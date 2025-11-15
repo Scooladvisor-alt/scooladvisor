@@ -397,7 +397,7 @@ export default function SchoolDetailPage() {
               
               {!user &&
               <p className="text-sm text-slate-600 mt-3 text-center">
-                  📌 Connecte-toi pour ajouter des profs et noter l'établissement.
+                  📌 Connecte-toi pour noter et ajouter tes profs.
                 </p>
               }
             </div>
@@ -405,13 +405,13 @@ export default function SchoolDetailPage() {
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 items-start">
-          <div className="w-full h-[700px] flex flex-col">
+          <div className="w-full h-[500px] flex flex-col">
             <Suspense fallback={<div className="p-4 bg-white rounded-lg shadow-md flex justify-center items-center h-full"><Loader2 className="w-8 h-8 animate-spin text-slate-400" /></div>}>
               <TeachersList schoolId={schoolId} />
             </Suspense>
           </div>
 
-          <div className="w-full h-[700px] flex flex-col">
+          <div className="w-full h-[500px] flex flex-col">
              <Suspense fallback={<div className="p-4 bg-white rounded-lg shadow-md flex justify-center items-center h-full"><Loader2 className="w-8 h-8 animate-spin text-slate-400" /></div>}>
               <SchoolReviews
                 schoolId={schoolId}
