@@ -67,9 +67,9 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
           usersData[email] = user;
         }
       } catch (error) {
-
         // Ignorer silencieusement les erreurs de chargement, as per instructions.
-      }}
+      }
+    }
 
     setReviewUsers(usersData);
     setLoading(false);
@@ -381,10 +381,12 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
                       variant={userLikes.has(review.id) ? "default" : "outline"}
                       size="sm"
                       onClick={() => handleLike(review)}
-                      disabled={likingReview === review.id} className="justify-center whitespace-nowrap font-medium focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 shadow hover:bg-primary/90 h-8 rounded-md px-3 text-xs flex items-center gap-2 transition-all bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 text-white hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90">
-
-
-
+                      disabled={likingReview === review.id}
+                      className={`flex items-center gap-2 transition-all ${
+                        userLikes.has(review.id) 
+                          ? 'bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 text-white hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90' 
+                          : 'hover:bg-blue-50'
+                      }`}>
 
 
 
