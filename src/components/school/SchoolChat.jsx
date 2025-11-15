@@ -167,7 +167,7 @@ export default function SchoolChat({ schoolId, isHomePage = false }) {
     if (!schoolId) return;
     setLoading(true);
     const allMessages = await base44.entities.ChatMessage.filter({ school_id: schoolId }, "-created_date");
-    const data = allMessages.filter((msg) => !msg.is_deleted);
+    const data = allMessages.filter(msg => !msg.is_deleted);
     setMessages(data);
     setLoading(false);
   };
@@ -581,8 +581,8 @@ Si la décision est "approved", la "reason" doit être null.`,
                 {user ?
                 <Button
                   onClick={handlePublish}
-                  disabled={!newMessage.trim() || postLoading || newMessage.length > MAX_MESSAGE_LENGTH || newMessage.length < 10} className="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 shadow hover:bg-primary/90 h-8 rounded-md px-3 bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 text-white hover:opacity-90 text-xs sm:text-base"
-
+                  disabled={!newMessage.trim() || postLoading || newMessage.length > MAX_MESSAGE_LENGTH || newMessage.length < 10}
+                  className="bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:opacity-90 text-xs sm:text-base"
                   size="sm">
 
                     {postLoading ? <Loader2 className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2 animate-spin" /> : <Send className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />}
