@@ -429,7 +429,7 @@ Si la décision est "approved", "reason" peut être vide ou null.`,
               <div className="space-y-2">
                 <div className="relative">
                   <Textarea
-                    placeholder={user ? "Partage ton expérience, tes conseils, tes anecdotes ! 💭" : "Connecte-toi pour participer 👋"}
+                    placeholder={user ? "Ton message ici... Partage ton expérience, tes conseils, tes anecdotes ! 💭" : "Connecte-toi pour participer 👋"}
                     value={newMessage}
                     onChange={(e) => {
                       const text = e.target.value;
