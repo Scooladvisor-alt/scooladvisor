@@ -1,11 +1,11 @@
-import { useState, useEffect, lazy, Suspense } from "react";
+import React, { useState, useEffect, lazy, Suspense } from "react";
 import { base44 } from "@/api/base44Client";
-import { MapPin, Star, Plus, Award, ChevronLeft, Flag, Loader2, Trash2 } from "lucide-react";
+import { MapPin, Users, Star, Plus, Award, ChevronLeft, Edit, Flag, Ban, Loader2, Trash2, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/utils";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 const TeachersList = lazy(() => import("../components/school/TeachersList"));
 const SchoolReviews = lazy(() => import("../components/school/SchoolReviews"));
@@ -13,6 +13,7 @@ const AddTeacherDialog = lazy(() => import("../components/school/AddTeacherDialo
 const AddSchoolReviewDialog = lazy(() => import("../components/school/AddSchoolReviewDialog"));
 const ReportSchoolDialog = lazy(() => import("../components/school/ReportSchoolDialog"));
 import SchoolChat from "../components/school/SchoolChat";
+import { toast } from "sonner";
 
 export default function SchoolDetailPage() {
   const navigate = useNavigate();
@@ -266,7 +267,7 @@ export default function SchoolDetailPage() {
                         e.stopPropagation();
                         setShowReportDialog(true);
                       }}
-                      className="hidden md:flex text-red-500 hover:text-red-700 transition-colors"
+                      className="md:hidden text-red-500 hover:text-red-700 transition-colors"
                       title="Signaler cet établissement">
 
                         <Flag className="w-4 h-4" />
@@ -288,10 +289,10 @@ export default function SchoolDetailPage() {
                         e.stopPropagation();
                         setShowReportDialog(true);
                       }}
-                      className="md:hidden ml-2 text-red-500 hover:text-red-700 transition-colors"
+                      className="hidden md:flex text-red-500 hover:text-red-700 transition-colors"
                       title="Signaler cet établissement">
 
-                        <Flag className="w-3.5 h-3.5" />
+                        <Flag className="w-4 h-4" />
                       </button>
                     }
                   </div>
@@ -402,12 +403,6 @@ export default function SchoolDetailPage() {
             </div>
           </div>
         </motion.div>
-        
-        <Suspense fallback={null}>
-            <div className="hidden sm:block">
-              <SchoolChat schoolId={schoolId} isHomePage={false} />
-            </div>
-        </Suspense>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
           <div className="w-full lg:flex lg:flex-col">
@@ -433,9 +428,7 @@ export default function SchoolDetailPage() {
         </div>
 
         <Suspense fallback={null}>
-            <div className="sm:hidden mt-6">
-              <SchoolChat schoolId={schoolId} isHomePage={false} />
-            </div>
+          <SchoolChat schoolId={schoolId} isHomePage={false} />
         </Suspense>
       </div>
 
