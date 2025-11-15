@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { base44 } from "@/api/base44Client";
 import { MessageSquare, Star, AlertCircle, User as UserIcon, Edit, ThumbsUp, Loader2, Trash2, Sparkles, Users, Building2, Utensils, Heart } from "lucide-react";

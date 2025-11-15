@@ -357,10 +357,7 @@ En cas de doute entre "critiquer" et "insulter", privilégie la sécurité et re
   const updateSchoolStats = async (schoolId) => {
     try {
       const reviews = await base44.entities.SchoolReview.filter({ school_id: schoolId, status: "published" });
-      // Calculate avg_rating based on total possible points (20 or 25)
-      const totalPossible = getMaxRating(); // Will be 20 or 25
-      const totalReviewedPoints = reviews.length > 0 ? reviews.reduce((sum, r) => sum + r.rating, 0) : 0;
-      const avgRating = reviews.length > 0 ? totalReviewedPoints / reviews.length * (20 / totalPossible) : 0; // Normalize to base 20 if needed for display
+      const avgRating = reviews.length > 0 ? reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length : 0;
 
       await base44.entities.School.update(schoolId, {
         average_rating: avgRating,
