@@ -62,7 +62,7 @@ export default function TeachersList({ schoolId }) {
   const hasMore = filteredTeachers.length > initialDisplayCount && !showAll;
 
   return (
-    <Card className="bg-white/80 backdrop-blur-sm border-slate-200 shadow-lg w-full h-full flex flex-col">
+    <Card className="bg-white/80 backdrop-blur-sm border-slate-200 shadow-lg w-full h-auto lg:h-full flex flex-col">
       <style>{`
         .teachers-list-scrollable {
           overflow-y: auto;

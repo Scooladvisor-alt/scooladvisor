@@ -273,7 +273,7 @@ Rédige maintenant ton résumé façon "L'avis d'Antonin" en 3 phrases max.`;
 
   return (
     <>
-      <Card className="bg-white/80 backdrop-blur-sm border-slate-200 shadow-lg w-full h-full flex flex-col">
+      <Card className="bg-white/80 backdrop-blur-sm border-slate-200 shadow-lg w-full h-auto lg:h-full flex flex-col">
         <CardHeader>
           <div className="flex items-center justify-between">
             <CardTitle className="flex items-center gap-2 text-lg sm:text-xl">
