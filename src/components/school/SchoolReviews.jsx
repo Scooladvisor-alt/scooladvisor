@@ -321,7 +321,7 @@ Rédige maintenant ton résumé façon "L'avis d'Antonin" en 3 phrases max.`;
               <Loader2 className="w-8 h-8 text-slate-400 animate-spin" />
             </div> :
           sortedReviews.length === 0 ?
-          <div className="py-40 text-center">
+          <div className="py-32 text-center">
               <MessageSquare className="w-12 h-12 text-slate-300 mx-auto mb-3" />
               <p className="text-slate-600 text-sm">Aucun avis pour le moment</p>
             </div> :
