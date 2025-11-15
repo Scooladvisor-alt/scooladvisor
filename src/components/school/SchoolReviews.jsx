@@ -425,7 +425,7 @@ Rédige maintenant ton résumé façon "L'avis d'Antonin" en 3 phrases max.`;
                       <Button
                       variant={userLikes.has(review.id) ? "default" : "outline"}
                       size="sm"
-                      onClick={() => handleLike(review)} className="border-2 border-slate-900 shadow-sm justify-center whitespace-nowrap text-sm font-medium ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-slate-50 h-9 rounded-lg px-3 flex items-center gap-2 transition-all bg-white text-slate-900">
+                      onClick={() => handleLike(review)} className="border-2 border-transparent shadow-sm justify-center whitespace-nowrap text-sm font-medium ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-slate-50 h-9 rounded-lg px-3 flex items-center gap-2 transition-all bg-white text-slate-900">
 
 
 
