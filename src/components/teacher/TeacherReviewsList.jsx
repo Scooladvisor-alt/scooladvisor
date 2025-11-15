@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { TeacherReview } from "@/entities/TeacherReview";
 import { ReviewLike } from "@/entities/ReviewLike";
@@ -68,9 +67,9 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
           usersData[email] = user;
         }
       } catch (error) {
-
         // Ignorer silencieusement les erreurs de chargement, as per instructions.
-      }}
+      }
+    }
 
     setReviewUsers(usersData);
     setLoading(false);
