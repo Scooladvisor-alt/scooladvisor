@@ -376,7 +376,7 @@ Si la décision est "approved", "reason" peut être vide ou null.`,
             <div className="absolute inset-0 bg-gradient-to-r from-rose-500/10 via-pink-500/10 to-purple-500/10" />
             <div className="relative z-10">
               <DialogTitle className="text-xl sm:text-3xl font-extrabold flex items-center justify-center gap-3 mb-2">
-                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-rose-500 via-pink-500 to-purple-500 rounded-2xl flex items-center justify-center shadow-lg animate-pulse">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-[#FF4D8D] via-purple-500 to-blue-500 rounded-2xl flex items-center justify-center shadow-lg animate-pulse">
                   <Mic className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                 </div>
                 <span className="bg-gradient-to-r from-rose-500 via-pink-500 to-purple-500 bg-clip-text text-transparent">
