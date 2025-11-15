@@ -62,7 +62,7 @@ export default function NationalChatWidget() {
     setError(false);
     try {
       const allMessages = await base44.entities.NationalMessage.list("-created_date", 50);
-      const msgs = allMessages.filter(msg => !msg.is_deleted);
+      const msgs = allMessages.filter((msg) => !msg.is_deleted);
       setMessages(msgs);
       setLastMessage(msgs[0] || null);
     } catch (error) {
@@ -390,8 +390,8 @@ Si la décision est "approved", "reason" peut être vide ou null.`,
           </DialogHeader>
 
           <div className="flex-1 overflow-y-auto px-3 sm:px-6 py-4 sm:py-6 chat-messages bg-gradient-to-b from-transparent to-white/30">
-            {messages.length === 0 ? (
-              <div className="flex flex-col items-center justify-center h-full text-center px-4">
+            {messages.length === 0 ?
+            <div className="flex flex-col items-center justify-center h-full text-center px-4">
                 <div className="w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-br from-rose-100 via-pink-100 to-purple-100 rounded-full flex items-center justify-center mb-4 sm:mb-6 shadow-lg">
                   <Mic className="w-10 h-10 sm:w-12 sm:h-12 text-purple-500" />
                 </div>
@@ -401,27 +401,27 @@ Si la décision est "approved", "reason" peut être vide ou null.`,
                 <p className="text-sm sm:text-base text-slate-600 max-w-md">
                   Lance la conversation et partage ton vécu avec toute la communauté étudiante française
                 </p>
+              </div> :
+
+            <div className="space-y-3 sm:space-y-4 max-w-4xl mx-auto">
+                {messages.map((msg, index) =>
+              <NationalMessageBubble
+                key={msg.id}
+                message={msg}
+                user={user}
+                onEdit={handleEdit}
+                onSave={handleSaveEdit}
+                onCancelEdit={handleCancelEdit}
+                onDelete={handleDelete}
+                onReport={handleReportClick}
+                editingMessageId={editingMessageId}
+                setEditedContent={setEditedContent}
+                editedContent={editedContent}
+                index={index} />
+
+              )}
               </div>
-            ) : (
-              <div className="space-y-3 sm:space-y-4 max-w-4xl mx-auto">
-                {messages.map((msg, index) => (
-                  <NationalMessageBubble
-                    key={msg.id}
-                    message={msg}
-                    user={user}
-                    onEdit={handleEdit}
-                    onSave={handleSaveEdit}
-                    onCancelEdit={handleCancelEdit}
-                    onDelete={handleDelete}
-                    onReport={handleReportClick}
-                    editingMessageId={editingMessageId}
-                    setEditedContent={setEditedContent}
-                    editedContent={editedContent}
-                    index={index}
-                  />
-                ))}
-              </div>
-            )}
+            }
           </div>
 
           <div className="bg-white/95 backdrop-blur-md border-t-2 border-purple-200/50 px-3 sm:px-6 py-3 sm:py-5 rounded-b-3xl">
@@ -438,8 +438,8 @@ Si la décision est "approved", "reason" peut être vide ou null.`,
                       }
                     }}
                     className="min-h-[70px] sm:min-h-[100px] text-sm sm:text-base pr-12 resize-none border-2 border-purple-200 focus:border-purple-400 rounded-2xl bg-white/90 shadow-sm"
-                    disabled={!user}
-                  />
+                    disabled={!user} />
+
                   <div className="absolute bottom-2 right-2 flex items-center gap-2">
                     <span className={`text-[10px] sm:text-xs font-medium ${newMessage.length >= MAX_MESSAGE_LENGTH ? 'text-red-500' : newMessage.length >= MAX_MESSAGE_LENGTH * 0.9 ? 'text-orange-500' : 'text-slate-400'}`}>
                       {newMessage.length}/{MAX_MESSAGE_LENGTH}
@@ -449,50 +449,50 @@ Si la décision est "approved", "reason" peut être vide ou null.`,
               </div>
 
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
-                {user && (
-                  <div className="flex items-center gap-2 px-3 py-2 bg-purple-50/80 rounded-xl border border-purple-200">
+                {user &&
+                <div className="flex items-center gap-2 px-3 py-2 bg-purple-50/80 rounded-xl border border-purple-200">
                     <Checkbox
-                      id="anonymous_national"
-                      checked={isAnonymous}
-                      onCheckedChange={setIsAnonymous}
-                      className="border-purple-300"
-                    />
+                    id="anonymous_national"
+                    checked={isAnonymous}
+                    onCheckedChange={setIsAnonymous}
+                    className="border-purple-300" />
+
                     <Label htmlFor="anonymous_national" className="text-xs sm:text-sm cursor-pointer font-medium text-slate-700">
                       🕵️ Mode anonyme
                     </Label>
                   </div>
-                )}
+                }
 
                 <div className="flex gap-2 sm:gap-3">
-                  {user ? (
-                    <Button
-                      onClick={handlePublish}
-                      disabled={!newMessage.trim() || postLoading || newMessage.length > MAX_MESSAGE_LENGTH || newMessage.length < 10}
-                      className="flex-1 sm:flex-initial bg-gradient-to-r from-rose-500 via-pink-500 to-purple-500 hover:from-rose-600 hover:via-pink-600 hover:to-purple-600 text-white shadow-lg hover:shadow-xl transition-all hover:scale-105 text-xs sm:text-base font-semibold py-5 sm:py-6 rounded-xl"
-                      size="lg"
-                    >
-                      {postLoading ? (
-                        <>
+                  {user ?
+                  <Button
+                    onClick={handlePublish}
+                    disabled={!newMessage.trim() || postLoading || newMessage.length > MAX_MESSAGE_LENGTH || newMessage.length < 10} className="inline-flex items-center justify-center gap-2 whitespace-nowrap focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover:bg-primary/90 h-10 px-8 flex-1 sm:flex-initial bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-white shadow-lg hover:shadow-xl transition-all hover:scale-105 text-xs sm:text-base font-semibold py-5 sm:py-6 rounded-xl"
+
+                    size="lg">
+
+                      {postLoading ?
+                    <>
                           <Loader2 className="w-4 h-4 sm:w-5 sm:h-5 mr-2 animate-spin" />
                           Publication...
-                        </>
-                      ) : (
-                        <>
+                        </> :
+
+                    <>
                           <Send className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
                           Publier gratuitement 🎉
                         </>
-                      )}
-                    </Button>
-                  ) : (
-                    <Button
-                      onClick={() => base44.auth.redirectToLogin(window.location.href)}
-                      className="flex-1 bg-gradient-to-r from-rose-500 via-pink-500 to-purple-500 hover:from-rose-600 hover:via-pink-600 hover:to-purple-600 text-white shadow-lg hover:shadow-xl transition-all hover:scale-105 text-xs sm:text-base font-semibold py-5 sm:py-6 rounded-xl"
-                      size="lg"
-                    >
+                    }
+                    </Button> :
+
+                  <Button
+                    onClick={() => base44.auth.redirectToLogin(window.location.href)}
+                    className="flex-1 bg-gradient-to-r from-rose-500 via-pink-500 to-purple-500 hover:from-rose-600 hover:via-pink-600 hover:to-purple-600 text-white shadow-lg hover:shadow-xl transition-all hover:scale-105 text-xs sm:text-base font-semibold py-5 sm:py-6 rounded-xl"
+                    size="lg">
+
                       <Send className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
                       Connecte-toi pour publier 🚀
                     </Button>
-                  )}
+                  }
                 </div>
               </div>
             </div>
@@ -565,13 +565,13 @@ const NationalMessageBubble = ({ message, user, onEdit, onSave, onCancelEdit, on
 
   const getAvatarColor = (name) => {
     const colors = [
-      'from-rose-400 to-pink-500',
-      'from-purple-400 to-indigo-500',
-      'from-blue-400 to-cyan-500',
-      'from-emerald-400 to-teal-500',
-      'from-amber-400 to-orange-500',
-      'from-fuchsia-400 to-purple-500'
-    ];
+    'from-rose-400 to-pink-500',
+    'from-purple-400 to-indigo-500',
+    'from-blue-400 to-cyan-500',
+    'from-emerald-400 to-teal-500',
+    'from-amber-400 to-orange-500',
+    'from-fuchsia-400 to-purple-500'];
+
     const hash = name.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
     return colors[hash % colors.length];
   };
@@ -594,7 +594,7 @@ const NationalMessageBubble = ({ message, user, onEdit, onSave, onCancelEdit, on
         {/* Avatar */}
         <div className={`flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br ${avatarGradient} flex items-center justify-center shadow-md border-2 border-white`}>
           <span className="text-white font-bold text-xs sm:text-sm">
-            {message.is_anonymous ? '🕵️' : (message.author_name?.charAt(0).toUpperCase() || '?')}
+            {message.is_anonymous ? '🕵️' : message.author_name?.charAt(0).toUpperCase() || '?'}
           </span>
         </div>
 
@@ -610,19 +610,19 @@ const NationalMessageBubble = ({ message, user, onEdit, onSave, onCancelEdit, on
             </p>
           </div>
 
-          {isEditing ? (
-            <div className="bg-slate-50 rounded-2xl p-3 shadow-md border-2 border-slate-200">
+          {isEditing ?
+          <div className="bg-slate-50 rounded-2xl p-3 shadow-md border-2 border-slate-200">
               <Textarea
-                value={editedContent}
-                onChange={(e) => {
-                  const text = e.target.value;
-                  if (text.length <= MAX_MESSAGE_LENGTH_EDIT) {
-                    setEditedContent(text);
-                  }
-                }}
-                className="bg-white text-slate-900 text-sm border-slate-200 focus:border-slate-400"
-                rows={3}
-              />
+              value={editedContent}
+              onChange={(e) => {
+                const text = e.target.value;
+                if (text.length <= MAX_MESSAGE_LENGTH_EDIT) {
+                  setEditedContent(text);
+                }
+              }}
+              className="bg-white text-slate-900 text-sm border-slate-200 focus:border-slate-400"
+              rows={3} />
+
               <div className="flex justify-between items-center text-[9px] sm:text-[10px] text-slate-400 mt-2">
                 <span className={editedContent.length >= MAX_MESSAGE_LENGTH_EDIT ? 'text-red-500 font-medium' : ''}>
                   {editedContent.length}/{MAX_MESSAGE_LENGTH_EDIT}
@@ -633,70 +633,70 @@ const NationalMessageBubble = ({ message, user, onEdit, onSave, onCancelEdit, on
                   Annuler
                 </Button>
                 <Button
-                  size="sm"
-                  onClick={() => onSave(message.id, editedContent, message.edit_count || 0)}
-                  className="h-8 text-xs bg-slate-700 hover:bg-slate-800 text-white rounded-lg"
-                  disabled={!editedContent.trim() || editedContent.length > MAX_MESSAGE_LENGTH_EDIT}
-                >
+                size="sm"
+                onClick={() => onSave(message.id, editedContent, message.edit_count || 0)}
+                className="h-8 text-xs bg-slate-700 hover:bg-slate-800 text-white rounded-lg"
+                disabled={!editedContent.trim() || editedContent.length > MAX_MESSAGE_LENGTH_EDIT}>
+
                   <Save className="w-3 h-3 mr-1" /> Enregistrer
                 </Button>
               </div>
-            </div>
-          ) : (
-            <>
+            </div> :
+
+          <>
               <div className="relative group">
                 <div className={`${isAuthor ? 'bg-slate-100 text-slate-900 border-slate-200' : 'bg-white text-slate-900 border-slate-200'} border-2 rounded-2xl rounded-tl-sm px-3 sm:px-4 py-2 sm:py-3 shadow-sm hover:shadow-md transition-all`}>
                   <p className="text-sm sm:text-base leading-relaxed break-words">{message.message}</p>
                   
                   {/* Bouton signaler intégré dans le message */}
-                  {!isAuthor && user && (
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="absolute top-1 right-1 h-6 w-6 p-0 hover:bg-orange-100 text-slate-400 hover:text-orange-600 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity"
-                      onClick={() => onReport(message)}
-                    >
+                  {!isAuthor && user &&
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="absolute top-1 right-1 h-6 w-6 p-0 hover:bg-orange-100 text-slate-400 hover:text-orange-600 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity"
+                  onClick={() => onReport(message)}>
+
                       <Flag className="w-3 h-3" />
                     </Button>
-                  )}
+                }
                 </div>
               </div>
 
               {/* Actions */}
-              {isAuthor && (
-                <div className="flex gap-1 mt-1.5 justify-end flex-wrap">
-                  {canEdit && (
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="h-7 px-2 text-xs hover:bg-slate-100 text-slate-600 rounded-lg"
-                      onClick={() => onEdit(message)}
-                    >
+              {isAuthor &&
+            <div className="flex gap-1 mt-1.5 justify-end flex-wrap">
+                  {canEdit &&
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-7 px-2 text-xs hover:bg-slate-100 text-slate-600 rounded-lg"
+                onClick={() => onEdit(message)}>
+
                       <Edit className="w-3 h-3 mr-1" />
                       Modifier
                     </Button>
-                  )}
+              }
                   <Button
-                    variant="ghost"
-                    size="sm"
-                    className="h-7 px-2 text-xs hover:bg-red-100 text-red-600 rounded-lg"
-                    onClick={() => onDelete(message.id)}
-                  >
+                variant="ghost"
+                size="sm"
+                className="h-7 px-2 text-xs hover:bg-red-100 text-red-600 rounded-lg"
+                onClick={() => onDelete(message.id)}>
+
                     <Trash2 className="w-3 h-3 mr-1" />
                     Supprimer
                   </Button>
                 </div>
-              )}
+            }
 
-              {isAuthor && !canEdit && (
-                <p className="text-[9px] sm:text-[10px] text-slate-400 mt-1 text-right">
+              {isAuthor && !canEdit &&
+            <p className="text-[9px] sm:text-[10px] text-slate-400 mt-1 text-right">
                   ⚠️ Limite de 3 modifications atteinte
                 </p>
-              )}
+            }
             </>
-          )}
+          }
         </div>
       </div>
-    </div>
-  );
+    </div>);
+
 };
