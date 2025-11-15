@@ -15,7 +15,7 @@ export default function TeacherStats({ teacher }) {
     <Card className="bg-white/80 backdrop-blur-sm border-slate-200 shadow-lg lg:sticky lg:top-24 w-full">
       <CardHeader>
         <CardTitle className="font-semibold tracking-tight flex items-center gap-2 text-lg sm:text-xl bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
-          <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 text-amber-500" />
+          <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent" />
           Statistiques détaillées
         </CardTitle>
       </CardHeader>
