@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { base44 } from "@/api/base44Client";
 import { motion } from "framer-motion";
 import { Plus, Search, Filter, TrendingUp, ArrowRight, Globe } from "lucide-react";
@@ -15,7 +15,9 @@ import {
 "@/components/ui/select";
 import {
   Dialog,
-  DialogContent } from
+  DialogContent,
+  DialogHeader,
+  DialogTitle } from
 "@/components/ui/dialog";
 import SchoolCard from "../components/schools/SchoolCard";
 import AddSchoolDialog from "../components/schools/AddSchoolDialog";

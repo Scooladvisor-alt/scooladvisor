@@ -1,11 +1,11 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { TeacherStatusReport } from "@/entities/TeacherStatusReport";
 import { Teacher } from "@/entities/Teacher";
 import { User } from "@/entities/User";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { AlertTriangle } from "lucide-react";
+import { AlertTriangle, CheckCircle } from "lucide-react";
 import { toast } from "sonner";
 
 export default function ReportTeacherStatusButton({ teacher, onUpdate }) {

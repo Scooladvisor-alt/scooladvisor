@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Teacher } from "@/entities/Teacher";
 import { CustomSubject } from "@/entities/CustomSubject";
 import { base44 } from "@/api/base44Client";

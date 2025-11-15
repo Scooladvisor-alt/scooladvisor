@@ -267,7 +267,7 @@ export default function SchoolDetailPage() {
                         e.stopPropagation();
                         setShowReportDialog(true);
                       }}
-                      className="md:hidden text-red-500 hover:text-red-700 transition-colors"
+                      className="hidden md:flex text-red-500 hover:text-red-700 transition-colors"
                       title="Signaler cet établissement">
 
                         <Flag className="w-4 h-4" />
@@ -289,10 +289,10 @@ export default function SchoolDetailPage() {
                         e.stopPropagation();
                         setShowReportDialog(true);
                       }}
-                      className="hidden md:flex text-red-500 hover:text-red-700 transition-colors"
+                      className="md:hidden ml-2 text-red-500 hover:text-red-700 transition-colors"
                       title="Signaler cet établissement">
 
-                        <Flag className="w-4 h-4" />
+                        <Flag className="w-3.5 h-3.5" />
                       </button>
                     }
                   </div>
@@ -403,6 +403,12 @@ export default function SchoolDetailPage() {
             </div>
           </div>
         </motion.div>
+        
+        <Suspense fallback={null}>
+            <div className="hidden sm:block">
+              <SchoolChat schoolId={schoolId} isHomePage={false} />
+            </div>
+        </Suspense>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
           <div className="w-full lg:flex lg:flex-col">
@@ -428,7 +434,9 @@ export default function SchoolDetailPage() {
         </div>
 
         <Suspense fallback={null}>
-          <SchoolChat schoolId={schoolId} isHomePage={false} />
+            <div className="sm:hidden mt-6">
+              <SchoolChat schoolId={schoolId} isHomePage={false} />
+            </div>
         </Suspense>
       </div>
 

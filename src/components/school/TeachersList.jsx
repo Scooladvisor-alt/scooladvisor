@@ -1,8 +1,8 @@
 
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { createPageUrl } from "@/utils";
-import { Users, BookOpen, ChevronRight, Loader2, Star, Award, Search } from "lucide-react";
+import { Users, BookOpen, ChevronRight, Loader2, Star, Award, ChevronDown, Search } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";

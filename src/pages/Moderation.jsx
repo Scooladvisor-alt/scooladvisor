@@ -1,11 +1,13 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { base44 } from "@/api/base44Client";
 import { useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/utils";
 import { 
   Shield, 
+  Users, 
   MessageSquare, 
   AlertTriangle,
+  Eye,
   UserX,
   School,
   Trash2,
@@ -16,6 +18,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { motion } from "framer-motion";
 
 import AllReports from "../components/moderation/AllReports";
+import ReviewModeration from "../components/moderation/ReviewModeration";
 import ContactMessages from "../components/moderation/ContactMessages";
 import BannedUsers from "../components/moderation/BannedUsers";
 import AllSchools from "../components/moderation/AllSchools";

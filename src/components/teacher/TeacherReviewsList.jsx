@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { TeacherReview } from "@/entities/TeacherReview";
 import { ReviewLike } from "@/entities/ReviewLike";
 import { Notification } from "@/entities/Notification";

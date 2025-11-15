@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import React, { useState } from "react";
 import { TeacherStatusReport } from "@/entities/TeacherStatusReport";
 import { TeacherFraudReport } from "@/entities/TeacherFraudReport";
 import { Teacher } from "@/entities/Teacher";

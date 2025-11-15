@@ -1,9 +1,10 @@
 
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Teacher } from "@/entities/Teacher";
 import { School } from "@/entities/School";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { CheckCircle, XCircle, BookOpen, School as SchoolIcon, Calendar } from "lucide-react";
 import { format } from "date-fns";

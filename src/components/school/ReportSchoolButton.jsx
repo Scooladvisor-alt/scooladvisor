@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import React, { useState } from "react";
 import { SchoolReport } from "@/entities/SchoolReport";
 import { base44 } from "@/api/base44Client";
 import { Button } from "@/components/ui/button";

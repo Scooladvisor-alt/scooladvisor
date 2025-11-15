@@ -1,10 +1,10 @@
 
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { ContactMessage } from "@/entities/ContactMessage";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { CheckCircle, Mail, Loader2, Trash2, Eye } from "lucide-react"; // Added Eye icon
+import { CheckCircle, Mail, User, Loader2, Trash2, Eye } from "lucide-react"; // Added Eye icon
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 import { toast } from "sonner";
