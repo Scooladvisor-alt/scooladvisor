@@ -10,8 +10,8 @@ import {
   Trash2,
   Loader2,
   Sparkles,
-  Users
-} from "lucide-react";
+  Users } from
+"lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { motion, AnimatePresence } from "framer-motion";
@@ -20,8 +20,8 @@ import {
   Dialog,
   DialogContent,
   DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+  DialogTitle } from
+"@/components/ui/dialog";
 
 import ReportTeacherButton from "../components/teacher/ReportTeacherButton";
 const AddTeacherReviewDialog = lazy(() => import("../components/teacher/AddTeacherReviewDialog"));
@@ -89,7 +89,7 @@ export default function TeacherDetailPage() {
           teaching_avg: 0,
           grading_avg: 0,
           average_rating: 0,
-          review_count: 0,
+          review_count: 0
         });
         return;
       }
@@ -100,7 +100,7 @@ export default function TeacherDetailPage() {
       const friendliness_avg = avg('friendliness');
       const teaching_avg = avg('teaching_method');
       const grading_avg = avg('grading_severity');
-      const average_rating = (workload_avg + friendliness_avg + teaching_avg + grading_avg); 
+      const average_rating = workload_avg + friendliness_avg + teaching_avg + grading_avg;
 
       await base44.entities.Teacher.update(tId, {
         workload_avg,
@@ -108,13 +108,13 @@ export default function TeacherDetailPage() {
         teaching_avg,
         grading_avg,
         average_rating,
-        review_count: reviewCount,
+        review_count: reviewCount
       });
     } catch (error) {
       console.error("Error updating teacher stats:", error);
     }
   };
-  
+
   const handleDeleteTeacher = async () => {
     const canDelete = user && user.email === 'antownin@gmail.com';
     if (!canDelete) {
@@ -139,17 +139,17 @@ export default function TeacherDetailPage() {
   const handleAskAntonin = async () => {
     setLoadingAntonin(true);
     setShowAntoninSummary(true);
-    
+
     try {
       const reviews = await base44.entities.TeacherReview.filter({ teacher_id: teacherId, status: "published" });
-      
+
       if (!reviews || reviews.length === 0) {
         setAntoninSummary("Pas encore d'avis sur ce prof ! Sois le premier à dire ce que tu en penses 😎");
         setLoadingAntonin(false);
         return;
       }
 
-      const reviewsSummary = reviews.map(r => ({
+      const reviewsSummary = reviews.map((r) => ({
         workload: r.workload,
         friendliness: r.friendliness,
         teaching_method: r.teaching_method,
@@ -164,7 +164,7 @@ Voici les avis : ${JSON.stringify(reviewsSummary)}
 
 Fais un résumé direct et naturel en 3-5 phrases max. Ton détendu, fun, mais constructif. 
 IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."), PAS par "Salut".`;
-      
+
       const result = await base44.integrations.Core.InvokeLLM({
         prompt: prompt,
         add_context_from_internet: false
@@ -183,8 +183,8 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-50 to-purple-50 flex items-center justify-center">
         <Loader2 className="w-12 h-12 text-purple-600 animate-spin" />
-      </div>
-    );
+      </div>);
+
   }
 
   if (!teacher) {
@@ -194,8 +194,8 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border-2 border-blue-200 p-8 text-center"
-          >
+            className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border-2 border-blue-200 p-8 text-center">
+
             <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-6">
               <Users className="w-10 h-10 text-white" />
             </div>
@@ -208,17 +208,17 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
               Ce profil n'existe pas ou a été supprimé.
             </p>
             
-            <Button 
+            <Button
               onClick={() => navigate(-1)}
-              className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
-            >
+              className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">
+
               <ChevronLeft className="w-4 h-4 mr-2" />
               Retour
             </Button>
           </motion.div>
         </div>
-      </div>
-    );
+      </div>);
+
   }
 
   const handleEditReview = (review) => {
@@ -299,8 +299,8 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
       `}</style>
       
       <div className="max-w-6xl mx-auto px-4 py-8">
-        <Button 
-          variant="ghost" 
+        <Button
+          variant="ghost"
           onClick={() => {
             if (school) {
               navigate(createPageUrl(`SchoolDetail?id=${school.id}`));
@@ -308,8 +308,8 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
               navigate(createPageUrl("Schools"));
             }
           }}
-          className="mb-6"
-        >
+          className="mb-6">
+
           <ChevronLeft className="w-4 h-4 mr-2" />
           {school ? `Retour à ${school.name}` : "Retour aux établissements"}
         </Button>
@@ -317,8 +317,8 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-slate-200 overflow-hidden mb-8"
-        >
+          className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-slate-200 overflow-hidden mb-8">
+
           <div className="relative p-4 sm:p-8">
             <div className="absolute top-0 right-0 w-72 h-72 bg-gradient-to-br from-purple-500/10 to-transparent rounded-bl-full" />
             
@@ -332,16 +332,16 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
                         {teacher.name.charAt(0)}
                       </AvatarFallback>
                     </Avatar>
-                    {isAntonin && (
-                      <Button
-                        onClick={handleDeleteTeacher}
-                        variant="ghost"
-                        size="icon"
-                        className="absolute -top-1 -right-1 h-7 w-7 bg-red-50 hover:bg-red-100 text-red-600 rounded-full shadow-md"
-                      >
+                    {isAntonin &&
+                    <Button
+                      onClick={handleDeleteTeacher}
+                      variant="ghost"
+                      size="icon"
+                      className="absolute -top-1 -right-1 h-7 w-7 bg-red-50 hover:bg-red-100 text-red-600 rounded-full shadow-md">
+
                         <Trash2 className="w-3.5 h-3.5" />
                       </Button>
-                    )}
+                    }
                   </div>
                   
                   <div className="flex-1 min-w-0">
@@ -353,15 +353,15 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
                   </div>
                 </div>
 
-                {hasRating ? (
-                  <motion.div 
-                    key={teacher.average_rating}
-                    initial={{ scale: 1 }}
-                    animate={{ scale: [1, 1.05, 1] }}
-                    transition={{ duration: 0.3 }}
-                    className="relative bg-gradient-to-br from-amber-50 to-amber-100 rounded-xl border-2 border-amber-200 w-full sm:w-auto note-widget"
-                    style={{ boxShadow: '0 0 12px rgba(168,85,247,0.15)' }}
-                  >
+                {hasRating ?
+                <motion.div
+                  key={teacher.average_rating}
+                  initial={{ scale: 1 }}
+                  animate={{ scale: [1, 1.05, 1] }}
+                  transition={{ duration: 0.3 }}
+                  className="relative bg-gradient-to-br from-amber-50 to-amber-100 rounded-xl border-2 border-amber-200 w-full sm:w-auto note-widget"
+                  style={{ boxShadow: '0 0 12px rgba(168,85,247,0.15)' }}>
+
                     <div className="relative z-10 flex sm:hidden items-center justify-center gap-1.5 px-3 py-2 whitespace-nowrap">
                       <Star className="w-4 h-4 text-amber-600 fill-amber-600" />
                       <span className="text-lg font-bold text-amber-900">{teacher.average_rating.toFixed(1)}</span>
@@ -380,17 +380,17 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
                       <p className="text-xs font-medium text-amber-700">sur 20</p>
                       <p className="text-xs text-amber-600 mt-0.5">{teacher.review_count} avis</p>
                     </div>
-                  </motion.div>
-                ) : (
-                  <div className="bg-slate-50 rounded-xl p-3 sm:p-4 border-2 border-slate-200 text-center min-w-[100px] sm:min-w-[120px] w-full sm:w-auto">
+                  </motion.div> :
+
+                <div className="bg-slate-50 rounded-xl p-3 sm:p-4 border-2 border-slate-200 text-center min-w-[100px] sm:min-w-[120px] w-full sm:w-auto">
                     <Star className="w-5 h-5 sm:w-6 sm:h-6 text-slate-400 mx-auto mb-1" />
                     <p className="text-xs text-slate-600">Pas encore noté</p>
                   </div>
-                )}
+                }
               </div>
 
               <div className="flex flex-col sm:flex-row flex-wrap gap-2 sm:gap-3">
-                <Button 
+                <Button
                   onClick={() => {
                     if (!user) {
                       base44.auth.redirectToLogin(window.location.href);
@@ -398,80 +398,80 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
                     }
                     setShowAddReview(true);
                     setEditingReview(null);
-                  }}
-                  className="bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 w-full sm:w-auto"
-                  size="sm"
-                >
+                  }} className="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 text-primary-foreground shadow hover:bg-primary/90 h-8 rounded-md px-3 text-xs bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-white w-full sm:w-auto"
+
+                  size="sm">
+
                   <Star className="w-4 h-4 mr-2" />
                   Noter ce professeur
                 </Button>
 
-                {user && (
-                  <ReportTeacherButton teacher={teacher} onUpdate={loadData} />
-                )}
+                {user &&
+                <ReportTeacherButton teacher={teacher} onUpdate={loadData} />
+                }
 
-                {canModerate && (
-                   <Button 
-                      onClick={handleDeleteTeacher}
-                      variant="destructive"
-                      size="sm"
-                      className="w-full sm:w-auto"
-                    >
+                {canModerate &&
+                <Button
+                  onClick={handleDeleteTeacher}
+                  variant="destructive"
+                  size="sm"
+                  className="w-full sm:w-auto">
+
                       <Trash2 className="w-4 h-4 mr-2" />
                       Supprimer le profil
                     </Button>
-                )}
+                }
 
                 <Button
                   onClick={handleAskAntonin}
                   variant="outline"
-                  size="sm"
-                  className="border-purple-200 text-purple-600 hover:bg-purple-50 w-full sm:w-auto"
-                >
+                  size="sm" className="">
+
+
                   <Sparkles className="w-4 h-4 mr-2" />
                   <span className="hidden sm:inline">Demander à Antonin 🤖 ce qu'il en pense</span>
                   <span className="sm:hidden">Avis d'Antonin 🤖</span>
                 </Button>
               </div>
               
-              {!user && (
-                <p className="text-xs sm:text-sm text-slate-600 mt-3">
+              {!user &&
+              <p className="text-xs sm:text-sm text-slate-600 mt-3">
                   📌 Connectez-vous pour noter ce professeur et accéder à toutes les fonctionnalités.
                 </p>
-              )}
+              }
             </div>
           </div>
         </motion.div>
 
         <div className="flex flex-col lg:hidden gap-6 sm:gap-8">
-          <Suspense fallback={<div className="p-4 bg-white rounded-lg shadow-md flex justify-center items-center h-64"><Loader2 className="w-8 h-8 animate-spin text-slate-400"/></div>}>
+          <Suspense fallback={<div className="p-4 bg-white rounded-lg shadow-md flex justify-center items-center h-64"><Loader2 className="w-8 h-8 animate-spin text-slate-400" /></div>}>
             <TeacherStats teacher={teacher} />
           </Suspense>
           
-          <Suspense fallback={<div className="p-4 bg-white rounded-lg shadow-md flex justify-center items-center h-64"><Loader2 className="w-8 h-8 animate-spin text-slate-400"/></div>}>
-            <TeacherReviewsList 
+          <Suspense fallback={<div className="p-4 bg-white rounded-lg shadow-md flex justify-center items-center h-64"><Loader2 className="w-8 h-8 animate-spin text-slate-400" /></div>}>
+            <TeacherReviewsList
               teacherId={teacherId}
-              user={user} 
+              user={user}
               onReload={loadData}
-              onEditReview={handleEditReview}
-            />
+              onEditReview={handleEditReview} />
+
           </Suspense>
         </div>
 
         <div className="hidden lg:grid lg:grid-cols-3 gap-6 sm:gap-8">
           <div className="lg:col-span-2">
-            <Suspense fallback={<div className="p-4 bg-white rounded-lg shadow-md flex justify-center items-center h-64"><Loader2 className="w-8 h-8 animate-spin text-slate-400"/></div>}>
-              <TeacherReviewsList 
+            <Suspense fallback={<div className="p-4 bg-white rounded-lg shadow-md flex justify-center items-center h-64"><Loader2 className="w-8 h-8 animate-spin text-slate-400" /></div>}>
+              <TeacherReviewsList
                 teacherId={teacherId}
-                user={user} 
+                user={user}
                 onReload={loadData}
-                onEditReview={handleEditReview}
-              />
+                onEditReview={handleEditReview} />
+
             </Suspense>
           </div>
 
           <div>
-             <Suspense fallback={<div className="p-4 bg-white rounded-lg shadow-md flex justify-center items-center h-64"><Loader2 className="w-8 h-8 animate-spin text-slate-400"/></div>}>
+             <Suspense fallback={<div className="p-4 bg-white rounded-lg shadow-md flex justify-center items-center h-64"><Loader2 className="w-8 h-8 animate-spin text-slate-400" /></div>}>
               <TeacherStats teacher={teacher} />
             </Suspense>
           </div>
@@ -488,8 +488,8 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
           teacherId={teacherId}
           existingReview={editingReview}
           setExistingReview={setEditingReview}
-          onSuccess={loadData}
-        />
+          onSuccess={loadData} />
+
       </Suspense>
 
       <Dialog open={showAntoninSummary} onOpenChange={setShowAntoninSummary}>
@@ -501,23 +501,23 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
             </DialogTitle>
           </DialogHeader>
           <div className="py-4 sm:py-6">
-            {loadingAntonin ? (
-              <div className="flex flex-col items-center justify-center py-8 sm:py-12">
+            {loadingAntonin ?
+            <div className="flex flex-col items-center justify-center py-8 sm:py-12">
                 <Loader2 className="w-10 h-10 sm:w-12 sm:h-12 text-purple-600 animate-spin mb-4" />
                 <p className="text-slate-600 text-sm sm:text-base">Antonin 🤖 analyse les avis...</p>
-              </div>
-            ) : (
-              <div className="prose prose-slate max-w-none prose-sm sm:prose-base">
+              </div> :
+
+            <div className="prose prose-slate max-w-none prose-sm sm:prose-base">
                 <div className="bg-gradient-to-r from-purple-50 to-blue-50 rounded-lg p-4 sm:p-6 border-2 border-purple-200">
                   <p className="text-slate-800 leading-relaxed text-base sm:text-lg whitespace-pre-wrap">
                     {antoninSummary}
                   </p>
                 </div>
               </div>
-            )}
+            }
           </div>
         </DialogContent>
       </Dialog>
-    </div>
-  );
+    </div>);
+
 }
