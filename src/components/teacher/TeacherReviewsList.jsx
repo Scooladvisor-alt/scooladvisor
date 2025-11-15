@@ -7,7 +7,7 @@ import { base44 } from "@/api/base44Client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { MessageSquare, Star, User as UserIcon, AlertCircle, Briefcase, Smile, BookOpen, Target, Edit, ThumbsUp, Loader2, Trash2 } from "lucide-react";
+import { MessageSquare, Star, User as UserIcon, AlertCircle, Edit, ThumbsUp, Loader2, Trash2, ChevronDown, BookOpen, Heart, Brain, FileText } from "lucide-react";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 import { motion } from "framer-motion";
@@ -21,10 +21,10 @@ const formatDateWithTimezone = (dateString, formatStr) => {
 };
 
 const criteriaIcons = {
-  workload: { icon: Briefcase, label: "Charge de travail", color: "text-blue-600" },
-  friendliness: { icon: Smile, label: "Gentillesse", color: "text-green-600" },
-  teaching_method: { icon: BookOpen, label: "Qualité des cours", color: "text-purple-600" },
-  grading_severity: { icon: Target, label: "Sévérité notation", color: "text-orange-600" }
+  workload: { icon: BookOpen, label: "Charge", color: "text-blue-600" },
+  friendliness: { icon: Heart, label: "Amabilité", color: "text-pink-600" },
+  teaching_method: { icon: Brain, label: "Enseignement", color: "text-purple-600" },
+  grading_severity: { icon: FileText, label: "Notation", color: "text-orange-600" }
 };
 
 const getAvatarUrl = (avatar) => {
@@ -46,6 +46,7 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
   const [localLikes, setLocalLikes] = useState({});
   const [userLikes, setUserLikes] = useState(new Set());
   const [reviewUsers, setReviewUsers] = useState({});
+  const [expandedReviews, setExpandedReviews] = useState(new Set());
 
   useEffect(() => {
     loadReviews();
@@ -223,6 +224,16 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
 
   const getLikeCount = (review) => {
     return localLikes[review.id] !== undefined ? localLikes[review.id] : review.like_count || 0;
+  };
+
+  const toggleExpand = (reviewId) => {
+    const newExpanded = new Set(expandedReviews);
+    if (newExpanded.has(reviewId)) {
+      newExpanded.delete(reviewId);
+    } else {
+      newExpanded.add(reviewId);
+    }
+    setExpandedReviews(newExpanded);
   };
 
   const sortedReviews = [...reviews].sort((a, b) => (getLikeCount(b) || 0) - (getLikeCount(a) || 0));

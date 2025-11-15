@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { base44 } from "@/api/base44Client";
-import { MessageSquare, Star, AlertCircle, User as UserIcon, Edit, ThumbsUp, Loader2, Trash2, Sparkles, Users, Building2, Utensils, Heart } from "lucide-react";
+import { MessageSquare, Star, AlertCircle, User as UserIcon, Edit, ThumbsUp, Loader2, Trash2, Sparkles, Users, Building2, Utensils, Heart, ChevronDown } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -37,6 +37,7 @@ export default function SchoolReviews({ schoolId, user, onReload, onEditReview, 
   const [showAntoninSummary, setShowAntoninSummary] = useState(false);
   const [antoninSummary, setAntoninSummary] = useState("");
   const [loadingAntonin, setLoadingAntonin] = useState(false);
+  const [expandedReviews, setExpandedReviews] = useState(new Set());
 
   useEffect(() => {
     const loadReviews = async () => {
@@ -190,6 +191,16 @@ export default function SchoolReviews({ schoolId, user, onReload, onEditReview, 
 
   const getLikeCount = (review) => {
     return localLikes[review.id] !== undefined ? localLikes[review.id] : review.like_count || 0;
+  };
+
+  const toggleExpand = (reviewId) => {
+    const newExpanded = new Set(expandedReviews);
+    if (newExpanded.has(reviewId)) {
+      newExpanded.delete(reviewId);
+    } else {
+      newExpanded.add(reviewId);
+    }
+    setExpandedReviews(newExpanded);
   };
 
   const handleAskAntonin = async () => {
@@ -374,19 +385,38 @@ Rédige maintenant ton résumé façon "L'avis d'Antonin" en 3 phrases max.`;
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-4 gap-2 mb-4">
-                      {Object.entries(criteriaIcons).map(([key, { icon: Icon, color }]) =>
-                    <div key={key} className="bg-slate-50 rounded-lg p-2 border border-slate-200">
-                            <div className="flex flex-row items-center justify-center gap-1">
-                              <Icon className={`w-4 h-4 ${color}`} />
-                              <span className="text-sm font-bold text-slate-900">{review[key]}</span>
-                              <span className="hidden sm:inline text-[9px] text-slate-500">/5</span>
-                            </div>
-                        </div>
+                    {review.comment && (
+                      <div className="relative bg-slate-50 p-3 rounded-lg mb-3">
+                        <p className="text-sm text-slate-700 leading-relaxed pr-6">
+                          {review.comment}
+                        </p>
+                        <button
+                          onClick={() => toggleExpand(review.id)}
+                          className="absolute top-3 right-3 text-slate-400 hover:text-slate-600 transition-colors"
+                          title={expandedReviews.has(review.id) ? "Masquer les détails" : "Voir les détails"}
+                        >
+                          <ChevronDown 
+                            className={`w-4 h-4 transition-transform duration-200 ${
+                              expandedReviews.has(review.id) ? 'rotate-180' : ''
+                            }`}
+                          />
+                        </button>
+                      </div>
                     )}
-                    </div>
 
-                    <p className="text-sm text-slate-700 leading-relaxed">{review.comment}</p>
+                    {expandedReviews.has(review.id) && (
+                      <div className="mt-3 pt-3 border-t border-slate-100">
+                        <div className="flex gap-3 overflow-x-auto mb-4">
+                          {Object.entries(criteriaIcons).map(([key, { icon: Icon, color }]) => (
+                            <div key={key} className="flex items-center gap-1 whitespace-nowrap">
+                              <Icon className={`w-3.5 h-3.5 ${color} flex-shrink-0`} />
+                              <span className="text-[11px] font-bold text-slate-900">{review[key]}</span>
+                              <span className="text-[10px] text-slate-500">/5</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
 
                     <div className="flex items-center justify-between pt-2 border-t border-slate-100">
                       <div className="flex gap-2">
