@@ -1,0 +1,472 @@
+import { useState, useEffect, lazy, Suspense } from "react";
+import { base44 } from "@/api/base44Client";
+import { MapPin, Star, Plus, Award, ChevronLeft, Flag, Loader2, Trash2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { useNavigate } from "react-router-dom";
+import { createPageUrl } from "@/utils";
+import { motion } from "framer-motion";
+
+const TeachersList = lazy(() => import("../components/school/TeachersList"));
+const SchoolReviews = lazy(() => import("../components/school/SchoolReviews"));
+const AddTeacherDialog = lazy(() => import("../components/school/AddTeacherDialog"));
+const AddSchoolReviewDialog = lazy(() => import("../components/school/AddSchoolReviewDialog"));
+const ReportSchoolDialog = lazy(() => import("../components/school/ReportSchoolDialog"));
+import SchoolChat from "../components/school/SchoolChat";
+
+export default function SchoolDetailPage() {
+  const navigate = useNavigate();
+  const urlParams = new URLSearchParams(window.location.search);
+  const schoolId = urlParams.get('id');
+
+  const [school, setSchool] = useState(null);
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [showAddTeacher, setShowAddTeacher] = useState(false);
+  const [showAddReview, setShowAddReview] = useState(false);
+  const [editingReview, setEditingReview] = useState(null);
+  const [schoolStatus, setSchoolStatus] = useState('active');
+  const [showReportDialog, setShowReportDialog] = useState(false);
+
+  useEffect(() => {
+    if (schoolId) {
+      loadData();
+    }
+  }, [schoolId]);
+
+  const loadData = async () => {
+    setLoading(true);
+
+    try {
+      const schoolsData = await base44.entities.School.filter({ id: schoolId });
+      const foundSchool = schoolsData[0];
+      setSchool(foundSchool);
+      if (foundSchool) {
+        setSchoolStatus(foundSchool.status || 'active');
+      }
+
+      let currentUser = null;
+      try {
+        currentUser = await base44.auth.me();
+        setUser(currentUser);
+      } catch (error) {
+        setUser(null);
+      }
+    } catch (error) {
+      console.error("Error loading school data:", error);
+      setSchool(null);
+    }
+    setLoading(false);
+  };
+
+  const refreshSchoolStats = async () => {
+    try {
+      const [updatedSchool] = await base44.entities.School.filter({ id: schoolId });
+      if (updatedSchool) {
+        setSchool(updatedSchool);
+      }
+    } catch (error) {
+      console.error("Error refreshing school stats:", error);
+    }
+  };
+
+  const handleEditReview = (review) => {
+    setEditingReview(review);
+    setShowAddReview(true);
+  };
+
+  const handleToggleSchoolStatus = async () => {
+    const canModerate = user && (user.role === 'admin' || user.role === 'moderator');
+    if (!user || !canModerate) {
+      alert("Vous n'êtes pas autorisé à effectuer cette action.");
+      return;
+    }
+    const newStatus = schoolStatus === 'active' ? 'banned' : 'active';
+    const confirmMessage = `Êtes-vous sûr de vouloir ${newStatus === 'banned' ? 'bannir' : 'activer'} cet établissement ?`;
+    if (!confirm(confirmMessage)) return;
+
+    try {
+      await base44.entities.School.update(schoolId, { status: newStatus });
+      setSchoolStatus(newStatus);
+      setSchool((prevSchool) => ({ ...prevSchool, status: newStatus }));
+      alert(`Statut de l'établissement mis à jour: ${newStatus}`);
+    } catch (error) {
+      console.error("Error updating school status:", error);
+      alert("Échec de la mise à jour du statut de l'établissement.");
+    }
+  };
+
+  const handleDeleteSchool = async () => {
+    const canModerate = user && (user.role === 'admin' || user.role === 'moderator');
+    if (!user || !canModerate) {
+      alert("Vous n'êtes pas autorisé à effectuer cette action.");
+      return;
+    }
+    if (!confirm("Êtes-vous sûr de vouloir supprimer cet établissement ? Cette action est irréversible.")) return;
+
+    try {
+      await base44.entities.School.delete(schoolId);
+      alert("Établissement supprimé avec succès.");
+      navigate(createPageUrl("Schools"));
+    } catch (error) {
+      console.error("Error deleting school:", error);
+      alert("Échec de la suppression de l'établissement.");
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 p-8 flex items-center justify-center">
+        <Loader2 className="w-12 h-12 text-blue-600 animate-spin" />
+      </div>);
+
+  }
+
+  if (!school) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 p-8 flex items-center justify-center">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold text-slate-900 mb-2">Établissement non trouvé</h2>
+          <Button onClick={() => navigate(createPageUrl("Schools"))}>
+            Retour aux établissements
+          </Button>
+        </div>
+      </div>);
+
+  }
+
+  const typeLabels = {
+    college: "Collège",
+    lycee: "Lycée",
+    universite: "Université",
+    ecole_privee: "École privée",
+    ecole_commerce: "École de commerce",
+    ecole_ingenieur: "École d'ingénieurs"
+  };
+
+  const typeColors = {
+    college: "bg-[#3498DB] text-white border-[#3498DB]",
+    lycee: "bg-[#1ABC9C] text-white border-[#1ABC9C]",
+    universite: "bg-[#27AE60] text-white border-[#27AE60]",
+    ecole_privee: "bg-[#F39C12] text-white border-[#F39C12]",
+    ecole_commerce: "bg-[#E74C3C] text-white border-[#E74C3C]",
+    ecole_ingenieur: "bg-[#FF6B35] text-white border-[#FF6B35]"
+  };
+
+  const hasRating = school.average_rating && school.average_rating > 0;
+  const canModerate = user && (user.role === 'admin' || user.role === 'moderator');
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-50">
+      <style>{`
+        @keyframes shine {
+          0% { background-position: -200% center; }
+          100% { background-position: 200% center; }
+        }
+        
+        @keyframes shimmer {
+          0% { background-position: -200% 0; }
+          100% { background-position: 200% 0; }
+        }
+        
+        @keyframes pulse-soft {
+          0%, 100% { transform: scale(1); opacity: 1; }
+          50% { transform: scale(1.02); opacity: 0.95; }
+        }
+        
+        @keyframes badge-shimmer {
+          0% { transform: translateX(-100%) rotate(45deg); }
+          100% { transform: translateX(400%) rotate(45deg); }
+        }
+        
+        .animate-shine {
+          animation: shine 4s ease-in-out infinite;
+        }
+        
+        .type-badge {
+          animation: pulse-soft 3s ease-in-out infinite;
+        }
+        
+        .note-widget {
+          position: relative;
+          overflow: hidden;
+        }
+        
+        .note-widget::before {
+          content: '';
+          position: absolute;
+          top: -50%;
+          left: -50%;
+          width: 50%;
+          height: 200%;
+          background: linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 255, 255, 0.5),
+            transparent
+          );
+          animation: badge-shimmer 3s infinite;
+          pointer-events: none;
+        }
+
+        /* Custom scrollbar styles */
+        ::-webkit-scrollbar {
+          width: 8px;
+          height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+          background: #f1f1f1;
+          border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+          background: #ccc;
+          border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+          background: #999;
+        }
+        
+        /* Accessibility: respect reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+          .animate-shine, .type-badge, .note-widget::before {
+            animation: none;
+            background-position: 0 0;
+          }
+        }
+      `}</style>
+      
+      <div className="max-w-6xl mx-auto px-4 py-8">
+        <Button
+          variant="ghost"
+          onClick={() => navigate(createPageUrl("Schools"))}
+          className="mb-6">
+
+          <ChevronLeft className="w-4 h-4 mr-2" />
+          Retour aux établissements
+        </Button>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-slate-200 overflow-hidden mb-8">
+
+          <div className="relative p-4 sm:p-6 md:p-8">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-blue-500/10 to-transparent rounded-bl-full" />
+            
+            <div className="relative">
+              <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-3 md:gap-6 mb-4 md:mb-6">
+                <div className="flex-1 w-full">
+                  <div className="flex items-center justify-between mb-2">
+                    <Badge className={`border-2 text-xs font-semibold shadow-md type-badge ${typeColors[school.type]}`}>
+                      {typeLabels[school.type]}
+                    </Badge>
+                    {user &&
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setShowReportDialog(true);
+                      }}
+                      className="hidden md:flex text-red-500 hover:text-red-700 transition-colors"
+                      title="Signaler cet établissement">
+
+                        <Flag className="w-4 h-4" />
+                      </button>
+                    }
+                  </div>
+                  {schoolStatus === 'banned' &&
+                  <Badge className="mb-2 bg-red-100 text-red-800 border-red-200 text-xs">
+                      Établissement Banni
+                    </Badge>
+                  }
+                  <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-slate-900 mb-1 md:mb-2 break-words">{school.name}</h1>
+                  <div className="flex items-center gap-2 text-slate-600 text-xs sm:text-sm">
+                    <MapPin className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" />
+                    <span className="break-words">{school.address}, {school.city}</span>
+                    {user &&
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setShowReportDialog(true);
+                      }}
+                      className="md:hidden ml-2 text-red-500 hover:text-red-700 transition-colors"
+                      title="Signaler cet établissement">
+
+                        <Flag className="w-3.5 h-3.5" />
+                      </button>
+                    }
+                  </div>
+                </div>
+
+                {hasRating ?
+                <motion.div
+                  key={school.average_rating}
+                  initial={{ scale: 1 }}
+                  animate={{ scale: [1, 1.05, 1] }}
+                  transition={{ duration: 0.3 }}
+                  className="relative bg-gradient-to-br from-amber-50 to-amber-100 rounded-lg border border-amber-200 text-center w-full sm:w-auto note-widget px-3 py-2 sm:px-4 sm:py-4 sm:min-w-[120px]">
+
+                    
+                    <div className="relative z-10 flex sm:hidden items-center justify-center gap-1 whitespace-nowrap">
+                      <Star className="w-4 h-4 text-amber-600 fill-amber-600" />
+                      <span className="text-lg font-bold text-amber-900">{school.average_rating.toFixed(1)}</span>
+                      <span className="text-sm text-amber-700">/ 20</span>
+                      <span className="text-xs text-amber-600 ml-1">basé sur :</span>
+                      <span className="text-sm font-semibold text-amber-800">{school.review_count} avis</span>
+                    </div>
+                    
+                    <div className="relative z-10 hidden sm:block">
+                      <div className="flex items-center justify-center gap-1.5 mb-1">
+                        <Star className="w-5 h-5 text-amber-600 fill-amber-600" />
+                        <span className="text-3xl font-bold text-amber-900" style={{ textShadow: '0 0 8px rgba(168,85,247,0.3)' }}>
+                          {school.average_rating.toFixed(1)}
+                        </span>
+                      </div>
+                      <p className="text-xs font-medium text-amber-700">sur 20</p>
+                      <p className="text-xs text-amber-600 mt-0.5">{school.review_count} avis</p>
+                    </div>
+                  </motion.div> :
+
+                <div className="bg-slate-50 rounded-lg border border-slate-200 text-center w-full sm:w-auto px-3 py-2 sm:px-4 sm:py-4 sm:min-w-[120px]">
+                    <div className="flex sm:hidden items-center justify-center gap-2 whitespace-nowrap">
+                      <Star className="w-4 h-4 text-slate-400" />
+                      <span className="text-sm text-slate-600">Pas encore noté</span>
+                    </div>
+                    
+                    <div className="hidden sm:block">
+                      <Star className="w-6 h-6 text-slate-400 mx-auto mb-1" />
+                      <p className="text-xs text-slate-600">Pas encore noté</p>
+                    </div>
+                  </div>
+                }
+              </div>
+
+              {canModerate &&
+              <div className="mb-6 border-t border-slate-200 pt-4 mt-6">
+                    <h3 className="text-lg font-semibold text-slate-800 mb-3 flex items-center">
+                        <Award className="w-5 h-5 mr-2 text-amber-500" />
+                        Actions Modérateur/Admin
+                    </h3>
+                    {school.reports_count > 0 &&
+                <p className="mb-3 text-sm text-red-600 flex items-center">
+                            <Flag className="w-4 h-4 mr-2" />
+                            Cet établissement a <span className="font-semibold mx-1">{school.reports_count}</span> signalement(s).
+                        </p>
+                }
+                    <div className="flex flex-wrap gap-3">
+                         <Button
+                    variant="destructive"
+                    onClick={handleDeleteSchool}>
+
+                            <Trash2 className="w-4 h-4 mr-2" />
+                            Supprimer l'établissement
+                        </Button>
+                    </div>
+                </div>
+              }
+
+              <div className="flex flex-col sm:flex-row gap-3">
+                <Button
+                  onClick={() => {
+                    if (!user) {
+                      base44.auth.redirectToLogin(window.location.href);
+                      return;
+                    }
+                    setShowAddReview(true);
+                  }}
+                  className="bg-gradient-to-r from-yellow-400 via-yellow-500 to-amber-500 hover:from-yellow-500 hover:via-yellow-600 hover:to-amber-600 text-white shadow-lg w-full sm:flex-1 h-11 order-2 sm:order-1">
+
+                  <Star className="w-4 h-4 mr-2" />
+                  Noter l'établissement
+                </Button>
+
+                <Button
+                  onClick={() => {
+                    if (!user) {
+                      base44.auth.redirectToLogin(window.location.href);
+                      return;
+                    }
+                    setShowAddTeacher(true);
+                  }} className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-primary hover:bg-primary/90 px-4 py-2 bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-white w-full sm:flex-1 h-11 shadow-md order-1 sm:order-2">
+
+
+                  <Plus className="w-4 h-4 mr-2 text-white" />
+                  Ajouter un professeur
+                </Button>
+              </div>
+              
+              {!user &&
+              <p className="text-sm text-slate-600 mt-3 text-center">
+                  📌 Connecte-toi pour ajouter des profs et noter l'établissement.
+                </p>
+              }
+            </div>
+          </div>
+        </motion.div>
+        
+        <Suspense fallback={null}>
+            <div className="hidden sm:block">
+              <SchoolChat schoolId={schoolId} isHomePage={false} />
+            </div>
+        </Suspense>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
+          <div className="w-full lg:flex lg:flex-col">
+            <Suspense fallback={<div className="p-4 bg-white rounded-lg shadow-md flex justify-center items-center h-64"><Loader2 className="w-8 h-8 animate-spin text-slate-400" /></div>}>
+              <TeachersList schoolId={schoolId} />
+            </Suspense>
+          </div>
+
+          <div className="w-full lg:flex lg:flex-col">
+             <Suspense fallback={<div className="p-4 bg-white rounded-lg shadow-md flex justify-center items-center h-64"><Loader2 className="w-8 h-8 animate-spin text-slate-400" /></div>}>
+              <SchoolReviews
+                schoolId={schoolId}
+                user={user}
+                onReload={() => {
+                  refreshSchoolStats();
+                  loadData();
+                }}
+                onEditReview={handleEditReview}
+                canModerate={canModerate} />
+
+            </Suspense>
+          </div>
+        </div>
+
+        <Suspense fallback={null}>
+            <div className="sm:hidden mt-6">
+              <SchoolChat schoolId={schoolId} isHomePage={false} />
+            </div>
+        </Suspense>
+      </div>
+
+      <Suspense>
+        <AddTeacherDialog
+          open={showAddTeacher}
+          onOpenChange={setShowAddTeacher}
+          schoolId={schoolId}
+          onSuccess={loadData} />
+
+
+        <AddSchoolReviewDialog
+          open={showAddReview}
+          onOpenChange={(open) => {
+            setShowAddReview(open);
+            if (!open) setEditingReview(null);
+          }}
+          schoolId={schoolId}
+          existingReview={editingReview}
+          onSuccess={() => {
+            refreshSchoolStats();
+            loadData();
+          }} />
+
+
+        <ReportSchoolDialog
+          open={showReportDialog}
+          onOpenChange={setShowReportDialog}
+          schoolId={schoolId} />
+
+      </Suspense>
+    </div>);
+
+}
