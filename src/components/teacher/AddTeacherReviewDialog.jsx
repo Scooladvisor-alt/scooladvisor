@@ -30,11 +30,11 @@ export default function AddTeacherReviewDialog({ open, onOpenChange, teacherId, 
   const MAX_COMMENT_LENGTH = 300;
 
   const criteria = [
-    { key: "workload", label: "Charge de travail", description: "Quantité de devoirs et travail demandé" },
-    { key: "friendliness", label: "Gentillesse", description: "Approche et bienveillance" },
-    { key: "teaching_method", label: "Qualité des cours", description: "Clarté et pédagogie" },
-    { key: "grading_severity", label: "Notation", description: "Façon de noter et de corriger" }
-  ];
+  { key: "workload", label: "Charge de travail", description: "Quantité de devoirs et travail demandé" },
+  { key: "friendliness", label: "Gentillesse", description: "Approche et bienveillance" },
+  { key: "teaching_method", label: "Qualité des cours", description: "Clarté et pédagogie" },
+  { key: "grading_severity", label: "Notation", description: "Façon de noter et de corriger" }];
+
 
   const resetForm = () => {
     setFormData({
@@ -49,7 +49,7 @@ export default function AddTeacherReviewDialog({ open, onOpenChange, teacherId, 
     setError(null);
     setSuccess(false);
   };
-  
+
   useEffect(() => {
     if (open) {
       if (existingReview) {
@@ -81,7 +81,7 @@ export default function AddTeacherReviewDialog({ open, onOpenChange, teacherId, 
         teacher_id: teacherId,
         created_by: user.email
       });
-      
+
       if (reviews.length > 0 && !existingReview) {
         setError("Vous avez déjà publié un avis pour ce professeur.");
       }
@@ -93,7 +93,7 @@ export default function AddTeacherReviewDialog({ open, onOpenChange, teacherId, 
   const calculateTotalRating = (data) => {
     const { workload, friendliness, teaching_method, grading_severity } = data;
     // Each criterion goes from 0-5. Total max is 20.
-    return (workload + friendliness + teaching_method + grading_severity);
+    return workload + friendliness + teaching_method + grading_severity;
   };
 
   const updateTeacherStats = async (teacherIdToUpdate) => {
@@ -107,7 +107,7 @@ export default function AddTeacherReviewDialog({ open, onOpenChange, teacherId, 
         teaching_avg: 0,
         grading_avg: 0,
         average_rating: 0,
-        review_count: 0,
+        review_count: 0
       });
       return;
     }
@@ -126,7 +126,7 @@ export default function AddTeacherReviewDialog({ open, onOpenChange, teacherId, 
       teaching_avg,
       grading_avg,
       average_rating,
-      review_count: reviewCount,
+      review_count: reviewCount
     });
   };
 
@@ -171,7 +171,7 @@ En cas de doute entre "critiquer" et "insulter", privilégie la sécurité et re
           }
         }
       });
-      
+
       // Ensure moderationResult.decision is either 'approved' or 'rejected'
       return moderationResult.decision === 'rejected' ? 'rejected' : 'approved';
     } catch (error) {
@@ -187,18 +187,18 @@ En cas de doute entre "critiquer" et "insulter", privilégie la sécurité et re
 
     // Récupérer tous les avis de l'utilisateur
     const [userSchoolReviews, userTeacherReviews] = await Promise.all([
-      base44.entities.SchoolReview.filter({ created_by: user.email }),
-      base44.entities.TeacherReview.filter({ created_by: user.email })
-    ]);
+    base44.entities.SchoolReview.filter({ created_by: user.email }),
+    base44.entities.TeacherReview.filter({ created_by: user.email })]
+    );
 
     // Obtenir les school_id uniques des avis école
-    const schoolIds = new Set(userSchoolReviews.map(r => r.school_id));
+    const schoolIds = new Set(userSchoolReviews.map((r) => r.school_id));
 
     // Pour les avis professeurs, récupérer les profs pour obtenir leurs school_id
     if (userTeacherReviews.length > 0) {
-      const teacherIds = [...new Set(userTeacherReviews.map(r => r.teacher_id))];
+      const teacherIds = [...new Set(userTeacherReviews.map((r) => r.teacher_id))];
       const teachers = await base44.entities.Teacher.filter({ id__in: teacherIds });
-      teachers.forEach(t => {
+      teachers.forEach((t) => {
         if (t.school_id) schoolIds.add(t.school_id);
       });
     }
@@ -236,7 +236,7 @@ En cas de doute entre "critiquer" et "insulter", privilégie la sécurité et re
       // Vérifier la limite de 7 établissements (sauf pour les modifications)
       if (!existingReview && user.email !== 'antownin@gmail.com') {
         const { schoolCount, currentSchoolId, reviewedSchools } = await checkSchoolLimit(user, teacherId);
-        
+
         // Si l'utilisateur a déjà 7 établissements ET que celui du prof actuel n'est pas dans la liste
         if (schoolCount >= 7 && !reviewedSchools.has(currentSchoolId)) {
           setError("Vous avez atteint la limite de 7 établissements différents. Vous ne pouvez pas publier d'avis sur un professeur d'un nouvel établissement.");
@@ -297,9 +297,9 @@ En cas de doute entre "critiquer" et "insulter", privilégie la sécurité et re
 
 
       } else {
-        const existingReviews = await base44.entities.TeacherReview.filter({ 
-          teacher_id: teacherId, 
-          created_by: user.email 
+        const existingReviews = await base44.entities.TeacherReview.filter({
+          teacher_id: teacherId,
+          created_by: user.email
         });
 
         if (existingReviews.length > 0) {
@@ -378,7 +378,7 @@ En cas de doute entre "critiquer" et "insulter", privilégie la sécurité et re
   };
 
   const canEdit = existingReview ? (existingReview.edit_count || 0) < 3 : true;
-  const submitButtonDisabled = loading || !canEdit || !formData.certification || (error && error.includes("atteint la limite")); // Added !formData.certification
+  const submitButtonDisabled = loading || !canEdit || !formData.certification || error && error.includes("atteint la limite"); // Added !formData.certification
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -394,21 +394,21 @@ En cas de doute entre "critiquer" et "insulter", privilégie la sécurité et re
           </p>
         </DialogHeader>
 
-        {success && (
-          <Alert className="bg-green-50 border-green-200">
+        {success &&
+        <Alert className="bg-green-50 border-green-200">
             <CheckCircle className="h-4 w-4 text-green-600" />
             <AlertDescription className="text-green-800 text-xs sm:text-sm">
               Avis publié avec succès !
             </AlertDescription>
           </Alert>
-        )}
+        }
 
-        {error && (
-          <Alert variant="destructive">
+        {error &&
+        <Alert variant="destructive">
             <AlertCircle className="h-4 w-4" />
             <AlertDescription className="text-xs sm:text-sm">{error}</AlertDescription>
           </Alert>
-        )}
+        }
 
         <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
           <div className="space-y-3 sm:space-y-5">
@@ -427,8 +427,8 @@ En cas de doute entre "critiquer" et "insulter", privilégie la sécurité et re
                   max={5}
                   step={0.5}
                   className="flex-1"
-                  disabled={!canEdit}
-                />
+                  disabled={!canEdit} />
+
                 <div className="flex items-center gap-1 bg-white px-2 py-1 sm:px-3 sm:py-1.5 rounded-lg border border-slate-200 min-w-[50px] sm:min-w-[60px] justify-center">
                   <span className="text-base sm:text-xl font-bold text-slate-900">{formData.workload.toFixed(1)}</span>
                   <span className="text-[10px] sm:text-sm text-slate-500">/5</span>
@@ -451,8 +451,8 @@ En cas de doute entre "critiquer" et "insulter", privilégie la sécurité et re
                   max={5}
                   step={0.5}
                   className="flex-1"
-                  disabled={!canEdit}
-                />
+                  disabled={!canEdit} />
+
                 <div className="flex items-center gap-1 bg-white px-2 py-1 sm:px-3 sm:py-1.5 rounded-lg border border-slate-200 min-w-[50px] sm:min-w-[60px] justify-center">
                   <span className="text-base sm:text-xl font-bold text-slate-900">{formData.friendliness.toFixed(1)}</span>
                   <span className="text-[10px] sm:text-sm text-slate-500">/5</span>
@@ -475,8 +475,8 @@ En cas de doute entre "critiquer" et "insulter", privilégie la sécurité et re
                   max={5}
                   step={0.5}
                   className="flex-1"
-                  disabled={!canEdit}
-                />
+                  disabled={!canEdit} />
+
                 <div className="flex items-center gap-1 bg-white px-2 py-1 sm:px-3 sm:py-1.5 rounded-lg border border-slate-200 min-w-[50px] sm:min-w-[60px] justify-center">
                   <span className="text-base sm:text-xl font-bold text-slate-900">{formData.teaching_method.toFixed(1)}</span>
                   <span className="text-[10px] sm:text-sm text-slate-500">/5</span>
@@ -499,8 +499,8 @@ En cas de doute entre "critiquer" et "insulter", privilégie la sécurité et re
                   max={5}
                   step={0.5}
                   className="flex-1"
-                  disabled={!canEdit}
-                />
+                  disabled={!canEdit} />
+
                 <div className="flex items-center gap-1 bg-white px-2 py-1 sm:px-3 sm:py-1.5 rounded-lg border border-slate-200 min-w-[50px] sm:min-w-[60px] justify-center">
                   <span className="text-base sm:text-xl font-bold text-slate-900">{formData.grading_severity.toFixed(1)}</span>
                   <span className="text-[10px] sm:text-sm text-slate-500">/5</span>
@@ -538,16 +538,16 @@ En cas de doute entre "critiquer" et "insulter", privilégie la sécurité et re
               placeholder="Décris ton expérience avec ce prof (cours, ambiance, méthodes...)"
               rows={4}
               className="text-sm sm:text-base"
-              disabled={!canEdit}
-            />
+              disabled={!canEdit} />
+
             <div className="flex justify-between text-[10px] text-slate-400">
               <span>
                 {formData.comment.length} / {MAX_COMMENT_LENGTH} caractères 
                 <span className="ml-1">(minimum 10)</span>
               </span>
-              {formData.comment.length >= MAX_COMMENT_LENGTH && (
-                <span className="text-red-600 font-medium">Limite atteinte !</span>
-              )}
+              {formData.comment.length >= MAX_COMMENT_LENGTH &&
+              <span className="text-red-600 font-medium">Limite atteinte !</span>
+              }
             </div>
           </div>
 
@@ -557,13 +557,13 @@ En cas de doute entre "critiquer" et "insulter", privilégie la sécurité et re
               checked={formData.is_anonymous}
               onCheckedChange={(checked) => setFormData({ ...formData, is_anonymous: checked })}
               className="mt-0.5"
-              disabled={!canEdit}
-            />
+              disabled={!canEdit} />
+
             <div className="grid gap-1.5 leading-none">
               <label
                 htmlFor="is_anonymous"
-                className="text-xs sm:text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-              >
+                className="text-xs sm:text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+
                 Publier en anonyme
               </label>
               <p className="text-[10px] sm:text-xs text-slate-500">
@@ -579,13 +579,13 @@ En cas de doute entre "critiquer" et "insulter", privilégie la sécurité et re
               checked={formData.certification}
               onCheckedChange={(checked) => setFormData({ ...formData, certification: checked })}
               className="mt-0.5"
-              disabled={!canEdit}
-            />
+              disabled={!canEdit} />
+
             <div className="grid gap-1.5 leading-none">
               <label
                 htmlFor="certification"
-                className="text-xs sm:text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-green-900"
-              >
+                className="text-xs sm:text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-green-900">
+
                 Je certifie que cet avis est constructif et bienveillant.
               </label>
             </div>
@@ -601,14 +601,14 @@ En cas de doute entre "critiquer" et "insulter", privilégie la sécurité et re
           <DialogFooter>
             <Button
               type="submit"
-              disabled={submitButtonDisabled}
-              className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-slate-300 text-xs sm:text-base h-9 sm:h-10"
-            >
-              {loading ? "Publication..." : (existingReview ? "Modifier l'avis" : "Publier l'avis")}
+              disabled={submitButtonDisabled} className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 text-primary-foreground shadow px-4 py-2 w-full bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 disabled:bg-slate-300 text-white text-xs sm:text-base h-9 sm:h-10">
+
+
+              {loading ? "Publication..." : existingReview ? "Modifier l'avis" : "Publier l'avis"}
             </Button>
           </DialogFooter>
         </form>
       </DialogContent>
-    </Dialog>
-  );
+    </Dialog>);
+
 }
