@@ -67,9 +67,9 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
           usersData[email] = user;
         }
       } catch (error) {
+
         // Ignorer silencieusement les erreurs de chargement, as per instructions.
-      }
-    }
+      }}
 
     setReviewUsers(usersData);
     setLoading(false);
@@ -231,7 +231,7 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
     <>
       <Card className="bg-white/80 backdrop-blur-sm border-slate-200 shadow-lg">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-2xl">
+          <CardTitle className="font-semibold tracking-tight flex items-center gap-2 text-xl">
             <MessageSquare className="w-6 h-6 text-purple-600" />
             Avis des étudiants 🍿 ({reviews.length})
           </CardTitle>
@@ -383,10 +383,10 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
                       onClick={() => handleLike(review)}
                       disabled={likingReview === review.id}
                       className={`flex items-center gap-2 transition-all ${
-                        userLikes.has(review.id) 
-                          ? 'bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 text-white hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90' 
-                          : 'hover:bg-blue-50'
-                      }`}>
+                      userLikes.has(review.id) ?
+                      'bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 text-white hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90' :
+                      'hover:bg-blue-50'}`
+                      }>
 
 
 
