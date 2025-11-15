@@ -317,23 +317,38 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-4 gap-2 mb-4">
-                      {Object.entries(criteriaIcons).map(([key, { icon: Icon, color }]) =>
-                    <div key={key} className="bg-transparent rounded-lg p-2">
-                          <div className="flex flex-row items-center justify-center gap-1">
-                            <Icon className={`w-4 h-4 ${color}`} />
-                            <span className="text-sm font-bold text-slate-900">{review[key]}</span>
-                            <span className="hidden sm:inline text-[9px] text-slate-500">/5</span>
-                          </div>
-                        </div>
+                    {review.comment && (
+                      <div className="relative bg-slate-50 p-3 rounded-lg mb-3">
+                        <p className="text-sm text-slate-700 leading-relaxed pr-6">
+                          {review.comment}
+                        </p>
+                        <button
+                          onClick={() => toggleExpand(review.id)}
+                          className="absolute top-3 right-3 text-slate-400 hover:text-slate-600 transition-colors"
+                          title={expandedReviews.has(review.id) ? "Masquer les détails" : "Voir les détails"}
+                        >
+                          <ChevronDown 
+                            className={`w-4 h-4 transition-transform duration-200 ${
+                              expandedReviews.has(review.id) ? 'rotate-180' : ''
+                            }`}
+                          />
+                        </button>
+                      </div>
                     )}
-                    </div>
 
-                    {review.comment &&
-                  <p className="text-slate-700 leading-relaxed bg-slate-50 p-4 rounded-lg mb-4">
-                        {review.comment}
-                      </p>
-                  }
+                    {expandedReviews.has(review.id) && (
+                      <div className="mt-3 pt-3 border-t border-slate-100">
+                        <div className="flex gap-3 overflow-x-auto mb-4">
+                          {Object.entries(criteriaIcons).map(([key, { icon: Icon, color }]) => (
+                            <div key={key} className="flex items-center gap-1 whitespace-nowrap">
+                              <Icon className={`w-3.5 h-3.5 ${color} flex-shrink-0`} />
+                              <span className="text-[11px] font-bold text-slate-900">{review[key]}</span>
+                              <span className="text-[10px] text-slate-500">/5</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
 
                     <div className="flex flex-wrap items-center justify-between gap-2 pt-4 border-t border-slate-100">
                       <div className="flex flex-wrap gap-2">
