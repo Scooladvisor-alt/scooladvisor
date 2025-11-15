@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { createPageUrl } from "@/utils";
@@ -63,18 +62,12 @@ export default function TeachersList({ schoolId }) {
   const hasMore = filteredTeachers.length > initialDisplayCount && !showAll;
 
   return (
-    <Card className="bg-white/80 backdrop-blur-sm border-slate-200 shadow-lg w-full">
+    <Card className="bg-white/80 backdrop-blur-sm border-slate-200 shadow-lg w-full h-full flex flex-col">
       <style>{`
         .teachers-list-scrollable {
-          max-height: 500px;
           overflow-y: auto;
           scroll-behavior: smooth;
-        }
-        
-        @media (max-width: 639px) {
-          .teachers-list-scrollable {
-            max-height: 360px;
-          }
+          flex: 1;
         }
         
         .teachers-list-scrollable::-webkit-scrollbar {
@@ -119,7 +112,7 @@ export default function TeachersList({ schoolId }) {
           </div>
         )}
       </CardHeader>
-      <CardContent>
+      <CardContent className="flex-1 flex flex-col overflow-hidden">
         {loading ? (
           <div className="flex justify-center items-center py-12">
             <Loader2 className="w-8 h-8 text-slate-400 animate-spin" />

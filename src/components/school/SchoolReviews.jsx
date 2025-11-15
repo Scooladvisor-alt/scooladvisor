@@ -273,7 +273,7 @@ Rédige maintenant ton résumé façon "L'avis d'Antonin" en 3 phrases max.`;
 
   return (
     <>
-      <Card className="bg-white/80 backdrop-blur-sm border-slate-200 shadow-lg w-full">
+      <Card className="bg-white/80 backdrop-blur-sm border-slate-200 shadow-lg w-full h-full flex flex-col">
         <CardHeader>
           <div className="flex items-center justify-between">
             <CardTitle className="flex items-center gap-2 text-lg sm:text-xl">
@@ -294,7 +294,28 @@ Rédige maintenant ton résumé façon "L'avis d'Antonin" en 3 phrases max.`;
             }
           </div>
         </CardHeader>
-        <CardContent className="section-scrollable">
+        <CardContent className="flex-1 flex flex-col overflow-hidden">
+          <style>{`
+            .reviews-scrollable {
+              overflow-y: auto;
+              scroll-behavior: smooth;
+              flex: 1;
+            }
+            
+            .reviews-scrollable::-webkit-scrollbar {
+              width: 6px;
+            }
+            
+            .reviews-scrollable::-webkit-scrollbar-thumb {
+              background-color: rgba(148, 163, 184, 0.6);
+              border-radius: 10px;
+            }
+            
+            .reviews-scrollable::-webkit-scrollbar-track {
+              background-color: rgba(0,0,0,0.05);
+              border-radius: 10px;
+            }
+          `}</style>
           {loading ?
           <div className="flex justify-center items-center py-12">
               <Loader2 className="w-8 h-8 text-slate-400 animate-spin" />
@@ -305,7 +326,7 @@ Rédige maintenant ton résumé façon "L'avis d'Antonin" en 3 phrases max.`;
               <p className="text-slate-600 text-sm">Aucun avis pour le moment</p>
             </div> :
 
-          <div className="space-y-4 max-h-[600px] overflow-y-auto pr-2">
+          <div className="space-y-4 reviews-scrollable pr-2">
               {sortedReviews.map((review) => {
               const avatarUrl = review.author_avatar && review.author_avatar !== 'letter' ? getAvatarUrl(review.author_avatar) : null;
 
