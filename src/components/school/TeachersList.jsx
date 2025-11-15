@@ -118,7 +118,7 @@ export default function TeachersList({ schoolId }) {
             <Loader2 className="w-8 h-8 text-slate-400 animate-spin" />
           </div> :
         filteredTeachers.length === 0 ?
-        <div className="py-40 text-center">
+        <div className="py-32 text-center">
             <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <Users className="w-8 h-8 text-slate-400" />
             </div>
