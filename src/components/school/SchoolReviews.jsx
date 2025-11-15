@@ -290,7 +290,7 @@ Rédige maintenant ton résumé façon "L'avis d'Antonin" en 3 phrases max.`;
               className="text-purple-600 hover:text-purple-700 hover:bg-purple-50">
 
                 <Sparkles className="w-4 h-4 mr-1" />
-                <span className="text-xs">Antonin 🤖</span>
+                <span className="text-xs">Ant's 🤖</span>
               </Button>
             }
           </div>
