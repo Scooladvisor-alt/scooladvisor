@@ -213,7 +213,7 @@ export default function SchoolReviews({ schoolId, user, onReload, onEditReview, 
         comment: r.comment
       }));
 
-      const prompt = `Tu es Ant's, une IA qui résume les avis des étudiants sur les profs et les établissements.
+      const prompt = `Tu es Antonin, une IA qui résume les avis des étudiants sur les profs et les établissements.
 
 Ton rôle : faire une synthèse courte, stylée et pleine de personnalité, comme si tu racontais ça à un pote, avec de l'humour, du bon sens et des images qui parlent.
 
@@ -254,7 +254,7 @@ ${JSON.stringify(reviewsSummary, null, 2)}
 
 IMPORTANT : Base-toi principalement sur les COMMENTAIRES des étudiants pour comprendre le ressenti réel. Les notes seules ne suffisent pas. Lis les commentaires pour saisir l'ambiance, les forces et les faiblesses de l'établissement.
 
-Rédige maintenant ton résumé façon "L'avis d'Ant's" en 3 phrases max.`;
+Rédige maintenant ton résumé façon "L'avis d'Antonin" en 3 phrases max.`;
 
       const result = await base44.integrations.Core.InvokeLLM({
         prompt: prompt,
@@ -264,7 +264,7 @@ Rédige maintenant ton résumé façon "L'avis d'Ant's" en 3 phrases max.`;
       setAntoninSummary(result);
     } catch (error) {
       console.error("Error calling Antonin:", error);
-      setAntoninSummary("Oups, Ant's a eu un bug ! Réessaie dans quelques instants 🤖");
+      setAntoninSummary("Oups, Antonin a eu un bug ! Réessaie dans quelques instants 🤖");
     } finally {
       setLoadingAntonin(false);
     }
@@ -290,7 +290,7 @@ Rédige maintenant ton résumé façon "L'avis d'Ant's" en 3 phrases max.`;
               className="text-purple-600 hover:text-purple-700 hover:bg-purple-50">
 
                 <Sparkles className="w-4 h-4 mr-1" />
-                <span className="text-xs">Ant's 🤖</span>
+                <span className="text-xs">Antonin 🤖</span>
               </Button>
             }
           </div>
