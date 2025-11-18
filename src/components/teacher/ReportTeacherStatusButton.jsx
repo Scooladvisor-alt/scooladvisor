@@ -35,7 +35,8 @@ export default function ReportTeacherStatusButton({ teacher, onUpdate }) {
         teacher_id: teacher.id,
         reporter_email: user.email,
         reason: "Ne fait plus partie de l'établissement",
-        status: "pending"
+        status: "pending",
+        teacher_name: teacher.name
       });
 
       // Incrémenter le compteur

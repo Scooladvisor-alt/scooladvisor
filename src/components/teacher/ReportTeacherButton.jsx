@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { TeacherStatusReport } from "@/entities/TeacherStatusReport";
 import { TeacherFraudReport } from "@/entities/TeacherFraudReport";
@@ -40,7 +39,8 @@ export default function ReportTeacherButton({ teacher, onUpdate }) {
           teacher_id: teacher.id,
           reporter_email: user.email,
           reason: "Ne fait plus partie de l'établissement",
-          status: "pending"
+          status: "pending",
+          teacher_name: teacher.name
         });
 
         const newCount = (teacher.status_report_count || 0) + 1;
@@ -75,7 +75,8 @@ export default function ReportTeacherButton({ teacher, onUpdate }) {
           teacher_id: teacher.id,
           reporter_email: user.email,
           reason: "Faux professeur",
-          status: "pending"
+          status: "pending",
+          teacher_name: teacher.name
         });
 
         // Compter le nombre total de signalements fraude
