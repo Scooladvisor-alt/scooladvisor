@@ -576,6 +576,7 @@ export default function AllReports({ onUpdate }) {
                   <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
                     <h4 className="font-semibold text-sm text-amber-900 mb-2">📋 Détails du signalement</h4>
                     <div className="space-y-2 text-sm">
+                      <p><span className="font-medium text-slate-700">Établissement signalé:</span> <span className="font-bold text-slate-900 text-base">{report.school_name || "Nom non disponible"}</span></p>
                       <p><span className="font-medium text-slate-700">Signalé par:</span> {report.reporter_email}</p>
                       <p><span className="font-medium text-slate-700">Raison:</span> <span className="font-semibold text-red-700">{report.reason}</span></p>
                       <p><span className="font-medium text-slate-700">Date:</span> {formatDateWithTimezone(report.created_date, "d MMM yyyy 'à' HH:mm")}</p>
