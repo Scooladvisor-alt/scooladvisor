@@ -31,6 +31,8 @@ import {
 "@/components/ui/dropdown-menu";
 import Footer from "./components/shared/Footer";
 import { motion, AnimatePresence } from "framer-motion";
+import WebViewDetector, { detectWebView } from "./components/shared/WebViewDetector";
+import WebViewBlocker from "./components/shared/WebViewBlocker";
 
 const BanDialog = ({ open, user }) => {
   const [showAppeal, setShowAppeal] = useState(false);
@@ -241,10 +243,39 @@ export default function Layout({ children }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [showBanDialog, setShowBanDialog] = useState(false);
   const [showLoginMessage, setShowLoginMessage] = useState(false);
+  const [showWebViewBlocker, setShowWebViewBlocker] = useState(false);
+  const [detectedApp, setDetectedApp] = useState("");
 
   useEffect(() => {
     loadUser();
+    checkWebView();
   }, []);
+
+  const checkWebView = () => {
+    // Vérifier le paramètre open_external
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('open_external') === 'true') {
+      setShowWebViewBlocker(false);
+      return;
+    }
+
+    // Détecter WebView
+    const isWebView = detectWebView();
+    if (isWebView) {
+      const ua = navigator.userAgent;
+      let appName = "l'application";
+      
+      if (ua.includes('Snapchat')) appName = "Snapchat";
+      else if (ua.includes('Instagram')) appName = "Instagram";
+      else if (ua.includes('TikTok')) appName = "TikTok";
+      else if (ua.includes('FBAN') || ua.includes('FBAV')) appName = "Facebook";
+      else if (ua.includes('LinkedInApp')) appName = "LinkedIn";
+      else if (ua.includes('Twitter')) appName = "Twitter/X";
+      
+      setDetectedApp(appName);
+      setShowWebViewBlocker(true);
+    }
+  };
 
   const loadUser = async () => {
     try {
@@ -278,6 +309,12 @@ export default function Layout({ children }) {
   };
 
   const handleLogin = async () => {
+    // Bloquer la connexion si en WebView
+    if (window.isInAppBrowser) {
+      setShowWebViewBlocker(true);
+      return;
+    }
+    
     try {
       const currentUrl = window.location.href;
       await base44.auth.redirectToLogin(currentUrl);
@@ -288,6 +325,10 @@ export default function Layout({ children }) {
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-slate-50 to-blue-50">
+      <WebViewDetector />
+      
+      {showWebViewBlocker && <WebViewBlocker appName={detectedApp} />}
+      
       <style>{`
         @media (min-width: 640px) {
           ::-webkit-scrollbar {
