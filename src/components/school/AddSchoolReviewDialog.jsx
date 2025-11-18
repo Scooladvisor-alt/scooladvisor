@@ -369,9 +369,9 @@ En cas de doute entre "critiquer" et "insulter", privilégie la sécurité et re
   };
 
   const criteria = [
-  { key: "ambiance", label: "Ambiance générale", icon: PartyPopper, color: "text-pink-600", description: "C'est la famille ?" },
+  { key: "ambiance", label: "Ambiance générale", icon: Heart, color: "text-pink-600", description: "C'est la famille ?" },
   { key: "staff_quality", label: "Qualité du personnel", icon: Users, color: "text-blue-600", description: "Administration, surveillants, professeurs, encadrement..." },
-  { key: "facilities", label: "Locaux", icon: Building2, color: "text-green-600", description: "Architecture, propreté, confort des espaces intérieurs et extérieurs, équipements sportifs et numériques." },
+  { key: "facilities", label: "Locaux", icon: Building2, color: "text-purple-600", description: "Architecture, propreté, confort des espaces intérieurs et extérieurs, équipements sportifs et numériques." },
   { key: "cafeteria", label: "Cantine / Restauration", icon: Utensils, color: "text-orange-600", description: "Qualité des repas, choix des menus, tarifs, confort de l'espace." }];
 
 

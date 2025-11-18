@@ -10,7 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Slider } from "@/components/ui/slider";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { AlertCircle, CheckCircle, Star, Heart, GraduationCap, FileText, BookOpen } from "lucide-react";
+import { AlertCircle, CheckCircle, Star, Heart, Brain, FileText, BookOpen } from "lucide-react";
 import { toast } from "sonner";
 
 export default function AddTeacherReviewDialog({ open, onOpenChange, teacherId, existingReview, setExistingReview, onSuccess }) {
@@ -463,7 +463,7 @@ En cas de doute entre "critiquer" et "insulter", privilégie la sécurité et re
             {/* Méthode d'enseignement */}
             <div className="bg-slate-50 rounded-lg p-3 sm:p-4 border border-slate-200">
               <div className="flex items-center gap-2 mb-1 sm:mb-2">
-                <GraduationCap className="w-4 h-4 sm:w-5 sm:h-5 text-purple-600" />
+                <Brain className="w-4 h-4 sm:w-5 sm:h-5 text-purple-600" />
                 <Label className="font-semibold text-xs sm:text-sm">Méthode d'enseignement</Label>
               </div>
               <p className="text-[10px] sm:text-xs text-slate-600 mb-2 sm:mb-3">Clarté, pédagogie, supports de cours</p>
