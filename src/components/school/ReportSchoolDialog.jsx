@@ -31,12 +31,17 @@ export default function ReportSchoolDialog({ open, onOpenChange, schoolId }) {
         return;
       }
 
+      // Récupérer le nom de l'établissement
+      const schools = await base44.entities.School.filter({ id: schoolId });
+      const schoolName = schools[0]?.name || "Établissement inconnu";
+
       await base44.entities.SchoolReport.create({
         school_id: schoolId,
         reporter_email: user.email,
         reason: reason,
         details: details,
-        status: "pending"
+        status: "pending",
+        school_name: schoolName
       });
 
       toast.success("Signalement enregistré. Un modérateur va l'examiner.");
