@@ -4,7 +4,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { CheckCircle, XCircle, AlertTriangle, Trash2, Loader2, ExternalLink, School as SchoolIcon } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { CheckCircle, XCircle, AlertTriangle, Trash2, Loader2, ExternalLink, School as SchoolIcon, Search } from "lucide-react";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 import { motion } from "framer-motion";
@@ -138,6 +139,7 @@ export default function AllReports({ onUpdate }) {
   const [teacherReports, setTeacherReports] = useState([]);
   const [schoolReports, setSchoolReports] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     loadAllReports();
@@ -289,19 +291,52 @@ export default function AllReports({ onUpdate }) {
     );
   }
 
+  const filteredTeacherReports = teacherReports.filter(report => {
+    if (!searchQuery) return true;
+    const query = searchQuery.toLowerCase();
+    return (
+      report.teacher_name?.toLowerCase().includes(query) ||
+      report.teacher_id?.toLowerCase().includes(query) ||
+      report.entity?.name?.toLowerCase().includes(query) ||
+      report.school?.name?.toLowerCase().includes(query)
+    );
+  });
+
+  const filteredSchoolReports = schoolReports.filter(report => {
+    if (!searchQuery) return true;
+    const query = searchQuery.toLowerCase();
+    return (
+      report.school_name?.toLowerCase().includes(query) ||
+      report.school_id?.toLowerCase().includes(query) ||
+      report.entity?.name?.toLowerCase().includes(query)
+    );
+  });
+
   return (
-    <Tabs defaultValue="reviews" className="space-y-4">
-      <TabsList className="grid w-full grid-cols-3">
-        <TabsTrigger value="reviews">
-          Avis ({reviewReports?.length || 0})
-        </TabsTrigger>
-        <TabsTrigger value="teachers">
-          Professeurs ({teacherReports?.length || 0})
-        </TabsTrigger>
-        <TabsTrigger value="schools">
-          Établissements ({schoolReports?.length || 0})
-        </TabsTrigger>
-      </TabsList>
+    <div className="space-y-4">
+      <div className="relative">
+        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-5 h-5" />
+        <Input
+          type="text"
+          placeholder="Rechercher par nom de professeur, établissement ou ID..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="pl-10 bg-white/90 backdrop-blur-sm border-slate-300 focus:border-blue-500 h-11"
+        />
+      </div>
+      
+      <Tabs defaultValue="reviews" className="space-y-4">
+        <TabsList className="grid w-full grid-cols-3">
+          <TabsTrigger value="reviews">
+            Avis ({reviewReports?.length || 0})
+          </TabsTrigger>
+          <TabsTrigger value="teachers">
+            Professeurs ({filteredTeacherReports?.length || 0})
+          </TabsTrigger>
+          <TabsTrigger value="schools">
+            Établissements ({filteredSchoolReports?.length || 0})
+          </TabsTrigger>
+        </TabsList>
 
       <TabsContent value="reviews" className="space-y-4">
         {(!reviewReports || reviewReports.length === 0) && <p className="text-center text-slate-500 py-4">Aucun signalement d'avis.</p>}
@@ -431,8 +466,8 @@ export default function AllReports({ onUpdate }) {
       </TabsContent>
 
       <TabsContent value="teachers" className="space-y-4">
-        {(!teacherReports || teacherReports.length === 0) && <p className="text-center text-slate-500 py-4">Aucun signalement de professeur.</p>}
-        {teacherReports && teacherReports.map((report, index) => (
+        {(!filteredTeacherReports || filteredTeacherReports.length === 0) && <p className="text-center text-slate-500 py-4">Aucun signalement de professeur.</p>}
+        {filteredTeacherReports && filteredTeacherReports.map((report, index) => (
           <motion.div
             key={report.id}
             initial={{ opacity: 0, y: 20 }}
@@ -450,6 +485,7 @@ export default function AllReports({ onUpdate }) {
                   <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
                     <h4 className="font-semibold text-sm text-amber-900 mb-2">📋 Détails du signalement</h4>
                     <div className="space-y-2 text-sm">
+                      <p><span className="font-medium text-slate-700">Professeur signalé:</span> <span className="font-bold text-slate-900 text-base">{report.teacher_name || "Nom non disponible"}</span></p>
                       <p><span className="font-medium text-slate-700">Signalé par:</span> {report.reporter_email}</p>
                       <p><span className="font-medium text-slate-700">Raison:</span> <span className="font-semibold text-orange-700">{report.reason}</span></p>
                       <p><span className="font-medium text-slate-700">Date:</span> {formatDateWithTimezone(report.created_date, "d MMM yyyy 'à' HH:mm")}</p>
@@ -521,8 +557,8 @@ export default function AllReports({ onUpdate }) {
       </TabsContent>
 
       <TabsContent value="schools" className="space-y-4">
-        {(!schoolReports || schoolReports.length === 0) && <p className="text-center text-slate-500 py-4">Aucun signalement d'établissement.</p>}
-        {schoolReports && schoolReports.map((report, index) => (
+        {(!filteredSchoolReports || filteredSchoolReports.length === 0) && <p className="text-center text-slate-500 py-4">Aucun signalement d'établissement.</p>}
+        {filteredSchoolReports && filteredSchoolReports.map((report, index) => (
           <motion.div
             key={report.id}
             initial={{ opacity: 0, y: 20 }}
@@ -604,5 +640,6 @@ export default function AllReports({ onUpdate }) {
         ))}
       </TabsContent>
     </Tabs>
+    </div>
   );
 }
