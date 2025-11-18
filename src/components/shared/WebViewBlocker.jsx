@@ -1,32 +1,29 @@
 import React from 'react';
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { AlertCircle, ExternalLink, Chrome, Globe } from "lucide-react";
 import { openInExternalBrowser } from "./WebViewDetector";
 
-export default function WebViewBlocker({ appName = "l'application" }) {
+export default function WebViewBlocker({ open, onOpenChange, appName = "l'application" }) {
   return (
-    <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
-      <Card className="max-w-md w-full bg-white shadow-2xl">
-        <CardHeader className="text-center border-b">
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="max-w-md">
+        <DialogHeader className="text-center">
           <div className="w-16 h-16 bg-gradient-to-br from-amber-400 to-orange-500 rounded-full flex items-center justify-center mx-auto mb-4">
             <AlertCircle className="w-8 h-8 text-white" />
           </div>
-          <CardTitle className="text-xl sm:text-2xl font-bold text-slate-900">
+          <DialogTitle className="text-xl sm:text-2xl font-bold text-slate-900">
             Action requise
-          </CardTitle>
-        </CardHeader>
+          </DialogTitle>
+        </DialogHeader>
         
-        <CardContent className="pt-6 space-y-6">
+        <div className="pt-4 space-y-6">
           <div className="space-y-3 text-center">
             <p className="text-slate-700 font-medium">
-              Vous utilisez Scooladvisor depuis {appName}
+              Pour vous connecter avec Google, vous devez ouvrir Scooladvisor dans votre navigateur (Safari ou Chrome).
             </p>
             <p className="text-sm text-slate-600 leading-relaxed">
-              Les applications comme Snapchat, TikTok ou Instagram ne permettent pas la connexion avec Google.
-            </p>
-            <p className="text-sm font-semibold text-blue-600">
-              Pour continuer, ouvrez le site dans votre navigateur.
+              Les applications comme {appName} ne permettent pas la connexion Google.
             </p>
           </div>
           
@@ -36,7 +33,7 @@ export default function WebViewBlocker({ appName = "l'application" }) {
               className="w-full h-12 text-base font-semibold bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-lg flex items-center justify-center gap-2"
             >
               <ExternalLink className="w-5 h-5" />
-              Ouvrir dans Safari / Chrome
+              Ouvrir dans le navigateur
             </Button>
             
             <div className="flex items-center justify-center gap-4 pt-2">
@@ -56,8 +53,8 @@ export default function WebViewBlocker({ appName = "l'application" }) {
               💡 <strong>Astuce :</strong> Dans la plupart des apps, appuyez sur les 3 points (⋯) puis "Ouvrir dans le navigateur"
             </p>
           </div>
-        </CardContent>
-      </Card>
-    </div>
+        </div>
+      </DialogContent>
+    </Dialog>
   );
 }
