@@ -10,7 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Slider } from "@/components/ui/slider";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { AlertCircle, CheckCircle, Star, PartyPopper, Users, Building2, Utensils } from "lucide-react";
+import { AlertCircle, CheckCircle, Star, Heart, Users, Building2, Utensils } from "lucide-react";
 
 export default function AddSchoolReviewDialog({ open, onOpenChange, schoolId, existingReview, onSuccess }) {
   const [loading, setLoading] = useState(false);
