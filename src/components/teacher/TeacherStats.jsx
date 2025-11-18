@@ -1,13 +1,13 @@
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { Briefcase, Smile, BookOpen, Target, TrendingUp } from "lucide-react";
+import { BookOpen, Heart, Brain, FileText, TrendingUp } from "lucide-react";
 
 const criteriaConfig = {
-  workload_avg: { label: "Charge de travail", icon: Briefcase, color: "bg-blue-500" },
-  friendliness_avg: { label: "Gentillesse", icon: Smile, color: "bg-green-500" },
-  teaching_avg: { label: "Qualité des cours", icon: BookOpen, color: "bg-purple-500" },
-  grading_avg: { label: "Notation", icon: Target, color: "bg-orange-500" }
+  workload_avg: { label: "Charge de travail", icon: BookOpen, color: "bg-blue-500" },
+  friendliness_avg: { label: "Gentillesse", icon: Heart, color: "bg-pink-500" },
+  teaching_avg: { label: "Qualité des cours", icon: Brain, color: "bg-purple-500" },
+  grading_avg: { label: "Notation", icon: FileText, color: "bg-orange-500" }
 };
 
 export default function TeacherStats({ teacher }) {
