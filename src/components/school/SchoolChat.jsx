@@ -464,7 +464,7 @@ Si la décision est "approved", la "reason" doit être null.`,
         }
       `}</style>
 
-      <div className="my-6 sm:my-8 p-3 sm:p-4 rounded-xl bg-gradient-to-br from-[#FF4D8D] via-purple-500 to-blue-500 shadow-lg cursor-pointer hover:shadow-xl transition-all hover:-translate-y-1 relative overflow-hidden"
+      <div className="my-6 sm:my-8 p-3 sm:p-4 rounded-xl bg-gradient-to-br from-[#FF4D8D] via-purple-500 to-blue-500 shadow-lg cursor-pointer hover:shadow-xl transition-all hover:-translate-y-1 relative overflow-hidden sticky bottom-4 z-10"
 
       onClick={() => setShowDialog(true)}>
 
