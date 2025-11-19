@@ -337,15 +337,15 @@ Rédige maintenant ton résumé façon "L'avis d'Antonin" en 3 phrases max.`;
               <p className="text-slate-600 text-sm">Aucun avis pour le moment</p>
             </div> :
 
-          <div className="space-y-4 reviews-scrollable pr-2">
-              {sortedReviews.map((review) => {
+          <div className="space-y-3 sm:space-y-4 reviews-scrollable pr-2 max-h-[400px] sm:max-h-none overflow-y-auto">
+              {sortedReviews.slice(0, 2).map((review) => {
               const avatarUrl = review.author_avatar && review.author_avatar !== 'letter' ? getAvatarUrl(review.author_avatar) : null;
 
               return (
-                <div key={review.id} className="p-4 rounded-lg border border-slate-200 bg-white space-y-3">
+                <div key={review.id} className="p-3 sm:p-4 rounded-lg border border-slate-200 bg-white space-y-2 sm:space-y-3">
                     <div className="flex items-start justify-between">
-                      <div className="flex items-center gap-3 flex-1">
-                        <Avatar className="w-10 h-10 border-2 border-slate-100">
+                      <div className="flex items-center gap-2 sm:gap-3 flex-1">
+                        <Avatar className="w-8 h-8 sm:w-10 sm:h-10 border-2 border-slate-100">
                           {!review.is_anonymous && avatarUrl ?
                         <AvatarImage src={avatarUrl} /> :
                         null}
@@ -356,47 +356,43 @@ Rédige maintenant ton résumé façon "L'avis d'Antonin" en 3 phrases max.`;
                         <div className="flex-1 min-w-0">
                           <div className="flex items-start justify-between gap-2">
                             <div className="flex-1 min-w-0">
-                              <p className="font-medium text-slate-900 text-sm">
+                              <p className="font-medium text-slate-900 text-xs sm:text-sm">
                                 {review.is_anonymous ? "Anonyme" : review.author_name || review.created_by?.split('@')[0] || "Utilisateur"}
                               </p>
-                              <p className="text-xs text-slate-500">
+                              <p className="text-[10px] sm:text-xs text-slate-500">
                                 {format(new Date(review.created_date), "d MMM yyyy", { locale: fr })}
                               </p>
                             </div>
 
                             {/* Note ultra simple - Mobile uniquement */}
-                            <div className="flex sm:hidden items-center gap-1 bg-gradient-to-br from-amber-50 to-amber-100 px-2 py-1 rounded-full border border-amber-200 relative overflow-hidden">
-                              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-shine"
-                            style={{ backgroundSize: '200% 100%' }}></div>
-                              <div className="relative z-10 flex items-center gap-1">
-                                <Star className="w-3 h-3 text-amber-600 fill-amber-600" />
-                                <span className="text-sm font-bold text-amber-900 leading-none">{review.rating.toFixed(1)}</span>
-                              </div>
+                            <div className="flex sm:hidden items-center gap-0.5 bg-gradient-to-br from-amber-50 to-amber-100 px-1.5 py-0.5 rounded-full border border-amber-200">
+                              <Star className="w-2.5 h-2.5 text-amber-600 fill-amber-600" />
+                              <span className="text-xs font-bold text-amber-900 leading-none">{review.rating.toFixed(1)}</span>
                             </div>
                           </div>
                         </div>
-                      </div>
+                        </div>
 
-                      {/* Note Desktop - garde l'ancien affichage */}
-                      <div className="hidden sm:flex items-center gap-1.5 bg-gradient-to-r from-amber-50 to-amber-100 px-2.5 py-1 rounded-full border border-amber-200">
+                        {/* Note Desktop - garde l'ancien affichage */}
+                        <div className="hidden sm:flex items-center gap-1.5 bg-gradient-to-r from-amber-50 to-amber-100 px-2.5 py-1 rounded-full border border-amber-200">
                         <Star className="w-3.5 h-3.5 text-amber-600 fill-amber-600" />
                         <span className="font-bold text-amber-900 text-sm">{review.rating.toFixed(1)}</span>
                         <span className="text-xs text-amber-700">/20</span>
-                      </div>
-                    </div>
+                        </div>
+                        </div>
 
                     {review.comment && (
-                      <div className="relative bg-slate-50 p-3 rounded-lg mb-3">
-                        <p className="text-sm text-slate-700 leading-relaxed pr-6">
+                      <div className="relative bg-slate-50 p-2 sm:p-3 rounded-lg mb-2 sm:mb-3">
+                        <p className="text-xs sm:text-sm text-slate-700 leading-relaxed pr-6">
                           {review.comment}
                         </p>
                         <button
                           onClick={() => toggleExpand(review.id)}
-                          className="absolute top-3 right-3 text-slate-400 hover:text-slate-600 transition-colors"
+                          className="absolute top-2 sm:top-3 right-2 sm:right-3 text-slate-400 hover:text-slate-600 transition-colors"
                           title={expandedReviews.has(review.id) ? "Masquer les détails" : "Voir les détails"}
                         >
                           <ChevronDown 
-                            className={`w-4 h-4 transition-transform duration-200 ${
+                            className={`w-3 h-3 sm:w-4 sm:h-4 transition-transform duration-200 ${
                               expandedReviews.has(review.id) ? 'rotate-180' : ''
                             }`}
                           />
@@ -405,13 +401,13 @@ Rédige maintenant ton résumé façon "L'avis d'Antonin" en 3 phrases max.`;
                     )}
 
                     {expandedReviews.has(review.id) && (
-                      <div className="mt-3 pt-3 border-t border-slate-100">
-                        <div className="flex gap-3 overflow-x-auto mb-4">
+                      <div className="mt-2 sm:mt-3 pt-2 sm:pt-3 border-t border-slate-100">
+                        <div className="flex gap-2 sm:gap-3 overflow-x-auto mb-2 sm:mb-4">
                           {Object.entries(criteriaIcons).map(([key, { icon: Icon, color }]) => (
-                            <div key={key} className="flex items-center gap-1 whitespace-nowrap">
-                              <Icon className={`w-3.5 h-3.5 ${color} flex-shrink-0`} />
-                              <span className="text-[11px] font-bold text-slate-900">{review[key]}</span>
-                              <span className="text-[10px] text-slate-500">/5</span>
+                            <div key={key} className="flex items-center gap-0.5 sm:gap-1 whitespace-nowrap">
+                              <Icon className={`w-3 h-3 sm:w-3.5 sm:h-3.5 ${color} flex-shrink-0`} />
+                              <span className="text-[10px] sm:text-[11px] font-bold text-slate-900">{review[key]}</span>
+                              <span className="text-[9px] sm:text-[10px] text-slate-500">/5</span>
                             </div>
                           ))}
                         </div>
