@@ -291,7 +291,7 @@ export default function AllReports({ onUpdate }) {
     );
   }
 
-  const filteredTeacherReports = teacherReports.filter(report => {
+  const filteredTeacherReports = (teacherReports || []).filter(report => {
     if (!searchQuery) return true;
     const query = searchQuery.toLowerCase();
     return (
@@ -302,7 +302,7 @@ export default function AllReports({ onUpdate }) {
     );
   });
 
-  const filteredSchoolReports = schoolReports.filter(report => {
+  const filteredSchoolReports = (schoolReports || []).filter(report => {
     if (!searchQuery) return true;
     const query = searchQuery.toLowerCase();
     return (
