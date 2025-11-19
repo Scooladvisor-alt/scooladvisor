@@ -261,8 +261,8 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
               <p className="text-sm text-slate-500 mt-2">Soyez le premier à noter ce professeur !</p>
             </div> :
 
-          <div className="space-y-6 max-h-[800px] overflow-y-auto pr-2">
-              {sortedReviews.map((review, index) => {
+          <div className="space-y-3 sm:space-y-6 max-h-[400px] sm:max-h-[800px] overflow-y-auto pr-2">
+              {sortedReviews.slice(0, 2).map((review, index) => {
               const reviewUser = reviewUsers[review.created_by];
               const userAvatar = reviewUser?.profile_avatar;
               const avatarUrl = userAvatar && userAvatar !== 'letter' ? getAvatarUrl(userAvatar) : null;
@@ -273,11 +273,11 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
-                  className="p-6 rounded-xl border border-slate-200 bg-white shadow-sm hover:shadow-md transition-shadow">
+                  className="p-3 sm:p-6 rounded-xl border border-slate-200 bg-white shadow-sm hover:shadow-md transition-shadow">
 
-                    <div className="flex flex-col sm:flex-row items-start justify-between mb-4 gap-3">
-                      <div className="flex items-start gap-3 flex-1 w-full">
-                        <Avatar className="w-12 h-12 border-2 border-slate-100 flex-shrink-0">
+                    <div className="flex flex-col sm:flex-row items-start justify-between mb-2 sm:mb-4 gap-2 sm:gap-3">
+                      <div className="flex items-start gap-2 sm:gap-3 flex-1 w-full">
+                        <Avatar className="w-8 h-8 sm:w-12 sm:h-12 border-2 border-slate-100 flex-shrink-0">
                           {!review.is_anonymous && avatarUrl ?
                         <AvatarImage src={avatarUrl} alt={`Avatar of ${reviewUser?.full_name || 'user'}`} /> :
                         null}
@@ -288,22 +288,18 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
                         <div className="flex-1 min-w-0 relative">
                           <div className="flex items-start justify-between gap-2">
                             <div className="flex-1 min-w-0">
-                              <p className="font-semibold text-slate-900 text-sm sm:text-base truncate">
+                              <p className="font-semibold text-slate-900 text-xs sm:text-base truncate">
                                 {review.is_anonymous ? "Étudiant anonyme" : reviewUser?.full_name || review.created_by?.split('@')[0] || "Étudiant"}
                               </p>
-                              <p className="text-xs text-slate-500">
+                              <p className="text-[10px] sm:text-xs text-slate-500">
                                 {formatDateWithTimezone(review.created_date, "d MMM yyyy")}
                               </p>
                             </div>
                             
                             {/* Note ultra simple - Mobile uniquement */}
-                            <div className="flex sm:hidden items-center gap-1 bg-gradient-to-br from-amber-50 to-amber-100 px-2 py-1 rounded-full border border-amber-200 relative overflow-hidden">
-                              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-shine"
-                            style={{ backgroundSize: '200% 100%' }}></div>
-                              <div className="relative z-10 flex items-center gap-1">
-                                <Star className="w-3 h-3 text-amber-600 fill-amber-600" />
-                                <span className="text-sm font-bold text-amber-900 leading-none">{(review.total_rating || 0).toFixed(1)}</span>
-                              </div>
+                            <div className="flex sm:hidden items-center gap-0.5 bg-gradient-to-br from-amber-50 to-amber-100 px-1.5 py-0.5 rounded-full border border-amber-200">
+                              <Star className="w-2.5 h-2.5 text-amber-600 fill-amber-600" />
+                              <span className="text-xs font-bold text-amber-900 leading-none">{(review.total_rating || 0).toFixed(1)}</span>
                             </div>
                           </div>
                         </div>
@@ -318,17 +314,17 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
                     </div>
 
                     {review.comment && (
-                      <div className="relative bg-slate-50 p-3 rounded-lg mb-3">
-                        <p className="text-sm text-slate-700 leading-relaxed pr-6">
+                      <div className="relative bg-slate-50 p-2 sm:p-3 rounded-lg mb-2 sm:mb-3">
+                        <p className="text-xs sm:text-sm text-slate-700 leading-relaxed pr-6">
                           {review.comment}
                         </p>
                         <button
                           onClick={() => toggleExpand(review.id)}
-                          className="absolute top-3 right-3 text-slate-400 hover:text-slate-600 transition-colors"
+                          className="absolute top-2 sm:top-3 right-2 sm:right-3 text-slate-400 hover:text-slate-600 transition-colors"
                           title={expandedReviews.has(review.id) ? "Masquer les détails" : "Voir les détails"}
                         >
                           <ChevronDown 
-                            className={`w-4 h-4 transition-transform duration-200 ${
+                            className={`w-3 h-3 sm:w-4 sm:h-4 transition-transform duration-200 ${
                               expandedReviews.has(review.id) ? 'rotate-180' : ''
                             }`}
                           />
@@ -337,57 +333,39 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
                     )}
 
                     {expandedReviews.has(review.id) && (
-                      <div className="mt-3 pt-3 border-t border-slate-100">
-                        <div className="flex gap-3 overflow-x-auto mb-4">
+                      <div className="mt-2 sm:mt-3 pt-2 sm:pt-3 border-t border-slate-100">
+                        <div className="flex gap-2 sm:gap-3 overflow-x-auto mb-2 sm:mb-4">
                           {Object.entries(criteriaIcons).map(([key, { icon: Icon, color }]) => (
-                            <div key={key} className="flex items-center gap-1 whitespace-nowrap">
-                              <Icon className={`w-3.5 h-3.5 ${color} flex-shrink-0`} />
-                              <span className="text-[11px] font-bold text-slate-900">{review[key]}</span>
-                              <span className="text-[10px] text-slate-500">/5</span>
+                            <div key={key} className="flex items-center gap-0.5 sm:gap-1 whitespace-nowrap">
+                              <Icon className={`w-3 h-3 sm:w-3.5 sm:h-3.5 ${color} flex-shrink-0`} />
+                              <span className="text-[10px] sm:text-[11px] font-bold text-slate-900">{review[key]}</span>
+                              <span className="text-[9px] sm:text-[10px] text-slate-500">/5</span>
                             </div>
                           ))}
                         </div>
                       </div>
                     )}
 
-                    <div className="flex flex-wrap items-center justify-between gap-2 pt-4 border-t border-slate-100">
-                      <div className="flex flex-wrap gap-2">
+                    <div className="flex items-center justify-between gap-1 sm:gap-2 pt-2 sm:pt-4 border-t border-slate-100">
+                      <div className="flex gap-1 flex-wrap">
                         {user && review.created_by === user.email &&
                       <>
                             <Button
                           variant="ghost"
-                          size="sm"
-                          onClick={() => onEditReview(review)}
-                          className="text-xs text-blue-600 hover:text-blue-700 hover:bg-blue-50 sm:flex hidden">
-
-                              <Edit className="w-3 h-3 mr-1" />
-                              Modifier mon avis
-                            </Button>
-                            <Button
-                          variant="ghost"
                           size="icon"
                           onClick={() => onEditReview(review)}
-                          className="text-blue-600 hover:text-blue-700 hover:bg-blue-50 sm:hidden h-8 w-8">
+                          className="text-blue-600 hover:text-blue-700 hover:bg-blue-50 h-6 w-6 sm:h-8 sm:w-8">
 
-                              <Edit className="w-4 h-4" />
+                              <Edit className="w-3 h-3 sm:w-4 sm:h-4" />
                             </Button>
                             
                             <Button
                           variant="ghost"
-                          size="sm"
-                          onClick={() => handleDelete(review.id)}
-                          className="text-xs text-red-600 hover:text-red-700 hover:bg-red-50 sm:flex hidden">
-
-                              <Trash2 className="w-3 h-3 mr-1" />
-                              Supprimer
-                            </Button>
-                            <Button
-                          variant="ghost"
                           size="icon"
                           onClick={() => handleDelete(review.id)}
-                          className="text-red-600 hover:text-red-700 hover:bg-red-50 sm:hidden h-8 w-8">
+                          className="text-red-600 hover:text-red-700 hover:bg-red-50 h-6 w-6 sm:h-8 sm:w-8">
 
-                              <Trash2 className="w-4 h-4" />
+                              <Trash2 className="w-3 h-3 sm:w-4 sm:h-4" />
                             </Button>
                           </>
                       }
@@ -396,29 +374,29 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
                         variant="ghost"
                         size="sm"
                         onClick={() => setReportingReview(review)}
-                        className="text-xs text-slate-500 hover:text-red-600">
+                        className="text-[10px] sm:text-xs text-slate-500 hover:text-red-600 h-6 sm:h-auto px-1.5 sm:px-2">
 
-                          <AlertCircle className="w-3 h-3 mr-1" />
-                          Signaler
+                          <AlertCircle className="w-2.5 h-2.5 sm:w-3 sm:h-3 sm:mr-1" />
+                          <span className="hidden sm:inline">Signaler</span>
+                        </Button>
+
+                        <Button
+                        variant={userLikes.has(review.id) ? "default" : "outline"}
+                        size="sm"
+                        onClick={() => handleLike(review)}
+                        disabled={likingReview === review.id}
+                        className={`flex items-center gap-1 sm:gap-2 transition-all h-6 sm:h-auto px-2 sm:px-3 ${
+                        userLikes.has(review.id) ?
+                        'bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 text-white hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90' :
+                        'hover:bg-blue-50'}`
+                        }>
+
+
+
+                          <ThumbsUp className={`w-2.5 h-2.5 sm:w-4 sm:h-4 ${userLikes.has(review.id) ? 'fill-current' : ''}`} />
+                          <span className="text-xs sm:text-sm">{getLikeCount(review)}</span>
                         </Button>
                       </div>
-
-                      <Button
-                      variant={userLikes.has(review.id) ? "default" : "outline"}
-                      size="sm"
-                      onClick={() => handleLike(review)}
-                      disabled={likingReview === review.id}
-                      className={`flex items-center gap-2 transition-all ${
-                      userLikes.has(review.id) ?
-                      'bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 text-white hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90' :
-                      'hover:bg-blue-50'}`
-                      }>
-
-
-
-                        <ThumbsUp className={`w-4 h-4 ${userLikes.has(review.id) ? 'fill-current' : ''}`} />
-                        <span>{getLikeCount(review)}</span>
-                      </Button>
                     </div>
                   </motion.div>);
 
