@@ -45,19 +45,28 @@ export default function TeacherLoveNotes({ teacherId, user }) {
     setSending(true);
 
     try {
-      // Modération positive stricte
+      // Modération positive élargie (accepte aussi le slang positif type "boss", "goat", etc.)
       const moderationResult = await base44.integrations.Core.InvokeLLM({
-        prompt: `Tu es un modérateur de bienveillance stricte.
-Analyse le message suivant destiné à un professeur : "${newMessage}"
+        prompt: `Tu es un modérateur pour une "boîte à mots doux" destinée à un professeur.
+Analyse le message suivant : "${newMessage}"
 
-Ta mission : Accepter UNIQUEMENT les messages positifs, gentils, encourageants, de remerciement ou d'amour.
-Tout ce qui est négatif, critique, insultant, neutre-froid, ou sarcastique doit être REJETÉ.
-C'est une boîte à "mots doux", pas une boîte à critiques.
+Ta mission : Accepter TOUT message positif, encourageant, de remerciement ou d'admiration.
+Tu dois accepter :
+- Les compliments classiques ("Merci pour tout", "Super prof")
+- L'argot positif et expressions de jeunes ("C'est le boss", "Le goat", "Masterclass", "Incroyable ce prof", "Une légende", "Dinguerie")
+- L'humour bienveillant
+
+Tu dois REJETER uniquement :
+- Les critiques (même constructives, ce n'est pas le lieu)
+- Les insultes ou méchancetés
+- Le sarcasme évident
+- Les messages neutres ou froids sans connotation positive
+- Le harcèlement
 
 Réponds uniquement par un JSON :
 {
   "decision": "approved" | "rejected",
-  "reason": "raison du rejet en une phrase courte et gentille" (null si approved)
+  "reason": "raison du rejet courte et claire" (null si approved)
 }`,
         response_json_schema: {
           type: "object",
@@ -70,7 +79,20 @@ Réponds uniquement par un JSON :
       });
 
       if (moderationResult.decision === 'rejected') {
-        toast.error(moderationResult.reason || "Oups ! Seuls les messages 100% positifs et bienveillants sont acceptés ici. ❤️");
+        toast.error(moderationResult.reason || "Ton message n'est pas assez positif pour cette boîte à mots doux !");
+        
+        // Notification de rejet
+        const violationCount = (user.violation_count || 0) + 1;
+        await base44.auth.updateMe({ violation_count: violationCount });
+
+        await base44.entities.Notification.create({
+          user_email: user.email,
+          title: "Message refusé",
+          message: `Ton petit mot a été refusé : ${moderationResult.reason || "Il ne respecte pas les critères de positivité."}`,
+          type: "report",
+          is_read: false
+        });
+
         setSending(false);
         return;
       }

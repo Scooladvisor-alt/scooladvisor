@@ -319,37 +319,12 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
           animate={{ opacity: 1, y: 0 }}
           className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-slate-200 overflow-hidden mb-8">
 
-          <div className="relative p-4 sm:p-8 overflow-hidden">
-            {/* Forme ronde fusionnée en background/widget pour Desktop */}
-            {hasRating && (
-              <div className="hidden md:block absolute -top-10 -right-10 w-96 h-96 bg-gradient-to-br from-amber-100 via-amber-50 to-transparent rounded-full opacity-80 note-widget border-4 border-white shadow-2xl flex items-center justify-center z-0">
-                 <div className="text-center mt-16 mr-16 transform rotate-6">
-                    <div className="flex items-center justify-center gap-2 mb-1">
-                      <Star className="w-8 h-8 text-amber-600 fill-amber-600 animate-pulse" />
-                      <span className="text-6xl font-extrabold text-amber-900 tracking-tighter" style={{ textShadow: '2px 2px 4px rgba(255,255,255,0.8)' }}>
-                        {teacher.average_rating.toFixed(1)}
-                      </span>
-                    </div>
-                    <p className="text-xl font-medium text-amber-800/80">sur 20</p>
-                    <div className="mt-2 inline-block px-4 py-1 rounded-full bg-white/60 backdrop-blur-sm border border-amber-200/50 shadow-sm">
-                        <p className="text-sm text-amber-900 font-semibold">{teacher.review_count} avis</p>
-                    </div>
-                 </div>
-              </div>
-            )}
-
-            {!hasRating && (
-               <div className="hidden md:block absolute -top-10 -right-10 w-80 h-80 bg-gradient-to-br from-slate-100 via-slate-50 to-transparent rounded-full opacity-60 border-4 border-white shadow-xl flex items-center justify-center z-0">
-                  <div className="text-center mt-12 mr-12">
-                    <Star className="w-12 h-12 text-slate-300 mx-auto mb-2" />
-                    <p className="text-lg text-slate-500 font-medium">Pas encore noté</p>
-                  </div>
-               </div>
-            )}
+          <div className="relative p-4 sm:p-8">
+            <div className="absolute top-0 right-0 w-72 h-72 bg-gradient-to-br from-purple-500/10 to-transparent rounded-bl-full" />
             
-            <div className="relative z-10">
+            <div className="relative">
               <div className="flex flex-col md:flex-row gap-4 sm:gap-6 items-start mb-6">
-                <div className="flex gap-3 sm:gap-6 items-start flex-1 w-full max-w-2xl">
+                <div className="flex gap-3 sm:gap-6 items-start flex-1 w-full">
                   <div className="relative">
                     <Avatar className="w-20 h-20 sm:w-32 sm:h-32 border-4 border-white shadow-lg flex-shrink-0">
                       <AvatarImage src={teacher.photo_url} />
@@ -369,7 +344,7 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
                     }
                   </div>
                   
-                  <div className="flex-1 min-w-0 pt-2">
+                  <div className="flex-1 min-w-0">
                     <h1 className="text-2xl sm:text-4xl font-bold text-slate-900 mb-2 break-words">{teacher.name}</h1>
                     <div className="flex items-center gap-2 text-sm sm:text-base text-slate-600">
                       <BookOpen className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
@@ -378,33 +353,40 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
                   </div>
                 </div>
 
-                {/* Version Mobile de la note (toujours compacte) */}
-                <div className="md:hidden w-full">
-                    {hasRating ? (
-                    <div className="bg-gradient-to-r from-amber-50 to-amber-100 rounded-xl p-4 border border-amber-200 flex items-center justify-between shadow-sm note-widget">
-                        <div className="flex items-center gap-3">
-                            <span className="text-3xl font-bold text-amber-900">{teacher.average_rating.toFixed(1)}</span>
-                            <div className="flex flex-col">
-                                <span className="text-xs text-amber-700 font-medium">Note globale</span>
-                                <div className="flex gap-0.5">
-                                    {[...Array(5)].map((_, i) => (
-                                        <Star key={i} className={`w-3 h-3 ${i < Math.round(teacher.average_rating / 4) ? "fill-amber-500 text-amber-500" : "fill-amber-200 text-amber-200"}`} />
-                                    ))}
-                                </div>
-                            </div>
-                        </div>
-                        <div className="text-right">
-                            <span className="text-sm font-bold text-amber-800 block">{teacher.review_count}</span>
-                            <span className="text-xs text-amber-600">avis</span>
-                        </div>
+                {hasRating ?
+                <motion.div
+                  key={teacher.average_rating}
+                  initial={{ scale: 1 }}
+                  animate={{ scale: [1, 1.05, 1] }}
+                  transition={{ duration: 0.3 }}
+                  className="relative bg-gradient-to-br from-amber-50 to-amber-100 rounded-xl border-2 border-amber-200 w-full sm:w-auto note-widget"
+                  style={{ boxShadow: '0 0 12px rgba(168,85,247,0.15)' }}>
+
+                    <div className="relative z-10 flex sm:hidden items-center justify-center gap-1.5 px-3 py-2 whitespace-nowrap">
+                      <Star className="w-4 h-4 text-amber-600 fill-amber-600" />
+                      <span className="text-lg font-bold text-amber-900">{teacher.average_rating.toFixed(1)}</span>
+                      <span className="text-xs text-amber-700">/ 20</span>
+                      <span className="text-xs text-amber-600 ml-1">•</span>
+                      <span className="text-sm font-semibold text-amber-800">{teacher.review_count} avis</span>
                     </div>
-                    ) : (
-                    <div className="bg-slate-50 rounded-xl p-4 border border-slate-200 flex items-center justify-center gap-3">
-                        <Star className="w-5 h-5 text-slate-400" />
-                        <p className="text-sm text-slate-600">Aucune note pour le moment</p>
+                    
+                    <div className="relative z-10 hidden sm:block text-center p-4 min-w-[120px]">
+                      <div className="flex items-center justify-center gap-1.5 mb-1">
+                        <Star className="w-5 h-5 text-amber-600 fill-amber-600" />
+                        <span className="text-3xl font-bold text-amber-900" style={{ textShadow: '0 0 8px rgba(168,85,247,0.3)' }}>
+                          {teacher.average_rating.toFixed(1)}
+                        </span>
+                      </div>
+                      <p className="text-xs font-medium text-amber-700">sur 20</p>
+                      <p className="text-xs text-amber-600 mt-0.5">{teacher.review_count} avis</p>
                     </div>
-                    )}
-                </div>
+                  </motion.div> :
+
+                <div className="bg-slate-50 rounded-xl p-3 sm:p-4 border-2 border-slate-200 text-center min-w-[100px] sm:min-w-[120px] w-full sm:w-auto">
+                    <Star className="w-5 h-5 sm:w-6 sm:h-6 text-slate-400 mx-auto mb-1" />
+                    <p className="text-xs text-slate-600">Pas encore noté</p>
+                  </div>
+                }
               </div>
 
               <div className="flex flex-col sm:flex-row flex-wrap gap-2 sm:gap-3">
