@@ -12,14 +12,14 @@ const criteriaConfig = {
 
 export default function TeacherStats({ teacher }) {
   return (
-    <Card className="bg-white/80 backdrop-blur-sm border-slate-200 shadow-lg lg:sticky lg:top-24 w-full">
+    <Card className="bg-white/80 backdrop-blur-sm border-slate-200 shadow-lg lg:sticky lg:top-24 w-full h-full flex flex-col">
       <CardHeader>
         <CardTitle className="flex items-center gap-2 text-lg sm:text-xl">
           <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 text-purple-600" />
           Statistiques détaillées
         </CardTitle>
       </CardHeader>
-      <CardContent className="space-y-4 sm:space-y-5">
+      <CardContent className="space-y-4 sm:space-y-5 flex-1 overflow-y-auto">
         {teacher.review_count > 0 ? (
           <>
             {Object.entries(criteriaConfig).map(([key, { label, icon: Icon, color }]) => {
