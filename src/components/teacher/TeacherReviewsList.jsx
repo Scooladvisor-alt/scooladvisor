@@ -240,14 +240,14 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
 
   return (
     <>
-      <Card className="bg-white/80 backdrop-blur-sm border-slate-200 shadow-lg">
+      <Card className="bg-white/80 backdrop-blur-sm border-slate-200 shadow-lg w-full h-full flex flex-col">
         <CardHeader>
           <CardTitle className="font-semibold tracking-tight flex items-center gap-2 text-xl">
             <MessageSquare className="w-6 h-6 text-purple-600" />
             Avis des étudiants 🍿 ({reviews.length})
           </CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="flex-1 overflow-hidden flex flex-col">
           {loading ?
           <div className="flex justify-center items-center h-48">
               <Loader2 className="w-8 h-8 text-slate-400 animate-spin" />
@@ -261,7 +261,13 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
               <p className="text-sm text-slate-500 mt-2">Soyez le premier à noter ce professeur !</p>
             </div> :
 
-          <div className="space-y-3 sm:space-y-6 max-h-[400px] sm:max-h-[800px] overflow-y-auto pr-2">
+          <div className="space-y-3 sm:space-y-6 flex-1 overflow-y-auto pr-2 custom-scrollbar">
+            <style>{`
+              .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+              .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+              .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+              .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+            `}</style>
               {sortedReviews.slice(0, 2).map((review, index) => {
               const reviewUser = reviewUsers[review.created_by];
               const userAvatar = reviewUser?.profile_avatar;

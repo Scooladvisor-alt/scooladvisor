@@ -458,8 +458,8 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
           </Suspense>
         </div>
 
-        <div className="hidden lg:grid lg:grid-cols-3 gap-6 sm:gap-8 items-stretch">
-          <div className="lg:col-span-2 h-[600px] flex flex-col">
+        <div className="hidden lg:grid lg:grid-cols-3 gap-6 sm:gap-8 items-start">
+          <div className="lg:col-span-2 h-[500px]">
             <Suspense fallback={<div className="p-4 bg-white rounded-lg shadow-md flex justify-center items-center h-full"><Loader2 className="w-8 h-8 animate-spin text-slate-400" /></div>}>
               <TeacherReviewsList
                 teacherId={teacherId}
@@ -470,7 +470,7 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
             </Suspense>
           </div>
 
-          <div className="h-[600px] flex flex-col">
+          <div className="h-[500px]">
              <Suspense fallback={<div className="p-4 bg-white rounded-lg shadow-md flex justify-center items-center h-full"><Loader2 className="w-8 h-8 animate-spin text-slate-400" /></div>}>
               <TeacherStats teacher={teacher} />
             </Suspense>
