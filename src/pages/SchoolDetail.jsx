@@ -14,6 +14,7 @@ const AddSchoolReviewDialog = lazy(() => import("../components/school/AddSchoolR
 const ReportSchoolDialog = lazy(() => import("../components/school/ReportSchoolDialog"));
 import SchoolChat from "../components/school/SchoolChat";
 import { toast } from "sonner";
+import SEO from "@/components/shared/SEO";
 
 export default function SchoolDetailPage() {
   const navigate = useNavigate();
@@ -159,6 +160,13 @@ export default function SchoolDetailPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-50">
+      {school && (
+        <SEO 
+          title={`${school.name} (${school.city}) - Avis et Classement | ScoolAdvisor`}
+          description={`Découvrez les avis authentiques des étudiants sur ${school.name} à ${school.city}. Note globale : ${school.average_rating ? school.average_rating.toFixed(1) : 'N/A'}/20.`}
+          canonicalPath={`/SchoolDetail?id=${school.id}`}
+        />
+      )}
       <style>{`
         @keyframes shine {
           0% { background-position: -200% center; }

@@ -24,6 +24,7 @@ import AddSchoolDialog from "../components/schools/AddSchoolDialog";
 import NationalChatWidget from "../components/shared/NationalChatWidget";
 import { useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/utils";
+import SEO from "@/components/shared/SEO";
 
 export default function SchoolsPage() {
   const navigate = useNavigate();
@@ -190,6 +191,11 @@ export default function SchoolsPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-50">
+      <SEO 
+        title="ScoolAdvisor - L'avis des étudiants sur leurs écoles et professeurs"
+        description="Recherchez votre établissement, consultez les avis des étudiants et notez vos professeurs. Le 1er site d'avis scolaires vérifiés."
+        canonicalPath="/"
+      />
       <style>{`
         @keyframes rotating-shine {
           0% { 

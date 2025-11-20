@@ -23,6 +23,7 @@ import {
 "@/components/ui/dialog";
 
 import ReportTeacherButton from "../components/teacher/ReportTeacherButton";
+import SEO from "@/components/shared/SEO";
 const AddTeacherReviewDialog = lazy(() => import("../components/teacher/AddTeacherReviewDialog"));
 const TeacherStats = lazy(() => import("../components/teacher/TeacherStats"));
 const TeacherReviewsList = lazy(() => import("../components/teacher/TeacherReviewsList"));
@@ -232,6 +233,13 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-purple-50 to-slate-50">
+      {teacher && (
+        <SEO 
+          title={`${teacher.name} - Avis Professeur ${teacher.subject} | ScoolAdvisor`}
+          description={`Lisez les avis des élèves sur ${teacher.name}, professeur de ${teacher.subject} ${school ? `à ${school.name}` : ''}. Charge de travail, pédagogie et ambiance.`}
+          canonicalPath={`/TeacherDetail?id=${teacher.id}`}
+        />
+      )}
       <style>{`
         @keyframes shine {
           0% { background-position: -200% center; }
