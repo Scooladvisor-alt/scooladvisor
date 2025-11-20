@@ -284,12 +284,15 @@ Rédige maintenant ton résumé façon "L'avis d'Antonin" en 3 phrases max.`;
 
   return (
     <>
-      <Card className="bg-white/80 backdrop-blur-sm border-slate-200 shadow-lg w-full h-auto lg:h-full flex flex-col">
-        <CardHeader>
+      <Card className="bg-white/90 backdrop-blur-md border-slate-200 shadow-xl w-full h-auto lg:h-full flex flex-col hover:shadow-2xl transition-shadow duration-300">
+        <CardHeader className="border-b border-slate-100 bg-gradient-to-r from-amber-50/50 to-transparent">
           <div className="flex items-center justify-between">
             <CardTitle className="flex items-center gap-2 text-lg sm:text-xl">
-              <MessageSquare className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600" />
-              Avis 🍿 ({reviews.length})
+              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-amber-500 to-orange-500 rounded-lg flex items-center justify-center shadow-md">
+                <MessageSquare className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+              </div>
+              <span className="text-base sm:text-2xl font-bold bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent">Avis 🍿</span>
+              <span className="text-sm sm:text-base text-slate-500 font-normal">({reviews.length})</span>
             </CardTitle>
             
             {reviews.length > 0 &&
@@ -332,9 +335,18 @@ Rédige maintenant ton résumé façon "L'avis d'Antonin" en 3 phrases max.`;
               <Loader2 className="w-8 h-8 text-slate-400 animate-spin" />
             </div> :
           sortedReviews.length === 0 ?
-          <div className="py-32 text-center">
-              <MessageSquare className="w-12 h-12 text-slate-300 mx-auto mb-3" />
-              <p className="text-slate-600 text-sm">Aucun avis pour le moment</p>
+          <div className="py-16 text-center flex flex-col items-center justify-center">
+              <div className="w-20 h-20 bg-gradient-to-br from-amber-100 to-orange-100 rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm">
+                <MessageSquare className="w-10 h-10 text-amber-600" />
+              </div>
+              <p className="text-slate-700 font-medium mb-2">Aucun avis pour le moment</p>
+              <p className="text-sm text-slate-500 mb-4 max-w-xs">
+                Partage ton expérience et aide les autres ! 💬
+              </p>
+              <Button className="bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 text-white shadow-md">
+                <Star className="w-4 h-4 mr-2" />
+                Laisser le premier avis
+              </Button>
             </div> :
 
           <div className="space-y-3 sm:space-y-4 reviews-scrollable pr-2 max-h-[400px] sm:max-h-none overflow-y-auto">

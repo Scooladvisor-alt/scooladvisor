@@ -62,7 +62,7 @@ export default function TeachersList({ schoolId }) {
   const hasMore = filteredTeachers.length > initialDisplayCount && !showAll;
 
   return (
-    <Card className="bg-white/80 backdrop-blur-sm border-slate-200 shadow-lg w-full h-auto lg:h-full flex flex-col">
+    <Card className="bg-white/90 backdrop-blur-md border-slate-200 shadow-xl w-full h-auto lg:h-full flex flex-col hover:shadow-2xl transition-shadow duration-300">
       <style>{`
         .teachers-list-scrollable {
           overflow-y: auto;
@@ -85,11 +85,14 @@ export default function TeachersList({ schoolId }) {
         }
       `}</style>
       
-      <CardHeader>
+      <CardHeader className="border-b border-slate-100 bg-gradient-to-r from-blue-50/50 to-transparent">
         <div className="flex items-center justify-between">
           <CardTitle className="flex items-center gap-2 text-xl sm:text-2xl">
-            <Users className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600" />
-            <span className="text-base sm:text-2xl">Professeurs ❤️ ({teachers.length})</span>
+            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-blue-500 to-purple-500 rounded-lg flex items-center justify-center shadow-md">
+              <Users className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+            </div>
+            <span className="text-base sm:text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Professeurs ❤️</span>
+            <span className="text-sm sm:text-base text-slate-500 font-normal">({teachers.length})</span>
           </CardTitle>
           <Button
             variant="ghost"
@@ -118,13 +121,24 @@ export default function TeachersList({ schoolId }) {
             <Loader2 className="w-8 h-8 text-slate-400 animate-spin" />
           </div> :
         filteredTeachers.length === 0 ?
-        <div className="py-24 text-center">
-            <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Users className="w-8 h-8 text-slate-400" />
+        <div className="py-16 text-center flex flex-col items-center justify-center">
+            <div className="w-20 h-20 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm">
+              <Users className="w-10 h-10 text-blue-600" />
             </div>
-            <p className="text-slate-600">
-              {searchQuery ? "Aucun professeur trouvé" : "Aucun professeur ajouté pour le moment"}
+            <p className="text-slate-700 font-medium mb-2">
+              {searchQuery ? "Aucun professeur trouvé" : "Aucun professeur pour le moment"}
             </p>
+            {!searchQuery && (
+              <>
+                <p className="text-sm text-slate-500 mb-4 max-w-xs">
+                  Sois le premier à ajouter les profs de cet établissement ! 🚀
+                </p>
+                <Button className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white shadow-md">
+                  <Users className="w-4 h-4 mr-2" />
+                  Ajouter le premier prof
+                </Button>
+              </>
+            )}
           </div> :
 
         <>
