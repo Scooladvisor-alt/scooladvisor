@@ -28,7 +28,7 @@ const getAvatarUrl = (avatar) => {
   return avatarUrls[avatar] || "";
 };
 
-export default function SchoolReviews({ schoolId, user, onReload, onEditReview, canModerate }) {
+export default function SchoolReviews({ schoolId, user, onReload, onEditReview, canModerate, onAddReview }) {
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [reportingReview, setReportingReview] = React.useState(null);
@@ -285,13 +285,16 @@ Rédige maintenant ton résumé façon "L'avis d'Antonin" en 3 phrases max.`;
   return (
     <>
       <Card className="bg-white/90 backdrop-blur-md border-slate-200 shadow-xl w-full h-auto lg:h-full flex flex-col hover:shadow-2xl transition-shadow duration-300">
-        <CardHeader className="border-b border-slate-100 bg-gradient-to-r from-amber-50/50 to-transparent">
+        <CardHeader className="border-b border-slate-100 bg-gradient-to-r from-yellow-400/10 via-yellow-500/10 to-amber-500/10">
           <div className="flex items-center justify-between">
             <CardTitle className="flex items-center gap-2 text-lg sm:text-xl">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-amber-500 to-orange-500 rounded-lg flex items-center justify-center shadow-md">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-yellow-400 via-yellow-500 to-amber-500 rounded-lg flex items-center justify-center shadow-md">
                 <MessageSquare className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
               </div>
-              <span className="text-base sm:text-2xl font-bold bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent">Avis 🍿</span>
+              <div className="flex items-center gap-1">
+                <span className="text-base sm:text-2xl font-bold bg-gradient-to-r from-yellow-600 via-amber-600 to-orange-600 bg-clip-text text-transparent">Avis</span>
+                <span className="text-base sm:text-2xl">🍿</span>
+              </div>
               <span className="text-sm sm:text-base text-slate-500 font-normal">({reviews.length})</span>
             </CardTitle>
             
@@ -343,7 +346,7 @@ Rédige maintenant ton résumé façon "L'avis d'Antonin" en 3 phrases max.`;
               <p className="text-sm text-slate-500 mb-4 max-w-xs">
                 Partage ton expérience et aide les autres ! 💬
               </p>
-              <Button className="bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 text-white shadow-md">
+              <Button onClick={onAddReview} className="bg-gradient-to-r from-yellow-400 via-yellow-500 to-amber-500 hover:from-yellow-500 hover:via-yellow-600 hover:to-amber-600 text-white shadow-md">
                 <Star className="w-4 h-4 mr-2" />
                 Laisser le premier avis
               </Button>

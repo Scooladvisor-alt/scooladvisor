@@ -372,12 +372,11 @@ export default function SchoolDetailPage() {
                       base44.auth.redirectToLogin(window.location.href);
                       return;
                     }
-                    setShowAddReview(true);
-                  }}
-                  className="bg-gradient-to-r from-yellow-400 via-yellow-500 to-amber-500 hover:from-yellow-500 hover:via-yellow-600 hover:to-amber-600 text-white shadow-lg w-full sm:flex-1 h-11 order-2 sm:order-1">
-
-                  <Star className="w-4 h-4 mr-2" />
-                  Noter l'établissement
+                    setShowAddTeacher(true);
+                  }} 
+                  className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-white shadow-lg w-full sm:flex-1 h-11">
+                  <Plus className="w-4 h-4 mr-2 text-white" />
+                  Ajouter un professeur
                 </Button>
 
                 <Button
@@ -386,12 +385,11 @@ export default function SchoolDetailPage() {
                       base44.auth.redirectToLogin(window.location.href);
                       return;
                     }
-                    setShowAddTeacher(true);
-                  }} className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-primary hover:bg-primary/90 px-4 py-2 bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-white w-full sm:flex-1 h-11 shadow-md order-1 sm:order-2">
-
-
-                  <Plus className="w-4 h-4 mr-2 text-white" />
-                  Ajouter un professeur
+                    setShowAddReview(true);
+                  }}
+                  className="bg-gradient-to-r from-yellow-400 via-yellow-500 to-amber-500 hover:from-yellow-500 hover:via-yellow-600 hover:to-amber-600 text-white shadow-lg w-full sm:flex-1 h-11">
+                  <Star className="w-4 h-4 mr-2" />
+                  Noter l'établissement
                 </Button>
               </div>
               
@@ -407,7 +405,16 @@ export default function SchoolDetailPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 items-center justify-items-center">
           <div className="w-full max-h-[600px] lg:h-[500px] flex flex-col">
             <Suspense fallback={<div className="p-4 bg-white rounded-lg shadow-md flex justify-center items-center h-full"><Loader2 className="w-8 h-8 animate-spin text-slate-400" /></div>}>
-              <TeachersList schoolId={schoolId} />
+              <TeachersList 
+                schoolId={schoolId} 
+                onAddTeacher={() => {
+                  if (!user) {
+                    base44.auth.redirectToLogin(window.location.href);
+                    return;
+                  }
+                  setShowAddTeacher(true);
+                }}
+              />
             </Suspense>
           </div>
 
@@ -421,7 +428,15 @@ export default function SchoolDetailPage() {
                   loadData();
                 }}
                 onEditReview={handleEditReview}
-                canModerate={canModerate} />
+                canModerate={canModerate}
+                onAddReview={() => {
+                  if (!user) {
+                    base44.auth.redirectToLogin(window.location.href);
+                    return;
+                  }
+                  setShowAddReview(true);
+                }}
+              />
 
             </Suspense>
           </div>

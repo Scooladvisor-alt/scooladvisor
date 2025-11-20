@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input";
 import { motion } from "framer-motion";
 import { base44 } from "@/api/base44Client";
 
-export default function TeachersList({ schoolId }) {
+export default function TeachersList({ schoolId, onAddTeacher }) {
   const [teachers, setTeachers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showAll, setShowAll] = useState(false);
@@ -85,13 +85,16 @@ export default function TeachersList({ schoolId }) {
         }
       `}</style>
       
-      <CardHeader className="border-b border-slate-100 bg-gradient-to-r from-blue-50/50 to-transparent">
+      <CardHeader className="border-b border-slate-100 bg-gradient-to-r from-[#FF4D8D]/10 via-purple-500/10 to-blue-500/10">
         <div className="flex items-center justify-between">
           <CardTitle className="flex items-center gap-2 text-xl sm:text-2xl">
-            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-blue-500 to-purple-500 rounded-lg flex items-center justify-center shadow-md">
+            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-[#FF4D8D] via-purple-500 to-blue-500 rounded-lg flex items-center justify-center shadow-md">
               <Users className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
             </div>
-            <span className="text-base sm:text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Professeurs ❤️</span>
+            <div className="flex items-center gap-1">
+              <span className="text-base sm:text-2xl font-bold bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">Professeurs</span>
+              <span className="text-base sm:text-2xl">❤️</span>
+            </div>
             <span className="text-sm sm:text-base text-slate-500 font-normal">({teachers.length})</span>
           </CardTitle>
           <Button
@@ -133,7 +136,7 @@ export default function TeachersList({ schoolId }) {
                 <p className="text-sm text-slate-500 mb-4 max-w-xs">
                   Sois le premier à ajouter les profs de cet établissement ! 🚀
                 </p>
-                <Button className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white shadow-md">
+                <Button onClick={onAddTeacher} className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-white shadow-md">
                   <Users className="w-4 h-4 mr-2" />
                   Ajouter le premier prof
                 </Button>
