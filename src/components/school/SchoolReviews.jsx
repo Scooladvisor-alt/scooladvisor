@@ -284,13 +284,20 @@ Rédige maintenant ton résumé façon "L'avis d'Antonin" en 3 phrases max.`;
 
   return (
     <>
+      <svg width="0" height="0" className="absolute">
+        <defs>
+          <linearGradient id="reviewGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#FACC15" />
+            <stop offset="50%" stopColor="#EAB308" />
+            <stop offset="100%" stopColor="#F59E0B" />
+          </linearGradient>
+        </defs>
+      </svg>
       <Card className="bg-white/90 backdrop-blur-md border-slate-200 shadow-xl w-full h-auto lg:h-full flex flex-col hover:shadow-2xl transition-shadow duration-300">
-        <CardHeader className="border-b border-slate-100 bg-gradient-to-r from-yellow-400/10 via-yellow-500/10 to-amber-500/10">
+        <CardHeader className="border-b border-slate-100 bg-gradient-to-r from-yellow-400/10 via-yellow-500/10 to-amber-500/10 mb-2">
           <div className="flex items-center justify-between">
-            <CardTitle className="flex items-center gap-2 text-lg sm:text-xl">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-yellow-400 via-yellow-500 to-amber-500 rounded-lg flex items-center justify-center shadow-md">
-                <MessageSquare className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
-              </div>
+            <CardTitle className="flex items-center gap-3 text-lg sm:text-xl">
+              <MessageSquare className="w-6 h-6 sm:w-8 sm:h-8" style={{ stroke: "url(#reviewGradient)" }} />
               <div className="flex items-center gap-1">
                 <span className="text-base sm:text-2xl font-bold bg-gradient-to-r from-yellow-600 via-amber-600 to-orange-600 bg-clip-text text-transparent">Avis</span>
                 <span className="text-base sm:text-2xl">🍿</span>
@@ -311,7 +318,7 @@ Rédige maintenant ton résumé façon "L'avis d'Antonin" en 3 phrases max.`;
             }
           </div>
         </CardHeader>
-        <CardContent className="flex-1 flex flex-col overflow-hidden">
+        <CardContent className="flex-1 flex flex-col overflow-hidden pt-4 gap-4">
           <style>{`
             .reviews-scrollable {
               overflow-y: auto;
@@ -417,12 +424,17 @@ Rédige maintenant ton résumé façon "L'avis d'Antonin" en 3 phrases max.`;
 
                     {expandedReviews.has(review.id) && (
                       <div className="mt-2 sm:mt-3 pt-2 sm:pt-3 border-t border-slate-100">
-                        <div className="flex gap-2 sm:gap-3 overflow-x-auto mb-2 sm:mb-4">
+                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 w-full pt-2 pb-2">
                           {Object.entries(criteriaIcons).map(([key, { icon: Icon, color }]) => (
-                            <div key={key} className="flex items-center gap-0.5 sm:gap-1 whitespace-nowrap">
-                              <Icon className={`w-3 h-3 sm:w-3.5 sm:h-3.5 ${color} flex-shrink-0`} />
-                              <span className="text-[10px] sm:text-[11px] font-bold text-slate-900">{review[key]}</span>
-                              <span className="text-[9px] sm:text-[10px] text-slate-500">/5</span>
+                            <div key={key} className="flex flex-col items-center justify-center gap-1 p-2 rounded-lg bg-slate-50 border border-slate-100">
+                              <div className="flex items-center gap-1.5">
+                                <Icon className={`w-4 h-4 ${color}`} />
+                                <span className="text-xs font-semibold text-slate-700">{criteriaIcons[key].label}</span>
+                              </div>
+                              <div className="flex items-baseline gap-0.5">
+                                <span className="text-sm font-bold text-slate-900">{review[key]}</span>
+                                <span className="text-[10px] text-slate-500">/5</span>
+                              </div>
                             </div>
                           ))}
                         </div>

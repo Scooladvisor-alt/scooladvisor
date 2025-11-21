@@ -62,6 +62,16 @@ export default function TeachersList({ schoolId, onAddTeacher }) {
   const hasMore = filteredTeachers.length > initialDisplayCount && !showAll;
 
   return (
+    <>
+    <svg width="0" height="0" className="absolute">
+      <defs>
+        <linearGradient id="teacherGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stopColor="#FF4D8D" />
+          <stop offset="50%" stopColor="#A855F7" />
+          <stop offset="100%" stopColor="#3B82F6" />
+        </linearGradient>
+      </defs>
+    </svg>
     <Card className="bg-white/90 backdrop-blur-md border-slate-200 shadow-xl w-full h-auto lg:h-full flex flex-col hover:shadow-2xl transition-shadow duration-300">
       <style>{`
         .teachers-list-scrollable {
@@ -85,12 +95,10 @@ export default function TeachersList({ schoolId, onAddTeacher }) {
         }
       `}</style>
       
-      <CardHeader className="border-b border-slate-100 bg-gradient-to-r from-[#FF4D8D]/10 via-purple-500/10 to-blue-500/10">
+      <CardHeader className="border-b border-slate-100 bg-gradient-to-r from-[#FF4D8D]/10 via-purple-500/10 to-blue-500/10 mb-2">
         <div className="flex items-center justify-between">
-          <CardTitle className="flex items-center gap-2 text-xl sm:text-2xl">
-            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-[#FF4D8D] via-purple-500 to-blue-500 rounded-lg flex items-center justify-center shadow-md">
-              <Users className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
-            </div>
+          <CardTitle className="flex items-center gap-3 text-xl sm:text-2xl">
+            <Users className="w-6 h-6 sm:w-8 sm:h-8" style={{ stroke: "url(#teacherGradient)" }} />
             <div className="flex items-center gap-1">
               <span className="text-base sm:text-2xl font-bold bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">Professeurs</span>
               <span className="text-base sm:text-2xl">❤️</span>
@@ -118,7 +126,7 @@ export default function TeachersList({ schoolId, onAddTeacher }) {
           </div>
         }
       </CardHeader>
-      <CardContent className="flex-1 flex flex-col overflow-hidden">
+      <CardContent className="flex-1 flex flex-col overflow-hidden pt-4 gap-4">
         {loading ?
         <div className="flex justify-center items-center py-12">
             <Loader2 className="w-8 h-8 text-slate-400 animate-spin" />
