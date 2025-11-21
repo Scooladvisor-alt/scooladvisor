@@ -23,6 +23,8 @@ export default function AddSchoolReviewDialog({ open, onOpenChange, schoolId, ex
     facilities: 2.5,
     cafeteria: 2.5,
     student_life_bonus: 0,
+    has_student_life: false,
+    has_network: false,
     comment: "",
     is_anonymous: false,
     certification: false
@@ -59,6 +61,8 @@ export default function AddSchoolReviewDialog({ open, onOpenChange, schoolId, ex
             facilities: existingReview.facilities,
             cafeteria: existingReview.cafeteria,
             student_life_bonus: existingReview.student_life_bonus || 0,
+            has_student_life: existingReview.has_student_life || false,
+            has_network: existingReview.has_network || false,
             comment: existingReview.comment,
             is_anonymous: existingReview.is_anonymous,
             certification: true
@@ -71,6 +75,8 @@ export default function AddSchoolReviewDialog({ open, onOpenChange, schoolId, ex
           facilities: 2.5,
           cafeteria: 2.5,
           student_life_bonus: 0,
+          has_student_life: false,
+          has_network: false,
           comment: "",
           is_anonymous: false,
           certification: false
@@ -103,10 +109,11 @@ export default function AddSchoolReviewDialog({ open, onOpenChange, schoolId, ex
   };
 
   const calculateTotalRating = (data) => {
-    const { ambiance, staff_quality, facilities, cafeteria, student_life_bonus } = data;
+    const { ambiance, staff_quality, facilities, cafeteria, has_student_life, has_network } = data;
 
     if (school && (school.type === 'ecole_commerce' || school.type === 'universite' || school.type === 'ecole_ingenieur')) {
-      return ambiance + staff_quality + facilities + cafeteria + (student_life_bonus || 0);
+      const bonus = (has_student_life ? 1 : 0) + (has_network ? 1 : 0);
+      return ambiance + staff_quality + facilities + cafeteria + bonus;
     }
 
     return ambiance + staff_quality + facilities + cafeteria;
@@ -114,7 +121,7 @@ export default function AddSchoolReviewDialog({ open, onOpenChange, schoolId, ex
 
   const getMaxRating = () => {
     if (school && (school.type === 'ecole_commerce' || school.type === 'universite' || school.type === 'ecole_ingenieur')) {
-      return 25;
+      return 22;
     }
     return 20;
   };
@@ -270,7 +277,9 @@ En cas de doute entre "critiquer" et "insulter", privilégie la sécurité et re
           staff_quality: formData.staff_quality,
           facilities: formData.facilities,
           cafeteria: formData.cafeteria,
-          student_life_bonus: formData.student_life_bonus || 0,
+          student_life_bonus: (formData.has_student_life ? 1 : 0) + (formData.has_network ? 1 : 0),
+          has_student_life: formData.has_student_life,
+          has_network: formData.has_network,
           rating: totalRating,
           comment: formData.comment,
           is_anonymous: formData.is_anonymous,
@@ -323,7 +332,9 @@ En cas de doute entre "critiquer" et "insulter", privilégie la sécurité et re
           staff_quality: formData.staff_quality,
           facilities: formData.facilities,
           cafeteria: formData.cafeteria,
-          student_life_bonus: formData.student_life_bonus || 0,
+          student_life_bonus: (formData.has_student_life ? 1 : 0) + (formData.has_network ? 1 : 0),
+          has_student_life: formData.has_student_life,
+          has_network: formData.has_network,
           rating: totalRating,
           comment: formData.comment,
           is_anonymous: formData.is_anonymous,
@@ -369,10 +380,10 @@ En cas de doute entre "critiquer" et "insulter", privilégie la sécurité et re
   };
 
   const criteria = [
-  { key: "ambiance", label: "Ambiance générale", icon: Heart, color: "text-pink-600", description: "C'est la famille ?" },
-  { key: "staff_quality", label: "Qualité du personnel", icon: Users, color: "text-blue-600", description: "Administration, surveillants, professeurs, encadrement..." },
-  { key: "facilities", label: "Locaux", icon: Building2, color: "text-purple-600", description: "Architecture, propreté, confort des espaces intérieurs et extérieurs, équipements sportifs et numériques." },
-  { key: "cafeteria", label: "Cantine / Restauration", icon: Utensils, color: "text-orange-600", description: "Qualité des repas, choix des menus, tarifs, confort de l'espace." }];
+  { key: "ambiance", label: "Ambiance générale", icon: Heart, color: "text-pink-600", description: "C'est la famille ?", gradient: "bg-gradient-to-r from-pink-50 to-rose-100" },
+  { key: "staff_quality", label: "Qualité du personnel", icon: Users, color: "text-blue-600", description: "Administration, surveillants, professeurs, encadrement...", gradient: "bg-gradient-to-r from-blue-50 to-cyan-100" },
+  { key: "facilities", label: "Locaux", icon: Building2, color: "text-purple-600", description: "Architecture, propreté, confort des espaces intérieurs et extérieurs, équipements sportifs et numériques.", gradient: "bg-gradient-to-r from-purple-50 to-indigo-100" },
+  { key: "cafeteria", label: "Cantine / Restauration", icon: Utensils, color: "text-orange-600", description: "Qualité des repas, choix des menus, tarifs, confort de l'espace.", gradient: "bg-gradient-to-r from-orange-50 to-amber-100" }];
 
 
   const showStudentLifeBonus = school && (school.type === 'ecole_commerce' || school.type === 'universite' || school.type === 'ecole_ingenieur');
@@ -412,53 +423,89 @@ En cas de doute entre "critiquer" et "insulter", privilégie la sécurité et re
 
         <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
           <div className="space-y-3 sm:space-y-5">
-            {criteria.map(({ key, label, icon: Icon, color, description }) =>
-            <div key={key} className="bg-slate-50 rounded-lg p-3 sm:p-4 border border-slate-200">
-                <div className="flex items-center gap-2 mb-1 sm:mb-2">
-                  <Icon className={`w-4 h-4 sm:w-5 sm:h-5 ${color}`} />
-                  <Label className="font-semibold text-xs sm:text-sm">{label}</Label>
-                </div>
-                <p className="text-[10px] sm:text-xs text-slate-600 mb-2 sm:mb-3">{description}</p>
-                <div className="flex items-center gap-3 sm:gap-4">
-                  <Slider
-                  value={[formData[key]]}
-                  onValueChange={([value]) => setFormData({ ...formData, [key]: value })}
-                  min={0}
-                  max={5}
-                  step={0.5}
-                  className="flex-1"
-                  disabled={!canEdit} />
+            {criteria.map(({ key, label, icon: Icon, color, description, gradient }) => {
+              const isMax = formData[key] === 5;
+              return (
+                <div 
+                  key={key} 
+                  className={`rounded-lg p-3 sm:p-4 border border-slate-200 transition-all duration-500 ${
+                    isMax ? gradient : 'bg-slate-50'
+                  }`}
+                >
+                  <div className="flex items-center gap-2 mb-1 sm:mb-2">
+                    <Icon className={`w-4 h-4 sm:w-5 sm:h-5 ${color}`} />
+                    <Label className="font-semibold text-xs sm:text-sm">{label}</Label>
+                  </div>
+                  <p className="text-[10px] sm:text-xs text-slate-600 mb-2 sm:mb-3">{description}</p>
+                  <div className="flex items-center gap-3 sm:gap-4">
+                    <Slider
+                      value={[formData[key]]}
+                      onValueChange={([value]) => setFormData({ ...formData, [key]: value })}
+                      min={0}
+                      max={5}
+                      step={0.5}
+                      className="flex-1"
+                      disabled={!canEdit} 
+                    />
 
-                  <div className="flex items-center gap-1 bg-white px-2 py-1 sm:px-3 sm:py-1.5 rounded-lg border border-slate-200 min-w-[50px] sm:min-w-[60px] justify-center">
-                    <span className="text-base sm:text-xl font-bold text-slate-900">{formData[key].toFixed(1)}</span>
-                    <span className="text-[10px] sm:text-sm text-slate-500">/5</span>
+                    <div className={`flex items-center gap-1 px-2 py-1 sm:px-3 sm:py-1.5 rounded-lg border min-w-[50px] sm:min-w-[60px] justify-center transition-colors duration-300 ${isMax ? 'bg-white/80 border-transparent shadow-sm' : 'bg-white border-slate-200'}`}>
+                      <span className={`text-base sm:text-xl font-bold transition-colors ${isMax ? 'text-slate-900' : 'text-slate-900'}`}>{formData[key].toFixed(1)}</span>
+                      <span className="text-[10px] sm:text-sm text-slate-500">/5</span>
+                    </div>
                   </div>
                 </div>
-              </div>
-            )}
+              );
+            })}
 
             {showStudentLifeBonus &&
-            <div className="bg-gradient-to-r from-purple-50 to-blue-50 rounded-lg p-3 sm:p-4 border-2 border-purple-200">
-                <div className="flex items-center gap-2 mb-1 sm:mb-2">
-                  <Star className="w-4 h-4 sm:w-5 sm:h-5 text-purple-600" />
-                  <Label className="font-semibold text-xs sm:text-sm text-purple-900">Bonus Vie Associative</Label>
+            <div className="relative overflow-hidden bg-slate-50/50 rounded-lg p-3 sm:p-4 border border-slate-200">
+                {(formData.has_student_life || formData.has_network) && (
+                  <>
+                    {[...Array(8)].map((_, i) => (
+                      <div
+                        key={i}
+                        className="absolute animate-ping"
+                        style={{
+                          top: `${Math.random() * 80 + 10}%`,
+                          left: `${Math.random() * 90 + 5}%`,
+                          animationDuration: `${Math.random() * 1.5 + 0.5}s`,
+                          animationDelay: `${Math.random() * 1}s`
+                        }}
+                      >
+                        <Star className="w-2 h-2 text-yellow-400 fill-yellow-400" />
+                      </div>
+                    ))}
+                  </>
+                )}
+                
+                <div className="flex items-center gap-2 mb-2 sm:mb-3 relative z-10">
+                  <Star className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-500 fill-yellow-500" />
+                  <Label className="font-semibold text-xs sm:text-sm text-slate-700">Bonus Établissement (Max +2)</Label>
                 </div>
-                <p className="text-[10px] sm:text-xs text-purple-700 mb-2 sm:mb-3">
-                  BDE, clubs, événements, associations étudiantes...
-                </p>
-                <div className="flex items-center gap-3 sm:gap-4">
-                  <Slider
-                  value={[formData.student_life_bonus]}
-                  onValueChange={([value]) => setFormData({ ...formData, student_life_bonus: value })}
-                  min={0}
-                  max={5}
-                  step={0.5}
-                  className="flex-1"
-                  disabled={!canEdit} />
 
-                  <div className="flex items-center gap-1 bg-white px-2 py-1 sm:px-3 sm:py-1.5 rounded-lg border border-purple-200 min-w-[50px] sm:min-w-[60px] justify-center">
-                    <span className="text-base sm:text-xl font-bold text-purple-900">{formData.student_life_bonus.toFixed(1)}</span>
-                    <span className="text-[10px] sm:text-sm text-purple-600">/5</span>
+                <div className="flex flex-wrap items-center gap-4 sm:gap-8 relative z-10">
+                  <div className="flex items-center space-x-2">
+                    <Checkbox
+                      id="has_student_life"
+                      checked={formData.has_student_life}
+                      onCheckedChange={(checked) => setFormData({ ...formData, has_student_life: checked })}
+                      disabled={!canEdit}
+                    />
+                    <Label htmlFor="has_student_life" className="text-xs sm:text-sm cursor-pointer font-medium text-slate-700">
+                      Vie associative +1
+                    </Label>
+                  </div>
+
+                  <div className="flex items-center space-x-2">
+                    <Checkbox
+                      id="has_network"
+                      checked={formData.has_network}
+                      onCheckedChange={(checked) => setFormData({ ...formData, has_network: checked })}
+                      disabled={!canEdit}
+                    />
+                    <Label htmlFor="has_network" className="text-xs sm:text-sm cursor-pointer font-medium text-slate-700">
+                      Réseaux +1
+                    </Label>
                   </div>
                 </div>
               </div>
