@@ -29,11 +29,14 @@ export default function AddTeacherReviewDialog({ open, onOpenChange, teacherId, 
 
   const MAX_COMMENT_LENGTH = 300;
 
+  const [flashingWidgets, setFlashingWidgets] = useState({});
+
   const criteria = [
-  { key: "workload", label: "Charge de travail", description: "Quantité de devoirs et travail demandé" },
-  { key: "friendliness", label: "Gentillesse", description: "Approche et bienveillance" },
-  { key: "teaching_method", label: "Qualité des cours", description: "Clarté et pédagogie" },
-  { key: "grading_severity", label: "Notation", description: "Façon de noter et de corriger" }];
+    { key: "workload", label: "Charge de travail", icon: BookOpen, color: "text-blue-600", description: "Quantité de devoirs et travail demandé", gradient: "bg-gradient-to-r from-blue-50 to-cyan-100", sliderClass: "slider-blue" },
+    { key: "friendliness", label: "Gentillesse", icon: Heart, color: "text-pink-600", description: "Approche et bienveillance", gradient: "bg-gradient-to-r from-pink-50 to-rose-100", sliderClass: "slider-pink" },
+    { key: "teaching_method", label: "Qualité des cours", icon: Brain, color: "text-purple-600", description: "Clarté et pédagogie", gradient: "bg-gradient-to-r from-purple-50 to-indigo-100", sliderClass: "slider-purple" },
+    { key: "grading_severity", label: "Notation", icon: FileText, color: "text-orange-600", description: "Façon de noter et de corriger", gradient: "bg-gradient-to-r from-orange-50 to-amber-100", sliderClass: "slider-orange" }
+  ];
 
 
   const resetForm = () => {
@@ -410,103 +413,66 @@ En cas de doute entre "critiquer" et "insulter", privilégie la sécurité et re
           </Alert>
         }
 
+        <style>{`
+          .slider-pink .bg-primary { background-color: #ec4899; }
+          .slider-blue .bg-primary { background-color: #2563eb; }
+          .slider-purple .bg-primary { background-color: #9333ea; }
+          .slider-orange .bg-primary { background-color: #ea580c; }
+          @keyframes widget-shine {
+            0% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(255, 255, 255, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+          }
+          .animate-widget-shine {
+            animation: widget-shine 0.5s ease-out;
+          }
+        `}</style>
+
         <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
           <div className="space-y-3 sm:space-y-5">
-            {/* Charge de travail */}
-            <div className="bg-slate-50 rounded-lg p-3 sm:p-4 border border-slate-200">
-              <div className="flex items-center gap-2 mb-1 sm:mb-2">
-                <BookOpen className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600" />
-                <Label className="font-semibold text-xs sm:text-sm">Charge de travail</Label>
-              </div>
-              <p className="text-[10px] sm:text-xs text-slate-600 mb-2 sm:mb-3">Devoirs, exercices, projets à rendre</p>
-              <div className="flex items-center gap-3 sm:gap-4">
-                <Slider
-                  value={[formData.workload]}
-                  onValueChange={([value]) => setFormData({ ...formData, workload: value })}
-                  min={0}
-                  max={5}
-                  step={0.5}
-                  className="flex-1"
-                  disabled={!canEdit} />
+            {criteria.map(({ key, label, icon: Icon, color, description, gradient, sliderClass }) => {
+              const isMax = formData[key] === 5;
+              const isFlashing = flashingWidgets[key];
 
-                <div className="flex items-center gap-1 bg-white px-2 py-1 sm:px-3 sm:py-1.5 rounded-lg border border-slate-200 min-w-[50px] sm:min-w-[60px] justify-center">
-                  <span className="text-base sm:text-xl font-bold text-slate-900">{formData.workload.toFixed(1)}</span>
-                  <span className="text-[10px] sm:text-sm text-slate-500">/5</span>
+              return (
+                <div
+                  key={key}
+                  className={`rounded-lg p-3 sm:p-4 border border-slate-200 transition-all duration-500 relative overflow-hidden ${
+                    isMax ? gradient : 'bg-slate-50'
+                  } ${isFlashing ? 'animate-widget-shine ring-2 ring-offset-2 ring-offset-white ring-yellow-400' : ''}`}
+                >
+                  <div className="flex items-center gap-2 mb-1 sm:mb-2 relative z-10">
+                    <Icon className={`w-4 h-4 sm:w-5 sm:h-5 ${color}`} />
+                    <Label className="font-semibold text-xs sm:text-sm">{label}</Label>
+                  </div>
+                  <p className="text-[10px] sm:text-xs text-slate-600 mb-2 sm:mb-3 relative z-10">{description}</p>
+                  <div className="flex items-center gap-3 sm:gap-4 relative z-10">
+                    <div className={sliderClass + " flex-1"}>
+                      <Slider
+                        value={[formData[key]]}
+                        onValueChange={([value]) => {
+                          setFormData({ ...formData, [key]: value });
+                          if (value === 5 && formData[key] !== 5) {
+                            setFlashingWidgets(prev => ({ ...prev, [key]: true }));
+                            setTimeout(() => setFlashingWidgets(prev => ({ ...prev, [key]: false })), 500);
+                          }
+                        }}
+                        min={0}
+                        max={5}
+                        step={0.5}
+                        className="flex-1"
+                        disabled={!canEdit}
+                      />
+                    </div>
+
+                    <div className={`flex items-center gap-1 px-2 py-1 sm:px-3 sm:py-1.5 rounded-lg border min-w-[50px] sm:min-w-[60px] justify-center transition-colors duration-300 ${isMax ? 'bg-white/80 border-transparent shadow-sm' : 'bg-white border-slate-200'}`}>
+                      <span className={`text-base sm:text-xl font-bold transition-colors ${isMax ? 'text-slate-900' : 'text-slate-900'}`}>{formData[key].toFixed(1)}</span>
+                      <span className="text-[10px] sm:text-sm text-slate-500">/5</span>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-
-            {/* Amabilité */}
-            <div className="bg-slate-50 rounded-lg p-3 sm:p-4 border border-slate-200">
-              <div className="flex items-center gap-2 mb-1 sm:mb-2">
-                <Heart className="w-4 h-4 sm:w-5 sm:h-5 text-pink-600" />
-                <Label className="font-semibold text-xs sm:text-sm">Amabilité</Label>
-              </div>
-              <p className="text-[10px] sm:text-xs text-slate-600 mb-2 sm:mb-3">Accueil, écoute, bienveillance</p>
-              <div className="flex items-center gap-3 sm:gap-4">
-                <Slider
-                  value={[formData.friendliness]}
-                  onValueChange={([value]) => setFormData({ ...formData, friendliness: value })}
-                  min={0}
-                  max={5}
-                  step={0.5}
-                  className="flex-1"
-                  disabled={!canEdit} />
-
-                <div className="flex items-center gap-1 bg-white px-2 py-1 sm:px-3 sm:py-1.5 rounded-lg border border-slate-200 min-w-[50px] sm:min-w-[60px] justify-center">
-                  <span className="text-base sm:text-xl font-bold text-slate-900">{formData.friendliness.toFixed(1)}</span>
-                  <span className="text-[10px] sm:text-sm text-slate-500">/5</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Méthode d'enseignement */}
-            <div className="bg-slate-50 rounded-lg p-3 sm:p-4 border border-slate-200">
-              <div className="flex items-center gap-2 mb-1 sm:mb-2">
-                <Brain className="w-4 h-4 sm:w-5 sm:h-5 text-purple-600" />
-                <Label className="font-semibold text-xs sm:text-sm">Méthode d'enseignement</Label>
-              </div>
-              <p className="text-[10px] sm:text-xs text-slate-600 mb-2 sm:mb-3">Clarté, pédagogie, supports de cours</p>
-              <div className="flex items-center gap-3 sm:gap-4">
-                <Slider
-                  value={[formData.teaching_method]}
-                  onValueChange={([value]) => setFormData({ ...formData, teaching_method: value })}
-                  min={0}
-                  max={5}
-                  step={0.5}
-                  className="flex-1"
-                  disabled={!canEdit} />
-
-                <div className="flex items-center gap-1 bg-white px-2 py-1 sm:px-3 sm:py-1.5 rounded-lg border border-slate-200 min-w-[50px] sm:min-w-[60px] justify-center">
-                  <span className="text-base sm:text-xl font-bold text-slate-900">{formData.teaching_method.toFixed(1)}</span>
-                  <span className="text-[10px] sm:text-sm text-slate-500">/5</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Sévérité de notation */}
-            <div className="bg-slate-50 rounded-lg p-3 sm:p-4 border border-slate-200">
-              <div className="flex items-center gap-2 mb-1 sm:mb-2">
-                <FileText className="w-4 h-4 sm:w-5 sm:h-5 text-orange-600" />
-                <Label className="font-semibold text-xs sm:text-sm">Notation</Label>
-              </div>
-              <p className="text-[10px] sm:text-xs text-slate-600 mb-2 sm:mb-3">Méthode d’évaluation – Sévérité / Indulgence</p>
-              <div className="flex items-center gap-3 sm:gap-4">
-                <Slider
-                  value={[formData.grading_severity]}
-                  onValueChange={([value]) => setFormData({ ...formData, grading_severity: value })}
-                  min={0}
-                  max={5}
-                  step={0.5}
-                  className="flex-1"
-                  disabled={!canEdit} />
-
-                <div className="flex items-center gap-1 bg-white px-2 py-1 sm:px-3 sm:py-1.5 rounded-lg border border-slate-200 min-w-[50px] sm:min-w-[60px] justify-center">
-                  <span className="text-base sm:text-xl font-bold text-slate-900">{formData.grading_severity.toFixed(1)}</span>
-                  <span className="text-[10px] sm:text-sm text-slate-500">/5</span>
-                </div>
-              </div>
-            </div>
+              );
+            })}
           </div>
 
           <div className="bg-gradient-to-r from-amber-50 to-amber-100 rounded-xl p-3 sm:p-4 border-2 border-amber-200">
