@@ -17,6 +17,7 @@ export default function AddSchoolReviewDialog({ open, onOpenChange, schoolId, ex
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
   const [school, setSchool] = useState(null);
+  const [flashingWidgets, setFlashingWidgets] = useState({});
   const [formData, setFormData] = useState({
     ambiance: 2.5,
     staff_quality: 2.5,
@@ -88,6 +89,7 @@ export default function AddSchoolReviewDialog({ open, onOpenChange, schoolId, ex
         setError("Vous avez atteint la limite de 3 modifications pour cet avis.");
       }
       setSuccess(false);
+      setFlashingWidgets({});
     }
   }, [open, existingReview]);
 
@@ -421,35 +423,58 @@ En cas de doute entre "critiquer" et "insulter", privilégie la sécurité et re
           </Alert>
         }
 
+        <style>{`
+          .slider-pink .bg-primary { background-color: #ec4899; }
+          .slider-blue .bg-primary { background-color: #2563eb; }
+          .slider-purple .bg-primary { background-color: #9333ea; }
+          .slider-orange .bg-primary { background-color: #ea580c; }
+          @keyframes widget-shine {
+            0% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(255, 255, 255, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+          }
+          .animate-widget-shine {
+            animation: widget-shine 0.5s ease-out;
+          }
+        `}</style>
         <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
           <div className="space-y-3 sm:space-y-5">
-            {criteria.map(({ key, label, icon: Icon, color, description, gradient }) => {
+            {criteria.map(({ key, label, icon: Icon, color, description, gradient, sliderClass }) => {
               const isMax = formData[key] === 5;
+              const isFlashing = flashingWidgets[key];
+              
               return (
                 <div 
                   key={key} 
-                  className={`rounded-lg p-3 sm:p-4 border border-slate-200 transition-all duration-500 ${
+                  className={`rounded-lg p-3 sm:p-4 border border-slate-200 transition-all duration-500 relative overflow-hidden ${
                     isMax ? gradient : 'bg-slate-50'
-                  }`}
+                  } ${isFlashing ? 'animate-widget-shine ring-2 ring-offset-2 ring-offset-white ring-yellow-400' : ''}`}
                 >
-                  <div className="flex items-center gap-2 mb-1 sm:mb-2">
+                  <div className="flex items-center gap-2 mb-1 sm:mb-2 relative z-10">
                     <Icon className={`w-4 h-4 sm:w-5 sm:h-5 ${color}`} />
                     <Label className="font-semibold text-xs sm:text-sm">{label}</Label>
                   </div>
-                  <p className="text-[10px] sm:text-xs text-slate-600 mb-2 sm:mb-3">{description}</p>
-                  <div className="flex items-center gap-3 sm:gap-4">
-                    <Slider
-                      value={[formData[key]]}
-                      onValueChange={([value]) => setFormData({ ...formData, [key]: value })}
-                      min={0}
-                      max={5}
-                      step={0.5}
-                      className="flex-1"
-                      disabled={!canEdit} 
-                    />
+                  <p className="text-[10px] sm:text-xs text-slate-600 mb-2 sm:mb-3 relative z-10">{description}</p>
+                  <div className="flex items-center gap-3 sm:gap-4 relative z-10">
+                    <div className={sliderClass + " flex-1"}>
+                      <Slider
+                        value={[formData[key]]}
+                        onValueChange={([value]) => {
+                          setFormData({ ...formData, [key]: value });
+                          if (value === 5 && formData[key] !== 5) {
+                            setFlashingWidgets(prev => ({ ...prev, [key]: true }));
+                            setTimeout(() => setFlashingWidgets(prev => ({ ...prev, [key]: false })), 500);
+                          }
+                        }}
+                        min={0}
+                        max={5}
+                        step={0.25}
+                        disabled={!canEdit} 
+                      />
+                    </div>
 
                     <div className={`flex items-center gap-1 px-2 py-1 sm:px-3 sm:py-1.5 rounded-lg border min-w-[50px] sm:min-w-[60px] justify-center transition-colors duration-300 ${isMax ? 'bg-white/80 border-transparent shadow-sm' : 'bg-white border-slate-200'}`}>
-                      <span className={`text-base sm:text-xl font-bold transition-colors ${isMax ? 'text-slate-900' : 'text-slate-900'}`}>{formData[key].toFixed(1)}</span>
+                      <span className={`text-base sm:text-xl font-bold transition-colors ${isMax ? 'text-slate-900' : 'text-slate-900'}`}>{formData[key].toFixed(2).replace(/[.,]00$/, "")}</span>
                       <span className="text-[10px] sm:text-sm text-slate-500">/5</span>
                     </div>
                   </div>
@@ -519,8 +544,8 @@ En cas de doute entre "critiquer" et "insulter", privilégie la sécurité et re
                 <span className="font-semibold text-sm sm:text-base text-amber-900">Note finale</span>
               </div>
               <div className="flex items-center gap-1 sm:gap-2">
-                <span className="text-2xl sm:text-3xl font-bold text-amber-900">{calculateTotalRating(formData).toFixed(1)}</span>
-                <span className="text-sm sm:text-lg text-amber-700">/{getMaxRating()}</span>
+                <span className="text-2xl sm:text-3xl font-bold text-amber-900">{calculateTotalRating(formData).toFixed(2).replace(/[.,]00$/, "")}</span>
+                <span className="text-sm sm:text-lg text-amber-700">/ 20</span>
               </div>
             </div>
           </div>
