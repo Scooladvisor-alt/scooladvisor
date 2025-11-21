@@ -479,12 +479,6 @@ Rédige maintenant ton résumé façon "L'avis d'Antonin" en 3 phrases max.`;
                       variant={userLikes.has(review.id) ? "default" : "outline"}
                       size="sm"
                       onClick={() => handleLike(review)} className="justify-center whitespace-nowrap text-sm font-medium ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-primary hover:bg-primary/90 h-9 rounded-md px-3 flex items-center gap-2 transition-all bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 text-white hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90">
-
-
-
-
-
-
                         <ThumbsUp className={`w-3 h-3 ${userLikes.has(review.id) ? 'fill-current' : ''}`} />
                         <span className="text-xs">{getLikeCount(review)}</span>
                       </Button>
@@ -536,6 +530,6 @@ Rédige maintenant ton résumé façon "L'avis d'Antonin" en 3 phrases max.`;
           </div>
         </DialogContent>
       </Dialog>
-    </>);
-
+    </>
+  );
 }
