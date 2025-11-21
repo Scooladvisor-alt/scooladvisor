@@ -426,11 +426,8 @@ Rédige maintenant ton résumé façon "L'avis d'Antonin" en 3 phrases max.`;
                       <div className="mt-2 sm:mt-3 pt-2 sm:pt-3 border-t border-slate-100">
                         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 w-full pt-2 pb-2">
                           {Object.entries(criteriaIcons).map(([key, { icon: Icon, color }]) => (
-                            <div key={key} className="flex flex-col items-center justify-center gap-1 p-2 rounded-lg bg-slate-50 border border-slate-100">
-                              <div className="flex items-center gap-1.5">
-                                <Icon className={`w-4 h-4 ${color}`} />
-                                <span className="text-xs font-semibold text-slate-700">{criteriaIcons[key].label}</span>
-                              </div>
+                            <div key={key} className="flex items-center justify-center gap-2 p-2 rounded-lg bg-slate-50 border border-slate-100" title={criteriaIcons[key].label}>
+                              <Icon className={`w-4 h-4 ${color}`} />
                               <div className="flex items-baseline gap-0.5">
                                 <span className="text-sm font-bold text-slate-900">{review[key]}</span>
                                 <span className="text-[10px] text-slate-500">/5</span>
