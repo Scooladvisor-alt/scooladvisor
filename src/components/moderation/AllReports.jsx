@@ -314,16 +314,7 @@ export default function AllReports({ onUpdate }) {
 
   return (
     <div className="space-y-4">
-      <div className="relative">
-        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-5 h-5" />
-        <Input
-          type="text"
-          placeholder="Rechercher par nom de professeur, établissement ou ID..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="pl-10 bg-white/90 backdrop-blur-sm border-slate-300 focus:border-blue-500 h-11"
-        />
-      </div>
+      {/* Barre de recherche supprimée à la demande de l'utilisateur */}
       
       <Tabs defaultValue="reviews" className="space-y-4">
         <TabsList className="grid w-full grid-cols-3">
