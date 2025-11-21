@@ -309,8 +309,8 @@ Rédige maintenant ton résumé façon "L'avis d'Antonin" en 3 phrases max.`;
             <Button
               onClick={handleAskAntonin}
               variant="ghost"
-              size="sm"
-              className="text-purple-600 hover:text-purple-700 hover:bg-purple-50">
+              size="sm" className="\"inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 h-8 rounded-md px-3 text-xs bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-white\"">
+
 
                 <Sparkles className="w-4 h-4 mr-1" />
                 <span className="text-xs">Antonin 🤖</span>
@@ -403,40 +403,40 @@ Rédige maintenant ton résumé façon "L'avis d'Antonin" en 3 phrases max.`;
                         </div>
                         </div>
 
-                    {review.comment && (
-                      <div className="relative bg-slate-50 p-2 sm:p-3 rounded-lg mb-2 sm:mb-3">
+                    {review.comment &&
+                  <div className="relative bg-slate-50 p-2 sm:p-3 rounded-lg mb-2 sm:mb-3">
                         <p className="text-xs sm:text-sm text-slate-700 leading-relaxed pr-6">
                           {review.comment}
                         </p>
                         <button
-                          onClick={() => toggleExpand(review.id)}
-                          className="absolute top-2 sm:top-3 right-2 sm:right-3 text-slate-400 hover:text-slate-600 transition-colors"
-                          title={expandedReviews.has(review.id) ? "Masquer les détails" : "Voir les détails"}
-                        >
-                          <ChevronDown 
-                            className={`w-3 h-3 sm:w-4 sm:h-4 transition-transform duration-200 ${
-                              expandedReviews.has(review.id) ? 'rotate-180' : ''
-                            }`}
-                          />
+                      onClick={() => toggleExpand(review.id)}
+                      className="absolute top-2 sm:top-3 right-2 sm:right-3 text-slate-400 hover:text-slate-600 transition-colors"
+                      title={expandedReviews.has(review.id) ? "Masquer les détails" : "Voir les détails"}>
+
+                          <ChevronDown
+                        className={`w-3 h-3 sm:w-4 sm:h-4 transition-transform duration-200 ${
+                        expandedReviews.has(review.id) ? 'rotate-180' : ''}`
+                        } />
+
                         </button>
                       </div>
-                    )}
+                  }
 
-                    {expandedReviews.has(review.id) && (
-                      <div className="mt-2 sm:mt-3 pt-2 sm:pt-3 border-t border-slate-100">
+                    {expandedReviews.has(review.id) &&
+                  <div className="mt-2 sm:mt-3 pt-2 sm:pt-3 border-t border-slate-100">
                         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 w-full pt-2 pb-2">
-                          {Object.entries(criteriaIcons).map(([key, { icon: Icon, color }]) => (
-                            <div key={key} className="flex items-center justify-center gap-2 p-2 rounded-lg bg-slate-50 border border-slate-100" title={criteriaIcons[key].label}>
+                          {Object.entries(criteriaIcons).map(([key, { icon: Icon, color }]) =>
+                      <div key={key} className="flex items-center justify-center gap-2 p-2 rounded-lg bg-slate-50 border border-slate-100" title={criteriaIcons[key].label}>
                               <Icon className={`w-4 h-4 ${color}`} />
                               <div className="flex items-baseline gap-0.5">
                                 <span className="text-sm font-bold text-slate-900">{review[key]}</span>
                                 <span className="text-[10px] text-slate-500">/5</span>
                               </div>
                             </div>
-                          ))}
+                      )}
                         </div>
                       </div>
-                    )}
+                  }
 
                     <div className="flex items-center justify-between pt-2 border-t border-slate-100">
                       <div className="flex gap-2">
@@ -527,6 +527,6 @@ Rédige maintenant ton résumé façon "L'avis d'Antonin" en 3 phrases max.`;
           </div>
         </DialogContent>
       </Dialog>
-    </>
-  );
+    </>);
+
 }
