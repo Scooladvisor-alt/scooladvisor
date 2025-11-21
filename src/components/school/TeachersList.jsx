@@ -43,16 +43,16 @@ export default function TeachersList({ schoolId, onAddTeacher }) {
   }, [schoolId]);
 
   const podiumStyles = [
-  'bg-gradient-to-r from-amber-200 via-amber-100 to-amber-200 border-amber-300',
-  'bg-gradient-to-r from-slate-200 via-slate-100 to-slate-200 border-slate-300',
-  'bg-gradient-to-r from-orange-200 via-orange-100 to-orange-200 border-orange-300'];
-
+    'bg-gradient-to-r from-amber-200 via-amber-100 to-amber-200 border-amber-300',
+    'bg-gradient-to-r from-slate-200 via-slate-100 to-slate-200 border-slate-300',
+    'bg-gradient-to-r from-orange-200 via-orange-100 to-orange-200 border-orange-300'
+  ];
 
   const podiumIconColors = ['text-amber-500', 'text-slate-500', 'text-orange-500'];
 
   const filteredTeachers = teachers.filter((teacher) =>
-  teacher.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-  teacher.subject.toLowerCase().includes(searchQuery.toLowerCase())
+    teacher.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    teacher.subject.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   // Determine initial number of teachers to display based on screen size
@@ -63,158 +63,153 @@ export default function TeachersList({ schoolId, onAddTeacher }) {
 
   return (
     <>
-    <svg width="0" height="0" className="absolute">
-      <defs>
-        <linearGradient id="teacherGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stopColor="#FF4D8D" />
-          <stop offset="50%" stopColor="#A855F7" />
-          <stop offset="100%" stopColor="#3B82F6" />
-        </linearGradient>
-      </defs>
-    </svg>
-    <Card className="bg-white/90 backdrop-blur-md border-slate-200 shadow-xl w-full h-auto lg:h-full flex flex-col hover:shadow-2xl transition-shadow duration-300">
-      <style>{`
-        .teachers-list-scrollable {
-          overflow-y: auto;
-          scroll-behavior: smooth;
-          flex: 1;
-        }
-        
-        .teachers-list-scrollable::-webkit-scrollbar {
-          width: 6px;
-        }
-        
-        .teachers-list-scrollable::-webkit-scrollbar-thumb {
-          background-color: rgba(148, 163, 184, 0.6);
-          border-radius: 10px;
-        }
-        
-        .teachers-list-scrollable::-webkit-scrollbar-track {
-          background-color: rgba(0,0,0,0.05);
-          border-radius: 10px;
-        }
-      `}</style>
-      
-      <CardHeader className="border-b border-slate-100 bg-gradient-to-r from-[#FF4D8D]/10 via-purple-500/10 to-blue-500/10 mb-2">
-        <div className="flex items-center justify-between">
-          <CardTitle className="flex items-center gap-3 text-xl sm:text-2xl">
-            <Users className="w-6 h-6 sm:w-8 sm:h-8" style={{ stroke: "url(#teacherGradient)" }} />
-            <div className="flex items-center gap-1">
-              <span className="text-base sm:text-2xl font-bold bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">Professeurs</span>
-              <span className="text-base sm:text-2xl">❤️</span>
-            </div>
-            <span className="text-sm sm:text-base text-slate-500 font-normal">({teachers.length})</span>
-          </CardTitle>
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => setShowSearch(!showSearch)}
-            className="text-blue-600 hover:text-blue-700 hover:bg-blue-50">
-
-            <Search className="w-5 h-5" />
-          </Button>
-        </div>
-        
-        {showSearch &&
-        <div className="mt-3">
-            <Input
-            placeholder="Rechercher un professeur ou une matière..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full" />
-
-          </div>
-        }
-      </CardHeader>
-      <CardContent className="flex-1 flex flex-col overflow-hidden pt-4 gap-4">
-        {loading ?
-        <div className="flex justify-center items-center py-12">
-            <Loader2 className="w-8 h-8 text-slate-400 animate-spin" />
-          </div> :
-        filteredTeachers.length === 0 ?
-        <div className="py-16 text-center flex flex-col items-center justify-center">
-            <div className="w-20 h-20 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm">
-              <Users className="w-10 h-10 text-blue-600" />
-            </div>
-            <p className="text-slate-700 font-medium mb-2">
-              {searchQuery ? "Aucun professeur trouvé" : "Aucun professeur pour le moment"}
-            </p>
-            {!searchQuery && (
-              <>
-                <p className="text-sm text-slate-500 mb-4 max-w-xs">
-                  Sois le premier à ajouter les profs de cet établissement ! 🚀
-                </p>
-                <Button onClick={onAddTeacher} className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-white shadow-md">
-                  <Users className="w-4 h-4 mr-2" />
-                  Ajouter le premier prof
-                </Button>
-              </>
-            )}
-          </div> :
-
-        <>
-            <div className="space-y-3 pr-2 teachers-list-scrollable">
-              {displayedTeachers.map((teacher, index) => {
-              const isPodium = teacher.review_count > 0 && index < 3;
-              const podiumClass = isPodium ? podiumStyles[index] : 'hover:border-blue-300 bg-white';
-
-              return (
-                <motion.div
-                  key={teacher.id}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: index * 0.05 }}>
-
-                    <Link to={createPageUrl(`TeacherDetail?id=${teacher.id}`)}>
-                      <div className={`group flex items-center gap-2 sm:gap-4 p-3 sm:p-4 rounded-xl border hover:shadow-md transition-all ${podiumClass}`}>
-                        <Avatar className="w-10 h-10 sm:w-14 sm:h-14 border-2 border-white shadow-sm flex-shrink-0">
-                          <AvatarImage src={teacher.photo_url} />
-                          <AvatarFallback className="bg-gradient-to-br from-blue-600 to-blue-800 text-white font-semibold text-sm sm:text-base">
-                            {teacher.name.charAt(0)}
-                          </AvatarFallback>
-                        </Avatar>
-
-                        <div className="flex-1 min-w-0">
-                          <h3 className="font-semibold text-slate-900 group-hover:text-blue-600 transition-colors truncate flex items-center gap-1 sm:gap-2 text-sm sm:text-base">
-                            {isPodium && <Award className={`w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0 ${podiumIconColors[index]}`} />}
-                            <span className="truncate">{teacher.name}</span>
-                          </h3>
-                          <div className="flex items-center gap-1 sm:gap-2 mt-1">
-                            <BookOpen className="w-3 h-3 sm:w-4 sm:h-4 text-slate-400 flex-shrink-0" />
-                            <span className="text-xs sm:text-sm text-slate-600 truncate">{teacher.subject}</span>
-                          </div>
-                        </div>
-
-                        <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
-                          {teacher.average_rating > 0 &&
-                        <div className="flex items-center gap-1 bg-white/50 px-2 py-1 rounded-full border border-slate-200">
-                              <Star className="w-3 h-3 text-amber-500 fill-amber-500" />
-                              <span className="font-bold text-slate-800 text-xs sm:text-sm">{teacher.average_rating.toFixed(1)}</span>
-                            </div>
-                        }
-                          <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 text-slate-400 group-hover:text-blue-600 group-hover:translate-x-1 transition-all" />
-                        </div>
-                      </div>
-                    </Link>
-                  </motion.div>);
-
-            })}
-            </div>
-
-            {hasMore &&
-          <div className="mt-4 text-center">
-                <button
-              onClick={() => setShowAll(true)}
-              className="text-blue-600 hover:text-blue-700 text-sm font-medium transition-colors">
-
-                  Voir {filteredTeachers.length - initialDisplayCount} professeurs de plus
-                </button>
-              </div>
+      <svg width="0" height="0" className="absolute">
+        <defs>
+          <linearGradient id="teacherGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#FF4D8D" />
+            <stop offset="50%" stopColor="#A855F7" />
+            <stop offset="100%" stopColor="#3B82F6" />
+          </linearGradient>
+        </defs>
+      </svg>
+      <Card className="bg-white/90 backdrop-blur-md border-slate-200 shadow-xl w-full h-auto lg:h-full flex flex-col hover:shadow-2xl transition-shadow duration-300">
+        <style>{`
+          .teachers-list-scrollable {
+            overflow-y: auto;
+            scroll-behavior: smooth;
+            flex: 1;
           }
-          </>
-        }
-      </CardContent>
-    </Card>
-    </>);
+          
+          .teachers-list-scrollable::-webkit-scrollbar {
+            width: 6px;
+          }
+          
+          .teachers-list-scrollable::-webkit-scrollbar-thumb {
+            background-color: rgba(148, 163, 184, 0.6);
+            border-radius: 10px;
+          }
+          
+          .teachers-list-scrollable::-webkit-scrollbar-track {
+            background-color: rgba(0,0,0,0.05);
+            border-radius: 10px;
+          }
+        `}</style>
+        
+        <CardHeader className="border-b border-slate-100 bg-gradient-to-r from-[#FF4D8D]/10 via-purple-500/10 to-blue-500/10 mb-2">
+          <div className="flex items-center justify-between">
+            <CardTitle className="flex items-center gap-3 text-xl sm:text-2xl">
+              <Users className="w-6 h-6 sm:w-8 sm:h-8" style={{ stroke: "url(#teacherGradient)" }} />
+              <div className="flex items-center gap-1">
+                <span className="text-base sm:text-2xl font-bold bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">Professeurs</span>
+                <span className="text-base sm:text-2xl">❤️</span>
+              </div>
+              <span className="text-sm sm:text-base text-slate-500 font-normal">({teachers.length})</span>
+            </CardTitle>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setShowSearch(!showSearch)}
+              className="text-blue-600 hover:text-blue-700 hover:bg-blue-50">
+              <Search className="w-5 h-5" />
+            </Button>
+          </div>
+          
+          {showSearch &&
+            <div className="mt-3">
+              <Input
+                placeholder="Rechercher un professeur ou une matière..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full" />
+            </div>
+          }
+        </CardHeader>
+        <CardContent className="flex-1 flex flex-col overflow-hidden pt-4 gap-4">
+          {loading ?
+            <div className="flex justify-center items-center py-12">
+              <Loader2 className="w-8 h-8 text-slate-400 animate-spin" />
+            </div> :
+            filteredTeachers.length === 0 ?
+              <div className="py-16 text-center flex flex-col items-center justify-center">
+                <div className="w-20 h-20 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm">
+                  <Users className="w-10 h-10 text-blue-600" />
+                </div>
+                <p className="text-slate-700 font-medium mb-2">
+                  {searchQuery ? "Aucun professeur trouvé" : "Aucun professeur pour le moment"}
+                </p>
+                {!searchQuery && (
+                  <>
+                    <p className="text-sm text-slate-500 mb-4 max-w-xs">
+                      Sois le premier à ajouter les profs de cet établissement ! 🚀
+                    </p>
+                    <Button onClick={onAddTeacher} className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-white shadow-md">
+                      <Users className="w-4 h-4 mr-2" />
+                      Ajouter le premier prof
+                    </Button>
+                  </>
+                )}
+              </div> :
+              <>
+                <div className="space-y-3 pr-2 teachers-list-scrollable">
+                  {displayedTeachers.map((teacher, index) => {
+                    const isPodium = teacher.review_count > 0 && index < 3;
+                    const podiumClass = isPodium ? podiumStyles[index] : 'hover:border-blue-300 bg-white';
 
+                    return (
+                      <motion.div
+                        key={teacher.id}
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: index * 0.05 }}>
+                        <Link to={createPageUrl(`TeacherDetail?id=${teacher.id}`)}>
+                          <div className={`group flex items-center gap-2 sm:gap-4 p-3 sm:p-4 rounded-xl border hover:shadow-md transition-all ${podiumClass}`}>
+                            <Avatar className="w-10 h-10 sm:w-14 sm:h-14 border-2 border-white shadow-sm flex-shrink-0">
+                              <AvatarImage src={teacher.photo_url} />
+                              <AvatarFallback className="bg-gradient-to-br from-blue-600 to-blue-800 text-white font-semibold text-sm sm:text-base">
+                                {teacher.name.charAt(0)}
+                              </AvatarFallback>
+                            </Avatar>
+
+                            <div className="flex-1 min-w-0">
+                              <h3 className="font-semibold text-slate-900 group-hover:text-blue-600 transition-colors truncate flex items-center gap-1 sm:gap-2 text-sm sm:text-base">
+                                {isPodium && <Award className={`w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0 ${podiumIconColors[index]}`} />}
+                                <span className="truncate">{teacher.name}</span>
+                              </h3>
+                              <div className="flex items-center gap-1 sm:gap-2 mt-1">
+                                <BookOpen className="w-3 h-3 sm:w-4 sm:h-4 text-slate-400 flex-shrink-0" />
+                                <span className="text-xs sm:text-sm text-slate-600 truncate">{teacher.subject}</span>
+                              </div>
+                            </div>
+
+                            <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+                              {teacher.average_rating > 0 &&
+                                <div className="flex items-center gap-1 bg-white/50 px-2 py-1 rounded-full border border-slate-200">
+                                  <Star className="w-3 h-3 text-amber-500 fill-amber-500" />
+                                  <span className="font-bold text-slate-800 text-xs sm:text-sm">{teacher.average_rating.toFixed(1)}</span>
+                                </div>
+                              }
+                              <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 text-slate-400 group-hover:text-blue-600 group-hover:translate-x-1 transition-all" />
+                            </div>
+                          </div>
+                        </Link>
+                      </motion.div>
+                    );
+                  })}
+                </div>
+
+                {hasMore &&
+                  <div className="mt-4 text-center">
+                    <button
+                      onClick={() => setShowAll(true)}
+                      className="text-blue-600 hover:text-blue-700 text-sm font-medium transition-colors">
+                      Voir {filteredTeachers.length - initialDisplayCount} professeurs de plus
+                    </button>
+                  </div>
+                }
+              </>
+          }
+        </CardContent>
+      </Card>
+    </>
+  );
 }
