@@ -382,10 +382,10 @@ En cas de doute entre "critiquer" et "insulter", privilégie la sécurité et re
   };
 
   const criteria = [
-  { key: "ambiance", label: "Ambiance générale", icon: Heart, color: "text-pink-600", description: "C'est la famille ?", gradient: "bg-gradient-to-r from-pink-50 to-rose-100" },
-  { key: "staff_quality", label: "Qualité du personnel", icon: Users, color: "text-blue-600", description: "Administration, surveillants, professeurs, encadrement...", gradient: "bg-gradient-to-r from-blue-50 to-cyan-100" },
-  { key: "facilities", label: "Locaux", icon: Building2, color: "text-purple-600", description: "Architecture, propreté, confort des espaces intérieurs et extérieurs, équipements sportifs et numériques.", gradient: "bg-gradient-to-r from-purple-50 to-indigo-100" },
-  { key: "cafeteria", label: "Cantine / Restauration", icon: Utensils, color: "text-orange-600", description: "Qualité des repas, choix des menus, tarifs, confort de l'espace.", gradient: "bg-gradient-to-r from-orange-50 to-amber-100" }];
+  { key: "ambiance", label: "Ambiance générale", icon: Heart, color: "text-pink-600", description: "C'est la famille ?", gradient: "bg-gradient-to-r from-pink-50 to-rose-100", sliderClass: "slider-pink" },
+  { key: "staff_quality", label: "Qualité du personnel", icon: Users, color: "text-blue-600", description: "Administration, surveillants, professeurs, encadrement...", gradient: "bg-gradient-to-r from-blue-50 to-cyan-100", sliderClass: "slider-blue" },
+  { key: "facilities", label: "Locaux", icon: Building2, color: "text-purple-600", description: "Architecture, propreté, confort des espaces intérieurs et extérieurs, équipements sportifs et numériques.", gradient: "bg-gradient-to-r from-purple-50 to-indigo-100", sliderClass: "slider-purple" },
+  { key: "cafeteria", label: "Cantine / Restauration", icon: Utensils, color: "text-orange-600", description: "Qualité des repas, choix des menus, tarifs, confort de l'espace.", gradient: "bg-gradient-to-r from-orange-50 to-amber-100", sliderClass: "slider-orange" }];
 
 
   const showStudentLifeBonus = school && (school.type === 'ecole_commerce' || school.type === 'universite' || school.type === 'ecole_ingenieur');
