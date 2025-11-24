@@ -122,10 +122,10 @@ Réponds par JSON : { "decision": "approved" | "rejected", "reason": "raison cou
       <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-pink-300 via-red-300 to-pink-300" />
       
       <CardHeader className="pb-2">
-        <div className="flex items-center justify-between">
-          <CardTitle className="flex items-center gap-2 text-xl text-pink-700">
-            <Mail className="w-5 h-5" />
-            Petit mot ❤️
+        <div className="flex items-center justify-between gap-2">
+          <CardTitle className="flex items-center gap-2 text-base sm:text-xl text-pink-700 whitespace-nowrap">
+            <Mail className="w-4 h-4 sm:w-5 sm:h-5" />
+            <span>Petit mot ❤️</span>
           </CardTitle>
           
           {!hasUserPosted ? (
@@ -171,29 +171,27 @@ Réponds par JSON : { "decision": "approved" | "rejected", "reason": "raison cou
                   className="bg-white border-pink-200 focus:border-pink-400 min-h-[100px] mb-3"
                 />
                 
-                <div className="flex items-center justify-between mb-3">
-                  <div className="flex items-center space-x-2">
+                <div className="flex items-center justify-between gap-2 flex-wrap sm:flex-nowrap mb-1">
+                  <div className="flex items-center space-x-2 bg-white/50 px-2 py-1 rounded-lg border border-pink-100">
                     <Checkbox 
                       id="anonymous-mode" 
                       checked={isAnonymous}
                       onCheckedChange={setIsAnonymous}
-                      className="border-pink-300 data-[state=checked]:bg-pink-500 data-[state=checked]:text-white"
+                      className="border-pink-300 data-[state=checked]:bg-pink-500 data-[state=checked]:text-white w-4 h-4"
                     />
-                    <Label htmlFor="anonymous-mode" className="text-xs text-pink-700 cursor-pointer">
-                      Publier en anonyme
+                    <Label htmlFor="anonymous-mode" className="text-[10px] sm:text-xs text-pink-700 cursor-pointer whitespace-nowrap">
+                      Anonyme
                     </Label>
                   </div>
-                </div>
 
-                <div className="flex justify-end">
                   <Button 
                     onClick={handleSend} 
                     disabled={sending || !newMessage.trim()}
-                    className="bg-gradient-to-r from-pink-500 to-red-500 hover:from-pink-600 hover:to-red-600 text-white shadow-md"
+                    className="bg-gradient-to-r from-pink-500 to-red-500 hover:from-pink-600 hover:to-red-600 text-white shadow-md h-8 text-xs sm:text-sm flex-1 sm:flex-none justify-center"
                     size="sm"
                   >
-                    {sending ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Send className="w-4 h-4 mr-2" />}
-                    Envoyer du love
+                    {sending ? <Loader2 className="w-3 h-3 sm:w-4 sm:h-4 animate-spin mr-1.5" /> : <Send className="w-3 h-3 sm:w-4 sm:h-4 mr-1.5" />}
+                    Envoyer
                   </Button>
                 </div>
               </div>
