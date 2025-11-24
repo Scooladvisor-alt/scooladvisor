@@ -160,7 +160,7 @@ Réponds par JSON : { "decision": "approved" | "rejected", "reason": "raison cou
               exit={{ height: 0, opacity: 0 }}
               className="overflow-hidden mb-4"
             >
-              <div className="bg-pink-50 p-4 rounded-xl border border-pink-100">
+              <div className="bg-pink-50 p-4 rounded-lg border border-pink-100">
                 <p className="text-xs text-pink-600 mb-2 font-medium">
                   ✨ Ici, on ne partage que du love.
                 </p>
@@ -168,7 +168,7 @@ Réponds par JSON : { "decision": "approved" | "rejected", "reason": "raison cou
                   placeholder="Merci pour tout, vous êtes le meilleur prof..."
                   value={newMessage}
                   onChange={(e) => setNewMessage(e.target.value)}
-                  className="bg-white border-pink-200 focus:border-pink-400 min-h-[100px] mb-3"
+                  className="bg-white border-pink-200 focus:border-pink-400 min-h-[70px] mb-3"
                 />
                 
                 <div className="flex items-center justify-between gap-2 flex-wrap sm:flex-nowrap mb-1">
