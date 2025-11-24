@@ -162,7 +162,7 @@ Réponds par JSON : { "decision": "approved" | "rejected", "reason": "raison cou
             >
               <div className="bg-pink-50 p-4 rounded-xl border border-pink-100">
                 <p className="text-xs text-pink-600 mb-2 font-medium">
-                  ✨ Ici, on ne partage que du love. Les messages négatifs sont automatiquement bloqués.
+                  ✨ Ici, on ne partage que du love.
                 </p>
                 <Textarea
                   placeholder="Merci pour tout, vous êtes le meilleur prof..."
