@@ -114,7 +114,7 @@ Réponds par JSON : { "decision": "approved" | "rejected", "reason": "raison cou
     }
   };
 
-  const hasUserPosted = user && notes.some(n => n.author_email === user.email);
+  const hasUserPosted = user && notes.some((n) => n.author_email === user.email);
 
   return (
     <Card className="bg-white/80 backdrop-blur-sm border-pink-200 shadow-lg w-full overflow-hidden relative">
@@ -128,101 +128,101 @@ Réponds par JSON : { "decision": "approved" | "rejected", "reason": "raison cou
             <span>Petit mot ❤️</span>
           </CardTitle>
           
-          {!hasUserPosted ? (
-            <Button 
-              variant="ghost" 
-              size="sm" 
-              className="text-pink-600 hover:text-pink-700 hover:bg-pink-50"
-              onClick={() => {
-                  if (!user) {
-                      base44.auth.redirectToLogin(window.location.href);
-                      return;
-                  }
-                  setShowForm(!showForm)
-              }}
-            >
+          {!hasUserPosted ?
+          <Button
+            variant="ghost"
+            size="sm"
+            className="text-pink-600 hover:text-pink-700 hover:bg-pink-50"
+            onClick={() => {
+              if (!user) {
+                base44.auth.redirectToLogin(window.location.href);
+                return;
+              }
+              setShowForm(!showForm);
+            }}>
+
               {showForm ? "Fermer" : "Écrire un mot"}
-            </Button>
-          ) : (
-            <span className="text-xs text-pink-600 font-medium bg-pink-50 px-3 py-1 rounded-full">
+            </Button> :
+
+          <span className="text-xs text-pink-600 font-medium bg-pink-50 px-3 py-1 rounded-full">
               Vous avez déjà posté 💌
             </span>
-          )}
+          }
         </div>
       </CardHeader>
 
       <CardContent>
         <AnimatePresence>
-          {showForm && (
-            <motion.div 
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: "auto", opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              className="overflow-hidden mb-4"
-            >
+          {showForm &&
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            className="overflow-hidden mb-4">
+
               <div className="bg-pink-50 p-4 rounded-lg border border-pink-100">
                 <p className="text-xs text-pink-600 mb-2 font-medium">
                   ✨ Ici, on ne partage que du love.
                 </p>
                 <Textarea
-                  placeholder="Merci pour tout, vous êtes le meilleur prof..."
-                  value={newMessage}
-                  onChange={(e) => setNewMessage(e.target.value)}
-                  className="bg-white border-pink-200 focus:border-pink-400 min-h-[70px] mb-3"
-                />
+                placeholder="Merci pour tout, vous êtes le meilleur prof..."
+                value={newMessage}
+                onChange={(e) => setNewMessage(e.target.value)} className="className=\"flex w-full rounded-md border px-3 py-2 text-sm shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm bg-white border-pink-200 focus:border-pink-400 min-h-[70px] mb-3\"" />
+
+
                 
                 <div className="flex items-center justify-between gap-2 flex-wrap sm:flex-nowrap mb-1">
                   <div className="flex items-center space-x-2 bg-white/50 px-2 py-1 rounded-lg border border-pink-100">
-                    <Checkbox 
-                      id="anonymous-mode" 
-                      checked={isAnonymous}
-                      onCheckedChange={setIsAnonymous}
-                      className="border-pink-300 data-[state=checked]:bg-pink-500 data-[state=checked]:text-white w-4 h-4"
-                    />
+                    <Checkbox
+                    id="anonymous-mode"
+                    checked={isAnonymous}
+                    onCheckedChange={setIsAnonymous}
+                    className="border-pink-300 data-[state=checked]:bg-pink-500 data-[state=checked]:text-white w-4 h-4" />
+
                     <Label htmlFor="anonymous-mode" className="text-[10px] sm:text-xs text-pink-700 cursor-pointer whitespace-nowrap">
                       Anonyme
                     </Label>
                   </div>
 
-                  <Button 
-                    onClick={handleSend} 
-                    disabled={sending || !newMessage.trim()}
-                    className="bg-gradient-to-r from-pink-500 to-red-500 hover:from-pink-600 hover:to-red-600 text-white shadow-md h-8 text-xs sm:text-sm flex-1 sm:flex-none justify-center"
-                    size="sm"
-                  >
+                  <Button
+                  onClick={handleSend}
+                  disabled={sending || !newMessage.trim()}
+                  className="bg-gradient-to-r from-pink-500 to-red-500 hover:from-pink-600 hover:to-red-600 text-white shadow-md h-8 text-xs sm:text-sm flex-1 sm:flex-none justify-center"
+                  size="sm">
+
                     {sending ? <Loader2 className="w-3 h-3 sm:w-4 sm:h-4 animate-spin mr-1.5" /> : <Send className="w-3 h-3 sm:w-4 sm:h-4 mr-1.5" />}
                     Envoyer
                   </Button>
                 </div>
               </div>
             </motion.div>
-          )}
+          }
         </AnimatePresence>
 
-        {loading ? (
-          <div className="flex justify-center py-8">
+        {loading ?
+        <div className="flex justify-center py-8">
             <Loader2 className="w-6 h-6 text-pink-300 animate-spin" />
-          </div>
-        ) : notes.length === 0 ? (
-          <div className="text-center py-8 text-pink-400/70 italic text-sm">
+          </div> :
+        notes.length === 0 ?
+        <div className="text-center py-8 text-pink-400/70 italic text-sm">
             La boîte aux lettres est vide... Soyez le premier à déposer un petit mot ! 💌
-          </div>
-        ) : (
-          <div className="space-y-3 max-h-[300px] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-pink-200 scrollbar-track-transparent">
-            {notes.map((note) => (
-              <div key={note.id} className="bg-gradient-to-br from-white to-pink-50 p-3 rounded-lg border border-pink-100 shadow-sm relative group hover:shadow-md transition-all duration-200">
-                {user && note.author_email === user.email && (
-                  <button 
-                    onClick={() => handleDelete(note.id)}
-                    className="absolute top-2 right-2 p-1 text-pink-300 hover:text-red-500 hover:bg-red-50 rounded-full transition-colors"
-                    title="Supprimer mon message"
-                  >
+          </div> :
+
+        <div className="space-y-3 max-h-[300px] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-pink-200 scrollbar-track-transparent">
+            {notes.map((note) =>
+          <div key={note.id} className="bg-gradient-to-br from-white to-pink-50 p-3 rounded-lg border border-pink-100 shadow-sm relative group hover:shadow-md transition-all duration-200">
+                {user && note.author_email === user.email &&
+            <button
+              onClick={() => handleDelete(note.id)}
+              className="absolute top-2 right-2 p-1 text-pink-300 hover:text-red-500 hover:bg-red-50 rounded-full transition-colors"
+              title="Supprimer mon message">
+
                     <Trash2 className="w-3 h-3" />
                   </button>
-                )}
-                {!user || note.author_email !== user.email ? (
-                  <Heart className="w-3 h-3 text-pink-300 absolute top-3 right-3 fill-pink-100" />
-                ) : null}
+            }
+                {!user || note.author_email !== user.email ?
+            <Heart className="w-3 h-3 text-pink-300 absolute top-3 right-3 fill-pink-100" /> :
+            null}
                 
                 <p className="text-slate-700 text-sm italic leading-relaxed mb-2 pr-6">
                   "{note.message}"
@@ -231,10 +231,10 @@ Réponds par JSON : { "decision": "approved" | "rejected", "reason": "raison cou
                   — {note.is_anonymous ? "Anonyme" : note.author_name}
                 </p>
               </div>
-            ))}
+          )}
           </div>
-        )}
+        }
       </CardContent>
-    </Card>
-  );
+    </Card>);
+
 }
