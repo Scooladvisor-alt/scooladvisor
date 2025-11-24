@@ -3,6 +3,8 @@ import { base44 } from "@/api/base44Client";
 import { Heart, Send, Loader2, Mail, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
 import { format } from "date-fns";
@@ -12,6 +14,7 @@ import { motion, AnimatePresence } from "framer-motion";
 export default function TeacherLoveNotes({ teacherId, user }) {
   const [notes, setNotes] = useState([]);
   const [newMessage, setNewMessage] = useState("");
+  const [isAnonymous, setIsAnonymous] = useState(false);
   const [loading, setLoading] = useState(true);
   const [sending, setSending] = useState(false);
   const [showForm, setShowForm] = useState(false);
@@ -84,10 +87,11 @@ Réponds par JSON : { "decision": "approved" | "rejected", "reason": "raison cou
         message: newMessage,
         author_email: user.email,
         author_name: user.full_name,
-        is_anonymous: true
+        is_anonymous: isAnonymous
       });
 
       setNewMessage("");
+      setIsAnonymous(false);
       setShowForm(false);
       toast.success("Message envoyé ! 💖");
       loadNotes();
@@ -164,8 +168,23 @@ Réponds par JSON : { "decision": "approved" | "rejected", "reason": "raison cou
                   placeholder="Merci pour tout, vous êtes le meilleur prof..."
                   value={newMessage}
                   onChange={(e) => setNewMessage(e.target.value)}
-                  className="bg-white border-pink-200 focus:border-pink-400 min-h-[100px] mb-2"
+                  className="bg-white border-pink-200 focus:border-pink-400 min-h-[100px] mb-3"
                 />
+                
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center space-x-2">
+                    <Checkbox 
+                      id="anonymous-mode" 
+                      checked={isAnonymous}
+                      onCheckedChange={setIsAnonymous}
+                      className="border-pink-300 data-[state=checked]:bg-pink-500 data-[state=checked]:text-white"
+                    />
+                    <Label htmlFor="anonymous-mode" className="text-xs text-pink-700 cursor-pointer">
+                      Publier en anonyme
+                    </Label>
+                  </div>
+                </div>
+
                 <div className="flex justify-end">
                   <Button 
                     onClick={handleSend} 
@@ -191,7 +210,7 @@ Réponds par JSON : { "decision": "approved" | "rejected", "reason": "raison cou
             La boîte aux lettres est vide... Soyez le premier à déposer un petit mot ! 💌
           </div>
         ) : (
-          <div className="space-y-3 h-[280px] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-pink-200 scrollbar-track-transparent">
+          <div className="space-y-3 max-h-[300px] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-pink-200 scrollbar-track-transparent">
             {notes.map((note) => (
               <div key={note.id} className="bg-gradient-to-br from-white to-pink-50 p-3 rounded-lg border border-pink-100 shadow-sm relative group hover:shadow-md transition-all duration-200">
                 {user && note.author_email === user.email && (
@@ -211,7 +230,7 @@ Réponds par JSON : { "decision": "approved" | "rejected", "reason": "raison cou
                   "{note.message}"
                 </p>
                 <p className="text-xs text-pink-400 font-medium text-right">
-                  — Anonyme
+                  — {note.is_anonymous ? "Anonyme" : note.author_name}
                 </p>
               </div>
             ))}

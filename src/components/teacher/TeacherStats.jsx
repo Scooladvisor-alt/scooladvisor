@@ -19,13 +19,7 @@ export default function TeacherStats({ teacher }) {
           Statistiques détaillées
         </CardTitle>
       </CardHeader>
-      <CardContent className="space-y-4 sm:space-y-5 flex-1 overflow-y-auto custom-scrollbar pr-2">
-        <style>{`
-          .custom-scrollbar::-webkit-scrollbar { width: 6px; }
-          .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
-          .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
-          .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
-        `}</style>
+      <CardContent className="space-y-4 sm:space-y-5 flex-1 pr-2">
         {teacher.review_count > 0 ? (
           <>
             {Object.entries(criteriaConfig).map(([key, { label, icon: Icon, color }]) => {

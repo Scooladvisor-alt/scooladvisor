@@ -241,6 +241,7 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
   return (
     <>
       <Card className="bg-white/80 backdrop-blur-sm border-slate-200 shadow-lg w-full h-full flex flex-col">
+        <div className="absolute top-0 right-0 w-full h-1 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 opacity-50 rounded-t-xl" />
         <CardHeader>
           <CardTitle className="font-semibold tracking-tight flex items-center gap-2 text-xl">
             <MessageSquare className="w-6 h-6 text-purple-600" />
