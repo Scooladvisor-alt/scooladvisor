@@ -21,14 +21,14 @@ export default function TeacherStats({ teacher, embedded = false }) {
           Statistiques détaillées
         </h3>
       </div>
-
+      
       <div className={`space-y-5 ${!embedded ? "p-6 pt-0" : ""}`}>
         {teacher.review_count > 0 ? (
           <>
             {Object.entries(criteriaConfig).map(([key, { label, icon: Icon, color }]) => {
               const value = teacher[key] || 0;
               const percentage = (value / 5) * 100;
-
+              
               return (
                 <div key={key} className="space-y-2">
                   <div className="flex items-center justify-between">
@@ -66,64 +66,6 @@ export default function TeacherStats({ teacher, embedded = false }) {
               Aucune statistique
             </p>
             <p className="text-xs text-slate-400 mt-1">
-              Soyez le premier à noter !
-            </p>
-          </div>
-        )}
-      </div>
-    </div>
-  );
-
-  if (embedded) return <Content />;
-
-  return (
-    <Card className="bg-white/90 backdrop-blur-md border-slate-200 shadow-xl w-full h-full flex flex-col hover:shadow-2xl transition-shadow duration-300">
-      <Content />
-    </Card>
-  );
-}
-          <>
-            {Object.entries(criteriaConfig).map(([key, { label, icon: Icon, color }]) => {
-              const value = teacher[key] || 0;
-              const percentage = (value / 5) * 100;
-              
-              return (
-                <div key={key} className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <Icon className="w-3 h-3 sm:w-4 sm:h-4 text-slate-600 flex-shrink-0" />
-                      <span className="text-xs sm:text-sm font-medium text-slate-700">{label}</span>
-                    </div>
-                    <span className="text-xs sm:text-sm font-bold text-slate-900">
-                      {value.toFixed(1)}/5
-                    </span>
-                  </div>
-                  <div className="relative">
-                    <Progress value={percentage} className="h-2 [&>*]:bg-transparent" />
-                    <div 
-                      className={`absolute top-0 left-0 h-2 ${color} rounded-full transition-all`}
-                      style={{ width: `${percentage}%` }}
-                    />
-                  </div>
-                </div>
-              );
-            })}
-
-            <div className="pt-4 mt-4 border-t border-slate-200">
-              <p className="text-xs sm:text-sm text-slate-600 text-center">
-                Basé sur <span className="font-semibold">{teacher.review_count}</span> avis
-              </p>
-            </div>
-          </>
-        ) : (
-          <div className="text-center py-8">
-            <div className="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-3">
-              <TrendingUp className="w-6 h-6 text-slate-400" />
-            </div>
-            <p className="text-sm text-slate-600">
-              Aucune statistique disponible
-            </p>
-            <p className="text-xs text-slate-500 mt-1">
               Soyez le premier à noter !
             </p>
           </div>
