@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { base44 } from "@/api/base44Client";
-import { Heart, Send, Loader2, Mail } from "lucide-react";
+import { Heart, Send, Loader2, Mail, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -45,29 +45,15 @@ export default function TeacherLoveNotes({ teacherId, user }) {
     setSending(true);
 
     try {
-      // Modération positive élargie (accepte aussi le slang positif type "boss", "goat", etc.)
       const moderationResult = await base44.integrations.Core.InvokeLLM({
-        prompt: `Tu es un modérateur pour une "boîte à mots doux" destinée à un professeur.
-Analyse le message suivant : "${newMessage}"
+        prompt: `Tu es un modérateur pour une "boîte à mots doux".
+Analyse le message : "${newMessage}"
 
-Ta mission : Accepter TOUT message positif, encourageant, de remerciement ou d'admiration.
-Tu dois accepter :
-- Les compliments classiques ("Merci pour tout", "Super prof")
-- L'argot positif et expressions de jeunes ("C'est le boss", "Le goat", "Masterclass", "Incroyable ce prof", "Une légende", "Dinguerie")
-- L'humour bienveillant
+Mission : Accepter TOUT message positif, encourageant, remerciement ou admiration.
+Accepter : compliments, argot positif (boss, goat, masterclass, légende), humour bienveillant.
+Rejeter : critiques, insultes, sarcasme, messages neutres/froids, harcèlement.
 
-Tu dois REJETER uniquement :
-- Les critiques (même constructives, ce n'est pas le lieu)
-- Les insultes ou méchancetés
-- Le sarcasme évident
-- Les messages neutres ou froids sans connotation positive
-- Le harcèlement
-
-Réponds uniquement par un JSON :
-{
-  "decision": "approved" | "rejected",
-  "reason": "raison du rejet courte et claire" (null si approved)
-}`,
+Réponds par JSON : { "decision": "approved" | "rejected", "reason": "raison courte" }`,
         response_json_schema: {
           type: "object",
           properties: {
@@ -79,20 +65,16 @@ Réponds uniquement par un JSON :
       });
 
       if (moderationResult.decision === 'rejected') {
-        toast.error(moderationResult.reason || "Ton message n'est pas assez positif pour cette boîte à mots doux !");
-        
-        // Notification de rejet
+        toast.error(moderationResult.reason || "Message pas assez positif !");
         const violationCount = (user.violation_count || 0) + 1;
         await base44.auth.updateMe({ violation_count: violationCount });
-
         await base44.entities.Notification.create({
           user_email: user.email,
           title: "Message refusé",
-          message: `Ton petit mot a été refusé : ${moderationResult.reason || "Il ne respecte pas les critères de positivité."}`,
+          message: `Ton petit mot a été refusé : ${moderationResult.reason}`,
           type: "report",
           is_read: false
         });
-
         setSending(false);
         return;
       }
@@ -102,12 +84,12 @@ Réponds uniquement par un JSON :
         message: newMessage,
         author_email: user.email,
         author_name: user.full_name,
-        is_anonymous: false
+        is_anonymous: true
       });
 
       setNewMessage("");
       setShowForm(false);
-      toast.success("Message envoyé ! Merci pour cette bienveillance 💖");
+      toast.success("Message envoyé ! 💖");
       loadNotes();
     } catch (error) {
       console.error("Error sending note:", error);
@@ -116,6 +98,19 @@ Réponds uniquement par un JSON :
       setSending(false);
     }
   };
+
+  const handleDelete = async (noteId) => {
+    if (!confirm("Supprimer votre petit mot ?")) return;
+    try {
+      await base44.entities.TeacherLoveNote.delete(noteId);
+      toast.success("Message supprimé.");
+      loadNotes();
+    } catch (error) {
+      toast.error("Erreur lors de la suppression.");
+    }
+  };
+
+  const hasUserPosted = user && notes.some(n => n.author_email === user.email);
 
   return (
     <Card className="bg-white/80 backdrop-blur-sm border-pink-200 shadow-lg w-full overflow-hidden relative">
@@ -129,20 +124,26 @@ Réponds uniquement par un JSON :
             Petit mot ❤️
           </CardTitle>
           
-          <Button 
-            variant="ghost" 
-            size="sm" 
-            className="text-pink-600 hover:text-pink-700 hover:bg-pink-50"
-            onClick={() => {
-                if (!user) {
-                    base44.auth.redirectToLogin(window.location.href);
-                    return;
-                }
-                setShowForm(!showForm)
-            }}
-          >
-            {showForm ? "Fermer" : "Écrire un mot"}
-          </Button>
+          {!hasUserPosted ? (
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              className="text-pink-600 hover:text-pink-700 hover:bg-pink-50"
+              onClick={() => {
+                  if (!user) {
+                      base44.auth.redirectToLogin(window.location.href);
+                      return;
+                  }
+                  setShowForm(!showForm)
+              }}
+            >
+              {showForm ? "Fermer" : "Écrire un mot"}
+            </Button>
+          ) : (
+            <span className="text-xs text-pink-600 font-medium bg-pink-50 px-3 py-1 rounded-full">
+              Vous avez déjà posté 💌
+            </span>
+          )}
         </div>
       </CardHeader>
 
@@ -190,15 +191,27 @@ Réponds uniquement par un JSON :
             La boîte aux lettres est vide... Soyez le premier à déposer un petit mot ! 💌
           </div>
         ) : (
-          <div className="space-y-3 max-h-[300px] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-pink-200 scrollbar-track-transparent">
+          <div className="space-y-3 h-[280px] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-pink-200 scrollbar-track-transparent">
             {notes.map((note) => (
-              <div key={note.id} className="bg-gradient-to-br from-white to-pink-50 p-3 rounded-lg border border-pink-100 shadow-sm relative group hover:-translate-y-0.5 transition-transform duration-200">
-                <Heart className="w-3 h-3 text-pink-300 absolute top-3 right-3 fill-pink-100" />
-                <p className="text-slate-700 text-sm italic leading-relaxed mb-2">
+              <div key={note.id} className="bg-gradient-to-br from-white to-pink-50 p-3 rounded-lg border border-pink-100 shadow-sm relative group hover:shadow-md transition-all duration-200">
+                {user && note.author_email === user.email && (
+                  <button 
+                    onClick={() => handleDelete(note.id)}
+                    className="absolute top-2 right-2 p-1 text-pink-300 hover:text-red-500 hover:bg-red-50 rounded-full transition-colors"
+                    title="Supprimer mon message"
+                  >
+                    <Trash2 className="w-3 h-3" />
+                  </button>
+                )}
+                {!user || note.author_email !== user.email ? (
+                  <Heart className="w-3 h-3 text-pink-300 absolute top-3 right-3 fill-pink-100" />
+                ) : null}
+                
+                <p className="text-slate-700 text-sm italic leading-relaxed mb-2 pr-6">
                   "{note.message}"
                 </p>
                 <p className="text-xs text-pink-400 font-medium text-right">
-                  — {note.is_anonymous ? "Anonyme" : note.author_name}
+                  — Anonyme
                 </p>
               </div>
             ))}
