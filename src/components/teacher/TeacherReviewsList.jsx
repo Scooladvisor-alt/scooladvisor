@@ -245,12 +245,14 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
           <div className="p-2 bg-pink-50 rounded-lg border border-pink-100">
             <MessageSquare className="w-6 h-6 text-[#FF64B8]" />
           </div>
-          <h3 className="text-xl font-bold flex items-center gap-2">
+          {/* MODIFICATION ICI : text-xl changé en text-lg */}
+          <h3 className="text-lg font-bold flex items-center gap-2">
             <span className="bg-gradient-to-r from-[#FF64B8] to-[#4CA9FF] bg-clip-text text-transparent">
               Avis des étudiants
             </span>
             <span>🍿</span>
-            <span className="text-slate-400 font-medium text-base">({reviews.length})</span>
+            {/* J'ai aussi réduit légèrement la taille du compteur (text-sm) pour garder l'équilibre */}
+            <span className="text-slate-400 font-medium text-sm">({reviews.length})</span>
           </h3>
         </div>
       </div>
