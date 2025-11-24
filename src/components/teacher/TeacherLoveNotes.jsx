@@ -167,7 +167,8 @@ Réponds par JSON : { "decision": "approved" | "rejected", "reason": "raison cou
                 <Textarea
                 placeholder="Merci pour tout, vous êtes le meilleur prof..."
                 value={newMessage}
-                onChange={(e) => setNewMessage(e.target.value)} className="className=\"flex w-full rounded-md border px-3 py-2 text-sm shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm bg-white border-pink-200 focus:border-pink-400 min-h-[70px] mb-3\"" />
+                onChange={(e) => setNewMessage(e.target.value)}
+                className="bg-white border-pink-200 focus:border-pink-400 min-h-[70px] mb-3" />
 
 
                 
