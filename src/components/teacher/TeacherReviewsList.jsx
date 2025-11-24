@@ -317,27 +317,19 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
                     </div>
                   </div>
 
-                  {/* Comment */}
-                  <div className="mt-4 mb-2">
-                    <p className="text-sm text-slate-700 leading-relaxed">
+                  {/* Comment & Expand Toggle */}
+                  <div className="mt-4 mb-2 flex items-start gap-2">
+                    <p className="text-sm text-slate-700 leading-relaxed flex-1">
                       {review.comment}
                     </p>
-                  </div>
-
-                  {/* Expand Criteria Toggle */}
-                   <button
+                    <button
                       onClick={() => toggleExpand(review.id)}
-                      className="w-full flex items-center justify-center gap-1.5 py-1.5 mt-2 text-xs font-medium text-slate-400 hover:text-purple-600 transition-colors group/btn"
+                      className="flex-shrink-0 p-1 text-slate-400 hover:text-purple-600 transition-colors rounded-full hover:bg-slate-50"
+                      title={expandedReviews.has(review.id) ? "Masquer les détails" : "Voir les détails"}
                     >
-                      {expandedReviews.has(review.id) ? (
-                        <ChevronDown className="w-3.5 h-3.5 rotate-180" />
-                      ) : (
-                        <>
-                          Voir le détail des notes
-                          <ChevronDown className="w-3.5 h-3.5 group-hover/btn:translate-y-0.5 transition-transform" />
-                        </>
-                      )}
+                      <ChevronDown className={`w-5 h-5 transition-transform duration-300 ${expandedReviews.has(review.id) ? 'rotate-180' : ''}`} />
                     </button>
+                  </div>
 
                   {/* Criteria Details */}
                   <AnimatePresence>
@@ -348,12 +340,12 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
                         exit={{ opacity: 0, height: 0 }}
                         className="overflow-hidden"
                       >
-                        <div className="flex flex-wrap items-center justify-center gap-3 pt-2 pb-4">
-                           {Object.entries(criteriaIcons).map(([key, { icon: Icon, color }]) => (
-                             <div key={key} className="flex items-center gap-1.5 p-1.5 bg-slate-50 rounded-md border border-slate-100">
-                                <Icon className={`w-3.5 h-3.5 ${color}`} />
-                                <span className="text-xs font-bold text-slate-800">{review[key]}</span>
-                                <span className="text-[10px] text-slate-400">/5</span>
+                        <div className="flex flex-wrap items-center gap-4 pb-3 pl-1">
+                           {Object.entries(criteriaIcons).map(([key, { icon: Icon, label, color }]) => (
+                             <div key={key} className="flex items-center gap-2 text-slate-600">
+                                <Icon className={`w-4 h-4 ${color}`} />
+                                <span className="text-xs font-medium">{label}:</span>
+                                <span className="text-sm font-bold text-slate-900">{review[key]}/5</span>
                              </div>
                            ))}
                         </div>
