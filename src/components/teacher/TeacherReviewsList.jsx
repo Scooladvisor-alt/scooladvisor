@@ -396,7 +396,7 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
                       )}
                     </div>
                   </div>
-                </motion.div>
+                </div>
               );
 
             })}
