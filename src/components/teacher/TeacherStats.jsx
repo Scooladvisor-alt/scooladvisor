@@ -12,13 +12,25 @@ const criteriaConfig = {
 
 export default function TeacherStats({ teacher }) {
   return (
-    <Card className="bg-white/80 backdrop-blur-sm border-slate-200 shadow-lg lg:sticky lg:top-24 w-full h-full flex flex-col">
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2 text-lg sm:text-xl">
-          <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 text-purple-600" />
-          Statistiques détaillées
-        </CardTitle>
-      </CardHeader>
+    <>
+      <svg width="0" height="0" className="absolute">
+        <defs>
+          <linearGradient id="statsGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#3B82F6" />
+            <stop offset="50%" stopColor="#8B5CF6" />
+            <stop offset="100%" stopColor="#EC4899" />
+          </linearGradient>
+        </defs>
+      </svg>
+      <Card className="bg-white/90 backdrop-blur-md border-slate-200 shadow-xl lg:sticky lg:top-24 w-full h-full flex flex-col hover:shadow-2xl transition-shadow duration-300">
+        <CardHeader className="border-b border-slate-100 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-pink-500/10 mb-2">
+          <CardTitle className="flex items-center gap-3 text-lg sm:text-xl">
+            <TrendingUp className="w-6 h-6 sm:w-8 sm:h-8" style={{ stroke: "url(#statsGradient)" }} />
+            <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+              Statistiques détaillées
+            </span>
+          </CardTitle>
+        </CardHeader>
       <CardContent className="space-y-4 sm:space-y-5 flex-1 pr-2">
         {teacher.review_count > 0 ? (
           <>
@@ -69,5 +81,6 @@ export default function TeacherStats({ teacher }) {
         )}
       </CardContent>
     </Card>
+    </>
   );
 }

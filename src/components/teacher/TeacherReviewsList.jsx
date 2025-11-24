@@ -240,12 +240,22 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
 
   return (
     <>
-      <Card className="bg-white/80 backdrop-blur-sm border-slate-200 shadow-lg w-full h-full flex flex-col">
-        <div className="absolute top-0 right-0 w-full h-1 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 opacity-50 rounded-t-xl" />
-        <CardHeader>
-          <CardTitle className="font-semibold tracking-tight flex items-center gap-2 text-xl">
-            <MessageSquare className="w-6 h-6 text-purple-600" />
-            Avis des étudiants 🍿 ({reviews.length})
+      <svg width="0" height="0" className="absolute">
+        <defs>
+          <linearGradient id="teacherReviewGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#A855F7" />
+            <stop offset="50%" stopColor="#EC4899" />
+            <stop offset="100%" stopColor="#3B82F6" />
+          </linearGradient>
+        </defs>
+      </svg>
+      <Card className="bg-white/90 backdrop-blur-md border-slate-200 shadow-xl w-full h-full flex flex-col hover:shadow-2xl transition-shadow duration-300">
+        <CardHeader className="border-b border-slate-100 bg-gradient-to-r from-purple-500/10 via-pink-500/10 to-blue-500/10 mb-2">
+          <CardTitle className="font-semibold tracking-tight flex items-center gap-3 text-xl">
+            <MessageSquare className="w-6 h-6 sm:w-8 sm:h-8" style={{ stroke: "url(#teacherReviewGradient)" }} />
+            <span className="bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-transparent">
+              Avis des étudiants 🍿 ({reviews.length})
+            </span>
           </CardTitle>
         </CardHeader>
         <CardContent className="flex-1 overflow-hidden flex flex-col">
