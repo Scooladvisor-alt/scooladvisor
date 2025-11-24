@@ -21,10 +21,10 @@ const formatDateWithTimezone = (dateString, formatStr) => {
 };
 
 const criteriaIcons = {
-  workload: { icon: BookOpen, label: "Charge", color: "text-blue-600" },
-  friendliness: { icon: Heart, label: "Amabilité", color: "text-pink-600" },
-  teaching_method: { icon: Brain, label: "Enseignement", color: "text-purple-600" },
-  grading_severity: { icon: FileText, label: "Notation", color: "text-orange-600" }
+  workload: { icon: BookOpen, label: "Charge", color: "text-[#4CA9FF]" },
+  friendliness: { icon: Heart, label: "Amabilité", color: "text-[#FF64B8]" },
+  teaching_method: { icon: Brain, label: "Enseignement", color: "text-purple-500" },
+  grading_severity: { icon: FileText, label: "Notation", color: "text-orange-500" }
 };
 
 const getAvatarUrl = (avatar) => {
@@ -38,7 +38,7 @@ const getAvatarUrl = (avatar) => {
   return avatarUrls[avatar] || "";
 };
 
-export default function TeacherReviewsList({ teacherId, user, onReload, onEditReview }) {
+export default function TeacherReviewsList({ teacherId, user, onReload, onEditReview, embedded = false }) {
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [reportingReview, setReportingReview] = useState(null);
@@ -238,41 +238,38 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
 
   const sortedReviews = [...reviews].sort((a, b) => (getLikeCount(b) || 0) - (getLikeCount(a) || 0));
 
-  return (
-    <>
-      <svg width="0" height="0" className="absolute">
-        <defs>
-          <linearGradient id="teacherReviewGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#A855F7" />
-            <stop offset="50%" stopColor="#EC4899" />
-            <stop offset="100%" stopColor="#3B82F6" />
-          </linearGradient>
-        </defs>
-      </svg>
-      <Card className="bg-white/90 backdrop-blur-md border-slate-200 shadow-xl w-full h-full flex flex-col hover:shadow-2xl transition-shadow duration-300">
-        <CardHeader className="border-b border-slate-100 bg-gradient-to-r from-purple-500/10 via-pink-500/10 to-blue-500/10 mb-2">
-          <CardTitle className="font-semibold tracking-tight flex items-center gap-3 text-xl">
-            <MessageSquare className="w-6 h-6 sm:w-8 sm:h-8" style={{ stroke: "url(#teacherReviewGradient)" }} />
-            <span className="bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-transparent">
-              Avis des étudiants 🍿 ({reviews.length})
+  const Content = () => (
+    <div className="flex-1 flex flex-col h-full">
+      <div className={`flex items-center justify-between mb-6 ${!embedded ? "p-6 pb-0" : ""}`}>
+        <div className="flex items-center gap-3">
+          <div className="p-2 bg-pink-50 rounded-lg border border-pink-100">
+            <MessageSquare className="w-6 h-6 text-[#FF64B8]" />
+          </div>
+          <h3 className="text-xl font-bold flex items-center gap-2">
+            <span className="bg-gradient-to-r from-[#FF64B8] to-[#4CA9FF] bg-clip-text text-transparent">
+              Avis des étudiants
             </span>
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="flex-1 overflow-hidden flex flex-col">
+            <span>🍿</span>
+            <span className="text-slate-400 font-medium text-base">({reviews.length})</span>
+          </h3>
+        </div>
+      </div>
+
+      <div className={`flex-1 flex flex-col ${!embedded ? "p-6 pt-0" : ""} overflow-hidden`}>
           {loading ?
           <div className="flex justify-center items-center h-48">
               <Loader2 className="w-8 h-8 text-slate-400 animate-spin" />
             </div> :
           sortedReviews.length === 0 ?
           <div className="text-center py-12">
-              <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <MessageSquare className="w-8 h-8 text-slate-400" />
+              <div className="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-4 border border-slate-100">
+                <MessageSquare className="w-8 h-8 text-slate-300" />
               </div>
-              <p className="text-slate-600">Aucun avis pour le moment</p>
-              <p className="text-sm text-slate-500 mt-2">Soyez le premier à noter ce professeur !</p>
+              <p className="text-slate-600 font-medium">Aucun avis pour le moment</p>
+              <p className="text-sm text-slate-500 mt-1">Soyez le premier à noter !</p>
             </div> :
 
-          <div className="space-y-3 sm:space-y-6 flex-1 overflow-y-auto pr-2 custom-scrollbar">
+          <div className="space-y-4 flex-1 overflow-y-auto pr-2 custom-scrollbar">
             <style>{`
               .custom-scrollbar::-webkit-scrollbar { width: 6px; }
               .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
@@ -420,8 +417,19 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
             })}
             </div>
           }
-        </CardContent>
-      </Card>
+      </div>
+    </div>
+  );
+
+  return (
+    <>
+      {embedded ? (
+        <Content />
+      ) : (
+        <Card className="bg-white/90 backdrop-blur-md border-slate-200 shadow-xl w-full h-full flex flex-col hover:shadow-2xl transition-shadow duration-300">
+          <Content />
+        </Card>
+      )}
 
       {reportingReview &&
       <ReportDialog
