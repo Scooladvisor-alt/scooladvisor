@@ -282,11 +282,8 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
               const avatarUrl = userAvatar && userAvatar !== 'letter' ? getAvatarUrl(userAvatar) : null;
 
               return (
-                <motion.div
+                <div
                   key={review.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
                   className="group relative p-5 rounded-2xl border border-slate-100 bg-white shadow-[0_2px_8px_-2px_rgba(0,0,0,0.05)] hover:shadow-[0_8px_16px_-4px_rgba(0,0,0,0.08)] transition-all duration-300 hover:border-purple-100"
                 >
                   {/* Header */}
@@ -312,10 +309,10 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
                     </div>
 
                     <div className="flex flex-col items-end">
-                      <div className="flex items-center gap-1.5 bg-amber-50 text-amber-900 px-2.5 py-1 rounded-lg border border-amber-100 shadow-sm">
-                        <Star className="w-3.5 h-3.5 fill-amber-500 text-amber-500" />
-                        <span className="font-bold text-sm">{review.total_rating.toFixed(1)}</span>
-                        <span className="text-[10px] text-amber-600 font-medium">/20</span>
+                      <div className="flex items-center gap-1.5 bg-amber-50 text-amber-900 px-2.5 py-1 rounded-lg border border-amber-200 shadow-sm">
+                        <Star className="w-3.5 h-3.5 fill-amber-600 text-amber-600" />
+                        <span className="font-bold text-sm text-amber-950">{review.total_rating.toFixed(1)}</span>
+                        <span className="text-[10px] text-amber-700 font-medium">/20</span>
                       </div>
                     </div>
                   </div>
@@ -332,8 +329,14 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
                       onClick={() => toggleExpand(review.id)}
                       className="w-full flex items-center justify-center gap-1.5 py-1.5 mt-2 text-xs font-medium text-slate-400 hover:text-purple-600 transition-colors group/btn"
                     >
-                      {expandedReviews.has(review.id) ? "Masquer les détails" : "Voir le détail des notes"}
-                      <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${expandedReviews.has(review.id) ? 'rotate-180' : 'group-hover/btn:translate-y-0.5'}`} />
+                      {expandedReviews.has(review.id) ? (
+                        <ChevronDown className="w-3.5 h-3.5 rotate-180" />
+                      ) : (
+                        <>
+                          Voir le détail des notes
+                          <ChevronDown className="w-3.5 h-3.5 group-hover/btn:translate-y-0.5 transition-transform" />
+                        </>
+                      )}
                     </button>
 
                   {/* Criteria Details */}
@@ -345,14 +348,12 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
                         exit={{ opacity: 0, height: 0 }}
                         className="overflow-hidden"
                       >
-                        <div className="grid grid-cols-2 gap-2 pt-2 pb-4">
-                           {Object.entries(criteriaIcons).map(([key, { icon: Icon, label, color }]) => (
-                             <div key={key} className="flex items-center justify-between p-2 bg-slate-50 rounded-lg border border-slate-100">
-                                <div className="flex items-center gap-2">
-                                   <Icon className={`w-3.5 h-3.5 ${color}`} />
-                                   <span className="text-xs font-medium text-slate-600">{label}</span>
-                                </div>
-                                <span className="text-xs font-bold text-slate-800">{review[key]}/5</span>
+                        <div className="flex flex-wrap items-center justify-center gap-3 pt-2 pb-4">
+                           {Object.entries(criteriaIcons).map(([key, { icon: Icon, color }]) => (
+                             <div key={key} className="flex items-center gap-1.5 p-1.5 bg-slate-50 rounded-md border border-slate-100">
+                                <Icon className={`w-3.5 h-3.5 ${color}`} />
+                                <span className="text-xs font-bold text-slate-800">{review[key]}</span>
+                                <span className="text-[10px] text-slate-400">/5</span>
                              </div>
                            ))}
                         </div>
@@ -369,30 +370,30 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
                           onClick={() => handleLike(review)}
                           className={`h-8 px-2.5 rounded-full text-xs font-medium transition-all ${
                             userLikes.has(review.id)
-                              ? "bg-pink-50 text-pink-600 hover:bg-pink-100 hover:text-pink-700"
+                              ? "bg-gradient-to-r from-[#FF64B8] to-[#4CA9FF] text-white shadow-sm hover:opacity-90"
                               : "text-slate-500 hover:bg-slate-50 hover:text-slate-700"
                           }`}
                        >
-                          <ThumbsUp className={`w-3.5 h-3.5 mr-1.5 ${userLikes.has(review.id) ? "fill-current" : ""}`} />
+                          <ThumbsUp className={`w-3.5 h-3.5 mr-1.5 ${userLikes.has(review.id) ? "fill-current text-white" : ""}`} />
                           {getLikeCount(review) || "J'aime"}
                        </Button>
                     </div>
 
                     <div className="flex items-center gap-1">
-                       {user && review.created_by === user.email ? (
-                         <>
-                           <Button variant="ghost" size="icon" onClick={() => onEditReview(review)} className="h-7 w-7 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-full">
-                             <Edit className="w-3.5 h-3.5" />
-                           </Button>
-                           <Button variant="ghost" size="icon" onClick={() => handleDelete(review.id)} className="h-7 w-7 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-full">
-                             <Trash2 className="w-3.5 h-3.5" />
-                           </Button>
-                         </>
-                       ) : (
-                         <Button variant="ghost" size="icon" onClick={() => setReportingReview(review)} className="h-7 w-7 text-slate-300 hover:text-orange-500 hover:bg-orange-50 rounded-full" title="Signaler">
-                            <AlertCircle className="w-3.5 h-3.5" />
-                         </Button>
-                       )}
+                      {user && review.created_by === user.email ? (
+                        <>
+                          <Button variant="ghost" size="icon" onClick={() => onEditReview(review)} className="h-7 w-7 text-blue-600 hover:text-blue-700 hover:bg-blue-50 rounded-full">
+                            <Edit className="w-3.5 h-3.5" />
+                          </Button>
+                          <Button variant="ghost" size="icon" onClick={() => handleDelete(review.id)} className="h-7 w-7 text-red-600 hover:text-red-700 hover:bg-red-50 rounded-full">
+                            <Trash2 className="w-3.5 h-3.5" />
+                          </Button>
+                        </>
+                      ) : (
+                        <Button variant="ghost" size="icon" onClick={() => setReportingReview(review)} className="h-7 w-7 text-slate-300 hover:text-orange-500 hover:bg-orange-50 rounded-full" title="Signaler">
+                           <AlertCircle className="w-3.5 h-3.5" />
+                        </Button>
+                      )}
                     </div>
                   </div>
                 </motion.div>
