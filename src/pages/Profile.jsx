@@ -328,8 +328,8 @@ export default function ProfilePage() {
                       {avatarUrl ?
                       <AvatarImage src={avatarUrl} /> :
                       null}
-                      <AvatarFallback className="bg-gradient-to-br from-[#FF4D8D] via-purple-500 to-[#4DA6FF] text-white text-5xl sm:text-6xl font-bold">
-                        {user.full_name?.charAt(0) || 'U'}
+                      <AvatarFallback className="bg-transparent">
+                        <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/f5396bc58_a-humanized-black-graduation-cap-with-a-star-shape-3.png" alt="Avatar" className="w-full h-full object-cover" />
                       </AvatarFallback>
                     </Avatar>
                     

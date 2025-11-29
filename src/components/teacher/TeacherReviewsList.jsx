@@ -299,8 +299,14 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
                       <Avatar className="w-10 h-10 border-2 border-white shadow-sm ring-1 ring-slate-100">
                          {!review.is_anonymous && avatarUrl ?
                             <AvatarImage src={avatarUrl} /> : null}
-                          <AvatarFallback className={`text-white text-sm font-bold ${review.is_anonymous ? 'bg-slate-400' : 'bg-gradient-to-br from-purple-500 to-blue-500'}`}>
-                            {review.is_anonymous ? <UserIcon className="w-5 h-5" /> : (review.author_name?.[0] || 'A')}
+                          <AvatarFallback className="bg-transparent">
+                             {review.is_anonymous ? (
+                               <div className="w-full h-full bg-slate-400 flex items-center justify-center text-white">
+                                 <UserIcon className="w-5 h-5" />
+                               </div>
+                             ) : (
+                               <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/f5396bc58_a-humanized-black-graduation-cap-with-a-star-shape-3.png" alt="Avatar" className="w-full h-full object-cover" />
+                             )}
                           </AvatarFallback>
                       </Avatar>
                       <div>

@@ -375,8 +375,14 @@ Rédige maintenant ton résumé façon "L'avis d'Antonin" en 3 phrases max.`;
                           {!review.is_anonymous && avatarUrl ?
                         <AvatarImage src={avatarUrl} /> :
                         null}
-                          <AvatarFallback className="bg-gradient-to-br from-slate-600 to-slate-800 text-white text-sm">
-                            {review.is_anonymous ? <UserIcon className="w-5 h-5" /> : review.author_name?.charAt(0).toUpperCase() || review.created_by?.charAt(0).toUpperCase() || 'A'}
+                          <AvatarFallback className="bg-transparent">
+                            {review.is_anonymous ? (
+                              <div className="w-full h-full bg-slate-400 flex items-center justify-center text-white">
+                                <UserIcon className="w-5 h-5" />
+                              </div>
+                            ) : (
+                              <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/f5396bc58_a-humanized-black-graduation-cap-with-a-star-shape-3.png" alt="Avatar" className="w-full h-full object-cover" />
+                            )}
                           </AvatarFallback>
                         </Avatar>
                         <div className="flex-1 min-w-0">

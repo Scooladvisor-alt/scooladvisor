@@ -398,8 +398,8 @@ export default function Layout({ children }) {
                           {user.profile_avatar && user.profile_avatar !== 'letter' ?
                       <AvatarImage src={getAvatarUrl(user.profile_avatar)} /> :
                       null}
-                          <AvatarFallback className="bg-gradient-to-br from-blue-600 to-purple-600 text-white text-sm font-semibold">
-                            {user.full_name?.charAt(0) || 'U'}
+                          <AvatarFallback className="bg-transparent">
+                            <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/f5396bc58_a-humanized-black-graduation-cap-with-a-star-shape-3.png" alt="Avatar" className="w-full h-full object-cover" />
                           </AvatarFallback>
                         </Avatar>
                         <span className="text-sm font-medium text-slate-900 hidden sm:block">{user.full_name?.split(' ')[0]}</span>
