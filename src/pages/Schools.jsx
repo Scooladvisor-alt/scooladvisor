@@ -718,7 +718,21 @@ export default function SchoolsPage() {
               className="text-center py-16">
 
                 <div className="w-20 h-20 bg-gradient-to-br from-pink-100 to-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Search className="w-10 h-10 bg-gradient-to-r from-[#FF4D8D] to-[#4DA6FF] bg-clip-text text-transparent" style={{ WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }} />
+                  <motion.div
+                    animate={{ 
+                      rotate: [0, -10, 0, 10, 0],
+                      scale: [1, 1.1, 1],
+                      x: [0, -3, 3, 0],
+                      y: [0, -3, 0]
+                    }}
+                    transition={{ 
+                      duration: 3,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                  >
+                    <Search className="w-10 h-10 text-[#FF4D8D]" />
+                  </motion.div>
                 </div>
                 <p className="text-lg font-semibold text-slate-900 mb-2">Commence à chercher un prof</p>
                 <p className="text-sm text-slate-500">Tape son nom ou sa matière pour découvrir son profil 🔍</p>
