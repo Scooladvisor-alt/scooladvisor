@@ -395,7 +395,7 @@ En cas de doute entre "critiquer" et "insulter", privilégie la sécurité et re
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-[95vw] sm:max-w-4xl max-h-[90vh] overflow-y-auto rounded-2xl">
+      <DialogContent className="max-w-[95vw] sm:max-w-5xl max-h-[90vh] overflow-y-auto rounded-2xl">
         <DialogHeader>
           <DialogTitle className="text-lg sm:text-2xl font-bold">
             <span className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
@@ -437,53 +437,53 @@ En cas de doute entre "critiquer" et "insulter", privilégie la sécurité et re
             animation: widget-shine 0.5s ease-out;
           }
         `}</style>
-        <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
-          <div className="space-y-3 sm:space-y-5">
-            {criteria.map(({ key, label, icon: Icon, color, description, gradient, sliderClass }) => {
-              const isMax = formData[key] === 5;
-              const isFlashing = flashingWidgets[key];
-              
-              return (
-                <div 
-                  key={key} 
-                  className={`rounded-lg p-3 sm:p-4 border border-slate-200 transition-all duration-500 relative overflow-hidden ${
-                    isMax ? gradient : 'bg-slate-50'
-                  } ${isFlashing ? 'animate-widget-shine ring-2 ring-offset-2 ring-offset-white ring-yellow-400' : ''}`}
-                >
-                  <div className="flex items-center gap-2 mb-1 sm:mb-2 relative z-10">
-                    <Icon className={`w-4 h-4 sm:w-5 sm:h-5 ${color}`} />
-                    <Label className="font-semibold text-xs sm:text-sm">{label}</Label>
-                  </div>
-                  <p className="text-[10px] sm:text-xs text-slate-600 mb-2 sm:mb-3 relative z-10">{description}</p>
-                  <div className="flex items-center gap-3 sm:gap-4 relative z-10">
-                    <div className={sliderClass + " flex-1"}>
-                      <Slider
-                        value={[formData[key]]}
-                        onValueChange={([value]) => {
-                          setFormData({ ...formData, [key]: value });
-                          if (value === 5 && formData[key] !== 5) {
-                            setFlashingWidgets(prev => ({ ...prev, [key]: true }));
-                            setTimeout(() => setFlashingWidgets(prev => ({ ...prev, [key]: false })), 500);
-                          }
-                        }}
-                        min={0}
-                        max={5}
-                        step={0.25}
-                        disabled={!canEdit} 
-                      />
+        <form onSubmit={handleSubmit} className="flex flex-col lg:flex-row gap-6">
+          <div className="flex-1 space-y-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {criteria.map(({ key, label, icon: Icon, color, description, gradient, sliderClass }) => {
+                const isMax = formData[key] === 5;
+                const isFlashing = flashingWidgets[key];
+                
+                return (
+                  <div 
+                    key={key} 
+                    className={`rounded-lg p-3 border border-slate-200 transition-all duration-500 relative overflow-hidden ${
+                      isMax ? gradient : 'bg-slate-50'
+                    } ${isFlashing ? 'animate-widget-shine ring-2 ring-offset-2 ring-offset-white ring-yellow-400' : ''}`}
+                  >
+                    <div className="flex items-center gap-2 mb-2 relative z-10">
+                      <Icon className={`w-4 h-4 ${color}`} />
+                      <Label className="font-semibold text-xs">{label}</Label>
                     </div>
+                    <div className="flex items-center gap-2 relative z-10">
+                      <div className={sliderClass + " flex-1"}>
+                        <Slider
+                          value={[formData[key]]}
+                          onValueChange={([value]) => {
+                            setFormData({ ...formData, [key]: value });
+                            if (value === 5 && formData[key] !== 5) {
+                              setFlashingWidgets(prev => ({ ...prev, [key]: true }));
+                              setTimeout(() => setFlashingWidgets(prev => ({ ...prev, [key]: false })), 500);
+                            }
+                          }}
+                          min={0}
+                          max={5}
+                          step={0.25}
+                          disabled={!canEdit} 
+                        />
+                      </div>
 
-                    <div className={`flex items-center gap-1 px-2 py-1 sm:px-3 sm:py-1.5 rounded-lg border min-w-[50px] sm:min-w-[60px] justify-center transition-colors duration-300 ${isMax ? 'bg-white/80 border-transparent shadow-sm' : 'bg-white border-slate-200'}`}>
-                      <span className={`text-base sm:text-xl font-bold transition-colors ${isMax ? 'text-slate-900' : 'text-slate-900'}`}>{formData[key].toFixed(2).replace(/[.,]00$/, "")}</span>
-                      <span className="text-[10px] sm:text-sm text-slate-500">/5</span>
+                      <div className={`flex items-center justify-center px-2 py-0.5 rounded border min-w-[40px] transition-colors duration-300 ${isMax ? 'bg-white/80 border-transparent shadow-sm' : 'bg-white border-slate-200'}`}>
+                        <span className="text-sm font-bold text-slate-900">{formData[key].toFixed(1).replace(/[.,]0$/, "")}</span>
+                      </div>
                     </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
 
             {showStudentLifeBonus &&
-            <div className="relative overflow-hidden bg-slate-50/50 rounded-lg p-3 sm:p-4 border border-slate-200">
+            <div className="relative overflow-hidden bg-slate-50/50 rounded-lg p-3 border border-slate-200">
                 {(formData.has_student_life || formData.has_network) && (
                   <>
                     {[...Array(8)].map((_, i) => (
@@ -503,21 +503,22 @@ En cas de doute entre "critiquer" et "insulter", privilégie la sécurité et re
                   </>
                 )}
                 
-                <div className="flex items-center gap-2 mb-2 sm:mb-3 relative z-10">
-                  <Star className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-500 fill-yellow-500" />
-                  <Label className="font-semibold text-xs sm:text-sm text-slate-700">Bonus Établissement (Max +2)</Label>
+                <div className="flex items-center gap-2 mb-2 relative z-10">
+                  <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" />
+                  <Label className="font-semibold text-xs text-slate-700">Bonus (Max +2)</Label>
                 </div>
 
-                <div className="flex flex-wrap items-center gap-4 sm:gap-8 relative z-10">
+                <div className="flex gap-4 relative z-10">
                   <div className="flex items-center space-x-2">
                     <Checkbox
                       id="has_student_life"
                       checked={formData.has_student_life}
                       onCheckedChange={(checked) => setFormData({ ...formData, has_student_life: checked })}
                       disabled={!canEdit}
+                      className="w-4 h-4"
                     />
-                    <Label htmlFor="has_student_life" className="text-xs sm:text-sm cursor-pointer font-medium text-slate-700">
-                      Vie associative +1
+                    <Label htmlFor="has_student_life" className="text-xs cursor-pointer font-medium text-slate-700">
+                      Vie asso. +1
                     </Label>
                   </div>
 
@@ -527,109 +528,96 @@ En cas de doute entre "critiquer" et "insulter", privilégie la sécurité et re
                       checked={formData.has_network}
                       onCheckedChange={(checked) => setFormData({ ...formData, has_network: checked })}
                       disabled={!canEdit}
+                      className="w-4 h-4"
                     />
-                    <Label htmlFor="has_network" className="text-xs sm:text-sm cursor-pointer font-medium text-slate-700">
+                    <Label htmlFor="has_network" className="text-xs cursor-pointer font-medium text-slate-700">
                       Réseaux +1
                     </Label>
                   </div>
                 </div>
               </div>
             }
-          </div>
 
-          <div className="bg-gradient-to-r from-amber-50 to-amber-100 rounded-xl p-3 sm:p-4 border-2 border-amber-200">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <Star className="w-5 h-5 sm:w-6 sm:h-6 text-amber-600 fill-amber-600" />
-                <span className="font-semibold text-sm sm:text-base text-amber-900">Note finale</span>
-              </div>
-              <div className="flex items-center gap-1 sm:gap-2">
-                <span className="text-2xl sm:text-3xl font-bold text-amber-900">{calculateTotalRating(formData).toFixed(2).replace(/[.,]00$/, "")}</span>
-                <span className="text-sm sm:text-lg text-amber-700">/ 20</span>
+            <div className="bg-gradient-to-r from-amber-50 to-amber-100 rounded-lg p-3 border border-amber-200">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <Star className="w-5 h-5 text-amber-600 fill-amber-600" />
+                  <span className="font-semibold text-sm text-amber-900">Note finale</span>
+                </div>
+                <div className="flex items-center gap-1">
+                  <span className="text-2xl font-bold text-amber-900">{calculateTotalRating(formData).toFixed(2).replace(/[.,]00$/, "")}</span>
+                  <span className="text-sm text-amber-700">/ 20</span>
+                </div>
               </div>
             </div>
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="comment" className="text-sm sm:text-base">
-              Appréciation générale *
-            </Label>
-            <Textarea
-              id="comment"
-              value={formData.comment}
-              onChange={(e) => {
-                const text = e.target.value;
-                if (text.length <= MAX_COMMENT_LENGTH) {
-                  setFormData({ ...formData, comment: text });
+          <div className="flex-1 space-y-3">
+            <div className="space-y-2">
+              <Label htmlFor="comment" className="text-sm font-semibold">
+                Appréciation générale *
+              </Label>
+              <Textarea
+                id="comment"
+                value={formData.comment}
+                onChange={(e) => {
+                  const text = e.target.value;
+                  if (text.length <= MAX_COMMENT_LENGTH) {
+                    setFormData({ ...formData, comment: text });
+                  }
+                }}
+                placeholder="Décris ton expérience..."
+                rows={5}
+                className="text-sm resize-none"
+                disabled={!canEdit} />
+
+              <div className="flex justify-between text-[10px] text-slate-400">
+                <span>
+                  {formData.comment.length} / {MAX_COMMENT_LENGTH}
+                </span>
+                {formData.comment.length >= MAX_COMMENT_LENGTH &&
+                <span className="text-red-600 font-medium">Max atteint</span>
                 }
-              }}
-              placeholder="Décris ton expérience dans cet établissement (ambiance, locaux, staff...)"
-              rows={4}
-              className="text-sm sm:text-base"
-              disabled={!canEdit} />
-
-            <div className="flex justify-between text-[10px] text-slate-400">
-              <span>
-                {formData.comment.length} / {MAX_COMMENT_LENGTH} caractères 
-                <span className="ml-1">(minimum 10)</span>
-              </span>
-              {formData.comment.length >= MAX_COMMENT_LENGTH &&
-              <span className="text-red-600 font-medium">Limite atteinte !</span>
-              }
+              </div>
             </div>
-          </div>
-          
-          <div className="flex items-start space-x-3 p-2 sm:p-3 rounded-lg bg-blue-50 border border-blue-200">
-             <Checkbox
-              id="is_anonymous"
-              checked={formData.is_anonymous}
-              onCheckedChange={(checked) => setFormData({ ...formData, is_anonymous: checked })}
-              className="mt-0.5"
-              disabled={!canEdit} />
-
-            <div className="grid gap-1.5 leading-none">
-              <label
-                htmlFor="is_anonymous"
-                className="text-xs sm:text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-
-                Publier en anonyme
-              </label>
-              <p className="text-[10px] sm:text-xs text-slate-500">
-                Votre nom d'utilisateur ne sera pas affiché publiquement.
-              </p>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="flex items-center space-x-2 p-2 rounded bg-blue-50 border border-blue-100">
+                 <Checkbox
+                  id="is_anonymous"
+                  checked={formData.is_anonymous}
+                  onCheckedChange={(checked) => setFormData({ ...formData, is_anonymous: checked })}
+                  className="w-4 h-4"
+                  disabled={!canEdit} />
+                <label htmlFor="is_anonymous" className="text-xs font-medium cursor-pointer">
+                  Mode anonyme
+                </label>
+              </div>
+              
+              <div className="flex items-center space-x-2 p-2 bg-green-50 rounded border border-green-200">
+                <Checkbox
+                  id="certification"
+                  checked={formData.certification}
+                  onCheckedChange={(checked) => setFormData({ ...formData, certification: checked })}
+                  className="w-4 h-4"
+                  disabled={!canEdit} />
+                 <label htmlFor="certification" className="text-xs font-medium text-green-900 cursor-pointer">
+                  Je certifie être constructif
+                </label>
+              </div>
             </div>
-          </div>
-          
-          <div className="flex items-start space-x-3 p-3 sm:p-4 bg-green-50 rounded-lg border-2 border-green-300">
-            <Checkbox
-              id="certification"
-              checked={formData.certification}
-              onCheckedChange={(checked) => setFormData({ ...formData, certification: checked })}
-              className="mt-0.5"
-              disabled={!canEdit} />
 
-            <div className="grid gap-1.5 leading-none">
-               <label
-                htmlFor="certification"
-                className="text-xs sm:text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-green-900">
+            <Alert className="bg-red-50 border-red-100 py-2">
+              <AlertCircle className="h-3 w-3 text-red-600 top-3" />
+              <AlertDescription className="text-red-900 text-[10px] leading-tight ml-2">
+                Responsabilité : pas d'injures, diffamation ou discrimination.
+              </AlertDescription>
+            </Alert>
 
-                Je certifie que cet avis est constructif et bienveillant.
-              </label>
-            </div>
-          </div>
-
-           <Alert className="bg-red-50 border-red-300">
-            <AlertCircle className="h-4 w-4 text-red-600" />
-            <AlertDescription className="text-red-900 text-[10px] sm:text-sm font-medium">
-              <strong>Avertissement légal :</strong> Chaque utilisateur est seul responsable de ses propos. Tout contenu diffamatoire, injurieux ou discriminatoire est interdit.
-            </AlertDescription>
-          </Alert>
-
-          <DialogFooter>
-            <Button type="submit" disabled={submitButtonDisabled} className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 text-primary-foreground px-4 py-2 w-full bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 disabled:bg-slate-300 text-white text-xs sm:text-base h-9 sm:h-10 shadow-md">
-              {loading ? "Publication..." : existingReview ? "Modifier l'avis" : "Publier l'avis"}
+            <Button type="submit" disabled={submitButtonDisabled} className="w-full bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 text-white shadow-md">
+              {loading ? "Envoi..." : existingReview ? "Modifier" : "Publier"}
             </Button>
-          </DialogFooter>
+          </div>
         </form>
       </DialogContent>
     </Dialog>);
