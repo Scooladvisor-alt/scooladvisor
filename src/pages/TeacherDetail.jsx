@@ -438,8 +438,8 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
 
 
                   <Sparkles className="w-4 h-4 mr-2" />
-                  <span className="hidden sm:inline">Demander à Antonin 🤖 ce qu'il en pense</span>
-                  <span className="sm:hidden">Avis d'Antonin 🤖</span>
+                  <span className="hidden sm:inline">Demander à Antonin ce qu'il en pense</span>
+                  <span className="sm:hidden">Avis d'Antonin</span>
                 </Button>
               </div>
               
