@@ -71,8 +71,8 @@ function AvatarSelectionDialog({ open, onOpenChange, currentAvatar, onAvatarSele
             onClick={() => setSelectedAvatar(avatar.id)}
             className={`relative p-2 sm:p-4 rounded-xl border-2 transition-all hover:scale-105 ${
             selectedAvatar === avatar.id ?
-            'border-purple-600 bg-purple-50 shadow-lg' :
-            'border-slate-200 bg-white hover:border-purple-300'}`
+            'border-[#FF4D8D] bg-pink-50 shadow-lg' :
+            'border-slate-200 bg-white hover:border-pink-300'}`
             }>
 
               {avatar.url ?
@@ -82,13 +82,13 @@ function AvatarSelectionDialog({ open, onOpenChange, currentAvatar, onAvatarSele
               className="w-full h-20 sm:h-32 object-contain rounded-lg" /> :
 
 
-            <div className="w-full h-20 sm:h-32 flex items-center justify-center bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg">
+            <div className="w-full h-20 sm:h-32 flex items-center justify-center bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-[#4DA6FF] rounded-lg">
                   <span className="text-4xl sm:text-6xl font-bold text-white">{userInitial}</span>
                 </div>
             }
               <p className="text-xs sm:text-sm font-medium text-center mt-1 sm:mt-2 text-slate-900">{avatar.name}</p>
               {selectedAvatar === avatar.id &&
-            <div className="absolute top-1 right-1 sm:top-2 sm:right-2 w-5 h-5 sm:w-6 sm:h-6 bg-purple-600 rounded-full flex items-center justify-center">
+            <div className="absolute top-1 right-1 sm:top-2 sm:right-2 w-5 h-5 sm:w-6 sm:h-6 bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-[#4DA6FF] rounded-full flex items-center justify-center">
                   <svg className="w-3 h-3 sm:w-4 sm:h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
@@ -102,7 +102,7 @@ function AvatarSelectionDialog({ open, onOpenChange, currentAvatar, onAvatarSele
           <Button variant="outline" onClick={() => onOpenChange(false)} className="text-xs sm:text-sm">
             Annuler
           </Button>
-          <Button onClick={handleSave} className="bg-gradient-to-r from-purple-600 to-blue-600 text-white text-xs sm:text-sm">
+          <Button onClick={handleSave} className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-[#4DA6FF] text-white text-xs sm:text-sm">
             Enregistrer
           </Button>
         </DialogFooter>
@@ -314,7 +314,7 @@ export default function ProfilePage() {
 
           <Card className="bg-white/80 backdrop-blur-sm shadow-xl border-slate-200 mb-8">
             <CardHeader className="border-b border-slate-100">
-              <CardTitle className="tracking-tight text-3xl sm:text-4xl font-bold bg-gradient-to-br from-[#FF66CC] to-[#4DA6FF] bg-clip-text text-transparent">Mon Profil
+              <CardTitle className="tracking-tight text-3xl sm:text-4xl font-bold bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-[#4DA6FF] bg-clip-text text-transparent">Mon Profil
 
               </CardTitle>
             </CardHeader>
@@ -327,7 +327,7 @@ export default function ProfilePage() {
                       {avatarUrl ?
                       <AvatarImage src={avatarUrl} /> :
                       null}
-                      <AvatarFallback className="bg-gradient-to-br from-blue-600 to-purple-600 text-white text-5xl sm:text-6xl font-bold">
+                      <AvatarFallback className="bg-gradient-to-br from-[#FF4D8D] via-purple-500 to-[#4DA6FF] text-white text-5xl sm:text-6xl font-bold">
                         {user.full_name?.charAt(0) || 'U'}
                       </AvatarFallback>
                     </Avatar>
@@ -362,7 +362,7 @@ export default function ProfilePage() {
           <Card className="bg-white/80 backdrop-blur-sm shadow-xl border-slate-200">
             <CardHeader className="border-b border-slate-100">
               <CardTitle className="flex items-center gap-2 text-2xl">
-                <TrendingUp className="w-6 h-6 text-purple-600" />
+                <TrendingUp className="w-6 h-6 text-[#FF4D8D]" />
                 Mes avis ({totalReviews})
               </CardTitle>
             </CardHeader>
@@ -370,7 +370,7 @@ export default function ProfilePage() {
             <CardContent className="p-6">
               {reviewsLoading ?
               <div className="flex justify-center py-12">
-                  <div className="w-8 h-8 border-4 border-purple-600 border-t-transparent rounded-full animate-spin" />
+                  <div className="w-8 h-8 border-4 border-[#FF4D8D] border-t-transparent rounded-full animate-spin" />
                 </div> :
               totalReviews === 0 ?
               <div className="text-center py-12">
@@ -386,7 +386,7 @@ export default function ProfilePage() {
                   {/* Colonne gauche : Avis professeurs */}
                   <div className="flex flex-col">
                     <h3 className="text-lg font-semibold text-slate-900 mb-4 flex items-center gap-2 bg-white/90 backdrop-blur-sm py-2 sticky top-0 z-10 border-b border-slate-100">
-                      <Users className="w-5 h-5 text-purple-600" />
+                      <Users className="w-5 h-5 text-[#FF4D8D]" />
                       Avis professeurs ({teacherReviews.length})
                     </h3>
                     <div className="space-y-3 overflow-y-auto pr-2 reviews-scroll" style={{ maxHeight: '600px' }}>
@@ -396,7 +396,7 @@ export default function ProfilePage() {
                       key={review.id}
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
-                      className="border-2 border-slate-200 rounded-xl p-4 hover:border-purple-300 hover:shadow-lg transition-all cursor-pointer bg-white"
+                      className="border-2 border-slate-200 rounded-xl p-4 hover:border-pink-300 hover:shadow-lg transition-all cursor-pointer bg-white"
                       onClick={() => navigate(createPageUrl(`TeacherDetail?id=${review.teacher_id}`))}>
 
                             <div className="flex items-start justify-between gap-2 mb-3">
