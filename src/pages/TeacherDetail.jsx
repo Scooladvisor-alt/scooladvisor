@@ -233,13 +233,13 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-purple-50 to-slate-50">
-      {teacher && (
-        <SEO 
-          title={`${teacher.name} - Avis Professeur ${teacher.subject} | ScoolAdvisor`}
-          description={`Lisez les avis des élèves sur ${teacher.name}, professeur de ${teacher.subject} ${school ? `à ${school.name}` : ''}. Charge de travail, pédagogie et ambiance.`}
-          canonicalPath={`/TeacherDetail?id=${teacher.id}`}
-        />
-      )}
+      {teacher &&
+      <SEO
+        title={`${teacher.name} - Avis Professeur ${teacher.subject} | ScoolAdvisor`}
+        description={`Lisez les avis des élèves sur ${teacher.name}, professeur de ${teacher.subject} ${school ? `à ${school.name}` : ''}. Charge de travail, pédagogie et ambiance.`}
+        canonicalPath={`/TeacherDetail?id=${teacher.id}`} />
+
+      }
       <style>{`
         @keyframes shine {
           0% { background-position: -200% center; }
@@ -328,7 +328,7 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
           className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-slate-200 overflow-hidden mb-8">
 
           <div className="relative p-4 sm:p-8">
-            <div className="absolute top-0 right-0 w-72 h-72 bg-gradient-to-br from-purple-500/10 to-transparent rounded-bl-full" />
+            <div className="absolute top-0 right-0 w-72 h-72 bg-gradient-to-br from-[#FF4D8D]/10 via-purple-500/10 to-blue-500/5 rounded-bl-full" />
             
             <div className="relative">
               <div className="flex flex-col md:flex-row gap-4 sm:gap-6 items-start mb-6">
@@ -467,11 +467,11 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
         </div>
 
         <div className="hidden lg:block">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-white/90 backdrop-blur-md rounded-2xl shadow-xl border border-slate-200 overflow-hidden"
-          >
+            className="bg-white/90 backdrop-blur-md rounded-2xl shadow-xl border border-slate-200 overflow-hidden">
+
             {/* Header Unifié */}
             <div className="h-1 bg-gradient-to-r from-[#FF64B8] via-[#4CA9FF] to-[#FFD700]" />
             
@@ -483,8 +483,8 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
                     user={user}
                     onReload={loadData}
                     onEditReview={handleEditReview}
-                    embedded={true}
-                  />
+                    embedded={true} />
+
                 </Suspense>
               </div>
 
