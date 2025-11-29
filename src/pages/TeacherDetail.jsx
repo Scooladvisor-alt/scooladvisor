@@ -398,7 +398,7 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
                 }
               </div>
 
-              <div className="flex flex-col sm:flex-row flex-wrap gap-2 sm:gap-3">
+              <div className="flex flex-col sm:flex-row flex-wrap gap-2 sm:gap-3 items-center">
                 <Button
                   onClick={() => {
                     if (!user) {
@@ -407,11 +407,10 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
                     }
                     setShowAddReview(true);
                     setEditingReview(null);
-                  }} className="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 text-primary-foreground shadow hover:bg-primary/90 h-8 rounded-md px-3 text-xs bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-white w-full sm:w-auto"
-
-                  size="sm">
-
-                  <Star className="w-4 h-4 mr-2" />
+                  }} 
+                  className="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-5 [&_svg]:shrink-0 text-primary-foreground shadow hover:bg-primary/90 rounded-xl bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-white w-full sm:w-auto h-11 px-6 text-base"
+                  size="default">
+                  <Star className="w-5 h-5 mr-2" />
                   Noter ce professeur
                 </Button>
 
@@ -419,28 +418,26 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
                 <ReportTeacherButton teacher={teacher} onUpdate={loadData} />
                 }
 
+                <Button
+                  onClick={handleAskAntonin}
+                  variant="outline"
+                  size="sm" 
+                  className="bg-transparent hover:bg-slate-50 border-slate-200 h-11">
+                  <Sparkles className="w-4 h-4 mr-2 text-[#FF4D8D]" />
+                  <span className="hidden sm:inline bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent font-bold">Demander à Antonin ce qu'il en pense</span>
+                  <span className="sm:hidden bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent font-bold">Avis d'Antonin</span>
+                </Button>
+
                 {canModerate &&
                 <Button
                   onClick={handleDeleteTeacher}
                   variant="destructive"
                   size="sm"
-                  className="w-full sm:w-auto">
-
+                  className="w-full sm:w-auto h-11">
                       <Trash2 className="w-4 h-4 mr-2" />
                       Supprimer le profil
                     </Button>
                 }
-
-                <Button
-                  onClick={handleAskAntonin}
-                  variant="outline"
-                  size="sm" className="">
-
-
-                  <Sparkles className="w-4 h-4 mr-2" />
-                  <span className="hidden sm:inline">Demander à Antonin ce qu'il en pense</span>
-                  <span className="sm:hidden">Avis d'Antonin</span>
-                </Button>
               </div>
               
               {!user &&
