@@ -395,7 +395,7 @@ En cas de doute entre "critiquer" et "insulter", privilégie la sécurité et re
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-[95vw] sm:max-w-5xl max-h-[90vh] overflow-y-auto rounded-2xl">
+      <DialogContent className="max-w-[95vw] sm:max-w-7xl max-h-[95vh] overflow-y-auto rounded-2xl">
         <DialogHeader>
           <DialogTitle className="text-lg sm:text-2xl font-bold">
             <span className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
