@@ -372,20 +372,17 @@ Si la décision est "approved", "reason" peut être vide ou null.`,
             }
           `}</style>
 
-          <DialogHeader className="px-6 py-6 bg-white border-b border-slate-100 relative z-20">
-            <div className="flex flex-col items-center justify-center text-center">
-              <div className="inline-flex items-center gap-2 bg-pink-50 text-[#FF4D8D] px-3 py-1 rounded-full mb-4">
-                <Mic className="w-4 h-4" />
-                <span className="text-xs font-bold uppercase tracking-wide">Espace d'expression libre</span>
-              </div>
-              
-              <DialogTitle className="text-3xl sm:text-4xl font-bold mb-2">
-                Micro <span className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">National</span>
+          <DialogHeader className="px-6 py-4 bg-white border-b border-slate-100 relative z-20">
+            <div className="flex items-center justify-between w-full">
+              <DialogTitle className="text-xl sm:text-2xl font-bold flex items-center gap-3">
+                <div className="w-8 h-8 sm:w-10 sm:h-10 bg-pink-50 rounded-xl flex items-center justify-center text-[#FF4D8D]">
+                  <Mic className="w-5 h-5 sm:w-6 sm:h-6" />
+                </div>
+                <span>Micro <span className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">National</span></span>
               </DialogTitle>
               
-              <p className="text-slate-600 max-w-md mx-auto text-sm sm:text-base">
-                Prends la parole devant tous les étudiants de France. <br/>
-                Partage tes anecdotes, tes conseils ou tes coups de gueule (gentils).
+              <p className="text-slate-500 text-sm hidden sm:block font-medium">
+                L'espace libre des étudiants 🎓
               </p>
             </div>
           </DialogHeader>
