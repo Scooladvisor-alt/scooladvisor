@@ -392,15 +392,14 @@ Si la décision est "approved", "reason" peut être vide ou null.`,
             <div className="relative z-10">
             {messages.length === 0 ?
             <div className="flex flex-col items-center justify-center h-full text-center px-4 relative z-20 py-10">
-                <div className="w-20 h-20 bg-white border border-slate-100 rounded-3xl flex items-center justify-center mb-6 shadow-xl shadow-purple-100 rotate-3">
-                  <Mic className="w-10 h-10 text-[#FF4D8D]" />
+                <div className="w-16 h-16 bg-white border border-slate-100 rounded-2xl flex items-center justify-center mb-4 shadow-lg shadow-purple-100 -rotate-3">
+                  <Mic className="w-8 h-8 text-[#FF4D8D]" />
                 </div>
-                <h3 className="text-2xl font-bold text-slate-900 mb-3">
-                  Le silence est d'or... <br/>
-                  <span className="text-purple-500">Mais ta parole vaut plus !</span>
+                <h3 className="text-xl font-bold text-slate-900 mb-2">
+                  C'est calme ici... 🤫
                 </h3>
-                <p className="text-slate-500 max-w-md leading-relaxed">
-                  Sois le premier à lancer la discussion. Une anecdote, une question, ou juste un coucou ?
+                <p className="text-slate-500 text-sm">
+                  Prends le micro et lance la discussion !
                 </p>
               </div> :
 
@@ -472,7 +471,7 @@ Si la décision est "approved", "reason" peut être vide ou null.`,
                   <Button
                     onClick={handlePublish}
                     disabled={!newMessage.trim() || postLoading || newMessage.length > MAX_MESSAGE_LENGTH || newMessage.length < 10}
-                    className="w-full sm:w-auto bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:opacity-90 text-white shadow-lg shadow-purple-500/20 hover:shadow-purple-500/40 transition-all hover:-translate-y-0.5 text-base font-bold py-6 px-8 rounded-xl"
+                    className="w-full sm:w-auto bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:opacity-90 text-white shadow-lg shadow-purple-500/20 hover:shadow-purple-500/40 transition-all hover:-translate-y-0.5 text-base font-bold h-12 px-8 rounded-xl"
                     size="lg">
 
                       {postLoading ?
@@ -490,10 +489,10 @@ Si la décision est "approved", "reason" peut être vide ou null.`,
 
                   <Button
                     onClick={() => base44.auth.redirectToLogin(window.location.href)}
-                    className="w-full sm:w-auto bg-slate-900 hover:bg-slate-800 text-white shadow-lg transition-all hover:-translate-y-0.5 text-base font-bold py-6 px-8 rounded-xl"
+                    className="w-full sm:w-auto bg-slate-900 hover:bg-slate-800 text-white shadow-lg transition-all hover:-translate-y-0.5 text-base font-bold h-12 px-8 rounded-xl"
                     size="lg">
 
-                      Se connecter pour publier
+                      Se connecter
                       <Send className="w-5 h-5 ml-2" />
                     </Button>
                   }
