@@ -355,51 +355,55 @@ Si la décision est "approved", "reason" peut être vide ou null.`,
       `}</style>
 
       <Dialog open={showDialog} onOpenChange={setShowDialog}>
-        <DialogContent className="fixed left-[50%] top-[50%] z-50 w-full translate-x-[-50%] translate-y-[-50%] gap-4 duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] sm:rounded-lg max-w-[95vw] sm:max-w-5xl h-[90vh] flex flex-col p-0 rounded-3xl bg-white shadow-2xl border-2 border-purple-200/50">
+        <DialogContent className="fixed left-[50%] top-[50%] z-50 w-full translate-x-[-50%] translate-y-[-50%] gap-4 duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] sm:rounded-lg max-w-[95vw] sm:max-w-5xl h-[90vh] flex flex-col p-0 rounded-3xl bg-white shadow-2xl border border-slate-200 overflow-hidden">
           <style>{`
             .chat-messages::-webkit-scrollbar {
-              width: 8px;
+              width: 6px;
             }
             .chat-messages::-webkit-scrollbar-track {
               background: transparent;
             }
             .chat-messages::-webkit-scrollbar-thumb {
-              background: linear-gradient(to bottom, #ec4899, #8b5cf6);
+              background: #cbd5e1;
               border-radius: 10px;
             }
             .chat-messages::-webkit-scrollbar-thumb:hover {
-              background: linear-gradient(to bottom, #db2777, #7c3aed);
+              background: #94a3b8;
             }
           `}</style>
 
-          <DialogHeader className="px-4 sm:px-8 py-4 sm:py-6 bg-white/90 backdrop-blur-md border-b-2 border-purple-200/50 rounded-t-3xl relative overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-r from-rose-500/10 via-pink-500/10 to-purple-500/10" />
-            <div className="relative z-10">
-              <DialogTitle className="text-xl sm:text-3xl font-extrabold flex items-center justify-center gap-3 mb-2">
-                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-rose-500 via-pink-500 to-purple-500 rounded-2xl flex items-center justify-center shadow-lg animate-pulse">
-                  <Mic className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
-                </div>
-                <span className="bg-gradient-to-r from-rose-500 via-pink-500 to-purple-500 bg-clip-text text-transparent">
-                  Micro National
-                </span>
+          <DialogHeader className="px-6 py-6 bg-white border-b border-slate-100 relative z-20">
+            <div className="flex flex-col items-center justify-center text-center">
+              <div className="inline-flex items-center gap-2 bg-pink-50 text-[#FF4D8D] px-3 py-1 rounded-full mb-4">
+                <Mic className="w-4 h-4" />
+                <span className="text-xs font-bold uppercase tracking-wide">Espace d'expression libre</span>
+              </div>
+              
+              <DialogTitle className="text-3xl sm:text-4xl font-bold mb-2">
+                Micro <span className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">National</span>
               </DialogTitle>
-              <p className="text-center text-xs sm:text-sm text-slate-600 font-medium">
-                Partage ton expérience avec tous les étudiants de France 🎓
+              
+              <p className="text-slate-600 max-w-md mx-auto text-sm sm:text-base">
+                Prends la parole devant tous les étudiants de France. <br/>
+                Partage tes anecdotes, tes conseils ou tes coups de gueule (gentils).
               </p>
             </div>
           </DialogHeader>
 
-          <div className="flex-1 overflow-y-auto px-3 sm:px-6 py-4 sm:py-6 chat-messages bg-white">
+          <div className="flex-1 overflow-y-auto px-4 sm:px-8 py-6 chat-messages bg-slate-50/50 relative">
+            <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] opacity-50 pointer-events-none" />
+            <div className="relative z-10">
             {messages.length === 0 ?
-            <div className="flex flex-col items-center justify-center h-full text-center px-4">
-                <div className="w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-br from-rose-100 via-pink-100 to-purple-100 rounded-full flex items-center justify-center mb-4 sm:mb-6 shadow-lg">
-                  <Mic className="w-10 h-10 sm:w-12 sm:h-12 text-purple-500" />
+            <div className="flex flex-col items-center justify-center h-full text-center px-4 relative z-20">
+                <div className="w-20 h-20 bg-white border border-slate-100 rounded-3xl flex items-center justify-center mb-6 shadow-xl shadow-purple-100 rotate-3">
+                  <Mic className="w-10 h-10 text-[#FF4D8D]" />
                 </div>
-                <h3 className="text-lg sm:text-2xl font-bold text-slate-900 mb-2 sm:mb-3">
-                  Sois le premier à t'exprimer ! 🎤
+                <h3 className="text-2xl font-bold text-slate-900 mb-3">
+                  Le silence est d'or... <br/>
+                  <span className="text-purple-500">Mais ta parole vaut plus !</span>
                 </h3>
-                <p className="text-sm sm:text-base text-slate-600 max-w-md">
-                  Lance la conversation et partage ton vécu avec toute la communauté étudiante française
+                <p className="text-slate-500 max-w-md leading-relaxed">
+                  Sois le premier à lancer la discussion. Une anecdote, une question, ou juste un coucou ?
                 </p>
               </div> :
 
@@ -424,12 +428,12 @@ Si la décision est "approved", "reason" peut être vide ou null.`,
             }
           </div>
 
-          <div className="bg-white/95 backdrop-blur-md border-t-2 border-purple-200/50 px-3 sm:px-6 py-3 sm:py-5 rounded-b-3xl">
-            <div className="max-w-4xl mx-auto space-y-3 sm:space-y-4">
+          <div className="bg-white border-t border-slate-100 px-4 sm:px-8 py-6 z-20">
+            <div className="max-w-4xl mx-auto space-y-4">
               <div className="space-y-2">
-                <div className="relative">
+                <div className="relative group">
                   <Textarea
-                    placeholder={user ? "Ton message ici... Partage ton expérience, tes conseils, tes anecdotes ! 💭" : "Connecte-toi pour participer 👋"}
+                    placeholder={user ? "À toi de jouer... (10 caractères min)" : "Connecte-toi pour participer 👋"}
                     value={newMessage}
                     onChange={(e) => {
                       const text = e.target.value;
@@ -437,60 +441,61 @@ Si la décision est "approved", "reason" peut être vide ou null.`,
                         setNewMessage(text);
                       }
                     }}
-                    className="min-h-[70px] sm:min-h-[100px] text-sm sm:text-base pr-12 resize-none border-2 border-purple-200 focus:border-purple-400 rounded-2xl bg-white/90 shadow-sm"
+                    className="min-h-[80px] sm:min-h-[100px] text-base p-4 pr-12 resize-none border border-slate-200 focus:border-purple-500 focus:ring-4 focus:ring-purple-500/10 rounded-2xl bg-slate-50 focus:bg-white transition-all duration-300"
                     disabled={!user} />
 
-                  <div className="absolute bottom-2 right-2 flex items-center gap-2">
-                    <span className={`text-[10px] sm:text-xs font-medium ${newMessage.length >= MAX_MESSAGE_LENGTH ? 'text-red-500' : newMessage.length >= MAX_MESSAGE_LENGTH * 0.9 ? 'text-orange-500' : 'text-slate-400'}`}>
+                  <div className="absolute bottom-3 right-3 flex items-center gap-2">
+                    <span className={`text-xs font-medium px-2 py-1 rounded-md ${newMessage.length >= MAX_MESSAGE_LENGTH ? 'bg-red-100 text-red-600' : 'bg-slate-100 text-slate-500'}`}>
                       {newMessage.length}/{MAX_MESSAGE_LENGTH}
                     </span>
                   </div>
                 </div>
               </div>
 
-              <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
                 {user &&
-                <div className="flex items-center gap-2 px-3 py-2 bg-purple-50/80 rounded-xl border border-purple-200">
+                <div className="flex items-center gap-2">
                     <Checkbox
                     id="anonymous_national"
                     checked={isAnonymous}
                     onCheckedChange={setIsAnonymous}
-                    className="border-purple-300" />
+                    className="border-slate-300 data-[state=checked]:bg-purple-600 data-[state=checked]:border-purple-600" />
 
-                    <Label htmlFor="anonymous_national" className="text-xs sm:text-sm cursor-pointer font-medium text-slate-700">
-                      🕵️ Mode anonyme
+                    <Label htmlFor="anonymous_national" className="text-sm cursor-pointer font-medium text-slate-600 hover:text-slate-900 transition-colors select-none flex items-center gap-2">
+                      <span className="bg-slate-100 p-1 rounded-md">🕵️</span>
+                      Poster en anonyme
                     </Label>
                   </div>
                 }
 
-                <div className="flex gap-2 sm:gap-3">
+                <div className="flex-1 sm:flex-none w-full sm:w-auto">
                   {user ?
                   <Button
                     onClick={handlePublish}
                     disabled={!newMessage.trim() || postLoading || newMessage.length > MAX_MESSAGE_LENGTH || newMessage.length < 10}
-                    className="flex-1 sm:flex-initial bg-gradient-to-r from-rose-500 via-pink-500 to-purple-500 hover:from-rose-600 hover:via-pink-600 hover:to-purple-600 text-white shadow-lg hover:shadow-xl transition-all hover:scale-105 text-xs sm:text-base font-semibold py-5 sm:py-6 rounded-xl"
+                    className="w-full sm:w-auto bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:opacity-90 text-white shadow-lg shadow-purple-500/20 hover:shadow-purple-500/40 transition-all hover:-translate-y-0.5 text-base font-bold py-6 px-8 rounded-xl"
                     size="lg">
 
                       {postLoading ?
                     <>
-                          <Loader2 className="w-4 h-4 sm:w-5 sm:h-5 mr-2 animate-spin" />
-                          Publication...
+                          <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                          Envoi...
                         </> :
 
                     <>
-                          <Send className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
-                          Publier gratuitement 🎉
+                          Publier
+                          <Send className="w-5 h-5 ml-2" />
                         </>
                     }
                     </Button> :
 
                   <Button
                     onClick={() => base44.auth.redirectToLogin(window.location.href)}
-                    className="flex-1 bg-gradient-to-r from-rose-500 via-pink-500 to-purple-500 hover:from-rose-600 hover:via-pink-600 hover:to-purple-600 text-white shadow-lg hover:shadow-xl transition-all hover:scale-105 text-xs sm:text-base font-semibold py-5 sm:py-6 rounded-xl"
+                    className="w-full sm:w-auto bg-slate-900 hover:bg-slate-800 text-white shadow-lg transition-all hover:-translate-y-0.5 text-base font-bold py-6 px-8 rounded-xl"
                     size="lg">
 
-                      <Send className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
-                      Connecte-toi pour publier 🚀
+                      Se connecter pour publier
+                      <Send className="w-5 h-5 ml-2" />
                     </Button>
                   }
                 </div>
@@ -645,15 +650,15 @@ const NationalMessageBubble = ({ message, user, onEdit, onSave, onCancelEdit, on
 
           <>
               <div className="relative group">
-                <div className={`${isAuthor ? 'bg-slate-100 text-slate-900 border-slate-200' : 'bg-white text-slate-900 border-slate-200'} border-2 rounded-2xl rounded-tl-sm px-3 sm:px-4 py-2 sm:py-3 shadow-sm hover:shadow-md transition-all`}>
-                  <p className="text-sm sm:text-base leading-relaxed break-words">{message.message}</p>
+                <div className={`${isAuthor ? 'bg-blue-50/50 text-slate-800 border-blue-100' : 'bg-white text-slate-800 border-slate-100'} border rounded-3xl rounded-tl-none px-5 py-4 shadow-sm hover:shadow-md transition-all`}>
+                  <p className="text-base leading-relaxed break-words">{message.message}</p>
                   
                   {/* Bouton signaler intégré dans le message */}
                   {!isAuthor && user &&
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="absolute top-1 right-1 h-6 w-6 p-0 hover:bg-orange-100 text-slate-400 hover:text-orange-600 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity"
+                  className="absolute top-2 right-2 h-6 w-6 p-0 hover:bg-slate-100 text-slate-300 hover:text-slate-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
                   onClick={() => onReport(message)}>
 
                       <Flag className="w-3 h-3" />
@@ -664,27 +669,23 @@ const NationalMessageBubble = ({ message, user, onEdit, onSave, onCancelEdit, on
 
               {/* Actions */}
               {isAuthor &&
-            <div className="flex gap-1 mt-1.5 justify-end flex-wrap">
+            <div className="flex gap-2 mt-2 justify-end flex-wrap opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                   {canEdit &&
-              <Button
-                variant="ghost"
-                size="sm"
-                className="h-7 px-2 text-xs hover:bg-slate-100 text-slate-600 rounded-lg"
+              <button
+                className="text-xs hover:underline text-slate-400 hover:text-blue-600 flex items-center gap-1"
                 onClick={() => onEdit(message)}>
 
-                      <Edit className="w-3 h-3 mr-1" />
+                      <Edit className="w-3 h-3" />
                       Modifier
-                    </Button>
+                    </button>
               }
-                  <Button
-                variant="ghost"
-                size="sm"
-                className="h-7 px-2 text-xs hover:bg-red-100 text-red-600 rounded-lg"
+                  <button
+                className="text-xs hover:underline text-slate-400 hover:text-red-600 flex items-center gap-1"
                 onClick={() => onDelete(message.id)}>
 
-                    <Trash2 className="w-3 h-3 mr-1" />
+                    <Trash2 className="w-3 h-3" />
                     Supprimer
-                  </Button>
+                  </button>
                 </div>
             }
 
