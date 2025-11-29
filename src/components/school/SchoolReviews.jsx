@@ -510,7 +510,7 @@ Rédige maintenant ton résumé façon "L'avis d'Antonin" en 3 phrases max.`;
             <DialogTitle className="flex items-center gap-2 text-lg sm:text-2xl">
               <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-[#FF4D8D]" />
               <span className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
-                L'avis d'Antonin 🤖
+                L'avis d'Antonin
               </span>
               <span className="text-slate-900">sur l'établissement</span>
             </DialogTitle>
