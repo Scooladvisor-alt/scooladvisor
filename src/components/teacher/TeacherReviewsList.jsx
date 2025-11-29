@@ -362,14 +362,21 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
                           variant="ghost"
                           size="sm"
                           onClick={() => handleLike(review)}
-                          className={`h-8 px-2.5 rounded-full text-xs font-medium transition-all ${
+                          className={`h-8 px-3 rounded-full text-xs font-medium transition-all min-w-[60px] justify-center ${
                             userLikes.has(review.id)
                               ? "bg-gradient-to-r from-[#FF64B8] to-[#4CA9FF] text-white shadow-sm hover:opacity-90"
-                              : "text-slate-500 hover:bg-slate-50 hover:text-slate-700"
+                              : "bg-slate-50 text-slate-600 hover:bg-slate-100"
                           }`}
                        >
-                          <ThumbsUp className={`w-3.5 h-3.5 mr-1.5 ${userLikes.has(review.id) ? "fill-current text-white" : ""}`} />
-                          {getLikeCount(review) || "J'aime"}
+                          <motion.div
+                            key={userLikes.has(review.id) ? "liked" : "unliked"}
+                            whileTap={{ scale: 0.8 }}
+                            animate={userLikes.has(review.id) ? { scale: [1, 1.4, 1], rotate: [0, -15, 15, 0] } : {}}
+                            transition={{ duration: 0.3 }}
+                          >
+                            <ThumbsUp className={`w-3.5 h-3.5 mr-1.5 ${userLikes.has(review.id) ? "fill-current text-white" : ""}`} />
+                          </motion.div>
+                          <span>{getLikeCount(review)}</span>
                        </Button>
                     </div>
 
