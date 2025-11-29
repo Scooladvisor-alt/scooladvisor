@@ -508,19 +508,22 @@ Rédige maintenant ton résumé façon "L'avis d'Antonin" en 3 phrases max.`;
         <DialogContent className="max-w-[95vw] sm:max-w-2xl max-h-[80vh] overflow-y-auto rounded-2xl">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2 text-lg sm:text-2xl">
-              <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-purple-600" />
-              L'avis d'Antonin 🤖 sur l'établissement
+              <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-[#FF4D8D]" />
+              <span className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
+                L'avis d'Antonin 🤖
+              </span>
+              <span className="text-slate-900">sur l'établissement</span>
             </DialogTitle>
           </DialogHeader>
           <div className="py-4 sm:py-6">
             {loadingAntonin ?
             <div className="flex flex-col items-center justify-center py-8 sm:py-12">
-                <Loader2 className="w-10 h-10 sm:w-12 sm:h-12 text-purple-600 animate-spin mb-4" />
+                <Loader2 className="w-10 h-10 sm:w-12 sm:h-12 text-[#FF4D8D] animate-spin mb-4" />
                 <p className="text-slate-600 text-sm sm:text-base">Antonin 🤖 analyse les avis...</p>
               </div> :
 
             <div className="prose prose-slate max-w-none prose-sm sm:prose-base">
-                <div className="bg-gradient-to-r from-purple-50 to-blue-50 rounded-lg p-4 sm:p-6 border-2 border-purple-200">
+                <div className="bg-gradient-to-r from-pink-50 via-purple-50 to-blue-50 rounded-lg p-4 sm:p-6 border-2 border-pink-100">
                   <p className="text-slate-800 leading-relaxed text-base sm:text-lg whitespace-pre-wrap">
                     {antoninSummary}
                   </p>
