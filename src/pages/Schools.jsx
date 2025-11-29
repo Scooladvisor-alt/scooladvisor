@@ -320,9 +320,11 @@ export default function SchoolsPage() {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-12">
 
-          <div className="inline-flex items-center gap-2 bg-blue-100 text-blue-700 px-3 py-1 rounded-full mb-6 font-semibold text-sm sm:text-base">
-            <TrendingUp className="w-5 h-5 sm:w-6 sm:h-6" />
-            <span>Le réseau social des étudiants</span>
+          <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full border border-purple-100 shadow-sm mb-6">
+            <TrendingUp className="w-4 h-4 text-[#FF4D8D]" />
+            <span className="text-sm font-medium bg-gradient-to-r from-[#FF4D8D] to-purple-600 bg-clip-text text-transparent">
+              Le réseau social des étudiants
+            </span>
           </div>
 
           <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold text-slate-900 mb-4 sm:mb-6 leading-tight">
