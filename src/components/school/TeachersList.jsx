@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { motion } from "framer-motion";
 import { base44 } from "@/api/base44Client";
+import GradientSpinner from "@/components/shared/GradientSpinner";
 
 export default function TeachersList({ schoolId, onAddTeacher }) {
   const [teachers, setTeachers] = useState([]);
@@ -127,7 +128,7 @@ export default function TeachersList({ schoolId, onAddTeacher }) {
         <CardContent className="flex-1 flex flex-col overflow-hidden p-2 sm:p-3 gap-2 sm:gap-3">
           {loading ?
           <div className="flex justify-center items-center py-12">
-              <Loader2 className="w-8 h-8 text-slate-400 animate-spin" />
+              <GradientSpinner size="w-8 h-8" />
             </div> :
           filteredTeachers.length === 0 ?
           <div className="py-16 text-center flex flex-col items-center justify-center">

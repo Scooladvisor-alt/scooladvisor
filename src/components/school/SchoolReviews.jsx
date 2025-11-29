@@ -9,6 +9,7 @@ import { fr } from "date-fns/locale";
 import ReportDialog from "../shared/ReportDialog";
 import { toast } from 'sonner';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import GradientSpinner from "@/components/shared/GradientSpinner";
 
 const criteriaIcons = {
   ambiance: { icon: Heart, label: "Ambiance", color: "text-pink-600" },
@@ -345,7 +346,7 @@ Rédige maintenant ton résumé façon "L'avis d'Antonin" en 3 phrases max.`;
           `}</style>
           {loading ?
           <div className="flex justify-center items-center py-12">
-              <Loader2 className="w-8 h-8 text-slate-400 animate-spin" />
+              <GradientSpinner size="w-8 h-8" />
             </div> :
           sortedReviews.length === 0 ?
           <div className="py-16 text-center flex flex-col items-center justify-center">
@@ -518,7 +519,7 @@ Rédige maintenant ton résumé façon "L'avis d'Antonin" en 3 phrases max.`;
           <div className="py-4 sm:py-6">
             {loadingAntonin ?
             <div className="flex flex-col items-center justify-center py-8 sm:py-12">
-                <Loader2 className="w-10 h-10 sm:w-12 sm:h-12 text-[#FF4D8D] animate-spin mb-4" />
+                <GradientSpinner size="w-10 h-10 sm:w-12 sm:h-12" className="mb-4" />
                 <p className="text-slate-600 text-sm sm:text-base">Antonin 🤖 analyse les avis...</p>
               </div> :
 

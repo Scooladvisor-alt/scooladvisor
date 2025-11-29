@@ -24,6 +24,7 @@ import {
 
 import ReportTeacherButton from "../components/teacher/ReportTeacherButton";
 import SEO from "@/components/shared/SEO";
+import GradientSpinner from "@/components/shared/GradientSpinner";
 const AddTeacherReviewDialog = lazy(() => import("../components/teacher/AddTeacherReviewDialog"));
 const TeacherStats = lazy(() => import("../components/teacher/TeacherStats"));
 const TeacherReviewsList = lazy(() => import("../components/teacher/TeacherReviewsList"));
@@ -183,7 +184,7 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-50 to-purple-50 flex items-center justify-center">
-        <Loader2 className="w-12 h-12 text-purple-600 animate-spin" />
+        <GradientSpinner size="w-12 h-12" />
       </div>);
 
   }
@@ -524,7 +525,7 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
           <div className="py-4 sm:py-6">
             {loadingAntonin ?
             <div className="flex flex-col items-center justify-center py-8 sm:py-12">
-                <Loader2 className="w-10 h-10 sm:w-12 sm:h-12 text-purple-600 animate-spin mb-4" />
+                <GradientSpinner size="w-10 h-10 sm:w-12 sm:h-12" className="mb-4" />
                 <p className="text-slate-600 text-sm sm:text-base">Antonin 🤖 analyse les avis...</p>
               </div> :
 

@@ -15,6 +15,7 @@ const ReportSchoolDialog = lazy(() => import("../components/school/ReportSchoolD
 import SchoolChat from "../components/school/SchoolChat";
 import { toast } from "sonner";
 import SEO from "@/components/shared/SEO";
+import GradientSpinner from "@/components/shared/GradientSpinner";
 
 export default function SchoolDetailPage() {
   const navigate = useNavigate();
@@ -119,7 +120,7 @@ export default function SchoolDetailPage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 p-8 flex items-center justify-center">
-        <Loader2 className="w-12 h-12 text-blue-600 animate-spin" />
+        <GradientSpinner size="w-12 h-12" />
       </div>);
 
   }

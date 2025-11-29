@@ -13,6 +13,7 @@ import { fr } from "date-fns/locale";
 import { motion, AnimatePresence } from "framer-motion";
 import ReportDialog from "../shared/ReportDialog";
 import { toast } from "sonner";
+import GradientSpinner from "@/components/shared/GradientSpinner";
 
 // Helper function pour formater les dates correctement
 const formatDateWithTimezone = (dateString, formatStr) => {
@@ -264,7 +265,7 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
       <div className="flex-1 flex flex-col p-6 pt-2 overflow-hidden">
           {loading ?
           <div className="flex justify-center items-center h-48">
-              <Loader2 className="w-8 h-8 text-slate-400 animate-spin" />
+              <GradientSpinner size="w-8 h-8" />
             </div> :
           sortedReviews.length === 0 ?
           <div className="text-center py-12">
