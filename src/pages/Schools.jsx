@@ -344,7 +344,7 @@ export default function SchoolsPage() {
           <div className="search-widget-content p-3 sm:p-6">
             <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 items-start sm:items-center">
               <div className="flex-1 relative w-full">
-                <Search className="absolute left-2.5 sm:left-3 top-1/2 transform -translate-y-1/2 w-3.5 h-3.5 sm:w-5 sm:h-5 text-slate-400" />
+                <Search className="absolute left-2.5 sm:left-3 top-1/2 transform -translate-y-1/2 w-3.5 h-3.5 sm:w-5 sm:h-5 text-slate-400 z-10" />
                 <Input
                   placeholder="Rechercher un établissement ou une ville..."
                   value={searchTerm}
@@ -627,7 +627,7 @@ export default function SchoolsPage() {
               transition={{ delay: 0.1 }}
               className="relative">
 
-              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-slate-400" />
+              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-slate-400 z-10" />
               <Input
                 placeholder="Nom du professeur ou matière..."
                 value={teacherSearchTerm}
