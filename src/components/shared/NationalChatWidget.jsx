@@ -394,7 +394,7 @@ Si la décision est "approved", "reason" peut être vide ou null.`,
             <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] opacity-50 pointer-events-none" />
             <div className="relative z-10">
             {messages.length === 0 ?
-            <div className="flex flex-col items-center justify-center h-full text-center px-4 relative z-20">
+            <div className="flex flex-col items-center justify-center h-full text-center px-4 relative z-20 py-10">
                 <div className="w-20 h-20 bg-white border border-slate-100 rounded-3xl flex items-center justify-center mb-6 shadow-xl shadow-purple-100 rotate-3">
                   <Mic className="w-10 h-10 text-[#FF4D8D]" />
                 </div>
@@ -426,6 +426,8 @@ Si la décision est "approved", "reason" peut être vide ou null.`,
               )}
               </div>
             }
+          </div>
+
           </div>
 
           <div className="bg-white border-t border-slate-100 px-4 sm:px-8 py-6 z-20">
