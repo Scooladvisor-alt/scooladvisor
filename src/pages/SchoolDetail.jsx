@@ -160,13 +160,13 @@ export default function SchoolDetailPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-50">
-      {school && (
-        <SEO 
-          title={`${school.name} (${school.city}) - Avis et Classement | ScoolAdvisor`}
-          description={`Découvrez les avis authentiques des étudiants sur ${school.name} à ${school.city}. Note globale : ${school.average_rating ? school.average_rating.toFixed(1) : 'N/A'}/20.`}
-          canonicalPath={`/SchoolDetail?id=${school.id}`}
-        />
-      )}
+      {school &&
+      <SEO
+        title={`${school.name} (${school.city}) - Avis et Classement | ScoolAdvisor`}
+        description={`Découvrez les avis authentiques des étudiants sur ${school.name} à ${school.city}. Note globale : ${school.average_rating ? school.average_rating.toFixed(1) : 'N/A'}/20.`}
+        canonicalPath={`/SchoolDetail?id=${school.id}`} />
+
+      }
       <style>{`
         @keyframes shine {
           0% { background-position: -200% center; }
@@ -260,7 +260,7 @@ export default function SchoolDetailPage() {
           className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-slate-200 overflow-hidden mb-8">
 
           <div className="relative p-4 sm:p-6 md:p-8">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-blue-500/10 to-transparent rounded-bl-full" />
+            <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-[#FF4D8D]/10 via-purple-500/10 to-blue-500/5 rounded-bl-full" />
             
             <div className="relative">
               <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-3 md:gap-6 mb-4 md:mb-6">
@@ -381,7 +381,7 @@ export default function SchoolDetailPage() {
                       return;
                     }
                     setShowAddTeacher(true);
-                  }} 
+                  }}
                   className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-white shadow-lg w-full sm:flex-1 h-11">
                   <Plus className="w-4 h-4 mr-2 text-white" />
                   Ajouter un professeur
@@ -410,19 +410,19 @@ export default function SchoolDetailPage() {
           </div>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 items-center justify-items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 items-center justify-items-center">
           <div className="w-full max-h-[600px] lg:h-[500px] flex flex-col">
             <Suspense fallback={<div className="p-4 bg-white rounded-lg shadow-md flex justify-center items-center h-full"><Loader2 className="w-8 h-8 animate-spin text-slate-400" /></div>}>
-              <TeachersList 
-                schoolId={schoolId} 
+              <TeachersList
+                schoolId={schoolId}
                 onAddTeacher={() => {
                   if (!user) {
                     base44.auth.redirectToLogin(window.location.href);
                     return;
                   }
                   setShowAddTeacher(true);
-                }}
-              />
+                }} />
+
             </Suspense>
           </div>
 
@@ -443,8 +443,8 @@ export default function SchoolDetailPage() {
                     return;
                   }
                   setShowAddReview(true);
-                }}
-              />
+                }} />
+
 
             </Suspense>
           </div>
