@@ -395,7 +395,7 @@ En cas de doute entre "critiquer" et "insulter", privilégie la sécurité et re
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-[95vw] sm:max-w-7xl max-h-[95vh] overflow-y-auto rounded-2xl">
+      <DialogContent className="max-w-[95vw] sm:max-w-4xl max-h-[90vh] overflow-y-auto rounded-2xl">
         <DialogHeader>
           <DialogTitle className="text-lg sm:text-2xl font-bold">
             <span className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
@@ -437,7 +437,7 @@ En cas de doute entre "critiquer" et "insulter", privilégie la sécurité et re
             animation: widget-shine 0.5s ease-out;
           }
         `}</style>
-        <form onSubmit={handleSubmit} className="flex flex-col lg:flex-row gap-6">
+        <form onSubmit={handleSubmit} className="flex flex-col md:flex-row gap-5 h-full">
           <div className="flex-1 space-y-3">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {criteria.map(({ key, label, icon: Icon, color, description, gradient, sliderClass }) => {
