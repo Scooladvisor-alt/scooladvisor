@@ -124,7 +124,7 @@ export default function TeachersList({ schoolId, onAddTeacher }) {
             </div>
           }
         </CardHeader>
-        <CardContent className="flex-1 flex flex-col overflow-hidden pt-4 gap-4">
+        <CardContent className="flex-1 flex flex-col overflow-hidden p-2 sm:p-3 gap-2 sm:gap-3">
           {loading ?
             <div className="flex justify-center items-center py-12">
               <Loader2 className="w-8 h-8 text-slate-400 animate-spin" />
