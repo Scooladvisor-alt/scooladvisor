@@ -399,7 +399,7 @@ export default function SchoolsPage() {
               <Button
                 size="sm"
                 onClick={() => setShowTeacherRoom(true)}
-                className="bg-gradient-to-r from-blue-500 via-purple-500 to-[#FF4D8D] hover:from-blue-500/90 hover:via-purple-500/90 hover:to-[#FF4D8D]/90 text-white shadow-md h-7 px-2 text-[10px] font-semibold flex-1">
+                className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-white shadow-md h-7 px-2 text-[10px] font-semibold flex-1">
                 <span>Salle des profs</span>
                 <ArrowRight className="w-3 h-3 ml-1" />
               </Button>
@@ -442,7 +442,7 @@ export default function SchoolsPage() {
                 <Button
                   size="sm"
                   onClick={() => setShowTeacherRoom(true)}
-                  className="bg-gradient-to-r from-blue-500 via-purple-500 to-[#FF4D8D] hover:from-blue-500/90 hover:via-purple-500/90 hover:to-[#FF4D8D]/90 text-white shadow-md h-8 px-3 text-xs font-semibold">
+                  className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-white shadow-md h-8 px-3 text-xs font-semibold">
                   <span>Visiter la salle des profs</span>
                   <ArrowRight className="w-3.5 h-3.5 ml-1.5" />
                 </Button>

@@ -235,7 +235,7 @@ function AvatarSelectionDialog({ open, onOpenChange, currentAvatar, onAvatarSele
           <Button variant="outline" onClick={() => onOpenChange(false)} className="text-xs sm:text-sm">
             Annuler
           </Button>
-          <Button onClick={handleSave} className="bg-gradient-to-r from-purple-600 to-blue-600 text-white text-xs sm:text-sm">
+          <Button onClick={handleSave} className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-white text-xs sm:text-sm border-0">
             Enregistrer
           </Button>
         </DialogFooter>
@@ -384,6 +384,13 @@ export default function Layout({ children }) {
         }
       `}</style>
       
+      <div className="bg-slate-900 text-white py-2 text-center text-xs sm:text-sm font-medium px-4 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-[#FF4D8D]/20 via-purple-500/20 to-blue-500/20 animate-pulse" />
+        <span className="relative z-10 flex items-center justify-center gap-2">
+          <span>🤝</span>
+          <span>Fait par les étudiants, pour les étudiants. <span className="hidden sm:inline">Ensemble, construisons l'école de demain !</span></span>
+        </span>
+      </div>
       <header className="bg-white/90 backdrop-blur-md border-b border-slate-200 sticky top-0 z-50 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="flex items-center justify-between h-16">
