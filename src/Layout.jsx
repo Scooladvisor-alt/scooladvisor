@@ -9,7 +9,8 @@ import {
   Menu,
   X,
   User as UserIcon,
-  Mic // Added Mic icon
+  Mic, // Added Mic icon
+  HelpCircle // Added HelpCircle icon
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -141,6 +142,11 @@ const navigationItems = [
   title: "Accueil",
   url: createPageUrl("Schools"),
   icon: School
+},
+{
+  title: "Scool quoi ?",
+  url: createPageUrl("About"),
+  icon: HelpCircle
 }];
 
 
