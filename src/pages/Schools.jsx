@@ -530,14 +530,16 @@ export default function SchoolsPage() {
             animate={{ opacity: 1 }}
             className="text-center mt-8">
 
-                <button
-              onClick={handleShowMore}
-              className="gradient-border-button">
-
-                  <span className="gradient-text">
+                <div 
+                  onClick={handleShowMore}
+                  className="flex items-center w-full gap-4 cursor-pointer group py-4"
+                >
+                  <div className="h-[2px] flex-1 bg-gradient-to-r from-transparent via-[#FF4D8D] to-purple-500 opacity-30 group-hover:opacity-100 transition-all duration-300" />
+                  <span className="text-sm sm:text-base font-bold bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent whitespace-nowrap transform group-hover:scale-105 transition-transform duration-300">
                     Voir 50 écoles +
                   </span>
-                </button>
+                  <div className="h-[2px] flex-1 bg-gradient-to-r from-purple-500 via-blue-500 to-transparent opacity-30 group-hover:opacity-100 transition-all duration-300" />
+                </div>
               </motion.div>
           }
 
