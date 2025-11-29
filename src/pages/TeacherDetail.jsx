@@ -472,11 +472,8 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
             animate={{ opacity: 1, y: 0 }}
             className="bg-white/90 backdrop-blur-md rounded-2xl shadow-xl border border-slate-200 overflow-hidden">
 
-            {/* Header Unifié */}
-            <div className="h-1 bg-gradient-to-r from-[#FF64B8] via-[#4CA9FF] to-[#FFD700]" />
-            
             <div className="grid grid-cols-3 divide-x divide-slate-100">
-              <div className="col-span-2 p-6">
+              <div className="col-span-2">
                 <Suspense fallback={<div className="flex justify-center items-center h-full min-h-[300px]"><Loader2 className="w-8 h-8 animate-spin text-slate-400" /></div>}>
                   <TeacherReviewsList
                     teacherId={teacherId}
@@ -488,7 +485,7 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
                 </Suspense>
               </div>
 
-              <div className="p-6 bg-slate-50/50">
+              <div className="bg-slate-50/50">
                 <Suspense fallback={<div className="flex justify-center items-center h-full min-h-[300px]"><Loader2 className="w-8 h-8 animate-spin text-slate-400" /></div>}>
                   <TeacherStats teacher={teacher} embedded={true} />
                 </Suspense>

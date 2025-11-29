@@ -244,24 +244,24 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
 
   const Content = () => (
     <div className="flex-1 flex flex-col h-full">
-      <div className={`flex items-center justify-between mb-6 ${!embedded ? "p-6 pb-0" : ""}`}>
-        <div className="flex items-center gap-3">
-          <div className="p-2 bg-pink-50 rounded-lg border border-pink-100">
-            <MessageSquare className="w-6 h-6 text-[#FF64B8]" />
+      <div className="border-b border-slate-100 bg-gradient-to-r from-pink-500/10 via-purple-500/10 to-blue-500/10 p-4 mb-2">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="p-2 bg-white rounded-lg shadow-sm">
+              <MessageSquare className="w-5 h-5 text-[#FF4D8D]" />
+            </div>
+            <h3 className="text-lg font-bold flex items-center gap-2">
+              <span className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
+                Avis des étudiants
+              </span>
+              <span>🍿</span>
+              <span className="text-slate-400 font-medium text-sm">({reviews.length})</span>
+            </h3>
           </div>
-          {/* MODIFICATION ICI : text-xl changé en text-lg */}
-          <h3 className="text-lg font-bold flex items-center gap-2">
-            <span className="bg-gradient-to-r from-[#FF64B8] to-[#4CA9FF] bg-clip-text text-transparent">
-              Avis des étudiants
-            </span>
-            <span>🍿</span>
-            {/* J'ai aussi réduit légèrement la taille du compteur (text-sm) pour garder l'équilibre */}
-            <span className="text-slate-400 font-medium text-sm">({reviews.length})</span>
-          </h3>
         </div>
       </div>
 
-      <div className={`flex-1 flex flex-col ${!embedded ? "p-6 pt-0" : ""} overflow-hidden`}>
+      <div className="flex-1 flex flex-col p-6 pt-2 overflow-hidden">
           {loading ?
           <div className="flex justify-center items-center h-48">
               <Loader2 className="w-8 h-8 text-slate-400 animate-spin" />

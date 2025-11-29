@@ -13,16 +13,18 @@ const criteriaConfig = {
 export default function TeacherStats({ teacher, embedded = false }) {
   const Content = () => (
     <div className={embedded ? "h-full" : ""}>
-      <div className={`flex items-center gap-3 mb-6 ${!embedded ? "p-6 pb-0" : ""}`}>
-        <div className="p-2 bg-amber-50 rounded-lg border border-amber-100">
-          <TrendingUp className="w-6 h-6 text-amber-500" />
+      <div className="border-b border-slate-100 bg-gradient-to-r from-amber-500/10 via-orange-500/10 to-red-500/10 p-4 mb-2">
+        <div className="flex items-center gap-3">
+          <div className="p-2 bg-white rounded-lg shadow-sm">
+            <TrendingUp className="w-5 h-5 text-amber-500" />
+          </div>
+          <h3 className="text-lg font-bold bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text text-transparent">
+            Statistiques détaillées
+          </h3>
         </div>
-        <h3 className="text-xl font-bold bg-gradient-to-r from-[#FFD700] to-[#FFB300] bg-clip-text text-transparent">
-          Statistiques détaillées
-        </h3>
       </div>
       
-      <div className={`space-y-5 ${!embedded ? "p-6 pt-0" : ""}`}>
+      <div className="space-y-5 p-6 pt-2">
         {teacher.review_count > 0 ? (
           <>
             {Object.entries(criteriaConfig).map(([key, { label, icon: Icon, color }]) => {
