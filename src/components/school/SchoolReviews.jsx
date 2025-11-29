@@ -313,10 +313,10 @@ Rédige maintenant ton résumé façon "L'avis d'Antonin" en 3 phrases max.`;
             <Button
               onClick={handleAskAntonin}
               size="sm"
-              className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 text-white hover:opacity-90 shadow-sm border-0">
+              className="bg-transparent hover:bg-purple-50 border-0 shadow-none">
 
-                <Sparkles className="w-4 h-4 mr-1" />
-                <span className="text-xs">Antonin 🤖</span>
+                <Sparkles className="w-4 h-4 mr-1 text-[#FF4D8D]" />
+                <span className="text-xs font-bold bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">Antonin 🤖</span>
               </Button>
             }
           </div>
