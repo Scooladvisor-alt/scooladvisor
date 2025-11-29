@@ -43,16 +43,16 @@ export default function TeachersList({ schoolId, onAddTeacher }) {
   }, [schoolId]);
 
   const podiumStyles = [
-    'bg-gradient-to-r from-amber-200 via-amber-100 to-amber-200 border-amber-300',
-    'bg-gradient-to-r from-slate-200 via-slate-100 to-slate-200 border-slate-300',
-    'bg-gradient-to-r from-orange-200 via-orange-100 to-orange-200 border-orange-300'
-  ];
+  'bg-gradient-to-r from-amber-200 via-amber-100 to-amber-200 border-amber-300',
+  'bg-gradient-to-r from-slate-200 via-slate-100 to-slate-200 border-slate-300',
+  'bg-gradient-to-r from-orange-200 via-orange-100 to-orange-200 border-orange-300'];
+
 
   const podiumIconColors = ['text-amber-500', 'text-slate-500', 'text-orange-500'];
 
   const filteredTeachers = teachers.filter((teacher) =>
-    teacher.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    teacher.subject.toLowerCase().includes(searchQuery.toLowerCase())
+  teacher.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+  teacher.subject.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   // Determine initial number of teachers to display based on screen size
@@ -115,30 +115,30 @@ export default function TeachersList({ schoolId, onAddTeacher }) {
           </div>
           
           {showSearch &&
-            <div className="mt-3">
+          <div className="mt-3">
               <Input
-                placeholder="Rechercher un professeur ou une matière..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full" />
+              placeholder="Rechercher un professeur ou une matière..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full" />
             </div>
           }
         </CardHeader>
         <CardContent className="flex-1 flex flex-col overflow-hidden p-2 sm:p-3 gap-2 sm:gap-3">
           {loading ?
-            <div className="flex justify-center items-center py-12">
+          <div className="flex justify-center items-center py-12">
               <Loader2 className="w-8 h-8 text-slate-400 animate-spin" />
             </div> :
-            filteredTeachers.length === 0 ?
-              <div className="py-16 text-center flex flex-col items-center justify-center">
-                <div className="w-20 h-20 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm">
+          filteredTeachers.length === 0 ?
+          <div className="py-16 text-center flex flex-col items-center justify-center">
+                <div className="w-20 h-20 bg-gradient-to-br from-pink-200 via-purple-200 to-blue-200 rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm">
                   <Users className="w-10 h-10 text-blue-600" />
                 </div>
                 <p className="text-slate-700 font-medium mb-2">
                   {searchQuery ? "Aucun professeur trouvé" : "Aucun professeur pour le moment"}
                 </p>
-                {!searchQuery && (
-                  <>
+                {!searchQuery &&
+            <>
                     <p className="text-sm text-slate-500 mb-4 max-w-xs">
                       Sois le premier à ajouter les profs de cet établissement ! 🚀
                     </p>
@@ -147,20 +147,20 @@ export default function TeachersList({ schoolId, onAddTeacher }) {
                       Ajouter le premier prof
                     </Button>
                   </>
-                )}
+            }
               </div> :
-              <>
+          <>
                 <div className="space-y-3 pr-2 teachers-list-scrollable">
                   {displayedTeachers.map((teacher, index) => {
-                    const isPodium = teacher.review_count > 0 && index < 3;
-                    const podiumClass = isPodium ? podiumStyles[index] : 'hover:border-blue-300 bg-white';
+                const isPodium = teacher.review_count > 0 && index < 3;
+                const podiumClass = isPodium ? podiumStyles[index] : 'hover:border-blue-300 bg-white';
 
-                    return (
-                      <motion.div
-                        key={teacher.id}
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: index * 0.05 }}>
+                return (
+                  <motion.div
+                    key={teacher.id}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.05 }}>
                         <Link to={createPageUrl(`TeacherDetail?id=${teacher.id}`)}>
                           <div className={`group flex items-center gap-2 sm:gap-4 p-3 sm:p-4 rounded-xl border hover:shadow-md transition-all ${podiumClass}`}>
                             <Avatar className="w-10 h-10 sm:w-14 sm:h-14 border-2 border-white shadow-sm flex-shrink-0">
@@ -183,33 +183,33 @@ export default function TeachersList({ schoolId, onAddTeacher }) {
 
                             <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
                               {teacher.average_rating > 0 &&
-                                <div className="flex items-center gap-1 bg-white/50 px-2 py-1 rounded-full border border-slate-200">
+                          <div className="flex items-center gap-1 bg-white/50 px-2 py-1 rounded-full border border-slate-200">
                                   <Star className="w-3 h-3 text-amber-500 fill-amber-500" />
                                   <span className="font-bold text-slate-800 text-xs sm:text-sm">{teacher.average_rating.toFixed(1)}</span>
                                 </div>
-                              }
+                          }
                               <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 text-slate-400 group-hover:text-blue-600 group-hover:translate-x-1 transition-all" />
                             </div>
                           </div>
                         </Link>
-                      </motion.div>
-                    );
-                  })}
+                      </motion.div>);
+
+              })}
                 </div>
 
                 {hasMore &&
-                  <div className="mt-4 text-center">
+            <div className="mt-4 text-center">
                     <button
-                      onClick={() => setShowAll(true)}
-                      className="text-blue-600 hover:text-blue-700 text-sm font-medium transition-colors">
+                onClick={() => setShowAll(true)}
+                className="text-blue-600 hover:text-blue-700 text-sm font-medium transition-colors">
                       Voir {filteredTeachers.length - initialDisplayCount} professeurs de plus
                     </button>
                   </div>
-                }
+            }
               </>
           }
         </CardContent>
       </Card>
-    </>
-  );
+    </>);
+
 }
