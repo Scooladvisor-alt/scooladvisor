@@ -353,12 +353,11 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
                         exit={{ opacity: 0, height: 0 }}
                         className="overflow-hidden"
                       >
-                        <div className="flex flex-wrap items-center gap-4 pb-3 pl-1">
+                        <div className="flex items-center justify-between text-sm pb-3 px-1 pt-1">
                            {Object.entries(criteriaIcons).map(([key, { icon: Icon, label, color }]) => (
-                             <div key={key} className="flex items-center gap-2 text-slate-600">
+                             <div key={key} className="flex items-center gap-1.5" title={label}>
                                 <Icon className={`w-4 h-4 ${color}`} />
-                                <span className="text-xs font-medium">{label}:</span>
-                                <span className="text-sm font-bold text-slate-900">{review[key]}/5</span>
+                                <span className="font-bold text-slate-700">{review[key]}/5</span>
                              </div>
                            ))}
                         </div>
@@ -373,21 +372,14 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
                           variant="ghost"
                           size="sm"
                           onClick={() => handleLike(review)}
-                          className={`h-8 px-3 rounded-full text-xs font-medium transition-all min-w-[60px] justify-center ${
+                          className={`h-8 px-3 rounded-full border transition-all min-w-[60px] justify-center ${
                             userLikes.has(review.id)
-                              ? "bg-gradient-to-r from-[#FF64B8] to-[#4CA9FF] text-white shadow-sm hover:opacity-90"
-                              : "bg-slate-50 text-slate-600 hover:bg-slate-100"
+                              ? "border-transparent bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 text-white shadow-md hover:opacity-90"
+                              : "border-slate-200 bg-white text-slate-700 hover:bg-slate-50 hover:border-slate-300"
                           }`}
                        >
-                          <motion.div
-                            key={userLikes.has(review.id) ? "liked" : "unliked"}
-                            whileTap={{ scale: 0.8 }}
-                            animate={userLikes.has(review.id) ? { scale: [1, 1.4, 1], rotate: [0, -15, 15, 0] } : {}}
-                            transition={{ duration: 0.3 }}
-                          >
-                            <ThumbsUp className={`w-3.5 h-3.5 mr-1.5 ${userLikes.has(review.id) ? "fill-current text-white" : ""}`} />
-                          </motion.div>
-                          <span>{getLikeCount(review)}</span>
+                          <ThumbsUp className={`w-3.5 h-3.5 mr-1.5 ${userLikes.has(review.id) ? "fill-current" : "text-slate-500"}`} />
+                          <span className="text-xs font-semibold">{getLikeCount(review)}</span>
                        </Button>
                     </div>
 
