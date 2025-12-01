@@ -417,7 +417,7 @@ En cas de doute entre "critiquer" et "insulter", privilégie la sécurité et re
         }
 
         {error &&
-        <Alert variant="destructive">
+        <Alert variant="destructive" className="relative w-full rounded-lg border px-4 py-1 text-sm [&>svg+div]:translate-y-[-1px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-1\n2 [&>svg~*]:pl-7 border-destructive/50 text-destructive dark:border-destructive [&>svg]:text-destructive">
             <AlertCircle className="h-4 w-4" />
             <AlertDescription className="text-xs sm:text-sm">{error}</AlertDescription>
           </Alert>
@@ -442,14 +442,14 @@ En cas de doute entre "critiquer" et "insulter", privilégie la sécurité et re
             {criteria.map(({ key, label, icon: Icon, color, description, gradient, sliderClass }) => {
               const isMax = formData[key] === 5;
               const isFlashing = flashingWidgets[key];
-              
+
               return (
-                <div 
-                  key={key} 
+                <div
+                  key={key}
                   className={`rounded-lg p-3 sm:p-4 border border-slate-200 transition-all duration-500 relative overflow-hidden ${
-                    isMax ? gradient : 'bg-slate-50'
-                  } ${isFlashing ? 'animate-widget-shine ring-2 ring-offset-2 ring-offset-white ring-yellow-400' : ''}`}
-                >
+                  isMax ? gradient : 'bg-slate-50'} ${
+                  isFlashing ? 'animate-widget-shine ring-2 ring-offset-2 ring-offset-white ring-yellow-400' : ''}`}>
+
                   <div className="flex items-center gap-2 mb-1 sm:mb-2 relative z-10">
                     <Icon className={`w-4 h-4 sm:w-5 sm:h-5 ${color}`} />
                     <Label className="font-semibold text-xs sm:text-sm">{label}</Label>
@@ -462,15 +462,15 @@ En cas de doute entre "critiquer" et "insulter", privilégie la sécurité et re
                         onValueChange={([value]) => {
                           setFormData({ ...formData, [key]: value });
                           if (value === 5 && formData[key] !== 5) {
-                            setFlashingWidgets(prev => ({ ...prev, [key]: true }));
-                            setTimeout(() => setFlashingWidgets(prev => ({ ...prev, [key]: false })), 500);
+                            setFlashingWidgets((prev) => ({ ...prev, [key]: true }));
+                            setTimeout(() => setFlashingWidgets((prev) => ({ ...prev, [key]: false })), 500);
                           }
                         }}
                         min={0}
                         max={5}
                         step={0.25}
-                        disabled={!canEdit} 
-                      />
+                        disabled={!canEdit} />
+
                     </div>
 
                     <div className={`flex items-center gap-1 px-2 py-1 sm:px-3 sm:py-1.5 rounded-lg border min-w-[50px] sm:min-w-[60px] justify-center transition-colors duration-300 ${isMax ? 'bg-white/80 border-transparent shadow-sm' : 'bg-white border-slate-200'}`}>
@@ -478,30 +478,30 @@ En cas de doute entre "critiquer" et "insulter", privilégie la sécurité et re
                       <span className="text-[10px] sm:text-sm text-slate-500">/5</span>
                     </div>
                   </div>
-                </div>
-              );
+                </div>);
+
             })}
 
             {showStudentLifeBonus &&
             <div className="relative overflow-hidden bg-slate-50/50 rounded-lg p-3 sm:p-4 border border-slate-200">
-                {(formData.has_student_life || formData.has_network) && (
-                  <>
-                    {[...Array(8)].map((_, i) => (
-                      <div
-                        key={i}
-                        className="absolute animate-ping"
-                        style={{
-                          top: `${Math.random() * 80 + 10}%`,
-                          left: `${Math.random() * 90 + 5}%`,
-                          animationDuration: `${Math.random() * 1.5 + 0.5}s`,
-                          animationDelay: `${Math.random() * 1}s`
-                        }}
-                      >
+                {(formData.has_student_life || formData.has_network) &&
+              <>
+                    {[...Array(8)].map((_, i) =>
+                <div
+                  key={i}
+                  className="absolute animate-ping"
+                  style={{
+                    top: `${Math.random() * 80 + 10}%`,
+                    left: `${Math.random() * 90 + 5}%`,
+                    animationDuration: `${Math.random() * 1.5 + 0.5}s`,
+                    animationDelay: `${Math.random() * 1}s`
+                  }}>
+
                         <Star className="w-2 h-2 text-yellow-400 fill-yellow-400" />
                       </div>
-                    ))}
-                  </>
                 )}
+                  </>
+              }
                 
                 <div className="flex items-center gap-2 mb-2 sm:mb-3 relative z-10">
                   <Star className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-500 fill-yellow-500" />
@@ -511,11 +511,11 @@ En cas de doute entre "critiquer" et "insulter", privilégie la sécurité et re
                 <div className="flex flex-wrap items-center gap-4 sm:gap-8 relative z-10">
                   <div className="flex items-center space-x-2">
                     <Checkbox
-                      id="has_student_life"
-                      checked={formData.has_student_life}
-                      onCheckedChange={(checked) => setFormData({ ...formData, has_student_life: checked })}
-                      disabled={!canEdit}
-                    />
+                    id="has_student_life"
+                    checked={formData.has_student_life}
+                    onCheckedChange={(checked) => setFormData({ ...formData, has_student_life: checked })}
+                    disabled={!canEdit} />
+
                     <Label htmlFor="has_student_life" className="text-xs sm:text-sm cursor-pointer font-medium text-slate-700">
                       Vie associative +1
                     </Label>
@@ -523,11 +523,11 @@ En cas de doute entre "critiquer" et "insulter", privilégie la sécurité et re
 
                   <div className="flex items-center space-x-2">
                     <Checkbox
-                      id="has_network"
-                      checked={formData.has_network}
-                      onCheckedChange={(checked) => setFormData({ ...formData, has_network: checked })}
-                      disabled={!canEdit}
-                    />
+                    id="has_network"
+                    checked={formData.has_network}
+                    onCheckedChange={(checked) => setFormData({ ...formData, has_network: checked })}
+                    disabled={!canEdit} />
+
                     <Label htmlFor="has_network" className="text-xs sm:text-sm cursor-pointer font-medium text-slate-700">
                       Réseaux +1
                     </Label>
