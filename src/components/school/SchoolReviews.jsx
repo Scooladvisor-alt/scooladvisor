@@ -434,13 +434,10 @@ Rédige maintenant ton résumé façon "L'avis d'Antonin" en 3 phrases max.`;
 
                     {expandedReviews.has(review.id) && (
                       <div className="mt-2 pt-2 border-t border-slate-100">
-                        <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm">
+                        <div className="flex items-center justify-between text-sm px-2">
                           {Object.entries(criteriaIcons).map(([key, { icon: Icon, color, label }]) => (
-                            <div key={key} className="flex items-center gap-2" title={label}>
-                              <div className="flex items-center gap-1.5">
-                                <Icon className={`w-3.5 h-3.5 ${color}`} />
-                                <span className="text-slate-500 font-medium">{label}</span>
-                              </div>
+                            <div key={key} className="flex items-center gap-1.5" title={label}>
+                              <Icon className={`w-4 h-4 ${color}`} />
                               <span className="font-bold text-slate-700">{review[key]}/5</span>
                             </div>
                           ))}
@@ -483,11 +480,16 @@ Rédige maintenant ton résumé façon "L'avis d'Antonin" en 3 phrases max.`;
                       </div>
 
                       <Button
-                      variant={userLikes.has(review.id) ? "default" : "outline"}
+                      variant="ghost"
                       size="sm"
-                      onClick={() => handleLike(review)} className="justify-center whitespace-nowrap text-sm font-medium ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-primary hover:bg-primary/90 h-9 rounded-md px-3 flex items-center gap-2 transition-all bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 text-white hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90">
-                        <ThumbsUp className={`w-3 h-3 ${userLikes.has(review.id) ? 'fill-current' : ''}`} />
-                        <span className="text-xs">{getLikeCount(review)}</span>
+                      onClick={() => handleLike(review)}
+                      className={`h-8 px-3 rounded-full border transition-all ${
+                        userLikes.has(review.id)
+                          ? "border-transparent bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 text-white shadow-md hover:opacity-90"
+                          : "border-slate-200 bg-white text-slate-700 hover:bg-slate-50 hover:border-slate-300"
+                      }`}>
+                        <ThumbsUp className={`w-3.5 h-3.5 mr-1.5 ${userLikes.has(review.id) ? "fill-current" : "text-slate-500"}`} />
+                        <span className="text-xs font-semibold">{getLikeCount(review)}</span>
                       </Button>
                     </div>
                   </div>);
