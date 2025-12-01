@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Link } from "react-router-dom";
 import { createPageUrl } from "@/utils";
@@ -135,19 +134,19 @@ export default function SchoolCard({ school, teacherCount }) {
         </div>
 
         <div className="grid grid-cols-2 gap-3 mt-auto">
-          <div className="stat-widget bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-2.5 border border-blue-200 flex items-center justify-center gap-2">
-            <MessageSquare className="w-5 h-5 text-blue-600 flex-shrink-0" />
+          <div className="stat-widget bg-sky-50 rounded-xl p-2.5 border border-sky-100 flex items-center justify-center gap-2">
+            <MessageSquare className="w-5 h-5 text-sky-500 flex-shrink-0" />
             <div className="flex items-baseline gap-1">
-              <span className="text-xl font-bold text-blue-900">{school.review_count || 0}</span>
-              <span className="text-xs text-blue-700 font-medium">Avis</span>
+              <span className="text-xl font-bold text-sky-900">{school.review_count || 0}</span>
+              <span className="text-xs text-sky-700 font-medium">Avis</span>
             </div>
           </div>
 
-          <div className="stat-widget bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl p-2.5 border border-purple-200 flex items-center justify-center gap-2">
-            <Users className="w-5 h-5 text-purple-600 flex-shrink-0" />
+          <div className="stat-widget bg-pink-50 rounded-xl p-2.5 border border-pink-100 flex items-center justify-center gap-2">
+            <Users className="w-5 h-5 text-pink-500 flex-shrink-0" />
             <div className="flex items-baseline gap-1">
-              <span className="text-xl font-bold text-purple-900">{teacherCount}</span>
-              <span className="text-xs text-purple-700 font-medium">Profs</span>
+              <span className="text-xl font-bold text-pink-900">{teacherCount}</span>
+              <span className="text-xs text-pink-700 font-medium">Profs</span>
             </div>
           </div>
         </div>
