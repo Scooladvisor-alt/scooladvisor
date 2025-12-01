@@ -6,12 +6,12 @@ import { User } from "@/entities/User";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { AlertTriangle, UserX, XCircle } from "lucide-react";
+import { AlertTriangle, UserX, XCircle, Flag } from "lucide-react";
 import { toast } from "sonner";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 
-export default function ReportTeacherButton({ teacher, onUpdate }) {
+export default function ReportTeacherButton({ teacher, onUpdate, variant = "default" }) {
   const [showDialog, setShowDialog] = useState(false);
   const [reportType, setReportType] = useState("former");
   const [loading, setLoading] = useState(false);
@@ -103,15 +103,28 @@ export default function ReportTeacherButton({ teacher, onUpdate }) {
 
   return (
     <>
-      <Button
-        variant="outline"
-        size="sm"
-        onClick={() => setShowDialog(true)}
-        className="border-orange-200 text-orange-600 hover:bg-orange-50"
-      >
-        <AlertTriangle className="w-4 h-4 mr-2" />
-        Signaler
-      </Button>
+      {variant === "flag" ? (
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            setShowDialog(true);
+          }}
+          className="text-slate-300 hover:text-red-500 transition-colors p-1 rounded-full hover:bg-red-50"
+          title="Signaler ce professeur"
+        >
+          <Flag className="w-4 h-4 sm:w-5 sm:h-5" />
+        </button>
+      ) : (
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => setShowDialog(true)}
+          className="border-orange-200 text-orange-600 hover:bg-orange-50"
+        >
+          <AlertTriangle className="w-4 h-4 mr-2" />
+          Signaler
+        </Button>
+      )}
 
       <Dialog open={showDialog} onOpenChange={setShowDialog}>
         <DialogContent>

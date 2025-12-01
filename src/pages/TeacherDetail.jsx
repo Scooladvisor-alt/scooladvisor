@@ -354,7 +354,12 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
                   </div>
                   
                   <div className="flex-1 min-w-0">
-                    <h1 className="text-2xl sm:text-4xl font-bold text-slate-900 mb-2 break-words">{teacher.name}</h1>
+                    <div className="flex items-center gap-2 mb-2">
+                      <h1 className="text-2xl sm:text-4xl font-bold text-slate-900 break-words">{teacher.name}</h1>
+                      {user && (
+                        <ReportTeacherButton teacher={teacher} onUpdate={loadData} variant="flag" />
+                      )}
+                    </div>
                     <div className="flex items-center gap-2 text-sm sm:text-base text-slate-600">
                       <BookOpen className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
                       <span className="break-words">{teacher.subject}</span>
@@ -428,12 +433,6 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
                 </Button>
 
                 <div className="flex gap-2 w-full sm:w-auto">
-                  {user && (
-                     <div className="flex-1 sm:flex-none">
-                      <ReportTeacherButton teacher={teacher} onUpdate={loadData} />
-                     </div>
-                  )}
-
                   {canModerate &&
                   <Button
                       onClick={handleDeleteTeacher}
