@@ -341,6 +341,11 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
                         {teacher.name.charAt(0)}
                       </AvatarFallback>
                     </Avatar>
+                    {teacher.is_former && (
+                      <div className="absolute -top-2 -right-2 bg-orange-500 text-white text-[10px] font-bold px-2 py-1 rounded-full shadow-md border-2 border-white z-10">
+                        Ancien
+                      </div>
+                    )}
                     {isAntonin &&
                     <Button
                       onClick={handleDeleteTeacher}

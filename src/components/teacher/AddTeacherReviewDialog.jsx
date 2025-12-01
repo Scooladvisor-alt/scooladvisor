@@ -332,10 +332,10 @@ En cas de doute entre "critiquer" et "insulter", privilégie la sécurité et re
               setError("Votre avis a été refusé et votre compte a été banni suite à des violations répétées.");
               setTimeout(() => window.location.reload(), 4000);
             } else {
-              setError("Votre avis a été refusé par notre système de modération car il ne respecte pas nos règles de bienveillance.");
+              setError("Désolé, ce message ne respecte pas nos conditions d’utilisation");
             }
           } else {
-            setError("Votre avis a été refusé par notre système de modération car il ne respecte pas nos règles de bienveillance.");
+            setError("Désolé, ce message ne respecte pas nos conditions d’utilisation");
           }
           setLoading(false);
           return;

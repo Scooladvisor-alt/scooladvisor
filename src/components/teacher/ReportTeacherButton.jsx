@@ -45,7 +45,7 @@ export default function ReportTeacherButton({ teacher, onUpdate, variant = "defa
 
         const newCount = (teacher.status_report_count || 0) + 1;
         
-        if (newCount >= 5) {
+        if (newCount >= 3) {
           await Teacher.update(teacher.id, {
             status_report_count: newCount,
             is_former: true
@@ -127,9 +127,9 @@ export default function ReportTeacherButton({ teacher, onUpdate, variant = "defa
       )}
 
       <Dialog open={showDialog} onOpenChange={setShowDialog}>
-        <DialogContent>
+        <DialogContent className="rounded-2xl">
           <DialogHeader>
-            <DialogTitle>Signaler ce professeur</DialogTitle>
+            <DialogTitle className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">Signaler ce professeur</DialogTitle>
           </DialogHeader>
 
           <RadioGroup value={reportType} onValueChange={setReportType} className="space-y-3">
