@@ -433,15 +433,15 @@ Rédige maintenant ton résumé façon "L'avis d'Antonin" en 3 phrases max.`;
                     )}
 
                     {expandedReviews.has(review.id) && (
-                      <div className="mt-2 sm:mt-3 pt-2 sm:pt-3 border-t border-slate-100">
-                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 w-full pt-2 pb-2">
-                          {Object.entries(criteriaIcons).map(([key, { icon: Icon, color }]) => (
-                            <div key={key} className="flex items-center justify-center gap-2 p-2 rounded-lg bg-slate-50 border border-slate-100" title={criteriaIcons[key].label}>
-                              <Icon className={`w-4 h-4 ${color}`} />
-                              <div className="flex items-baseline gap-0.5">
-                                <span className="text-sm font-bold text-slate-900">{review[key]}</span>
-                                <span className="text-[10px] text-slate-500">/5</span>
+                      <div className="mt-2 pt-2 border-t border-slate-100">
+                        <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm">
+                          {Object.entries(criteriaIcons).map(([key, { icon: Icon, color, label }]) => (
+                            <div key={key} className="flex items-center gap-2" title={label}>
+                              <div className="flex items-center gap-1.5">
+                                <Icon className={`w-3.5 h-3.5 ${color}`} />
+                                <span className="text-slate-500 font-medium">{label}</span>
                               </div>
+                              <span className="font-bold text-slate-700">{review[key]}/5</span>
                             </div>
                           ))}
                         </div>
