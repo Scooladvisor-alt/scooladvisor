@@ -12,7 +12,10 @@ import {
   School as SchoolIcon,
   TrendingUp,
   Users,
-  Edit } from
+  Edit,
+  Heart,
+  Brain,
+  FileText } from
 "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -425,6 +428,25 @@ export default function ProfilePage() {
                                   </span>
                                   <span className="text-xs text-amber-700">/20</span>
                                 </div>
+                              </div>
+                            </div>
+
+                            <div className="grid grid-cols-4 gap-2 mb-3 text-xs">
+                              <div className="flex flex-col items-center gap-1 p-1.5 bg-blue-50 rounded-lg border border-blue-100">
+                                <BookOpen className="w-3.5 h-3.5 text-blue-500" />
+                                <span className="font-bold text-slate-700">{review.workload}/5</span>
+                              </div>
+                              <div className="flex flex-col items-center gap-1 p-1.5 bg-pink-50 rounded-lg border border-pink-100">
+                                <Heart className="w-3.5 h-3.5 text-pink-500" />
+                                <span className="font-bold text-slate-700">{review.friendliness}/5</span>
+                              </div>
+                              <div className="flex flex-col items-center gap-1 p-1.5 bg-purple-50 rounded-lg border border-purple-100">
+                                <Brain className="w-3.5 h-3.5 text-purple-500" />
+                                <span className="font-bold text-slate-700">{review.teaching_method}/5</span>
+                              </div>
+                              <div className="flex flex-col items-center gap-1 p-1.5 bg-orange-50 rounded-lg border border-orange-100">
+                                <FileText className="w-3.5 h-3.5 text-orange-500" />
+                                <span className="font-bold text-slate-700">{review.grading_severity}/5</span>
                               </div>
                             </div>
 
