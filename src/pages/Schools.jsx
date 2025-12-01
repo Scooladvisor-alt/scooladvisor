@@ -657,7 +657,7 @@ export default function SchoolsPage() {
                 <p className="text-sm text-slate-500 mt-1">Essaie une autre recherche</p>
               </motion.div> :
             teacherSearchTerm && teacherSuggestions.length > 0 ?
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-4">
                 {teacherSuggestions.map((teacher, index) => {
                 const school = schools.find((s) => s.id === teacher.school_id);
                 return (
@@ -667,7 +667,7 @@ export default function SchoolsPage() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.05, duration: 0.3 }}
                     onClick={() => handleTeacherClick(teacher)}
-                    className="teacher-card-shimmer group p-4 text-left bg-white rounded-2xl border-2 border-slate-100 hover:border-pink-200 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+                    className="teacher-card-shimmer group p-2 sm:p-4 text-left bg-white rounded-2xl border-2 border-slate-100 hover:border-pink-200 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
 
                       <div className="flex flex-col items-center text-center gap-3">
                         {/* Photo de profil */}
