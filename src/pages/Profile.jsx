@@ -376,7 +376,7 @@ export default function ProfilePage() {
               totalReviews === 0 ?
               <div className="text-center py-12">
                   <MessageSquare className="w-16 h-16 text-slate-300 mx-auto mb-4" />
-                  <h3 className="text-lg font-semibold text-slate-900 mb-2">Tu n'as pas encore laissé d'avis ! 🎤</h3>
+                  <h3 className="text-lg font-semibold text-slate-900 mb-2">Tu n'as pas encore laissé d'avis !</h3>
                   <p className="text-slate-600 mb-6">Va partager ton expérience sur un prof ou ton établissement.</p>
                   <Button onClick={() => navigate(createPageUrl("Schools"))} className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-gradient-to-r from-pink-500 to-blue-500 text-white hover:opacity-90 h-10 px-4 py-2">
                     Découvrir les établissements
