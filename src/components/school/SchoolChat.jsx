@@ -447,6 +447,17 @@ Si la décision est "approved", la "reason" doit être null.`,
           animation: shimmer 3s infinite;
         }
       `}</style>
+      
+      {/* SVG Gradient Definition */}
+      <svg width="0" height="0" className="absolute">
+        <defs>
+          <linearGradient id="chat-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#FF4D8D" />
+            <stop offset="50%" stopColor="#a855f7" />
+            <stop offset="100%" stopColor="#3b82f6" />
+          </linearGradient>
+        </defs>
+      </svg>
 
       <div className="my-6 sm:my-8 p-3 sm:p-4 rounded-xl bg-gradient-to-br from-[#FF4D8D] via-purple-500 to-blue-500 shadow-lg cursor-pointer hover:shadow-xl transition-all hover:-translate-y-1 relative overflow-hidden sticky bottom-4 z-10 group"
 
@@ -482,7 +493,7 @@ Si la décision est "approved", la "reason" doit être null.`,
         <DialogContent className="max-w-[95vw] sm:max-w-4xl h-[85vh] flex flex-col p-0 rounded-2xl">
           <DialogHeader className="p-4 sm:p-6 pb-3 sm:pb-4 border-b">
             <DialogTitle className="text-xl sm:text-2xl font-bold flex items-center gap-2">
-              <MessageSquare className="w-5 h-5 sm:w-6 sm:h-6 text-purple-600" />
+              <MessageSquare className="w-5 h-5 sm:w-6 sm:h-6" style={{ stroke: "url(#chat-gradient)" }} />
               <span className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
                 Chat Général et souvenirs de l'Établissement
               </span>
