@@ -376,13 +376,13 @@ Rédige maintenant ton résumé façon "L'avis d'Antonin" en 3 phrases max.`;
                         <AvatarImage src={avatarUrl} /> :
                         null}
                           <AvatarFallback className="bg-transparent">
-                            {review.is_anonymous ? (
-                              <div className="w-full h-full bg-slate-400 flex items-center justify-center text-white">
+                            {review.is_anonymous ?
+                          <div className="w-full h-full bg-slate-400 flex items-center justify-center text-white">
                                 <UserIcon className="w-5 h-5" />
-                              </div>
-                            ) : (
-                              <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/f5396bc58_a-humanized-black-graduation-cap-with-a-star-shape-3.png" alt="Avatar" className="w-full h-full object-cover" />
-                            )}
+                              </div> :
+
+                          <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/f5396bc58_a-humanized-black-graduation-cap-with-a-star-shape-3.png" alt="Avatar" className="w-full h-full object-cover" />
+                          }
                           </AvatarFallback>
                         </Avatar>
                         <div className="flex-1 min-w-0">
@@ -413,37 +413,37 @@ Rédige maintenant ton résumé façon "L'avis d'Antonin" en 3 phrases max.`;
                         </div>
                         </div>
 
-                    {review.comment && (
-                      <div className="relative bg-slate-50 p-2 sm:p-3 rounded-lg mb-2 sm:mb-3">
+                    {review.comment &&
+                  <div className="relative bg-slate-50 p-2 sm:p-3 rounded-lg mb-2 sm:mb-3">
                         <p className="text-xs sm:text-sm text-slate-700 leading-relaxed pr-6">
                           {review.comment}
                         </p>
                         <button
-                          onClick={() => toggleExpand(review.id)}
-                          className="absolute top-2 sm:top-3 right-2 sm:right-3 text-slate-400 hover:text-slate-600 transition-colors"
-                          title={expandedReviews.has(review.id) ? "Masquer les détails" : "Voir les détails"}
-                        >
-                          <ChevronDown 
-                            className={`w-3 h-3 sm:w-4 sm:h-4 transition-transform duration-200 ${
-                              expandedReviews.has(review.id) ? 'rotate-180' : ''
-                            }`}
-                          />
+                      onClick={() => toggleExpand(review.id)}
+                      className="absolute top-2 sm:top-3 right-2 sm:right-3 text-slate-400 hover:text-slate-600 transition-colors"
+                      title={expandedReviews.has(review.id) ? "Masquer les détails" : "Voir les détails"}>
+
+                          <ChevronDown
+                        className={`w-3 h-3 sm:w-4 sm:h-4 transition-transform duration-200 ${
+                        expandedReviews.has(review.id) ? 'rotate-180' : ''}`
+                        } />
+
                         </button>
                       </div>
-                    )}
+                  }
 
-                    {expandedReviews.has(review.id) && (
-                      <div className="mt-2 pt-2 border-t border-slate-100">
+                    {expandedReviews.has(review.id) &&
+                  <div className="mt-2 pt-2 border-t border-slate-100">
                         <div className="flex items-center justify-between text-sm px-2">
-                          {Object.entries(criteriaIcons).map(([key, { icon: Icon, color, label }]) => (
-                            <div key={key} className="flex items-center gap-1.5" title={label}>
+                          {Object.entries(criteriaIcons).map(([key, { icon: Icon, color, label }]) =>
+                      <div key={key} className="flex items-center gap-1.5" title={label}>
                               <Icon className={`w-4 h-4 ${color}`} />
                               <span className="font-bold text-slate-700">{review[key]}/5</span>
                             </div>
-                          ))}
+                      )}
                         </div>
                       </div>
-                    )}
+                  }
 
                     <div className="flex items-center justify-between pt-2 border-t border-slate-100">
                       <div className="flex gap-2">
@@ -482,12 +482,12 @@ Rédige maintenant ton résumé façon "L'avis d'Antonin" en 3 phrases max.`;
                       <Button
                       variant="ghost"
                       size="sm"
-                      onClick={() => handleLike(review)}
-                      className={`h-8 px-3 rounded-full border transition-all ${
-                        userLikes.has(review.id)
-                          ? "border-transparent bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 text-white shadow-md hover:opacity-90"
-                          : "border-slate-200 bg-white text-slate-700 hover:bg-slate-50 hover:border-slate-300"
-                      }`}>
+                      onClick={() => handleLike(review)} className="bg-gradient-to-r text-white mr-1 px-3 text-xs font-medium rounded-full inline-flex items-center justify-center gap-2 whitespace-nowrap focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover:bg-accent hover:text-accent-foreground h-8 border transition-all border-transparent from-[#FF4D8D] via-purple-500 to-blue-500 shadow-md hover:opacity-90">
+
+
+
+
+
                         <ThumbsUp className={`w-3.5 h-3.5 mr-1.5 ${userLikes.has(review.id) ? "fill-current" : "text-slate-500"}`} />
                         <span className="text-xs font-semibold">{getLikeCount(review)}</span>
                       </Button>
@@ -542,6 +542,6 @@ Rédige maintenant ton résumé façon "L'avis d'Antonin" en 3 phrases max.`;
           </div>
         </DialogContent>
       </Dialog>
-    </>
-  );
+    </>);
+
 }
