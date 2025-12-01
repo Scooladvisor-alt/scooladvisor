@@ -17,105 +17,89 @@ const ChatBubble = ({ message, user, onEdit, onSave, onCancelEdit, onDelete, onR
   const canEdit = isAuthor && (message.edit_count || 0) < 3;
 
   return (
-    <div className="w-full">
-      <div className="p-3 rounded-xl shadow-md w-full relative overflow-hidden bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500">
-        <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/40 to-white/0 animate-shimmer"
-        style={{ backgroundSize: '200% 100%', animation: 'shimmer 2s infinite' }} />
-
-
-        <div className="flex items-baseline gap-2 mb-1.5 relative z-10">
-          <p className="font-semibold text-white text-xs drop-shadow-lg">
-            {message.is_anonymous ? "Anonyme" : message.author_name}
-          </p>
-          <p className="text-[10px] text-white/90 drop-shadow-md">
-            {formatDistanceToNow(new Date(message.created_date), { addSuffix: true, locale: fr })}
-            {message.is_edited && " (modifié)"}
-          </p>
+    <div className="w-full mb-3">
+      <div className="group relative bg-white p-4 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-all duration-300">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
+          <div className="flex items-baseline gap-2">
+            <p className="font-bold text-sm bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
+              {message.is_anonymous ? "Anonyme" : message.author_name}
+            </p>
+            <p className="text-[10px] text-slate-400">
+              {formatDistanceToNow(new Date(message.created_date), { addSuffix: true, locale: fr })}
+              {message.is_edited && " (modifié)"}
+            </p>
+          </div>
         </div>
 
-        {isEditing ?
-        <div className="relative z-10 mt-2">
+        {isEditing ? (
+          <div className="relative z-10">
             <Textarea
-            value={editedContent}
-            onChange={(e) => setEditedContent(e.target.value)}
-            className="bg-white/90 text-slate-900 text-sm"
-            rows={2} />
-
-            <div className="flex gap-2 mt-2 justify-end">
-              <Button size="sm" variant="ghost" onClick={onCancelEdit} className="bg-white/80 hover:bg-white h-7 text-xs">
+              value={editedContent}
+              onChange={(e) => setEditedContent(e.target.value)}
+              className="bg-slate-50 text-slate-900 text-sm min-h-[80px] mb-2"
+            />
+            <div className="flex gap-2 justify-end">
+              <Button size="sm" variant="ghost" onClick={onCancelEdit} className="h-8 text-xs">
                 Annuler
               </Button>
-              <Button size="sm" onClick={() => onSave(message.id, editedContent, message.edit_count || 0)} className="bg-white text-purple-600 hover:bg-white/90 h-7 text-xs">
+              <Button size="sm" onClick={() => onSave(message.id, editedContent, message.edit_count || 0)} className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 text-white h-8 text-xs border-0">
                 <Save className="w-3 h-3 mr-1" /> Enregistrer
               </Button>
             </div>
-          </div> :
-
-        <p className="text-sm leading-relaxed relative z-10 font-semibold text-white drop-shadow-lg">
+          </div>
+        ) : (
+          <p className="text-sm leading-relaxed text-slate-700 font-medium mb-4">
             {message.message}
           </p>
-        }
+        )}
 
-        {!isEditing &&
-        <div className="flex gap-1.5 justify-end mt-2 relative z-10 flex-wrap items-center">
-            {isAuthor && canEdit &&
-          <Button
-            variant="ghost"
-            size="sm"
-            className="bg-white/90 shadow-md hover:bg-white text-xs h-7 px-2 hover:scale-105 transition-transform"
-            onClick={() => onEdit(message)}>
+        {!isEditing && (
+          <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-slate-50 mt-2">
+            <div className="flex items-center gap-2">
+              {user && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => onLike(message)}
+                  className={`h-8 px-3 rounded-full border transition-all ${
+                    isLiked
+                      ? "bg-white border-transparent shadow-sm ring-1 ring-pink-100"
+                      : "bg-white border-slate-200 hover:bg-slate-50"
+                  }`}
+                >
+                  <ThumbsUp
+                    className="w-4 h-4 mr-1.5 transition-all duration-300"
+                    style={isLiked ? { stroke: "url(#chat-gradient)", fill: "none" } : { stroke: "#94a3b8", fill: "none" }}
+                  />
+                  <span className={`text-xs font-bold ${isLiked ? "text-transparent bg-clip-text bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500" : "text-slate-500"}`}>
+                    {likeCount}
+                  </span>
+                </Button>
+              )}
+            </div>
 
-                <Edit className="w-3 h-3 mr-1 text-blue-600" />
-                <span className="text-blue-600 font-medium">Modifier</span>
-              </Button>
-          }
-            {isAuthor &&
-          <Button
-            variant="ghost"
-            size="sm"
-            className="bg-white/90 shadow-md hover:bg-white text-xs h-7 px-2 hover:scale-105 transition-transform"
-            onClick={() => onDelete(message.id)}>
-
-                <Trash2 className="w-3 h-3 mr-1 text-red-600" />
-                <span className="text-red-600 font-medium">Supprimer</span>
-              </Button>
-          }
-
-            {user &&
-          <Button
-            variant={isLiked ? "default" : "ghost"}
-            size="sm"
-            onClick={() => onLike(message)}
-            className={`h-7 px-2 hover:scale-105 transition-transform ${
-            isLiked ?
-            'bg-white/90 text-blue-600 hover:bg-white shadow-md' :
-            'bg-white/90 hover:bg-white shadow-md'}`
-            }>
-
-                <ThumbsUp className={`w-3 h-3 mr-1 ${isLiked ? 'fill-current text-blue-600' : 'text-slate-600'}`} />
-                <span className={`text-xs font-medium ${isLiked ? 'text-blue-600' : 'text-slate-600'}`}>{likeCount}</span>
-              </Button>
-          }
-
-            {!isAuthor && user &&
-          <Button
-            variant="ghost"
-            size="sm"
-            className="bg-white/90 shadow-md hover:bg-white text-xs h-7 px-2 hover:scale-105 transition-transform"
-            onClick={() => onReport(message.id)}>
-
-                <Flag className="w-3 h-3 text-orange-600" />
-              </Button>
-          }
+            <div className="flex items-center gap-1">
+              {isAuthor && canEdit && (
+                <Button variant="ghost" size="icon" className="h-8 w-8 text-slate-400 hover:text-blue-500 hover:bg-blue-50 rounded-full" onClick={() => onEdit(message)}>
+                  <Edit className="w-4 h-4" />
+                </Button>
+              )}
+              {isAuthor && (
+                <Button variant="ghost" size="icon" className="h-8 w-8 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-full" onClick={() => onDelete(message.id)}>
+                  <Trash2 className="w-4 h-4" />
+                </Button>
+              )}
+              {!isAuthor && user && (
+                <Button variant="ghost" size="icon" className="h-8 w-8 text-slate-300 hover:text-orange-500 hover:bg-orange-50 rounded-full" onClick={() => onReport(message.id)}>
+                  <Flag className="w-4 h-4" />
+                </Button>
+              )}
+            </div>
           </div>
-        }
-
-        {isAuthor && !canEdit && !isEditing &&
-        <p className="text-[10px] text-white/90 mt-1.5 relative z-10 drop-shadow-md">Limite de 3 modifications atteinte.</p>
-        }
+        )}
       </div>
-    </div>);
-
+    </div>
+  );
 };
 
 export default function SchoolChat({ schoolId, isHomePage = false }) {
