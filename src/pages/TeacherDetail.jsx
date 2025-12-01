@@ -329,7 +329,7 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
           className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-slate-200 overflow-hidden mb-8">
 
           <div className="relative p-4 sm:p-8">
-            <div className="absolute top-0 right-0 w-72 h-72 bg-gradient-to-br from-[#FF4D8D]/10 via-purple-500/10 to-blue-500/5 rounded-bl-full" />
+            <div className="hidden sm:block absolute top-0 right-0 w-72 h-72 bg-gradient-to-br from-[#FF4D8D]/10 via-purple-500/10 to-blue-500/5 rounded-bl-full" />
             
             <div className="relative">
               <div className="flex flex-col md:flex-row gap-4 sm:gap-6 items-start mb-6">
@@ -398,7 +398,7 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
                 }
               </div>
 
-              <div className="flex flex-col sm:flex-row flex-wrap gap-2 sm:gap-3 items-center">
+              <div className="flex flex-col sm:flex-row flex-wrap gap-3 mt-4">
                 <Button
                   onClick={() => {
                     if (!user) {
@@ -408,36 +408,42 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
                     setShowAddReview(true);
                     setEditingReview(null);
                   }} 
-                  className="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-5 [&_svg]:shrink-0 text-primary-foreground shadow hover:bg-primary/90 rounded-xl bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-white w-full sm:w-auto h-11 px-6 text-base"
+                  className="flex-1 sm:flex-none bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-white shadow-md h-11 px-6 rounded-xl font-medium"
                   size="default">
                   <Star className="w-5 h-5 mr-2" />
                   Noter ce professeur
                 </Button>
 
-                {user &&
-                <ReportTeacherButton teacher={teacher} onUpdate={loadData} />
-                }
-
                 <Button
                   onClick={handleAskAntonin}
                   variant="outline"
-                  size="sm" 
-                  className="bg-transparent hover:bg-slate-50 border-slate-200 h-11">
+                  className="flex-1 sm:flex-none border-2 border-purple-100 hover:bg-purple-50 hover:border-purple-200 text-slate-700 h-11 px-4 rounded-xl font-medium bg-white/50">
                   <Sparkles className="w-4 h-4 mr-2 text-[#FF4D8D]" />
-                  <span className="hidden sm:inline bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent font-bold">Demander à Antonin ce qu'il en pense</span>
-                  <span className="sm:hidden bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent font-bold">Avis d'Antonin</span>
+                  <span className="hidden sm:inline bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent font-bold">
+                    Demander à Antonin ce qu'il en pense
+                  </span>
+                  <span className="sm:hidden bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent font-bold">
+                    Avis d'Antonin
+                  </span>
                 </Button>
 
-                {canModerate &&
-                <Button
-                  onClick={handleDeleteTeacher}
-                  variant="destructive"
-                  size="sm"
-                  className="w-full sm:w-auto h-11">
-                      <Trash2 className="w-4 h-4 mr-2" />
-                      Supprimer le profil
-                    </Button>
-                }
+                <div className="flex gap-2 w-full sm:w-auto">
+                  {user && (
+                     <div className="flex-1 sm:flex-none">
+                      <ReportTeacherButton teacher={teacher} onUpdate={loadData} />
+                     </div>
+                  )}
+
+                  {canModerate &&
+                  <Button
+                      onClick={handleDeleteTeacher}
+                      variant="ghost"
+                      className="flex-1 sm:flex-none text-red-500 hover:text-red-600 hover:bg-red-50 h-11 px-3 rounded-xl border border-red-100"
+                      title="Supprimer le profil">
+                        <Trash2 className="w-5 h-5" />
+                  </Button>
+                  }
+                </div>
               </div>
               
               {!user &&
