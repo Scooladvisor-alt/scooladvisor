@@ -296,6 +296,11 @@ Rédige maintenant ton résumé façon "L'avis d'Antonin" en 3 phrases max.`;
             <stop offset="50%" stopColor="#EAB308" />
             <stop offset="100%" stopColor="#F59E0B" />
           </linearGradient>
+          <linearGradient id="chat-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#FF4D8D" />
+            <stop offset="50%" stopColor="#a855f7" />
+            <stop offset="100%" stopColor="#3b82f6" />
+          </linearGradient>
         </defs>
       </svg>
       <Card className="bg-white/90 backdrop-blur-md border-slate-200 shadow-xl w-full h-auto lg:h-full flex flex-col hover:shadow-2xl transition-shadow duration-300">
@@ -480,16 +485,22 @@ Rédige maintenant ton résumé façon "L'avis d'Antonin" en 3 phrases max.`;
                       </div>
 
                       <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => handleLike(review)} className="bg-gradient-to-r text-white mr-1 px-3 text-xs font-medium rounded-full inline-flex items-center justify-center gap-2 whitespace-nowrap focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover:bg-accent hover:text-accent-foreground h-8 border transition-all border-transparent from-[#FF4D8D] via-purple-500 to-blue-500 shadow-md hover:opacity-90">
-
-
-
-
-
-                        <ThumbsUp className={`w-3.5 h-3.5 mr-1.5 ${userLikes.has(review.id) ? "fill-current" : "text-slate-500"}`} />
-                        <span className="text-xs font-semibold">{getLikeCount(review)}</span>
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleLike(review)}
+                        className={`h-8 px-3 rounded-full border transition-all ${
+                          userLikes.has(review.id)
+                            ? "bg-white border-transparent shadow-sm ring-1 ring-pink-100"
+                            : "bg-white border-slate-200 hover:bg-slate-50"
+                        }`}
+                      >
+                        <ThumbsUp
+                          className="w-4 h-4 mr-1.5 transition-all duration-300"
+                          style={userLikes.has(review.id) ? { stroke: "url(#chat-gradient)", fill: "none" } : { stroke: "#94a3b8", fill: "none" }}
+                        />
+                        <span className={`text-xs font-bold ${userLikes.has(review.id) ? "text-transparent bg-clip-text bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500" : "text-slate-500"}`}>
+                          {getLikeCount(review)}
+                        </span>
                       </Button>
                     </div>
                   </div>);

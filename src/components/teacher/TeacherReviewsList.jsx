@@ -245,6 +245,16 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
 
   const Content = () => (
     <div className="flex-1 flex flex-col h-full">
+      {/* SVG Gradient Definition */}
+      <svg width="0" height="0" className="absolute">
+        <defs>
+          <linearGradient id="chat-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#FF4D8D" />
+            <stop offset="50%" stopColor="#a855f7" />
+            <stop offset="100%" stopColor="#3b82f6" />
+          </linearGradient>
+        </defs>
+      </svg>
       <div className="border-b border-slate-100 bg-gradient-to-r from-pink-500/10 via-purple-500/10 to-blue-500/10 p-4 mb-2">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -374,12 +384,17 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
                           onClick={() => handleLike(review)}
                           className={`h-8 px-3 rounded-full border transition-all min-w-[60px] justify-center ${
                             userLikes.has(review.id)
-                              ? "border-transparent bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 text-white shadow-md hover:opacity-90"
-                              : "border-slate-200 bg-white text-slate-700 hover:bg-slate-50 hover:border-slate-300"
+                              ? "bg-white border-transparent shadow-sm ring-1 ring-pink-100"
+                              : "bg-white border-slate-200 hover:bg-slate-50"
                           }`}
                        >
-                          <ThumbsUp className={`w-3.5 h-3.5 mr-1.5 ${userLikes.has(review.id) ? "fill-current" : "text-slate-500"}`} />
-                          <span className="text-xs font-semibold">{getLikeCount(review)}</span>
+                          <ThumbsUp
+                            className="w-4 h-4 mr-1.5 transition-all duration-300"
+                            style={userLikes.has(review.id) ? { stroke: "url(#chat-gradient)", fill: "none" } : { stroke: "#94a3b8", fill: "none" }}
+                          />
+                          <span className={`text-xs font-bold ${userLikes.has(review.id) ? "text-transparent bg-clip-text bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500" : "text-slate-500"}`}>
+                            {getLikeCount(review)}
+                          </span>
                        </Button>
                     </div>
 
