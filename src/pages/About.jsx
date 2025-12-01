@@ -118,7 +118,7 @@ export default function AboutPage() {
       </div>
 
       {/* Concept Detail */}
-      <div className="bg-white py-24">
+      <div className="bg-white px-1 py-24">
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex flex-col md:flex-row items-center gap-16">
             <motion.div
