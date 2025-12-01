@@ -125,7 +125,7 @@ export default function TeachersList({ schoolId, onAddTeacher }) {
             </div>
           }
         </CardHeader>
-        <CardContent className="flex-1 flex flex-col overflow-hidden p-2 sm:p-3 gap-2 sm:gap-3">
+        <CardContent className="flex-1 flex flex-col overflow-hidden p-1 gap-1">
           {loading ?
           <div className="flex justify-center items-center py-12">
               <GradientSpinner size="w-8 h-8" />
@@ -151,7 +151,7 @@ export default function TeachersList({ schoolId, onAddTeacher }) {
             }
               </div> :
           <>
-                <div className="space-y-3 pr-2 teachers-list-scrollable">
+                <div className="space-y-1 pr-1 teachers-list-scrollable">
                   {displayedTeachers.map((teacher, index) => {
                 const isPodium = teacher.review_count > 0 && index < 3;
                 const podiumClass = isPodium ? podiumStyles[index] : 'hover:border-blue-300 bg-white';
@@ -163,7 +163,7 @@ export default function TeachersList({ schoolId, onAddTeacher }) {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: index * 0.05 }}>
                         <Link to={createPageUrl(`TeacherDetail?id=${teacher.id}`)}>
-                          <div className={`group flex items-center gap-2 sm:gap-4 p-3 sm:p-4 rounded-xl border hover:shadow-md transition-all ${podiumClass}`}>
+                          <div className={`group flex items-center gap-2 sm:gap-4 p-2 rounded-xl border hover:shadow-md transition-all ${podiumClass}`}>
                             <Avatar className="w-10 h-10 sm:w-14 sm:h-14 border-2 border-white shadow-sm flex-shrink-0">
                               <AvatarImage src={teacher.photo_url} />
                               <AvatarFallback className="bg-gradient-to-br from-blue-600 to-blue-800 text-white font-semibold text-sm sm:text-base">

@@ -322,7 +322,7 @@ Rédige maintenant ton résumé façon "L'avis d'Antonin" en 3 phrases max.`;
             }
           </div>
         </CardHeader>
-        <CardContent className="flex-1 flex flex-col overflow-hidden pt-4 gap-4">
+        <CardContent className="flex-1 flex flex-col overflow-hidden p-1 gap-1">
           <style>{`
             .reviews-scrollable {
               overflow-y: auto;
@@ -363,12 +363,12 @@ Rédige maintenant ton résumé façon "L'avis d'Antonin" en 3 phrases max.`;
               </Button>
             </div> :
 
-          <div className="space-y-3 sm:space-y-4 reviews-scrollable pr-2 max-h-[400px] sm:max-h-none overflow-y-auto">
+          <div className="space-y-1 reviews-scrollable pr-1 max-h-[400px] sm:max-h-none overflow-y-auto">
               {sortedReviews.slice(0, 2).map((review) => {
               const avatarUrl = review.author_avatar && review.author_avatar !== 'letter' ? getAvatarUrl(review.author_avatar) : null;
 
               return (
-                <div key={review.id} className="p-3 sm:p-4 rounded-lg border border-slate-200 bg-white space-y-2 sm:space-y-3">
+                <div key={review.id} className="p-2 rounded-lg border border-slate-200 bg-white space-y-1.5">
                     <div className="flex items-start justify-between">
                       <div className="flex items-center gap-2 sm:gap-3 flex-1">
                         <Avatar className="w-8 h-8 sm:w-10 sm:h-10 border-2 border-slate-100">
