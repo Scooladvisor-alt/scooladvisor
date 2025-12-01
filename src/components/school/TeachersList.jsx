@@ -96,7 +96,7 @@ export default function TeachersList({ schoolId, onAddTeacher }) {
           }
         `}</style>
         
-        <CardHeader className="border-b border-slate-100 bg-gradient-to-r from-[#FF4D8D]/10 via-purple-500/10 to-blue-500/10 mb-2">
+        <CardHeader className="border-b border-slate-100 bg-gradient-to-r from-[#FF4D8D]/10 via-purple-500/10 to-blue-500/10">
           <div className="flex items-center justify-between">
             <CardTitle className="flex items-center gap-3 text-xl sm:text-2xl">
               <Users className="w-6 h-6 sm:w-8 sm:h-8" style={{ stroke: "url(#teacherGradient)" }} />
@@ -125,7 +125,7 @@ export default function TeachersList({ schoolId, onAddTeacher }) {
             </div>
           }
         </CardHeader>
-        <CardContent className="flex-1 flex flex-col overflow-hidden p-1 gap-1">
+        <CardContent className="flex-1 flex flex-col overflow-hidden p-0">
           {loading ?
           <div className="flex justify-center items-center py-12">
               <GradientSpinner size="w-8 h-8" />
@@ -151,7 +151,7 @@ export default function TeachersList({ schoolId, onAddTeacher }) {
             }
               </div> :
           <>
-                <div className="space-y-1 pr-1 teachers-list-scrollable">
+                <div className="teachers-list-scrollable">
                   {displayedTeachers.map((teacher, index) => {
                 const isPodium = teacher.review_count > 0 && index < 3;
                 const podiumClass = isPodium ? podiumStyles[index] : 'hover:border-blue-300 bg-white';
@@ -163,7 +163,7 @@ export default function TeachersList({ schoolId, onAddTeacher }) {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: index * 0.05 }}>
                         <Link to={createPageUrl(`TeacherDetail?id=${teacher.id}`)}>
-                          <div className={`group flex items-center gap-2 sm:gap-4 p-2 rounded-xl border hover:shadow-md transition-all ${podiumClass}`}>
+                          <div className={`group flex items-center gap-2 sm:gap-4 p-4 border-b border-slate-100 last:border-0 hover:bg-slate-50 transition-all ${podiumClass}`}>
                             <Avatar className="w-10 h-10 sm:w-14 sm:h-14 border-2 border-white shadow-sm flex-shrink-0">
                               <AvatarImage src={teacher.photo_url} />
                               <AvatarFallback className="bg-gradient-to-br from-blue-600 to-blue-800 text-white font-semibold text-sm sm:text-base">
