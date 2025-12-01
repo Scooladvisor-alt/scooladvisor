@@ -167,19 +167,19 @@ export default function AboutPage() {
               initial={{ opacity: 0, scale: 0.8 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
-              className="flex-1 relative">
+              className="flex-1 relative w-full">
 
                {/* Abstract Illustration representation */}
-               <div className="relative w-full aspect-square max-w-md mx-auto">
-                  <div className="absolute inset-0 bg-gradient-to-br from-[#FF4D8D] via-purple-600 to-blue-600 rounded-[2rem] rotate-6 opacity-10" />
-                  <div className="absolute inset-0 bg-white rounded-[2rem] shadow-2xl border border-slate-100 p-8 flex flex-col items-center justify-center text-center">
-                    <div className="w-24 h-24 bg-gradient-to-br from-pink-100 to-purple-100 rounded-full flex items-center justify-center mb-6 animate-bounce">
-                      <span className="text-4xl">🎓</span>
+               <div className="relative w-full max-w-md mx-auto my-4 sm:my-0">
+                  <div className="absolute inset-0 bg-gradient-to-br from-[#FF4D8D] via-purple-600 to-blue-600 rounded-[2rem] rotate-6 opacity-10 transform translate-y-2" />
+                  <div className="relative bg-white rounded-[2rem] shadow-2xl border border-slate-100 p-6 sm:p-8 flex flex-col items-center justify-center text-center overflow-hidden">
+                    <div className="w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-br from-pink-100 to-purple-100 rounded-full flex items-center justify-center mb-4 sm:mb-6 animate-bounce">
+                      <span className="text-3xl sm:text-4xl">🎓</span>
                     </div>
-                    <h3 className="text-2xl font-bold text-slate-900 mb-2">Rejoignez le mouvement</h3>
-                    <p className="text-slate-500 mb-8">Déjà des milliers d'avis partagés.</p>
-                    <Link to={createPageUrl("Schools")}>
-                      <Button className="bg-gradient-to-r from-[#FF4D8D] to-purple-600 text-white shadow-lg hover:shadow-xl hover:scale-105 transition-all rounded-full px-8 py-6 text-lg">
+                    <h3 className="text-xl sm:text-2xl font-bold text-slate-900 mb-2">Rejoignez le mouvement</h3>
+                    <p className="text-sm sm:text-base text-slate-500 mb-6 sm:mb-8">Déjà des milliers d'avis partagés.</p>
+                    <Link to={createPageUrl("Schools")} className="w-full sm:w-auto">
+                      <Button className="w-full sm:w-auto bg-gradient-to-r from-[#FF4D8D] to-purple-600 text-white shadow-lg hover:shadow-xl hover:scale-105 transition-all rounded-full px-6 py-6 sm:px-8 sm:py-6 text-base sm:text-lg">
                         Voir les écoles
                         <ArrowRight className="ml-2 w-5 h-5" />
                       </Button>
