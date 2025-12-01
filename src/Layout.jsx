@@ -521,7 +521,7 @@ export default function Layout({ children }) {
               
               <div className="relative flex flex-col sm:flex-row items-center gap-2 sm:gap-4">
                 <p className="text-white font-medium text-xs sm:text-base text-center sm:text-left">
-                  Ta voix compte. Partage ton vécu scolaire. 😉
+                  Ta voix compte. Rejoins-nous. 😉
                 </p>
                 <Button
                 onClick={handleLogin}
