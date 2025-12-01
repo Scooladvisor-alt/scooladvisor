@@ -201,8 +201,8 @@ export default function TeachersList({ schoolId, onAddTeacher }) {
                 {hasMore &&
             <div className="mt-4 text-center">
                     <button
-                onClick={() => setShowAll(true)}
-                className="text-blue-600 hover:text-blue-700 text-sm font-medium transition-colors">
+                onClick={() => setShowAll(true)} className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-sm font-medium transition-colors">
+
                       Voir {filteredTeachers.length - initialDisplayCount} professeurs de plus
                     </button>
                   </div>
