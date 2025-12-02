@@ -181,22 +181,22 @@ export default function ProfilePage() {
       const teachersMap = new Map(teachers.map((t) => [t.id, t]));
       const schoolsMap = new Map(schools.map((s) => [s.id, s]));
 
-      // Enrichir les avis professeurs (sans filtrer si l'entité manque)
-      const validTeacherReviews = allTeacherReviews.map((review) => {
-        const teacher = teachersMap.get(review.teacher_id);
-        const school = teacher ? schoolsMap.get(teacher.school_id) : null;
-        return {
-          ...review,
-          teacher,
-          school
-        };
-      });
+      // Enrichir les avis professeurs et filtrer les orphelins
+      const validTeacherReviews = allTeacherReviews
+        .map((review) => {
+          const teacher = teachersMap.get(review.teacher_id);
+          const school = teacher ? schoolsMap.get(teacher.school_id) : null;
+          return { ...review, teacher, school };
+        })
+        .filter((r) => r.teacher && r.school); // Ne garder que si prof et école existent
 
-      // Enrichir les avis établissements (sans filtrer si l'entité manque)
-      const validSchoolReviews = allSchoolReviews.map((review) => ({
-        ...review,
-        school: schoolsMap.get(review.school_id)
-      }));
+      // Enrichir les avis établissements et filtrer les orphelins
+      const validSchoolReviews = allSchoolReviews
+        .map((review) => ({
+          ...review,
+          school: schoolsMap.get(review.school_id)
+        }))
+        .filter((r) => r.school); // Ne garder que si école existe
 
       setTeacherReviews(validTeacherReviews);
       setSchoolReviews(validSchoolReviews);
@@ -400,73 +400,99 @@ export default function ProfilePage() {
                       {teacherReviews.length > 0 ?
                     <>
                       {teacherReviews.slice(0, visibleTeacherReviews).map((review) => (
-                      <motion.div
-                        key={review.id}
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="border-2 border-slate-200 rounded-xl p-4 hover:border-pink-300 hover:shadow-lg transition-all cursor-pointer bg-white"
-                        onClick={() => navigate(createPageUrl(`TeacherDetail?id=${review.teacher_id}`))}>
+                        <motion.div
+                          key={review.id}
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          className="border-2 border-slate-200 rounded-xl p-4 hover:border-pink-300 hover:shadow-lg transition-all bg-white relative group"
+                        >
+                          <div className="flex flex-col gap-3">
+                            {/* Header Info */}
+                            <div className="flex justify-between items-start">
+                              <div className="flex flex-col gap-1.5 flex-1 min-w-0">
+                                {/* School Link */}
+                                <div 
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    navigate(createPageUrl(`SchoolDetail?id=${review.school?.id}`));
+                                  }}
+                                  className="flex items-center gap-1.5 text-slate-500 hover:text-blue-600 transition-colors cursor-pointer w-fit"
+                                >
+                                  <SchoolIcon className="w-3.5 h-3.5" />
+                                  <span className="text-xs font-semibold uppercase tracking-wide truncate max-w-full">
+                                    {review.school?.name}
+                                  </span>
+                                </div>
 
-                              <div className="flex items-start justify-between gap-2 mb-3">
-                              <div className="flex-1 min-w-0">
-                                <h4 className="font-bold text-slate-900 text-base mb-2">
-                                  {review.teacher?.name || "Professeur inconnu"}
+                                {/* Teacher Link */}
+                                <h4 
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    navigate(createPageUrl(`TeacherDetail?id=${review.teacher?.id}`));
+                                  }}
+                                  className="text-lg font-bold text-slate-900 hover:text-[#FF4D8D] transition-colors cursor-pointer truncate w-fit"
+                                >
+                                  {review.teacher?.name}
                                 </h4>
-                                <div className="flex flex-col gap-1.5">
-                                  <Badge variant="outline" className="text-xs w-fit">
-                                    <BookOpen className="w-3 h-3 mr-1" />
-                                    {review.teacher?.subject || "Matière inconnue"}
-                                  </Badge>
-                                  <span className="text-xs text-slate-600 flex items-center gap-1">
-                                    <SchoolIcon className="w-3 h-3" />
-                                    {review.school?.name || "Établissement inconnu"}
-                                  </span>
-                                </div>
-                              </div>
-                              
-                              <div className="rotating-shine-widget bg-gradient-to-br from-amber-50 to-amber-100 px-3 py-2 rounded-lg border-2 border-amber-200 flex-shrink-0">
-                                <div className="relative z-10 flex items-center gap-1">
-                                  <Star className="w-4 h-4 text-amber-600 fill-amber-600" />
-                                  <span className="text-base font-bold text-amber-900">
-                                    {review.total_rating?.toFixed(1)}
-                                  </span>
-                                  <span className="text-xs text-amber-700">/20</span>
-                                </div>
-                              </div>
-                            </div>
 
-                            <div className="grid grid-cols-4 gap-2 mb-3 text-xs">
-                              <div className="flex flex-col items-center gap-1 p-1.5 bg-blue-50 rounded-lg border border-blue-100">
-                                <BookOpen className="w-3.5 h-3.5 text-blue-500" />
-                                <span className="font-bold text-slate-700">{review.workload}/5</span>
-                              </div>
-                              <div className="flex flex-col items-center gap-1 p-1.5 bg-pink-50 rounded-lg border border-pink-100">
-                                <Heart className="w-3.5 h-3.5 text-pink-500" />
-                                <span className="font-bold text-slate-700">{review.friendliness}/5</span>
-                              </div>
-                              <div className="flex flex-col items-center gap-1 p-1.5 bg-purple-50 rounded-lg border border-purple-100">
-                                <Brain className="w-3.5 h-3.5 text-purple-500" />
-                                <span className="font-bold text-slate-700">{review.teaching_method}/5</span>
-                              </div>
-                              <div className="flex flex-col items-center gap-1 p-1.5 bg-orange-50 rounded-lg border border-orange-100">
-                                <FileText className="w-3.5 h-3.5 text-orange-500" />
-                                <span className="font-bold text-slate-700">{review.grading_severity}/5</span>
-                              </div>
-                            </div>
-
-                            <p className="text-sm text-slate-700 leading-relaxed mb-3">
-                              {review.comment}
-                            </p>
-
-                            <div className="flex items-center gap-2 text-xs text-slate-500">
-                              <span>📅 {format(new Date(review.created_date), "d MMMM yyyy", { locale: fr })}</span>
-                              {review.edit_count > 0 &&
-                        <Badge variant="outline" className="text-[10px]">
-                                  Modifié {review.edit_count}×
+                                {/* Subject Badge */}
+                                <Badge 
+                                  variant="secondary" 
+                                  className="w-fit text-xs font-medium bg-purple-50 text-purple-700 border-purple-100"
+                                >
+                                  <BookOpen className="w-3 h-3 mr-1.5" />
+                                  {review.teacher?.subject || "Matière non renseignée"}
                                 </Badge>
-                        }
+                              </div>
+
+                              {/* Rating Widget */}
+                              <div className="flex-shrink-0 bg-gradient-to-br from-amber-50 to-amber-100 px-2.5 py-1.5 rounded-lg border border-amber-200 flex items-center gap-1 shadow-sm">
+                                <Star className="w-4 h-4 text-amber-600 fill-amber-600" />
+                                <span className="text-base font-bold text-amber-900">
+                                  {review.total_rating?.toFixed(1)}
+                                </span>
+                                <span className="text-[10px] text-amber-700 font-medium">/20</span>
+                              </div>
                             </div>
-                          </motion.div>
+
+                            {/* Criteria Grid */}
+                            <div className="grid grid-cols-4 gap-2 text-xs bg-slate-50 p-2 rounded-lg">
+                              <div className="flex flex-col items-center text-center gap-0.5">
+                                <span className="text-[10px] text-slate-500 uppercase">Charge</span>
+                                <span className="font-bold text-blue-600">{review.workload}/5</span>
+                              </div>
+                              <div className="flex flex-col items-center text-center gap-0.5">
+                                <span className="text-[10px] text-slate-500 uppercase">Amabilité</span>
+                                <span className="font-bold text-pink-600">{review.friendliness}/5</span>
+                              </div>
+                              <div className="flex flex-col items-center text-center gap-0.5">
+                                <span className="text-[10px] text-slate-500 uppercase">Pédago</span>
+                                <span className="font-bold text-purple-600">{review.teaching_method}/5</span>
+                              </div>
+                              <div className="flex flex-col items-center text-center gap-0.5">
+                                <span className="text-[10px] text-slate-500 uppercase">Notation</span>
+                                <span className="font-bold text-orange-600">{review.grading_severity}/5</span>
+                              </div>
+                            </div>
+
+                            {/* Review Content */}
+                            <div className="bg-white rounded-lg">
+                              <p className="text-sm text-slate-700 leading-relaxed italic relative pl-3 border-l-2 border-pink-200">
+                                "{review.comment}"
+                              </p>
+                            </div>
+
+                            {/* Footer Date */}
+                            <div className="flex items-center justify-between text-xs text-slate-400 pt-2 border-t border-slate-100 mt-1">
+                              <span>Publié le {format(new Date(review.created_date), "d MMMM yyyy", { locale: fr })}</span>
+                              {review.edit_count > 0 && (
+                                <span className="bg-slate-100 px-1.5 py-0.5 rounded text-[10px]">
+                                  Modifié {review.edit_count} fois
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                        </motion.div>
                       ))}
                       {visibleTeacherReviews < teacherReviews.length && (
                         <button
@@ -496,44 +522,62 @@ export default function ProfilePage() {
                       {schoolReviews.length > 0 ?
                     <>
                       {schoolReviews.slice(0, visibleSchoolReviews).map((review) => (
-                      <motion.div
-                        key={review.id}
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="border-2 border-slate-200 rounded-xl p-4 hover:border-blue-300 hover:shadow-lg transition-all cursor-pointer bg-white"
-                        onClick={() => navigate(createPageUrl(`SchoolDetail?id=${review.school_id}`))}>
-
-                              <div className="flex items-start justify-between gap-2 mb-3">
+                        <motion.div
+                          key={review.id}
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          className="border-2 border-slate-200 rounded-xl p-4 hover:border-blue-300 hover:shadow-lg transition-all bg-white group"
+                        >
+                          <div className="flex flex-col gap-3">
+                            <div className="flex justify-between items-start">
                               <div className="flex-1 min-w-0">
-                                <h4 className="font-bold text-slate-900 text-base mb-2">
-                                  {review.school?.name || "Établissement inconnu"}
+                                {/* School Link */}
+                                <h4 
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    navigate(createPageUrl(`SchoolDetail?id=${review.school?.id}`));
+                                  }}
+                                  className="text-lg font-bold text-slate-900 hover:text-blue-600 transition-colors cursor-pointer truncate w-fit mb-1"
+                                >
+                                  {review.school?.name}
                                 </h4>
+                                
+                                {/* School Type Badge if available */}
+                                {review.school?.type && (
+                                  <Badge variant="outline" className="text-[10px] bg-blue-50 text-blue-700 border-blue-100 capitalize">
+                                    {review.school.type.replace('_', ' ')}
+                                  </Badge>
+                                )}
                               </div>
                               
-                              <div className="rotating-shine-widget bg-gradient-to-br from-amber-50 to-amber-100 px-3 py-2 rounded-lg border-2 border-amber-200 flex-shrink-0">
-                                <div className="relative z-10 flex items-center gap-1">
-                                  <Star className="w-4 h-4 text-amber-600 fill-amber-600" />
-                                  <span className="text-base font-bold text-amber-900">
-                                    {review.rating?.toFixed(1)}
-                                  </span>
-                                  <span className="text-xs text-amber-700">/20</span>
-                                </div>
+                              {/* Rating Widget */}
+                              <div className="flex-shrink-0 bg-gradient-to-br from-amber-50 to-amber-100 px-2.5 py-1.5 rounded-lg border border-amber-200 flex items-center gap-1 shadow-sm">
+                                <Star className="w-4 h-4 text-amber-600 fill-amber-600" />
+                                <span className="text-base font-bold text-amber-900">
+                                  {review.rating?.toFixed(1)}
+                                </span>
+                                <span className="text-[10px] text-amber-700 font-medium">/20</span>
                               </div>
                             </div>
 
-                            <p className="text-sm text-slate-700 leading-relaxed mb-3">
-                              {review.comment}
-                            </p>
-
-                            <div className="flex items-center gap-2 text-xs text-slate-500">
-                              <span>📅 {format(new Date(review.created_date), "d MMMM yyyy", { locale: fr })}</span>
-                              {review.edit_count > 0 &&
-                        <Badge variant="outline" className="text-[10px]">
-                                  Modifié {review.edit_count}×
-                                </Badge>
-                        }
+                            {/* Review Content */}
+                            <div className="bg-white rounded-lg">
+                              <p className="text-sm text-slate-700 leading-relaxed italic relative pl-3 border-l-2 border-blue-200">
+                                "{review.comment}"
+                              </p>
                             </div>
-                          </motion.div>
+
+                            {/* Footer Date */}
+                            <div className="flex items-center justify-between text-xs text-slate-400 pt-2 border-t border-slate-100 mt-1">
+                              <span>Publié le {format(new Date(review.created_date), "d MMMM yyyy", { locale: fr })}</span>
+                              {review.edit_count > 0 && (
+                                <span className="bg-slate-100 px-1.5 py-0.5 rounded text-[10px]">
+                                  Modifié {review.edit_count} fois
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                        </motion.div>
                       ))}
                       {visibleSchoolReviews < schoolReviews.length && (
                         <button
