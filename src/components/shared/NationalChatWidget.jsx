@@ -310,100 +310,54 @@ Si la décision est "approved", "reason" peut être vide ou null.`,
 
   return (
     <>
-      <div
-        className="my-6 sm:my-8 p-3 sm:p-4 rounded-xl bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 shadow-lg cursor-pointer hover:shadow-xl transition-all hover:-translate-y-1 relative overflow-hidden"
-        onClick={() => setShowDialog(true)}>
+      <div className="my-6 sm:my-8 p-3 sm:p-4 rounded-xl bg-gradient-to-br from-[#FF4D8D] via-purple-500 to-blue-500 shadow-lg cursor-pointer hover:shadow-xl transition-all hover:-translate-y-1 relative overflow-hidden sticky bottom-4 z-10 group"
+      onClick={() => setShowDialog(true)}>
+        <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/20 to-transparent z-0" style={{ transform: 'skewX(-20deg)' }} />
 
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-shine-slow pointer-events-none"
-        style={{ backgroundSize: '200% 100%' }} />
-
-
-        <h2 className="text-xs sm:text-xl font-bold flex items-center gap-1 sm:gap-2 mb-2 sm:mb-3 relative z-10">
-          <span className="text-white whitespace-nowrap">
-            Prends le micro des étudiants
+        <h2 className="text-sm sm:text-xl font-bold text-white flex items-center gap-2 mb-2 sm:mb-3">
+          <span className="text-white">
+            Micro National - L'espace libre des étudiants
           </span>
-          <span>🎤</span>
+          <span className="hidden sm:inline">🎤</span>
         </h2>
         {loading ?
-        <p className="text-white/80 text-xs sm:text-sm relative z-10">Chargement...</p> :
+        <p className="text-white/80 text-sm">Chargement...</p> :
         lastMessage ?
-        <div className="mt-2 sm:mt-3 p-2 sm:p-3 rounded-xl bg-white shadow-md relative z-10">
-            <p className="text-xs sm:text-sm font-semibold line-clamp-2">
+        <div className="mt-2 p-3 rounded-xl bg-white shadow-md">
+            <p className="text-sm font-semibold line-clamp-2">
               <span className="font-bold text-blue-600">
                 {lastMessage.is_anonymous ? 'Anonyme' : lastMessage.author_name}:
               </span>{' '}
-              <span className="text-slate-900">{lastMessage.message}</span>
+              <span className="text-black">{lastMessage.message}</span>
             </p>
-            <p className="text-[10px] sm:text-xs text-slate-500 mt-1 sm:mt-1.5 text-right">
+            <p className="text-xs text-slate-500 mt-1.5 text-right">
               {formatDateWithTimezone(lastMessage.created_date, "'Le' d MMM 'à' HH:mm")}
             </p>
           </div> :
 
-        <p className="text-white/80 text-xs sm:text-sm relative z-10">Et si tu ouvrais la conversation ? 💬</p>
+        <p className="text-white/80 text-sm">Et si tu ouvrais la conversation ? 💬</p>
         }
       </div>
 
-      <style>{`
-        @keyframes shine-slow {
-          0% { background-position: -200% center; }
-          100% { background-position: 200% center; }
-        }
-
-        .animate-shine-slow {
-          animation: shine-slow 3s ease-in-out infinite;
-        }
-      `}</style>
-
       <Dialog open={showDialog} onOpenChange={setShowDialog}>
-        <DialogContent className="fixed left-[50%] top-[50%] z-50 w-full translate-x-[-50%] translate-y-[-50%] gap-4 duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] sm:rounded-lg max-w-[95vw] sm:max-w-5xl h-[90vh] flex flex-col p-0 rounded-3xl bg-white shadow-2xl border border-slate-200 overflow-hidden">
-          <style>{`
-            .chat-messages::-webkit-scrollbar {
-              width: 6px;
-            }
-            .chat-messages::-webkit-scrollbar-track {
-              background: transparent;
-            }
-            .chat-messages::-webkit-scrollbar-thumb {
-              background: #cbd5e1;
-              border-radius: 10px;
-            }
-            .chat-messages::-webkit-scrollbar-thumb:hover {
-              background: #94a3b8;
-            }
-          `}</style>
-
-          <DialogHeader className="px-6 py-4 bg-white border-b border-slate-100 relative z-20">
-            <div className="flex items-center justify-between w-full">
-              <DialogTitle className="text-xl sm:text-2xl font-bold flex items-center gap-3">
-                <div className="w-8 h-8 sm:w-10 sm:h-10 bg-pink-50 rounded-xl flex items-center justify-center text-[#FF4D8D]">
-                  <Mic className="w-5 h-5 sm:w-6 sm:h-6" />
-                </div>
-                <span>Micro <span className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">National</span></span>
-              </DialogTitle>
-              
-              <p className="text-slate-500 text-sm hidden sm:block font-medium">
-                L'espace libre des étudiants 🎓
-              </p>
-            </div>
+        <DialogContent className="max-w-[95vw] sm:max-w-4xl h-[85vh] flex flex-col p-0 rounded-2xl">
+          <DialogHeader className="p-4 sm:p-6 pb-3 sm:pb-4 border-b">
+            <DialogTitle className="text-xl sm:text-2xl font-bold flex items-center gap-2">
+              <Mic className="w-5 h-5 sm:w-6 sm:h-6 text-[#FF4D8D]" />
+              <span className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
+                Micro National - L'espace libre
+              </span>
+              <span>🎤</span>
+            </DialogTitle>
           </DialogHeader>
 
-          <div className="flex-1 overflow-y-auto px-4 sm:px-8 py-6 chat-messages bg-slate-50/50 relative">
-            <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] opacity-50 pointer-events-none" />
-            <div className="relative z-10">
+          <div className="flex-1 overflow-y-auto px-6 py-4">
             {messages.length === 0 ?
-            <div className="flex flex-col items-center justify-center h-full text-center px-4 relative z-20 py-10">
-                <div className="w-16 h-16 bg-white border border-slate-100 rounded-2xl flex items-center justify-center mb-4 shadow-lg shadow-purple-100 -rotate-3">
-                  <Mic className="w-8 h-8 text-[#FF4D8D]" />
-                </div>
-                <h3 className="text-xl font-bold text-slate-900 mb-2">
-                  C'est calme ici... 🤫
-                </h3>
-                <p className="text-slate-500 text-sm">
-                  Prends le micro et lance la discussion !
-                </p>
+            <div className="text-center text-slate-500 py-16">
+                <p className="text-lg mb-4">C'est calme ici... Prends le micro ! 🎤</p>
               </div> :
 
-            <div className="space-y-3 sm:space-y-4 max-w-4xl mx-auto">
+            <div className="space-y-3">
                 {messages.map((msg, index) =>
               <NationalMessageBubble
                 key={msg.id}
@@ -424,79 +378,69 @@ Si la décision est "approved", "reason" peut être vide ou null.`,
             }
           </div>
 
-          </div>
-
-          <div className="bg-white border-t border-slate-100 px-4 sm:px-8 py-6 z-20">
-            <div className="max-w-4xl mx-auto space-y-4">
+          <div className="border-t bg-gradient-to-r from-pink-50 via-purple-50 to-blue-50 p-3 sm:p-6">
+            <div className="space-y-3 sm:space-y-4">
               <div className="space-y-2">
-                <div className="relative group">
-                  <Textarea
-                    placeholder={user ? "À toi de jouer... (10 caractères min)" : "Connecte-toi pour participer 👋"}
-                    value={newMessage}
-                    onChange={(e) => {
-                      const text = e.target.value;
-                      if (text.length <= MAX_MESSAGE_LENGTH) {
-                        setNewMessage(text);
-                      }
-                    }}
-                    className="min-h-[80px] sm:min-h-[100px] text-base p-4 pr-12 resize-none border border-slate-200 focus:border-purple-500 focus:ring-4 focus:ring-purple-500/10 rounded-2xl bg-slate-50 focus:bg-white transition-all duration-300"
-                    disabled={!user} />
+                <Textarea
+                  placeholder={user ? "Exprime-toi librement (10 caractères min)... 🎤" : "Connecte-toi pour participer 👋"}
+                  value={newMessage}
+                  onChange={(e) => {
+                    const text = e.target.value;
+                    if (text.length <= MAX_MESSAGE_LENGTH) {
+                      setNewMessage(text);
+                    }
+                  }}
+                  className="min-h-[80px] sm:min-h-[120px] text-sm sm:text-base"
+                  disabled={!user} />
 
-                  <div className="absolute bottom-3 right-3 flex items-center gap-2">
-                    <span className={`text-xs font-medium px-2 py-1 rounded-md ${newMessage.length >= MAX_MESSAGE_LENGTH ? 'bg-red-100 text-red-600' : 'bg-slate-100 text-slate-500'}`}>
-                      {newMessage.length}/{MAX_MESSAGE_LENGTH}
-                    </span>
-                  </div>
+                <div className="flex justify-between text-[10px] text-slate-400">
+                  <span>
+                    {newMessage.length} / {MAX_MESSAGE_LENGTH} caractères
+                    <span className="ml-1">(minimum 10)</span>
+                  </span>
+                  {newMessage.length >= MAX_MESSAGE_LENGTH &&
+                  <span className="text-red-600 font-medium">Limite atteinte !</span>
+                  }
                 </div>
               </div>
 
-              <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-                {user &&
-                <div className="flex items-center gap-2">
-                    <Checkbox
-                    id="anonymous_national"
-                    checked={isAnonymous}
-                    onCheckedChange={setIsAnonymous}
-                    className="border-slate-300 data-[state=checked]:bg-purple-600 data-[state=checked]:border-purple-600" />
+              {user &&
+              <div className="flex items-center space-x-2">
+                  <Checkbox
+                  id="anonymous_national"
+                  checked={isAnonymous}
+                  onCheckedChange={setIsAnonymous} />
 
-                    <Label htmlFor="anonymous_national" className="text-sm cursor-pointer font-medium text-slate-600 hover:text-slate-900 transition-colors select-none flex items-center gap-2">
-                      <span className="bg-slate-100 p-1 rounded-md">🕵️</span>
-                      Poster en anonyme
-                    </Label>
-                  </div>
-                }
-
-                <div className="flex-1 sm:flex-none w-full sm:w-auto">
-                  {user ?
-                  <Button
-                    onClick={handlePublish}
-                    disabled={!newMessage.trim() || postLoading || newMessage.length > MAX_MESSAGE_LENGTH || newMessage.length < 10}
-                    className="w-full sm:w-auto bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:opacity-90 text-white shadow-lg shadow-purple-500/20 hover:shadow-purple-500/40 transition-all hover:-translate-y-0.5 text-base font-bold h-12 px-8 rounded-xl"
-                    size="lg">
-
-                      {postLoading ?
-                    <>
-                          <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-                          Envoi...
-                        </> :
-
-                    <>
-                          Publier
-                          <Send className="w-5 h-5 ml-2" />
-                        </>
-                    }
-                    </Button> :
-
-                  <Button
-                    onClick={() => base44.auth.redirectToLogin(window.location.href)}
-                    className="w-full sm:w-auto bg-slate-900 hover:bg-slate-800 text-white shadow-lg transition-all hover:-translate-y-0.5 text-base font-bold h-12 px-8 rounded-xl"
-                    size="lg">
-
-                      Se connecter
-                      <Send className="w-5 h-5 ml-2" />
-                    </Button>
-                  }
+                  <Label htmlFor="anonymous_national" className="text-xs sm:text-sm cursor-pointer">
+                    Poster en anonyme 🕵️‍♂️
+                  </Label>
                 </div>
+              }
+
+              <div className="flex justify-end gap-2 sm:gap-3">
+                <Button variant="ghost" onClick={() => setShowDialog(false)} size="sm" className="text-xs sm:text-base">
+                  Annuler
+                </Button>
+                {user ?
+                <Button
+                  onClick={handlePublish}
+                  disabled={!newMessage.trim() || postLoading || newMessage.length > MAX_MESSAGE_LENGTH || newMessage.length < 10} className="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 shadow hover:bg-primary/90 h-8 rounded-md px-3 bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 text-white hover:opacity-90 text-xs sm:text-base"
+
+                  size="sm">
+
+                    {postLoading ? <Loader2 className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2 animate-spin" /> : <Send className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />}
+                    Publier
+                  </Button> :
+
+                <Button
+                  onClick={() => base44.auth.redirectToLogin(window.location.href)}
+                  className="bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:opacity-90 text-xs sm:text-base"
+                  size="sm">
+
+                    <Send className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
+                    Connecte-toi pour publier
+                  </Button>
+                }
               </div>
             </div>
           </div>
@@ -564,138 +508,70 @@ const NationalMessageBubble = ({ message, user, onEdit, onSave, onCancelEdit, on
   const isAuthor = user && message.author_email === user.email;
   const isEditing = editingMessageId === message.id;
   const canEdit = isAuthor && (message.edit_count || 0) < 3;
-  const MAX_MESSAGE_LENGTH_EDIT = 300;
-
-  const getAvatarColor = (name) => {
-    const colors = [
-    'from-rose-400 to-pink-500',
-    'from-purple-400 to-indigo-500',
-    'from-blue-400 to-cyan-500',
-    'from-emerald-400 to-teal-500',
-    'from-amber-400 to-orange-500',
-    'from-fuchsia-400 to-purple-500'];
-
-    const hash = name.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
-    return colors[hash % colors.length];
-  };
-
-  const avatarGradient = getAvatarColor(message.author_name || 'Anonymous');
 
   return (
-    <div className={`flex ${isAuthor ? 'justify-end' : 'justify-start'} animate-fadeIn`} style={{ animationDelay: `${index * 0.05}s` }}>
-      <style>{`
-        @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(10px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        .animate-fadeIn {
-          animation: fadeIn 0.3s ease-out forwards;
-        }
-      `}</style>
-
-      <div className={`flex gap-2 sm:gap-3 max-w-[85%] sm:max-w-[75%] ${isAuthor ? 'flex-row-reverse' : 'flex-row'}`}>
-        {/* Avatar */}
-        <div className={`flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br ${avatarGradient} flex items-center justify-center shadow-md border-2 border-white`}>
-          <span className="text-white font-bold text-xs sm:text-sm">
-            {message.is_anonymous ? '🕵️' : message.author_name?.charAt(0).toUpperCase() || '?'}
-          </span>
-        </div>
-
-        {/* Message Content */}
-        <div className="flex-1">
-          <div className={`flex items-baseline gap-2 mb-1 ${isAuthor ? 'flex-row-reverse' : 'flex-row'}`}>
-            <p className={`font-bold text-xs sm:text-sm ${isAuthor ? 'text-slate-700' : 'text-slate-700'}`}>
-              {message.is_anonymous ? '🕵️ Anonyme' : message.author_name}
+    <div className="w-full mb-3">
+      <div className="group relative bg-white p-4 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-all duration-300">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
+          <div className="flex items-baseline gap-2">
+            <p className="font-bold text-sm bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
+              {message.is_anonymous ? "Anonyme" : message.author_name}
             </p>
-            <p className="text-[9px] sm:text-[10px] text-slate-400">
+            <p className="text-[10px] text-slate-400">
               {formatDistanceWithTimezone(message.created_date)}
-              {message.is_edited && ' • modifié'}
+              {message.is_edited && " (modifié)"}
             </p>
           </div>
-
-          {isEditing ?
-          <div className="bg-slate-50 rounded-2xl p-3 shadow-md border-2 border-slate-200">
-              <Textarea
-              value={editedContent}
-              onChange={(e) => {
-                const text = e.target.value;
-                if (text.length <= MAX_MESSAGE_LENGTH_EDIT) {
-                  setEditedContent(text);
-                }
-              }}
-              className="bg-white text-slate-900 text-sm border-slate-200 focus:border-slate-400"
-              rows={3} />
-
-              <div className="flex justify-between items-center text-[9px] sm:text-[10px] text-slate-400 mt-2">
-                <span className={editedContent.length >= MAX_MESSAGE_LENGTH_EDIT ? 'text-red-500 font-medium' : ''}>
-                  {editedContent.length}/{MAX_MESSAGE_LENGTH_EDIT}
-                </span>
-              </div>
-              <div className="flex gap-2 mt-3 justify-end">
-                <Button size="sm" variant="outline" onClick={onCancelEdit} className="h-8 text-xs rounded-lg">
-                  Annuler
-                </Button>
-                <Button
-                size="sm"
-                onClick={() => onSave(message.id, editedContent, message.edit_count || 0)}
-                className="h-8 text-xs bg-slate-700 hover:bg-slate-800 text-white rounded-lg"
-                disabled={!editedContent.trim() || editedContent.length > MAX_MESSAGE_LENGTH_EDIT}>
-
-                  <Save className="w-3 h-3 mr-1" /> Enregistrer
-                </Button>
-              </div>
-            </div> :
-
-          <>
-              <div className="relative group">
-                <div className={`${isAuthor ? 'bg-blue-50/50 text-slate-800 border-blue-100' : 'bg-white text-slate-800 border-slate-100'} border rounded-3xl rounded-tl-none px-5 py-4 shadow-sm hover:shadow-md transition-all`}>
-                  <p className="text-base leading-relaxed break-words">{message.message}</p>
-                  
-                  {/* Bouton signaler intégré dans le message */}
-                  {!isAuthor && user &&
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="absolute top-2 right-2 h-6 w-6 p-0 hover:bg-slate-100 text-slate-300 hover:text-slate-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-                  onClick={() => onReport(message)}>
-
-                      <Flag className="w-3 h-3" />
-                    </Button>
-                }
-                </div>
-              </div>
-
-              {/* Actions */}
-              {isAuthor &&
-            <div className="flex gap-2 mt-2 justify-end flex-wrap opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                  {canEdit &&
-              <button
-                className="text-xs hover:underline text-slate-400 hover:text-blue-600 flex items-center gap-1"
-                onClick={() => onEdit(message)}>
-
-                      <Edit className="w-3 h-3" />
-                      Modifier
-                    </button>
-              }
-                  <button
-                className="text-xs hover:underline text-slate-400 hover:text-red-600 flex items-center gap-1"
-                onClick={() => onDelete(message.id)}>
-
-                    <Trash2 className="w-3 h-3" />
-                    Supprimer
-                  </button>
-                </div>
-            }
-
-              {isAuthor && !canEdit &&
-            <p className="text-[9px] sm:text-[10px] text-slate-400 mt-1 text-right">
-                  ⚠️ Limite de 3 modifications atteinte
-                </p>
-            }
-            </>
-          }
         </div>
-      </div>
-    </div>);
 
+        {isEditing ? (
+          <div className="relative z-10">
+            <Textarea
+              value={editedContent}
+              onChange={(e) => setEditedContent(e.target.value)}
+              className="bg-slate-50 text-slate-900 text-sm min-h-[80px] mb-2"
+            />
+            <div className="flex gap-2 justify-end">
+              <Button size="sm" variant="ghost" onClick={onCancelEdit} className="h-8 text-xs">
+                Annuler
+              </Button>
+              <Button size="sm" onClick={() => onSave(message.id, editedContent, message.edit_count || 0)} className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 text-white h-8 text-xs border-0">
+                <Save className="w-3 h-3 mr-1" /> Enregistrer
+              </Button>
+            </div>
+          </div>
+        ) : (
+          <p className="text-sm leading-relaxed text-slate-700 font-medium mb-4">
+            {message.message}
+          </p>
+        )}
+
+        {!isEditing && (
+          <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-slate-50 mt-2">
+            <div className="flex items-center gap-2">
+              {/* Like button functionality not fully implemented for national messages but placeholders kept if needed, currently simplified to match SchoolChat structure */}
+            </div>
+
+            <div className="flex items-center gap-1">
+              {isAuthor && canEdit && (
+                <Button variant="ghost" size="icon" className="h-8 w-8 text-slate-400 hover:text-blue-500 hover:bg-blue-50 rounded-full" onClick={() => onEdit(message)}>
+                  <Edit className="w-4 h-4" />
+                </Button>
+              )}
+              {isAuthor && (
+                <Button variant="ghost" size="icon" className="h-8 w-8 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-full" onClick={() => onDelete(message.id)}>
+                  <Trash2 className="w-4 h-4" />
+                </Button>
+              )}
+              {!isAuthor && user && (
+                <Button variant="ghost" size="icon" className="h-8 w-8 text-slate-300 hover:text-orange-500 hover:bg-orange-50 rounded-full" onClick={() => onReport(message)}>
+                  <Flag className="w-4 h-4" />
+                </Button>
+              )}
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
 };

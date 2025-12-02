@@ -145,41 +145,42 @@ export default function ProfilePage() {
     try {
       // Charger TOUS les avis de l'utilisateur publiés
       const [allTeacherReviews, allSchoolReviews] = await Promise.all([
-      base44.entities.TeacherReview.filter({
-        created_by: userEmail,
-        status: "published"
-      }, "-created_date"),
-      base44.entities.SchoolReview.filter({
-        created_by: userEmail,
-        status: "published"
-      }, "-created_date")]
-      );
+        base44.entities.TeacherReview.filter({
+          created_by: userEmail,
+          status: "published"
+        }, "-created_date"),
+        base44.entities.SchoolReview.filter({
+          created_by: userEmail,
+          status: "published"
+        }, "-created_date")
+      ]);
 
-      // Récupérer tous les IDs nécessaires
+      // Récupérer les IDs des professeurs
       const teacherIds = [...new Set(allTeacherReviews.map((r) => r.teacher_id).filter(Boolean))];
-      const schoolIds = [...new Set(allSchoolReviews.map((r) => r.school_id).filter(Boolean))];
+      
+      // Charger les professeurs spécifiquement via id__in
+      let teachers = [];
+      if (teacherIds.length > 0) {
+        teachers = await base44.entities.Teacher.filter({ id__in: teacherIds });
+      }
 
-      // Charger tous les profs et écoles en parallèle
-      const [teachers, directSchools] = await Promise.all([
-      teacherIds.length > 0 ? base44.entities.Teacher.list() : [],
-      schoolIds.length > 0 ? base44.entities.School.list() : []]
-      );
+      // Récupérer tous les IDs d'écoles (ceux des avis école ET ceux des profs récupérés)
+      const reviewSchoolIds = allSchoolReviews.map((r) => r.school_id).filter(Boolean);
+      const teacherSchoolIds = teachers.map((t) => t.school_id).filter(Boolean);
+      const allSchoolIds = [...new Set([...reviewSchoolIds, ...teacherSchoolIds])];
 
-      // Filtrer pour ne garder que les profs/écoles qui existent dans les IDs
-      const relevantTeachers = teachers.filter((t) => teacherIds.includes(t.id));
-      const teacherSchoolIds = relevantTeachers.map((t) => t.school_id).filter(Boolean);
-
-      // Charger toutes les écoles nécessaires
-      const allSchoolIds = [...new Set([...schoolIds, ...teacherSchoolIds])];
-      const allSchools = directSchools.filter((s) => allSchoolIds.includes(s.id));
+      // Charger les écoles spécifiquement via id__in
+      let schools = [];
+      if (allSchoolIds.length > 0) {
+        schools = await base44.entities.School.filter({ id__in: allSchoolIds });
+      }
 
       // Créer des maps pour accès rapide
-      const teachersMap = new Map(relevantTeachers.map((t) => [t.id, t]));
-      const schoolsMap = new Map(allSchools.map((s) => [s.id, s]));
+      const teachersMap = new Map(teachers.map((t) => [t.id, t]));
+      const schoolsMap = new Map(schools.map((s) => [s.id, s]));
 
-      // Enrichir et filtrer les avis professeurs
-      const validTeacherReviews = allTeacherReviews.
-      map((review) => {
+      // Enrichir les avis professeurs (sans filtrer si l'entité manque)
+      const validTeacherReviews = allTeacherReviews.map((review) => {
         const teacher = teachersMap.get(review.teacher_id);
         const school = teacher ? schoolsMap.get(teacher.school_id) : null;
         return {
@@ -187,20 +188,18 @@ export default function ProfilePage() {
           teacher,
           school
         };
-      }).
-      filter((review) => review.teacher && review.school);
+      });
 
-      // Enrichir et filtrer les avis établissements
-      const validSchoolReviews = allSchoolReviews.
-      map((review) => ({
+      // Enrichir les avis établissements (sans filtrer si l'entité manque)
+      const validSchoolReviews = allSchoolReviews.map((review) => ({
         ...review,
         school: schoolsMap.get(review.school_id)
-      })).
-      filter((review) => review.school);
+      }));
 
       setTeacherReviews(validTeacherReviews);
       setSchoolReviews(validSchoolReviews);
     } catch (error) {
+      console.error("Error loading user reviews:", error);
       setTeacherReviews([]);
       setSchoolReviews([]);
     }
@@ -406,16 +405,16 @@ export default function ProfilePage() {
                             <div className="flex items-start justify-between gap-2 mb-3">
                               <div className="flex-1 min-w-0">
                                 <h4 className="font-bold text-slate-900 text-base mb-2">
-                                  {review.teacher.name}
+                                  {review.teacher?.name || "Professeur inconnu"}
                                 </h4>
                                 <div className="flex flex-col gap-1.5">
                                   <Badge variant="outline" className="text-xs w-fit">
                                     <BookOpen className="w-3 h-3 mr-1" />
-                                    {review.teacher.subject}
+                                    {review.teacher?.subject || "Matière inconnue"}
                                   </Badge>
                                   <span className="text-xs text-slate-600 flex items-center gap-1">
                                     <SchoolIcon className="w-3 h-3" />
-                                    {review.school.name}
+                                    {review.school?.name || "Établissement inconnu"}
                                   </span>
                                 </div>
                               </div>
@@ -492,7 +491,7 @@ export default function ProfilePage() {
                             <div className="flex items-start justify-between gap-2 mb-3">
                               <div className="flex-1 min-w-0">
                                 <h4 className="font-bold text-slate-900 text-base mb-2">
-                                  {review.school.name}
+                                  {review.school?.name || "Établissement inconnu"}
                                 </h4>
                               </div>
                               
