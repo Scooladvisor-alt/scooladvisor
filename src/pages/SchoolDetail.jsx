@@ -125,18 +125,13 @@ export default function SchoolDetailPage() {
 
   }
 
-  if (!school) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 p-8 flex items-center justify-center">
-        <div className="text-center">
-          <h2 className="text-2xl font-bold text-slate-900 mb-2">Établissement non trouvé</h2>
-          <Button onClick={() => navigate(createPageUrl("Schools"))}>
-            Retour aux établissements
-          </Button>
-        </div>
-      </div>);
+  useEffect(() => {
+    if (!loading && !school) {
+      window.location.href = "/";
+    }
+  }, [loading, school]);
 
-  }
+  if (!school) return null;
 
   const typeLabels = {
     college: "Collège",
@@ -165,7 +160,7 @@ export default function SchoolDetailPage() {
       <SEO
         title={`${school.name} (${school.city}) - Avis et Classement | ScoolAdvisor`}
         description={`Découvrez les avis authentiques des étudiants sur ${school.name} à ${school.city}. Note globale : ${school.average_rating ? school.average_rating.toFixed(1) : 'N/A'}/20.`}
-        canonicalPath={`/SchoolDetail?id=${school.id}`} />
+        canonicalPath={`/schools/${school.id}`} />
 
       }
       <style>{`

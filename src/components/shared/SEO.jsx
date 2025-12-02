@@ -46,9 +46,12 @@ export default function SEO({ title, description, canonicalPath, noIndex = false
 
     // Logic for noindex
     // If explicitly set to noIndex OR if the current URL parameters imply a duplication/technical state
-    // For now, we trust the passed prop or if we detect we are NOT on the canonical URL (optional strict mode)
+    const shouldNoIndex = noIndex || 
+                         location.search.includes('id=') || 
+                         location.search.includes('utm_') ||
+                         location.search.includes('fbclid');
     
-    if (noIndex) {
+    if (shouldNoIndex) {
       metaRobots.content = "noindex, nofollow";
     } else {
       // Restore default if it was set to noindex previously (SPA navigation)
