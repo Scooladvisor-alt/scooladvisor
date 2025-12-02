@@ -377,17 +377,11 @@ Rédige maintenant ton résumé façon "L'avis d'Antonin" en 3 phrases max.`;
                     <div className="flex items-start justify-between">
                       <div className="flex items-center gap-2 sm:gap-3 flex-1">
                         <Avatar className="w-8 h-8 sm:w-10 sm:h-10 border-2 border-slate-100">
-                          {!review.is_anonymous && avatarUrl ?
+                          {avatarUrl ?
                         <AvatarImage src={avatarUrl} /> :
                         null}
                           <AvatarFallback className="bg-transparent">
-                            {review.is_anonymous ?
-                          <div className="w-full h-full bg-slate-400 flex items-center justify-center text-white">
-                                <UserIcon className="w-5 h-5" />
-                              </div> :
-
                           <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/f5396bc58_a-humanized-black-graduation-cap-with-a-star-shape-3.png" alt="Avatar" className="w-full h-full object-cover" />
-                          }
                           </AvatarFallback>
                         </Avatar>
                         <div className="flex-1 min-w-0">

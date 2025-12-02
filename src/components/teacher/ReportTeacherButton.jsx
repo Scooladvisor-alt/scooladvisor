@@ -127,7 +127,7 @@ export default function ReportTeacherButton({ teacher, onUpdate, variant = "defa
       )}
 
       <Dialog open={showDialog} onOpenChange={setShowDialog}>
-        <DialogContent className="rounded-2xl">
+        <DialogContent className="rounded-2xl w-[95%] max-w-lg">
           <DialogHeader>
             <DialogTitle className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">Signaler ce professeur</DialogTitle>
           </DialogHeader>

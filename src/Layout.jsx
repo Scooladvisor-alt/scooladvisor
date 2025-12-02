@@ -259,6 +259,10 @@ export default function Layout({ children }) {
     loadUser();
   }, []);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+
   const loadUser = async () => {
     try {
       const currentUser = await base44.auth.me();

@@ -272,7 +272,7 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
         </div>
       </div>
 
-      <div className="flex-1 flex flex-col p-6 pt-2 overflow-hidden">
+      <div className="flex-1 flex flex-col p-2 pt-2 overflow-hidden">
           {loading ?
           <div className="flex justify-center items-center h-48">
               <GradientSpinner size="w-8 h-8" />
@@ -295,8 +295,9 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
             `}</style>
               {sortedReviews.slice(0, 2).map((review, index) => {
               const reviewUser = reviewUsers[review.created_by];
-              const userAvatar = reviewUser?.profile_avatar;
-              const avatarUrl = userAvatar && userAvatar !== 'letter' ? getAvatarUrl(userAvatar) : null;
+              // Use stored avatar if available, otherwise fallback to user profile
+              const rawAvatar = review.author_avatar || reviewUser?.profile_avatar;
+              const avatarUrl = rawAvatar && rawAvatar !== 'letter' ? getAvatarUrl(rawAvatar) : null;
 
               return (
                 <div
@@ -307,16 +308,10 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
                   <div className="flex justify-between items-start gap-4">
                     <div className="flex gap-3">
                       <Avatar className="w-10 h-10 border-2 border-white shadow-sm ring-1 ring-slate-100">
-                         {!review.is_anonymous && avatarUrl ?
+                         {avatarUrl ?
                             <AvatarImage src={avatarUrl} /> : null}
                           <AvatarFallback className="bg-transparent">
-                             {review.is_anonymous ? (
-                               <div className="w-full h-full bg-slate-400 flex items-center justify-center text-white">
-                                 <UserIcon className="w-5 h-5" />
-                               </div>
-                             ) : (
                                <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/f5396bc58_a-humanized-black-graduation-cap-with-a-star-shape-3.png" alt="Avatar" className="w-full h-full object-cover" />
-                             )}
                           </AvatarFallback>
                       </Avatar>
                       <div>
