@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { base44 } from "@/api/base44Client";
+import { security } from "../shared/security";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -126,6 +127,14 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
     setLoading(true);
     setError(null);
 
+    // SECURITY: Check Permissions
+    const user = await base44.auth.me();
+    if (!security.canPost(user)) {
+       setError("Action non autorisée.");
+       setLoading(false);
+       return;
+    }
+
     const limitCheck = await checkTeacherLimits();
     if (!limitCheck.ok) {
       setError(limitCheck.message);
@@ -133,26 +142,45 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
       return;
     }
 
-    const finalSubject = showCustomSubject ? formData.customSubject : formData.subject;
+    // SECURITY: Sanitize inputs
+    const cleanName = security.sanitize(formData.name);
+    const finalSubjectRaw = showCustomSubject ? formData.customSubject : formData.subject;
+    const cleanSubject = security.sanitize(finalSubjectRaw);
 
-    if (!finalSubject) {
-      setError("Veuillez sélectionner ou saisir une matière");
+    if (!cleanSubject || !cleanName) {
+      setError("Veuillez vérifier les champs (caractères interdits détectés).");
       setLoading(false);
       return;
     }
 
+    // SECURITY: Anti-Duplicate Check
+    const duplicateCheck = await base44.entities.Teacher.filter({
+        school_id: schoolId,
+        name: cleanName
+    });
+    
+    if (duplicateCheck.length > 0) {
+        setError("Ce professeur existe déjà dans cet établissement.");
+        setLoading(false);
+        return;
+    }
+
     try {
       if (showCustomSubject) {
-        await base44.entities.CustomSubject.create({
-          subject_name: finalSubject,
-          proposed_by: limitCheck.userEmail,
-          status: "pending"
-        });
+        // Check duplicates for subject
+        const existingSubject = await base44.entities.CustomSubject.filter({ subject_name: cleanSubject });
+        if (existingSubject.length === 0) {
+            await base44.entities.CustomSubject.create({
+            subject_name: cleanSubject,
+            proposed_by: limitCheck.userEmail,
+            status: "pending"
+            });
+        }
       }
 
       const tempTeacher = {
-        name: formData.name,
-        subject: finalSubject,
+        name: cleanName,
+        subject: cleanSubject,
         school_id: schoolId,
         created_by: limitCheck.userEmail,
         id: 'temp-' + Date.now()
@@ -168,8 +196,8 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
 
       const newTeacher = await base44.entities.Teacher.create({
         school_id: schoolId,
-        name: formData.name,
-        subject: finalSubject,
+        name: cleanName,
+        subject: cleanSubject,
         photo_url: formData.photo_url,
         status: "approved",
         average_rating: 0,

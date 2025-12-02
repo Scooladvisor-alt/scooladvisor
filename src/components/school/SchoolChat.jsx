@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { base44 } from "@/api/base44Client";
+import { security } from "../shared/security";
 import { MessageSquare, Send, Loader2, Edit, Save, Trash2, Flag, ThumbsUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
@@ -295,19 +296,27 @@ Si la décision est "approved", la "reason" doit être null.`,
   const handlePublish = async () => {
     if (!user || !newMessage.trim()) return;
 
-    if (newMessage.length < MIN_MESSAGE_LENGTH) {
-      toast.error("Le message doit contenir au moins 10 caractères.");
+    // SECURITY: Rate Limiting
+    if (!security.checkRateLimit('chat_post', 10)) {
+        toast.error("Doucement ! Attends quelques secondes avant de reposter.");
+        return;
+    }
+
+    // SECURITY: Sanitize
+    const cleanMessage = security.sanitize(newMessage);
+    if (cleanMessage.length < MIN_MESSAGE_LENGTH) {
+      toast.error("Message invalide ou trop court.");
       return;
     }
 
-    if (newMessage.length > MAX_MESSAGE_LENGTH) {
+    if (cleanMessage.length > MAX_MESSAGE_LENGTH) {
       toast.error(`Le message dépasse la limite de ${MAX_MESSAGE_LENGTH} caractères.`);
       return;
     }
 
     setPostLoading(true);
 
-    const moderationResult = await sendToModerationWebhook(newMessage, null, false);
+    const moderationResult = await sendToModerationWebhook(cleanMessage, null, false);
     const { decision, reason } = moderationResult;
 
     if (decision === 'rejected') {
@@ -325,7 +334,7 @@ Si la décision est "approved", la "reason" doit être null.`,
 
       await base44.entities.ChatMessage.create({
         school_id: schoolId,
-        message: newMessage,
+        message: cleanMessage,
         author_email: user.email,
         author_name: user.full_name,
         color: randomColor,

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { base44 } from "@/api/base44Client";
+import { security } from "../shared/security";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -96,27 +97,39 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
     setError(null);
 
     try {
-      const allSchools = await base44.entities.School.list();
-      const normalizedNewAddress = `${formData.address}||${formData.city}`.toLowerCase().trim();
+      // SECURITY: Sanitize inputs
+      const cleanName = security.sanitize(formData.name);
+      const cleanAddress = security.sanitize(formData.address);
+      const cleanCity = security.sanitize(formData.city);
+
+      if (!cleanName || !cleanAddress || !cleanCity) {
+         setError("Données invalides détectées.");
+         setLoading(false);
+         return;
+      }
+
+      // SECURITY: Improved duplicate check (Server-side filter first)
+      const existingSchoolsInCity = await base44.entities.School.filter({ city: cleanCity });
+      const normalizedNewAddress = `${cleanAddress}||${cleanCity}`.toLowerCase().trim();
       
-      const duplicate = allSchools.find(school => {
+      const duplicate = existingSchoolsInCity.find(school => {
         const normalizedExistingAddress = `${school.address}||${school.city}`.toLowerCase().trim();
-        return normalizedExistingAddress === normalizedNewAddress;
+        return normalizedExistingAddress === normalizedNewAddress || school.name.toLowerCase() === cleanName.toLowerCase();
       });
 
       if (duplicate) {
-        setError(`Un établissement existe déjà à cette adresse : ${duplicate.name}`);
+        setError(`Cet établissement existe déjà : ${duplicate.name}`);
         setLoading(false);
         return;
       }
 
-      const capitalizedName = capitalizeWords(formData.name);
+      const capitalizedName = capitalizeWords(cleanName);
 
       await base44.entities.School.create({
         name: capitalizedName,
         type: formData.type,
-        address: formData.address,
-        city: formData.city,
+        address: cleanAddress,
+        city: cleanCity,
         region: "France",
         status: "approved",
         average_rating: 0,
