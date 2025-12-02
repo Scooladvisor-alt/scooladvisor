@@ -618,7 +618,7 @@ export default function SchoolsPage() {
                 <span className="ml-2">🧑‍🏫</span>
               </h1>
               <p className="text-base md:text-lg text-gray-600">
-                Explorez l'ensemble des établissements pour dénicher les profs les mieux notés 🎓
+                Trouvez les profs stars de partout 🚀
               </p>
             </motion.div>
           </div>
