@@ -408,7 +408,7 @@ export default function ProfilePage() {
                                   {review.teacher?.name || "Professeur inconnu"}
                                 </h4>
                                 <div className="flex flex-col gap-1.5">
-                                  <Badge variant="outline" className="text-s w-fit">
+                                  <Badge variant="outline" className="text-xs w-fit">
                                     <BookOpen className="w-3 h-3 mr-1" />
                                     {review.teacher?.subject || "Matière inconnue"}
                                   </Badge>
