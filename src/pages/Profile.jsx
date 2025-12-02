@@ -399,7 +399,7 @@ export default function ProfilePage() {
                     <div className="space-y-3 overflow-y-auto pr-2 reviews-scroll h-[400px] sm:h-[500px]">
                       {teacherReviews.length > 0 ?
                     <>
-                      {teacherReviews.slice(0, visibleTeacherReviews).map((review) =>
+                      {teacherReviews.slice(0, visibleTeacherReviews).map((review) => (
                       <motion.div
                         key={review.id}
                         initial={{ opacity: 0, y: 10 }}
@@ -495,7 +495,7 @@ export default function ProfilePage() {
                     <div className="space-y-3 overflow-y-auto pr-2 reviews-scroll h-[400px] sm:h-[500px]">
                       {schoolReviews.length > 0 ?
                     <>
-                      {schoolReviews.slice(0, visibleSchoolReviews).map((review) =>
+                      {schoolReviews.slice(0, visibleSchoolReviews).map((review) => (
                       <motion.div
                         key={review.id}
                         initial={{ opacity: 0, y: 10 }}
