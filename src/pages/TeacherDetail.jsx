@@ -189,39 +189,13 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
 
   }
 
-  if (!teacher) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-purple-50 p-8 flex items-center justify-center">
-        <div className="max-w-md w-full">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border-2 border-blue-200 p-8 text-center">
+  useEffect(() => {
+    if (!loading && !teacher) {
+      window.location.href = "/";
+    }
+  }, [loading, teacher]);
 
-            <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-6">
-              <Users className="w-10 h-10 text-white" />
-            </div>
-            
-            <h2 className="text-2xl font-bold text-slate-900 mb-3">
-              Professeur non trouvé
-            </h2>
-            
-            <p className="text-slate-600 mb-6">
-              Ce profil n'existe pas ou a été supprimé.
-            </p>
-            
-            <Button
-              onClick={() => navigate(-1)}
-              className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">
-
-              <ChevronLeft className="w-4 h-4 mr-2" />
-              Retour
-            </Button>
-          </motion.div>
-        </div>
-      </div>);
-
-  }
+  if (!teacher) return null;
 
   const handleEditReview = (review) => {
     setEditingReview(review);
