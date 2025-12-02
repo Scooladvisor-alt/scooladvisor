@@ -46,7 +46,12 @@ export default function SEO({ title, description, canonicalPath, noIndex = false
 
     // Logic for noindex
     // If explicitly set to noIndex OR if the current URL parameters imply a duplication/technical state
+    // SECURITY UPDATE: Force noindex on sensitive routes
+    const sensitiveRoutes = ['/profile', '/moderation', '/admin', '/login', '/register'];
+    const isSensitive = sensitiveRoutes.some(route => location.pathname.toLowerCase().startsWith(route));
+
     const shouldNoIndex = noIndex || 
+                         isSensitive ||
                          location.search.includes('id=') || 
                          location.search.includes('utm_') ||
                          location.search.includes('fbclid');

@@ -33,6 +33,7 @@ import {
 import Footer from "./components/shared/Footer";
 import { motion, AnimatePresence } from "framer-motion";
 import ErrorBoundary from "@/components/shared/ErrorBoundary";
+import SecurityGuard from "@/components/shared/SecurityGuard";
 
 
 const BanDialog = ({ open, user }) => {
@@ -539,7 +540,9 @@ export default function Layout({ children }) {
 
       <main className="flex-1">
         <ErrorBoundary>
-          {children}
+          <SecurityGuard>
+            {children}
+          </SecurityGuard>
         </ErrorBoundary>
       </main>
 
