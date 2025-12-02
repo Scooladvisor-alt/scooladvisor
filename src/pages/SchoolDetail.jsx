@@ -117,6 +117,12 @@ export default function SchoolDetailPage() {
     }
   };
 
+  useEffect(() => {
+    if (!loading && !school) {
+      window.location.href = "/";
+    }
+  }, [loading, school]);
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 p-8 flex items-center justify-center">
@@ -124,12 +130,6 @@ export default function SchoolDetailPage() {
       </div>);
 
   }
-
-  useEffect(() => {
-    if (!loading && !school) {
-      window.location.href = "/";
-    }
-  }, [loading, school]);
 
   if (!school) return null;
 

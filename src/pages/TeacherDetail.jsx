@@ -181,6 +181,12 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
     }
   };
 
+  useEffect(() => {
+    if (!loading && !teacher) {
+      window.location.href = "/";
+    }
+  }, [loading, teacher]);
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-50 to-purple-50 flex items-center justify-center">
@@ -188,12 +194,6 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
       </div>);
 
   }
-
-  useEffect(() => {
-    if (!loading && !teacher) {
-      window.location.href = "/";
-    }
-  }, [loading, teacher]);
 
   if (!teacher) return null;
 
