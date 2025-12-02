@@ -238,7 +238,7 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
       <SEO
         title={`${teacher.name} - Avis Professeur ${teacher.subject} | ScoolAdvisor`}
         description={`Lisez les avis des élèves sur ${teacher.name}, professeur de ${teacher.subject} ${school ? `à ${school.name}` : ''}. Charge de travail, pédagogie et ambiance.`}
-        canonicalPath={`/TeacherDetail?id=${teacher.id}`} />
+        canonicalPath={`/teachers/${teacher.id}`} />
 
       }
       <style>{`

@@ -32,6 +32,7 @@ import {
 "@/components/ui/dropdown-menu";
 import Footer from "./components/shared/Footer";
 import { motion, AnimatePresence } from "framer-motion";
+import ErrorBoundary from "@/components/shared/ErrorBoundary";
 
 
 const BanDialog = ({ open, user }) => {
@@ -537,7 +538,9 @@ export default function Layout({ children }) {
       </AnimatePresence>
 
       <main className="flex-1">
-        {children}
+        <ErrorBoundary>
+          {children}
+        </ErrorBoundary>
       </main>
 
       <Footer />
