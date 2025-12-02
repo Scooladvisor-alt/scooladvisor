@@ -168,7 +168,7 @@ Réponds par JSON : { "decision": "approved" | "rejected", "reason": "raison cou
                 placeholder="Merci pour tout, vous êtes le meilleur prof..."
                 value={newMessage}
                 onChange={(e) => setNewMessage(e.target.value)}
-                className="bg-white border-pink-200 focus:border-pink-400 min-h-[70px] mb-3" />
+                className="bg-white border-pink-200 focus:border-pink-400 min-h-[50px] mb-3" />
 
 
                 
