@@ -123,6 +123,8 @@ export default function ProfilePage() {
   const [schoolReviews, setSchoolReviews] = useState([]);
   const [reviewsLoading, setReviewsLoading] = useState(true);
   const [showAvatarDialog, setShowAvatarDialog] = useState(false);
+  const [visibleTeacherReviews, setVisibleTeacherReviews] = useState(5);
+  const [visibleSchoolReviews, setVisibleSchoolReviews] = useState(5);
 
   useEffect(() => {
     loadProfile();
@@ -388,21 +390,24 @@ export default function ProfilePage() {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                   {/* Colonne gauche : Avis professeurs */}
                   <div className="flex flex-col">
-                    <h3 className="text-lg font-semibold text-slate-900 mb-4 flex items-center gap-2 bg-white/90 backdrop-blur-sm py-2 sticky top-0 z-10 border-b border-slate-100">
-                      <Users className="w-5 h-5 text-[#FF4D8D]" />
-                      Avis professeurs ({teacherReviews.length})
+                    <h3 className="text-lg font-semibold text-slate-900 mb-4 flex items-center justify-between gap-2 bg-white/90 backdrop-blur-sm py-2 sticky top-0 z-10 border-b border-slate-100">
+                      <div className="flex items-center gap-2">
+                        <Users className="w-5 h-5 text-[#FF4D8D]" />
+                        Mes professeurs ({teacherReviews.length})
+                      </div>
                     </h3>
-                    <div className="space-y-3 overflow-y-auto pr-2 reviews-scroll" style={{ maxHeight: '600px' }}>
+                    <div className="space-y-3 overflow-y-auto pr-2 reviews-scroll h-[400px] sm:h-[500px]">
                       {teacherReviews.length > 0 ?
-                    teacherReviews.map((review) =>
-                    <motion.div
-                      key={review.id}
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      className="border-2 border-slate-200 rounded-xl p-4 hover:border-pink-300 hover:shadow-lg transition-all cursor-pointer bg-white"
-                      onClick={() => navigate(createPageUrl(`TeacherDetail?id=${review.teacher_id}`))}>
+                    <>
+                      {teacherReviews.slice(0, visibleTeacherReviews).map((review) =>
+                      <motion.div
+                        key={review.id}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="border-2 border-slate-200 rounded-xl p-4 hover:border-pink-300 hover:shadow-lg transition-all cursor-pointer bg-white"
+                        onClick={() => navigate(createPageUrl(`TeacherDetail?id=${review.teacher_id}`))}>
 
-                            <div className="flex items-start justify-between gap-2 mb-3">
+                              <div className="flex items-start justify-between gap-2 mb-3">
                               <div className="flex-1 min-w-0">
                                 <h4 className="font-bold text-slate-900 text-base mb-2">
                                   {review.teacher?.name || "Professeur inconnu"}
@@ -476,19 +481,20 @@ export default function ProfilePage() {
                   <div className="flex flex-col">
                     <h3 className="text-lg font-semibold text-slate-900 mb-4 flex items-center gap-2 bg-white/90 backdrop-blur-sm py-2 sticky top-0 z-10 border-b border-slate-100">
                       <SchoolIcon className="w-5 h-5 text-blue-600" />
-                      Avis établissements ({schoolReviews.length})
+                      Mes établissements ({schoolReviews.length})
                     </h3>
-                    <div className="space-y-3 overflow-y-auto pr-2 reviews-scroll" style={{ maxHeight: '600px' }}>
+                    <div className="space-y-3 overflow-y-auto pr-2 reviews-scroll h-[400px] sm:h-[500px]">
                       {schoolReviews.length > 0 ?
-                    schoolReviews.map((review) =>
-                    <motion.div
-                      key={review.id}
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      className="border-2 border-slate-200 rounded-xl p-4 hover:border-blue-300 hover:shadow-lg transition-all cursor-pointer bg-white"
-                      onClick={() => navigate(createPageUrl(`SchoolDetail?id=${review.school_id}`))}>
+                    <>
+                      {schoolReviews.slice(0, visibleSchoolReviews).map((review) =>
+                      <motion.div
+                        key={review.id}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="border-2 border-slate-200 rounded-xl p-4 hover:border-blue-300 hover:shadow-lg transition-all cursor-pointer bg-white"
+                        onClick={() => navigate(createPageUrl(`SchoolDetail?id=${review.school_id}`))}>
 
-                            <div className="flex items-start justify-between gap-2 mb-3">
+                              <div className="flex items-start justify-between gap-2 mb-3">
                               <div className="flex-1 min-w-0">
                                 <h4 className="font-bold text-slate-900 text-base mb-2">
                                   {review.school?.name || "Établissement inconnu"}

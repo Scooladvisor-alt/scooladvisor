@@ -73,7 +73,7 @@ export default function TeachersList({ schoolId, onAddTeacher }) {
           </linearGradient>
         </defs>
       </svg>
-      <Card className="bg-white/90 backdrop-blur-md border-slate-200 shadow-xl w-full h-auto lg:h-full flex flex-col hover:shadow-2xl transition-shadow duration-300">
+      <Card className="bg-white/90 backdrop-blur-md border-slate-200 shadow-xl w-full h-[400px] lg:h-full flex flex-col hover:shadow-2xl transition-shadow duration-300">
         <style>{`
           .teachers-list-scrollable {
             overflow-y: auto;
