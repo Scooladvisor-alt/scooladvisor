@@ -3,6 +3,7 @@ import { SchoolReview } from "@/entities/SchoolReview";
 import { School } from "@/entities/School";
 import { Notification } from "@/entities/Notification";
 import { base44 } from "@/api/base44Client";
+import { security } from "../shared/security";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -216,13 +217,23 @@ En cas de doute entre "critiquer" et "insulter", privilégie la sécurité et re
 
     try {
       const user = await base44.auth.me();
-      const totalRating = calculateTotalRating(formData);
-
-      if (user.is_banned && user.email !== 'antownin@gmail.com') {
-        setError("Votre compte est banni et ne peut pas publier d'avis.");
+      
+      // SECURITY: Check Permissions
+      if (!security.canPost(user) && user.email !== 'antownin@gmail.com') {
+        setError("Votre compte est restreint.");
         setLoading(false);
         return;
       }
+
+      // SECURITY: Sanitize
+      const cleanComment = security.sanitize(formData.comment);
+      if (cleanComment.length < 10) {
+         setError("Commentaire invalide après nettoyage.");
+         setLoading(false);
+         return;
+      }
+
+      const totalRating = calculateTotalRating(formData);
 
       // Vérifier la limite de 7 établissements (sauf pour les modifications)
       if (!existingReview && user.email !== 'antownin@gmail.com') {
@@ -283,7 +294,7 @@ En cas de doute entre "critiquer" et "insulter", privilégie la sécurité et re
           has_student_life: formData.has_student_life,
           has_network: formData.has_network,
           rating: totalRating,
-          comment: formData.comment,
+          comment: cleanComment,
           is_anonymous: formData.is_anonymous,
           edit_count: (existingReview.edit_count || 0) + 1,
           author_name: user.full_name,
@@ -338,7 +349,7 @@ En cas de doute entre "critiquer" et "insulter", privilégie la sécurité et re
           has_student_life: formData.has_student_life,
           has_network: formData.has_network,
           rating: totalRating,
-          comment: formData.comment,
+          comment: cleanComment,
           is_anonymous: formData.is_anonymous,
           status: "published",
           report_count: 0,
