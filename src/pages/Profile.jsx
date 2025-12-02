@@ -467,7 +467,16 @@ export default function ProfilePage() {
                         }
                             </div>
                           </motion.div>
-                    ) :
+                      ))}
+                      {visibleTeacherReviews < teacherReviews.length && (
+                        <button
+                          onClick={() => setVisibleTeacherReviews(prev => prev + 5)}
+                          className="w-full py-3 text-sm font-semibold text-purple-600 hover:text-purple-700 hover:bg-purple-50 rounded-xl transition-colors border border-dashed border-purple-200 mt-2"
+                        >
+                          Voir plus de professeurs...
+                        </button>
+                      )}
+                    </> :
 
                     <div className="text-center py-12 text-slate-500">
                           <Users className="w-12 h-12 mx-auto mb-3 text-slate-300" />
@@ -525,7 +534,16 @@ export default function ProfilePage() {
                         }
                             </div>
                           </motion.div>
-                    ) :
+                      ))}
+                      {visibleSchoolReviews < schoolReviews.length && (
+                        <button
+                          onClick={() => setVisibleSchoolReviews(prev => prev + 5)}
+                          className="w-full py-3 text-sm font-semibold text-blue-600 hover:text-blue-700 hover:bg-blue-50 rounded-xl transition-colors border border-dashed border-blue-200 mt-2"
+                        >
+                          Voir plus d'établissements...
+                        </button>
+                      )}
+                    </> :
 
                     <div className="text-center py-12 text-slate-500">
                           <SchoolIcon className="w-12 h-12 mx-auto mb-3 text-slate-300" />
