@@ -412,7 +412,7 @@ Si la décision est "approved", "reason" peut être vide ou null.`,
                   onCheckedChange={setIsAnonymous} />
 
                   <Label htmlFor="anonymous_national" className="text-xs sm:text-sm cursor-pointer">
-                    Poster en anonyme 🕵️‍♂️
+                    Poster en anonyme
                   </Label>
                 </div>
               }
@@ -429,7 +429,7 @@ Si la décision est "approved", "reason" peut être vide ou null.`,
                   size="sm">
 
                     {postLoading ? <Loader2 className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2 animate-spin" /> : <Send className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />}
-                    Publier
+                    Publier gratos
                   </Button> :
 
                 <Button
