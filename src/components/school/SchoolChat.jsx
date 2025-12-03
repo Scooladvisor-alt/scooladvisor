@@ -296,6 +296,30 @@ Si la décision est "approved", la "reason" doit être null.`,
   const handlePublish = async () => {
     if (!user || !newMessage.trim()) return;
 
+    // SECURITY: Spam detection - 5 messages per minute
+    const now = Date.now();
+    const oneMinuteAgo = now - 60000;
+    const recentMessages = messages.filter(
+      (msg) => msg.author_email === user.email && new Date(msg.created_date).getTime() > oneMinuteAgo
+    );
+
+    if (recentMessages.length >= 5) {
+      // Incrémenter le compteur d'avertissements spam
+      const spamWarnings = (user.spam_warning_count || 0) + 1;
+      await base44.auth.updateMe({ spam_warning_count: spamWarnings });
+
+      if (spamWarnings >= 2) {
+        // Ban après 2 avertissements
+        await base44.auth.updateMe({ is_banned: true });
+        toast.error("Vous avez été banni pour spam.");
+        setTimeout(() => window.location.reload(), 2000);
+        return;
+      }
+
+      toast.error("Merci de ne pas envoyer trop de messages en même temps.");
+      return;
+    }
+
     // SECURITY: Rate Limiting
     if (!security.checkRateLimit('chat_post', 10)) {
         toast.error("Doucement ! Attends quelques secondes avant de reposter.");
@@ -320,10 +344,10 @@ Si la décision est "approved", la "reason" doit être null.`,
     const { decision, reason } = moderationResult;
 
     if (decision === 'rejected') {
-      toast.error(`Ton message n'a pas pu être publié. Raison : ${reason || 'Inconnue'}. Essaie avec un ton plus constructif 💬🙂`);
+      toast.error("Votre avis ne respecte pas nos règles de modération.");
       const currentUser = await base44.auth.me();
       const violationCount = (currentUser.violation_count || 0) + 1;
-      await base44.auth.updateMe({ violation_count: violationCount, violation_reason: reason });
+      await base44.auth.updateMe({ violation_count: violationCount });
       setPostLoading(false);
       return;
     }

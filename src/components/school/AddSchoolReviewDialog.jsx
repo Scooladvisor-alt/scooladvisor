@@ -235,7 +235,7 @@ En cas de doute entre "critiquer" et "insulter", privilégie la sécurité et re
 
       const totalRating = calculateTotalRating(formData);
 
-      // Vérifier la limite de 7 établissements (sauf pour les modifications)
+      // Vérifier la limite de 5 établissements (sauf pour les modifications)
       if (!existingReview && user.email !== 'antownin@gmail.com') {
         const schoolCount = await checkSchoolLimit(user);
 
@@ -243,9 +243,14 @@ En cas de doute entre "critiquer" et "insulter", privilégie la sécurité et re
         const userSchoolReviews = await base44.entities.SchoolReview.filter({ created_by: user.email });
         const hasReviewedThisSchool = userSchoolReviews.some((r) => r.school_id === schoolId);
 
-        // Si l'utilisateur a déjà 7 établissements ET n'a pas encore noté celui-ci
-        if (schoolCount >= 7 && !hasReviewedThisSchool) {
-          setError("Vous avez atteint la limite de 7 établissements différents. Vous ne pouvez pas publier d'avis sur un nouvel établissement.");
+        // Avertissement au 4e avis
+        if (schoolCount === 4 && !hasReviewedThisSchool) {
+          setError("Il vous reste un avis possible. Vous ne pouvez publier que 5 avis au total.");
+        }
+
+        // Blocage au 6e avis (5 déjà publiés)
+        if (schoolCount >= 5 && !hasReviewedThisSchool) {
+          setError("Vous ne pouvez pas publier plus de 5 avis sur des établissements différents.");
           setLoading(false);
           return;
         }
@@ -262,7 +267,7 @@ En cas de doute entre "critiquer" et "insulter", privilégie la sécurité et re
         const moderationResult = await sendToModerationWebhook(tempReviewForModeration, true);
 
         if (moderationResult === 'rejected') {
-          setError("Votre modification contient du contenu inapproprié et a été refusée par la modération. Votre avis original n'a pas été modifié.");
+          setError("Votre avis ne respecte pas nos règles de modération.");
           setLoading(false);
 
           if (user.email !== 'antownin@gmail.com') {
@@ -327,13 +332,13 @@ En cas de doute entre "critiquer" et "insulter", privilégie la sécurité et re
 
             if (violationCount >= 3) {
               await base44.auth.updateMe({ is_banned: true });
-              setError("Votre avis a été refusé et votre compte a été banni suite à des violations répétées.");
+              setError("Votre avis ne respecte pas nos règles de modération. Votre compte a été banni.");
               setTimeout(() => window.location.reload(), 4000);
             } else {
-              setError("Votre avis a été refusé par notre système de modération car il ne respecte pas nos règles de bienveillance.");
+              setError("Votre avis ne respecte pas nos règles de modération.");
             }
           } else {
-            setError("Votre avis a été refusé par notre système de modération car il ne respecte pas nos règles de bienveillance.");
+            setError("Votre avis ne respecte pas nos règles de modération.");
           }
           setLoading(false);
           return;
