@@ -217,7 +217,7 @@ En cas de doute entre "critiquer" et "insulter", privilégie la sécurité et re
 
     try {
       const user = await base44.auth.me();
-      
+
       // SECURITY: Check Permissions
       if (!security.canPost(user) && user.email !== 'antownin@gmail.com') {
         setError("Votre compte est restreint.");
@@ -228,9 +228,9 @@ En cas de doute entre "critiquer" et "insulter", privilégie la sécurité et re
       // SECURITY: Sanitize
       const cleanComment = security.sanitize(formData.comment);
       if (cleanComment.length < 10) {
-         setError("Commentaire invalide après nettoyage.");
-         setLoading(false);
-         return;
+        setError("Commentaire invalide après nettoyage.");
+        setLoading(false);
+        return;
       }
 
       const totalRating = calculateTotalRating(formData);
@@ -428,7 +428,7 @@ En cas de doute entre "critiquer" et "insulter", privilégie la sécurité et re
         }
 
         {error &&
-        <Alert variant="destructive" className="relative w-full rounded-lg border px-4 py-1 text-sm [&>svg+div]:translate-y-[-1px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-1\n2 [&>svg~*]:pl-7 border-destructive/50 text-destructive dark:border-destructive [&>svg]:text-destructive">
+        <Alert variant="destructive" className="text-destructive pt-4 pr-4 pb-4 pl-5 text-sm rounded-lg [&>svg]:top-4 relative w-full border [&>svg+div]:translate-y-[-1px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-1\\n2 [&>svg~*]:pl-7 border-destructive/50 dark:border-destructive [&>svg]:text-destructive">
             <AlertCircle className="h-4 w-4" />
             <AlertDescription className="text-xs sm:text-sm">{error}</AlertDescription>
           </Alert>
