@@ -71,7 +71,7 @@ export default function AboutPage() {
             transition={{ delay: 0.2 }}
             className="text-lg sm:text-xl text-slate-600 leading-relaxed max-w-2xl mx-auto mb-10">
 
-            Plus qu'un site d'avis, c'est une communauté. Nous redonnons le pouvoir aux étudiants et aux parents pour éclairer l'avenir scolaire de chacun.
+            Plus qu’un simple site d’avis, c’est une véritable communauté. Nous donnons aux étudiants et aux parents les clés pour mieux comprendre, choisir et éclairer leur avenir scolaire.
           </motion.p>
         </div>
       </div>
