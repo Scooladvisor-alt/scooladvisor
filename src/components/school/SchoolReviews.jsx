@@ -166,7 +166,8 @@ export default function SchoolReviews({ schoolId, user, onReload, onEditReview, 
         await base44.entities.ReviewLike.create({
           review_type: "school",
           review_id: reviewId,
-          user_email: user.email
+          user_email: user.email,
+          user_id: user.id
         });
         await base44.entities.SchoolReview.update(reviewId, {
           like_count: (review.like_count || 0) + 1

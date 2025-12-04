@@ -190,7 +190,8 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
         await ReviewLike.create({
           review_type: "teacher",
           review_id: reviewId,
-          user_email: user.email
+          user_email: user.email,
+          user_id: user.id
         });
         await TeacherReview.update(reviewId, {
           like_count: (review.like_count || 0) + 1

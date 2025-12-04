@@ -86,6 +86,7 @@ Réponds par JSON : { "decision": "approved" | "rejected", "reason": "raison cou
         teacher_id: teacherId,
         message: newMessage,
         author_email: user.email,
+        author_id: user.id,
         author_name: user.full_name,
         is_anonymous: isAnonymous
       });
