@@ -301,16 +301,7 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
                         Ancien
                       </div>
                     )}
-                    {isAntonin &&
-                    <Button
-                      onClick={handleDeleteTeacher}
-                      variant="ghost"
-                      size="icon"
-                      className="absolute -top-1 -right-1 h-7 w-7 bg-red-50 hover:bg-red-100 text-red-600 rounded-full shadow-md">
 
-                        <Trash2 className="w-3.5 h-3.5" />
-                      </Button>
-                    }
                   </div>
                   
                   <div className="flex-1 min-w-0">
