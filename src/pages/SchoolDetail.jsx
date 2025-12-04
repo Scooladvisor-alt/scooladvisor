@@ -13,6 +13,7 @@ const AddTeacherDialog = lazy(() => import("../components/school/AddTeacherDialo
 const AddSchoolReviewDialog = lazy(() => import("../components/school/AddSchoolReviewDialog"));
 const ReportSchoolDialog = lazy(() => import("../components/school/ReportSchoolDialog"));
 import SchoolChat from "../components/school/SchoolChat";
+import SchoolAdminMenu from "../components/admin/SchoolAdminMenu";
 import { toast } from "sonner";
 import SEO from "@/components/shared/SEO";
 import GradientSpinner from "@/components/shared/GradientSpinner";
@@ -283,7 +284,12 @@ export default function SchoolDetailPage() {
                       Établissement Banni
                     </Badge>
                   }
-                  <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-slate-900 mb-1 md:mb-2 break-words">{school.name}</h1>
+                  <div className="flex items-center gap-2 mb-1 md:mb-2">
+                    <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-slate-900 break-words">{school.name}</h1>
+                    {user && (user.role === 'admin' || user.role === 'moderator') && (
+                      <SchoolAdminMenu school={school} user={user} onUpdate={loadData} />
+                    )}
+                  </div>
                   <div className="flex items-center gap-2 text-slate-600 text-xs sm:text-sm">
                     <MapPin className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" />
                     <span className="break-words">{school.address}, {school.city}</span>
@@ -345,29 +351,7 @@ export default function SchoolDetailPage() {
                 }
               </div>
 
-              {canModerate &&
-              <div className="mb-6 border-t border-slate-200 pt-4 mt-6">
-                    <h3 className="text-lg font-semibold text-slate-800 mb-3 flex items-center">
-                        <Award className="w-5 h-5 mr-2 text-amber-500" />
-                        Actions Modérateur/Admin
-                    </h3>
-                    {school.reports_count > 0 &&
-                <p className="mb-3 text-sm text-red-600 flex items-center">
-                            <Flag className="w-4 h-4 mr-2" />
-                            Cet établissement a <span className="font-semibold mx-1">{school.reports_count}</span> signalement(s).
-                        </p>
-                }
-                    <div className="flex flex-wrap gap-3">
-                         <Button
-                    variant="destructive"
-                    onClick={handleDeleteSchool}>
 
-                            <Trash2 className="w-4 h-4 mr-2" />
-                            Supprimer l'établissement
-                        </Button>
-                    </div>
-                </div>
-              }
 
               <div className="flex flex-col sm:flex-row gap-3">
                 <Button

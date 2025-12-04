@@ -23,6 +23,7 @@ import {
 "@/components/ui/dialog";
 
 import ReportTeacherButton from "../components/teacher/ReportTeacherButton";
+import TeacherAdminMenu from "../components/admin/TeacherAdminMenu";
 import SEO from "@/components/shared/SEO";
 import GradientSpinner from "@/components/shared/GradientSpinner";
 const AddTeacherReviewDialog = lazy(() => import("../components/teacher/AddTeacherReviewDialog"));
@@ -333,12 +334,15 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
                   </div>
                   
                   <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-2">
-                      <h1 className="text-2xl sm:text-4xl font-bold text-slate-900 break-words">{teacher.name}</h1>
-                      {user && (
-                        <ReportTeacherButton teacher={teacher} onUpdate={loadData} variant="flag" />
-                      )}
-                    </div>
+                      <div className="flex items-center gap-2 mb-2">
+                        <h1 className="text-2xl sm:text-4xl font-bold text-slate-900 break-words">{teacher.name}</h1>
+                        {user && (
+                          <ReportTeacherButton teacher={teacher} onUpdate={loadData} variant="flag" />
+                        )}
+                        {user && (user.role === 'admin' || user.role === 'moderator') && (
+                          <TeacherAdminMenu teacher={teacher} user={user} onUpdate={loadData} />
+                        )}
+                      </div>
                     <div className="flex items-center gap-2 text-sm sm:text-base text-slate-600">
                       <BookOpen className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
                       <span className="break-words">{teacher.subject}</span>
@@ -411,17 +415,7 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
                   </span>
                 </Button>
 
-                <div className="flex gap-2 w-full sm:w-auto">
-                  {canModerate &&
-                  <Button
-                      onClick={handleDeleteTeacher}
-                      variant="ghost"
-                      className="flex-1 sm:flex-none text-red-500 hover:text-red-600 hover:bg-red-50 h-11 px-3 rounded-xl border border-red-100"
-                      title="Supprimer le profil">
-                        <Trash2 className="w-5 h-5" />
-                  </Button>
-                  }
-                </div>
+
               </div>
               
               {!user &&
