@@ -36,17 +36,20 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
 
     setAddressLoading(true);
     try {
+      // Utilisation de l'API Adresse Gouv (gratuit, précis pour la France)
       const response = await fetch(
-        `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&format=json&addressdetails=1&limit=5`,
-        {
-          headers: {
-            'User-Agent': 'ScoolAdvisor/1.0'
-          }
-        }
+        `https://api-adresse.data.gouv.fr/search/?q=${encodeURIComponent(query)}&limit=5`
       );
       const data = await response.json();
-      setAddressSuggestions(data || []);
-      setShowAddressSuggestions(true);
+      const suggestions = (data.features || []).map(feature => ({
+        label: feature.properties.label,
+        street: feature.properties.name,
+        city: feature.properties.city,
+        postcode: feature.properties.postcode,
+        context: feature.properties.context
+      }));
+      setAddressSuggestions(suggestions);
+      setShowAddressSuggestions(suggestions.length > 0);
     } catch (error) {
       console.error("Error searching address:", error);
       setAddressSuggestions([]);
@@ -71,27 +74,17 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
   const cityInputRef = useRef(null);
 
   const handleAddressSelected = (place) => {
-    const address = place.address || {};
-    const displayName = place.display_name || '';
-    
-    // Extraire l'adresse (première partie avant la ville)
-    const addressParts = displayName.split(',');
-    const streetAddress = addressParts.slice(0, 2).join(',').trim();
-    
-    // Extraire la ville
-    const city = address.city || address.town || address.village || address.municipality || address.county || '';
-    
     setFormData({
       ...formData,
-      address: streetAddress,
-      city: city,
+      address: place.street || place.label,
+      city: place.city || '',
     });
     setShowAddressSuggestions(false);
     setAddressSuggestions([]);
     
-    // Focus sur le champ ville
+    // Focus sur le champ ville si pas rempli automatiquement
     setTimeout(() => {
-      if (cityInputRef.current) {
+      if (cityInputRef.current && !place.city) {
         cityInputRef.current.focus();
       }
     }, 50);
@@ -281,10 +274,13 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
                       e.preventDefault();
                       handleAddressSelected(place);
                     }}
-                    className="w-full px-3 py-2 text-left hover:bg-blue-50 transition-colors border-b border-slate-100 last:border-b-0"
+                    className="w-full px-3 py-2 text-left hover:bg-blue-50 transition-colors border-b border-slate-100 last:border-b-0 flex items-start gap-2"
                   >
-                    <p className="text-sm font-semibold text-slate-900">{place.display_name?.split(',').slice(0, 2).join(',')}</p>
-                    <p className="text-xs text-slate-600">{place.display_name?.split(',').slice(2).join(',').trim()}</p>
+                    <span className="text-blue-500 mt-0.5">📍</span>
+                    <div>
+                      <p className="text-sm font-semibold text-slate-900">{place.label}</p>
+                      {place.context && <p className="text-xs text-slate-500">{place.context}</p>}
+                    </div>
                   </button>
                 ))}
               </div>

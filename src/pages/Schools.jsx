@@ -35,6 +35,7 @@ export default function SchoolsPage() {
   const [displayedSchools, setDisplayedSchools] = useState([]);
   const [displayCount, setDisplayCount] = useState(6);
   const [loadingMore, setLoadingMore] = useState(false);
+  const [allSchoolsLoaded, setAllSchoolsLoaded] = useState(false);
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
   const [showAddDialog, setShowAddDialog] = useState(false);
@@ -86,13 +87,13 @@ export default function SchoolsPage() {
     }
 
     try {
-      // Charger seulement les 20 premiers établissements initialement
-      const allSchools = await base44.entities.School.list("-created_date", 50);
+      // Charger les 50 premiers établissements initialement pour affichage rapide
+      const initialSchools = await base44.entities.School.list("-average_rating", 50);
       
       const uniqueSchools = [];
       const seenNames = new Set();
 
-      for (const school of allSchools) {
+      for (const school of initialSchools) {
         const normalizedName = normalizeString(school.name);
         if (!seenNames.has(normalizedName)) {
           seenNames.add(normalizedName);
@@ -101,6 +102,7 @@ export default function SchoolsPage() {
       }
 
       setSchools(uniqueSchools);
+      setAllSchoolsLoaded(initialSchools.length < 50);
       
       // Charger les counts en arrière-plan après l'affichage initial
       loadTeacherCounts();
@@ -127,9 +129,16 @@ export default function SchoolsPage() {
   };
 
   const loadMoreSchools = async () => {
+    if (allSchoolsLoaded) {
+      // Si tout est déjà chargé, juste augmenter le display count
+      setDisplayCount(prev => prev + 50);
+      return;
+    }
+    
     setLoadingMore(true);
     try {
-      const allSchools = await base44.entities.School.list("-created_date");
+      // Charger TOUS les établissements sans limite
+      const allSchools = await base44.entities.School.list("-average_rating");
       const uniqueSchools = [];
       const seenNames = new Set();
 
@@ -141,6 +150,7 @@ export default function SchoolsPage() {
         }
       }
       setSchools(uniqueSchools);
+      setAllSchoolsLoaded(true);
     } catch (error) {
       console.error("Error loading more schools:", error);
     }
@@ -206,7 +216,7 @@ export default function SchoolsPage() {
   };
 
   const handleShowMore = async () => {
-    if (schools.length <= displayCount && schools.length < 100) {
+    if (!allSchoolsLoaded) {
       await loadMoreSchools();
     }
     setDisplayCount((prev) => prev + 50);
@@ -559,31 +569,31 @@ export default function SchoolsPage() {
             )}
             </div>
 
-            {filteredSchools.length > displayCount &&
-            <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="text-center mt-8">
+            {(filteredSchools.length > displayCount || !allSchoolsLoaded) &&
+              <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="text-center mt-8">
 
-                <div 
-                  onClick={handleShowMore}
-                  className="flex items-center w-full gap-4 cursor-pointer group py-4"
-                >
-                  <div className="h-[2px] flex-1 bg-gradient-to-r from-transparent via-[#FF4D8D] to-purple-500 opacity-30 group-hover:opacity-100 transition-all duration-300" />
-                  {loadingMore ? (
-                    <div className="flex items-center gap-2">
-                      <Loader2 className="w-4 h-4 animate-spin text-purple-500" />
-                      <span className="text-sm text-purple-500">Chargement...</span>
-                    </div>
-                  ) : (
-                    <span className="text-sm sm:text-base font-bold bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent whitespace-nowrap transform group-hover:scale-105 transition-transform duration-300">
-                      Voir 50 écoles +
-                    </span>
-                  )}
-                  <div className="h-[2px] flex-1 bg-gradient-to-r from-purple-500 via-blue-500 to-transparent opacity-30 group-hover:opacity-100 transition-all duration-300" />
-                </div>
-              </motion.div>
-            }
+                  <div 
+                    onClick={handleShowMore}
+                    className="flex items-center w-full gap-4 cursor-pointer group py-4"
+                  >
+                    <div className="h-[2px] flex-1 bg-gradient-to-r from-transparent via-[#FF4D8D] to-purple-500 opacity-30 group-hover:opacity-100 transition-all duration-300" />
+                    {loadingMore ? (
+                      <div className="flex items-center gap-2">
+                        <Loader2 className="w-4 h-4 animate-spin text-purple-500" />
+                        <span className="text-sm text-purple-500">Chargement...</span>
+                      </div>
+                    ) : (
+                      <span className="text-sm sm:text-base font-bold bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent whitespace-nowrap transform group-hover:scale-105 transition-transform duration-300">
+                        {!allSchoolsLoaded ? "Voir tous les établissements" : `Voir ${Math.min(50, filteredSchools.length - displayCount)} écoles +`}
+                      </span>
+                    )}
+                    <div className="h-[2px] flex-1 bg-gradient-to-r from-purple-500 via-blue-500 to-transparent opacity-30 group-hover:opacity-100 transition-all duration-300" />
+                  </div>
+                </motion.div>
+              }
 
             {filteredSchools.length > 6 &&
           <div className="mt-8">
