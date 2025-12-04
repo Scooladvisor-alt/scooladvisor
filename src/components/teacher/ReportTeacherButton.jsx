@@ -38,6 +38,7 @@ export default function ReportTeacherButton({ teacher, onUpdate, variant = "defa
         await TeacherStatusReport.create({
           teacher_id: teacher.id,
           reporter_email: user.email,
+          reporter_id: user.id,
           reason: "Ne fait plus partie de l'établissement",
           status: "pending",
           teacher_name: teacher.name
@@ -74,6 +75,7 @@ export default function ReportTeacherButton({ teacher, onUpdate, variant = "defa
         await TeacherFraudReport.create({
           teacher_id: teacher.id,
           reporter_email: user.email,
+          reporter_id: user.id,
           reason: "Faux professeur",
           status: "pending",
           teacher_name: teacher.name

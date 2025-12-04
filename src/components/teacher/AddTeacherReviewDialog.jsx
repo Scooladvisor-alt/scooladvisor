@@ -140,7 +140,7 @@ export default function AddTeacherReviewDialog({ open, onOpenChange, teacherId, 
 
     try {
       const moderationResult = await base44.integrations.Core.InvokeLLM({
-        prompt: `🧠 Tu es Modérator, l'agent d'intelligence artificielle officiel de ScoolAdvisor.
+        prompt: `Tu es Modérator, l'agent d'intelligence artificielle officiel de ScoolAdvisor.
 
 📝 Contenu à analyser :
 "${reviewData.comment}"
@@ -149,25 +149,53 @@ Type: ${isEdit ? 'Modification d\'avis' : 'Nouvel avis'} sur un professeur
 
 🎯 Mission : Analyser ce contenu et décider s'il respecte la charte de ScoolAdvisor.
 
-🚫 Contenu INTERDIT (à rejeter) :
+🚫 Contenu STRICTEMENT INTERDIT (à rejeter systématiquement) :
 - Grossièretés, insultes, vulgarité
-- Discrimination (sexe, origine, religion, physique, etc.)
-- Harcèlement ou moquerie ciblée
+- Attaques personnelles directes ("il/elle est nul(le)", "c'est un(e) incompétent(e)")
+- Discrimination (sexe, origine, religion, physique, orientation, handicap, etc.)
+- Harcèlement, moquerie ciblée ou humiliation
 - Diffamation ou atteinte grave à la réputation
-- Informations personnelles (noms d'élèves, coordonnées, etc.)
+- Informations personnelles identifiantes (noms complets d'élèves, adresses, téléphones, etc.)
 - Propos sexuels, violents ou politiques extrêmes
-- Langage dénigrant ou humiliant
+- Langage dénigrant portant sur la personne elle-même
+- Jugements de valeur sur l'individu (pas sur ses méthodes)
 
-✅ Contenu AUTORISÉ :
-- Critiques constructives et respectueuses (même négatives)
-- Avis factuels et polis
-- Opinions personnelles exprimées avec respect
-- Exemple OK: "Le professeur parle vite mais ses cours sont intéressants"
-- Exemple à rejeter: "Ce prof est nul, il sert à rien"
+✅ Contenu AUTORISÉ (critiques factuelles et constructives) :
+- Descriptions factuelles du cours et de la pédagogie, même négatives
+  ✓ "On ne fait que de l'éco", "On fait peu d'exercices"
+  ✓ "On fout rien avec elle", "Les cours sont peu structurés"
+  ✓ "Elle est souvent absente", "Il parle trop vite"
+  
+- Critiques constructives sur les MÉTHODES (pas sur la PERSONNE)
+  ✓ "Ses explications sont difficiles à suivre"
+  ✓ "Le rythme est trop lent pour moi"
+  ✓ "Ses cours manquent de dynamisme"
+  
+- Opinions personnelles respectueuses
+  ✓ "Je trouve que ses cours ne sont pas intéressants"
+  ✓ "Ce n'est pas ma méthode d'apprentissage préférée"
+
+❌ Exemples à REJETER :
+- "Elle est nulle" / "Il est incompétent" → Attaque personnelle
+- "C'est la pire prof de l'école" → Jugement de valeur sur la personne
+- "Il sert à rien" → Dénigrement personnel
+- "Elle est moche et bête" → Discrimination/insulte
+
+✅ Exemples à ACCEPTER :
+- "On fout rien avec elle" → Critique factuelle de l'activité en cours
+- "Ses cours sont ennuyants" → Opinion sur le COURS, pas la personne
+- "Elle est souvent absente et on fait toujours la même chose" → Constat factuel
+
+🔍 Règle d'or : 
+La différence entre ACCEPTER et REJETER se trouve ici :
+→ Critiquer ce que fait le professeur (méthodes, contenu, organisation) = ✅ OK
+→ Insulter ce qu'est le professeur (sa valeur, sa personne) = ❌ INTERDIT
+
+En cas de doute léger sur une formulation maladroite mais sans malveillance apparente, privilégie l'approbation.
+En cas de doute sur une attaque personnelle déguisée, rejette.
 
 📊 Décision requise :
-Réponds UNIQUEMENT par "approved" ou "rejected".
-En cas de doute entre "critiquer" et "insulter", privilégie la sécurité et rejette.`,
+Réponds UNIQUEMENT par "approved" ou "rejected".`,
         response_json_schema: {
           type: "object",
           properties: {
@@ -176,11 +204,10 @@ En cas de doute entre "critiquer" et "insulter", privilégie la sécurité et re
         }
       });
 
-      // Ensure moderationResult.decision is either 'approved' or 'rejected'
       return moderationResult.decision === 'rejected' ? 'rejected' : 'approved';
     } catch (error) {
       console.error("Error in moderation:", error);
-      return 'approved'; // Default to approved in case of moderation system error
+      return 'approved';
     }
   };
 

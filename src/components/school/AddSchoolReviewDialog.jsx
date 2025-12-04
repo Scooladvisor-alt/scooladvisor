@@ -135,7 +135,7 @@ export default function AddSchoolReviewDialog({ open, onOpenChange, schoolId, ex
 
     try {
       const moderationResult = await base44.integrations.Core.InvokeLLM({
-        prompt: `🧠 Tu es Modérateur, l'agent d'intelligence artificielle officiel de ScoolAdvisor.
+        prompt: `Tu es Modérator, l'agent d'intelligence artificielle officiel de ScoolAdvisor.
 
 📝 Contenu à analyser :
 "${reviewData.comment}"
@@ -144,23 +144,30 @@ Type: ${isEdit ? 'Modification d\'avis' : 'Nouvel avis'} sur un établissement
 
 🎯 Mission : Analyser ce contenu et décider s'il respecte la charte de ScoolAdvisor.
 
-🚫 Contenu INTERDIT (à rejeter) :
+🚫 Contenu STRICTEMENT INTERDIT (à rejeter systématiquement) :
 - Grossièretés, insultes, vulgarité
-- Discrimination (sexe, origine, religion, physique, etc.)
-- Harcèlement ou moquerie
+- Attaques personnelles directes
+- Discrimination (sexe, origine, religion, physique, orientation, handicap, etc.)
+- Harcèlement, moquerie ciblée ou humiliation
 - Diffamation ou atteinte grave à la réputation
-- Informations personnelles
+- Informations personnelles identifiantes
 - Propos sexuels, violents ou politiques extrêmes
-- Langage dénigrant ou humiliant
+- Langage dénigrant
 
-✅ Contenu AUTORISÉ :
-- Critiques constructives et respectueuses (même négatives)
-- Avis factuels et polis
-- Opinions personnelles exprimées avec respect
+✅ Contenu AUTORISÉ (critiques factuelles et constructives) :
+- Descriptions factuelles de l'établissement, même négatives
+- Critiques constructives sur les INSTALLATIONS, SERVICES, AMBIANCE
+- Opinions personnelles respectueuses
+
+🔍 Règle d'or : 
+→ Critiquer ce que fait/propose l'établissement = ✅ OK
+→ Insulter ou dénigrer = ❌ INTERDIT
+
+En cas de doute léger sur une formulation maladroite mais sans malveillance apparente, privilégie l'approbation.
+En cas de doute sur une attaque déguisée, rejette.
 
 📊 Décision requise :
-Réponds UNIQUEMENT par "approved" ou "rejected".
-En cas de doute entre "critiquer" et "insulter", privilégie la sécurité et rejette.`,
+Réponds UNIQUEMENT par "approved" ou "rejected".`,
         response_json_schema: {
           type: "object",
           properties: {
@@ -169,10 +176,10 @@ En cas de doute entre "critiquer" et "insulter", privilégie la sécurité et re
         }
       });
 
-      return moderationResult.decision || 'rejected'; // Default to rejected if AI fails for stricter moderation
+      return moderationResult.decision === 'rejected' ? 'rejected' : 'approved';
     } catch (error) {
       console.error("Error in moderation:", error);
-      return 'rejected'; // Default to rejected on error for safety/stricter moderation
+      return 'approved';
     }
   };
 

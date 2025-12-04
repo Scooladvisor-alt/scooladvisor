@@ -38,6 +38,7 @@ export default function ReportSchoolDialog({ open, onOpenChange, schoolId }) {
       await base44.entities.SchoolReport.create({
         school_id: schoolId,
         reporter_email: user.email,
+        reporter_id: user.id,
         reason: reason,
         details: details,
         status: "pending",
