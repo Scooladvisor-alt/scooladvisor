@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { base44 } from "@/api/base44Client";
+import { detectInternationalSchool } from "@/functions/detectInternationalSchool";
 import { security } from "../shared/security";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -125,17 +126,24 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
 
       const capitalizedName = capitalizeWords(cleanName);
 
-      await base44.entities.School.create({
+      const newSchool = await base44.entities.School.create({
         name: capitalizedName,
         type: formData.type,
         address: cleanAddress,
         city: cleanCity,
-        region: "France",
+        region: "", // Sera mis à jour automatiquement
         status: "approved",
         average_rating: 0,
         review_count: 0,
         is_deleted: false
       });
+
+      // Appeler la fonction de détection automatique France/International
+      try {
+        await detectInternationalSchool({ schoolId: newSchool.id });
+      } catch (err) {
+        console.log("Detection internationale non critique:", err);
+      }
 
       setSuccess(true);
       setTimeout(() => {
