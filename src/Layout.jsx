@@ -68,6 +68,7 @@ const BanDialog = ({ open, user }) => {
     try {
       await base44.entities.BanAppeal.create({
         user_email: user.email,
+        user_id: user.id,
         appeal_message: appealMessage
       });
       setAppealSent(true);
