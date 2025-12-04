@@ -291,7 +291,7 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
                 <div className="flex gap-3 sm:gap-6 items-start flex-1 w-full">
                   <div className="relative">
                     <Avatar className="w-20 h-20 sm:w-32 sm:h-32 border-4 border-white shadow-lg flex-shrink-0">
-                      <AvatarImage src={teacher.photo_url} />
+                      <AvatarImage src={teacher.photo_url} loading="lazy" />
                       <AvatarFallback className="bg-gradient-to-br from-[#FF4D8D] to-blue-500 text-white text-2xl sm:text-4xl font-semibold">
                         {teacher.name.charAt(0)}
                       </AvatarFallback>

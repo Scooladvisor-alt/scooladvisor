@@ -12,7 +12,7 @@ const SchoolReviews = lazy(() => import("../components/school/SchoolReviews"));
 const AddTeacherDialog = lazy(() => import("../components/school/AddTeacherDialog"));
 const AddSchoolReviewDialog = lazy(() => import("../components/school/AddSchoolReviewDialog"));
 const ReportSchoolDialog = lazy(() => import("../components/school/ReportSchoolDialog"));
-import SchoolChat from "../components/school/SchoolChat";
+const SchoolChat = lazy(() => import("../components/school/SchoolChat"));
 import SchoolAdminMenu from "../components/admin/SchoolAdminMenu";
 import { toast } from "sonner";
 import SEO from "@/components/shared/SEO";
