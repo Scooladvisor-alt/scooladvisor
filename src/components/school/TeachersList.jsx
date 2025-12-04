@@ -32,16 +32,23 @@ export default function TeachersList({ schoolId, onAddTeacher }) {
   useEffect(() => {
     const loadTeachers = async () => {
       setLoading(true);
-      const teachersData = await base44.entities.Teacher.filter({ school_id: schoolId, status: "approved" });
-
-      const sortedTeachers = teachersData.sort((a, b) => (b.average_rating || 0) - (a.average_rating || 0));
-      setTeachers(sortedTeachers);
+      // Charger seulement les 15 premiers profs initialement (triés par note)
+      const teachersData = await base44.entities.Teacher.filter({ school_id: schoolId, status: "approved" }, "-average_rating", 15);
+      setTeachers(teachersData);
       setLoading(false);
     };
     if (schoolId) {
       loadTeachers();
     }
   }, [schoolId]);
+
+  const loadAllTeachers = async () => {
+    setLoading(true);
+    const allTeachers = await base44.entities.Teacher.filter({ school_id: schoolId, status: "approved" });
+    const sortedTeachers = allTeachers.sort((a, b) => (b.average_rating || 0) - (a.average_rating || 0));
+    setTeachers(sortedTeachers);
+    setLoading(false);
+  };
 
   const podiumStyles = [
   'bg-gradient-to-r from-amber-200 via-amber-100 to-amber-200 border-amber-300',
@@ -165,7 +172,7 @@ export default function TeachersList({ schoolId, onAddTeacher }) {
                         <Link to={createPageUrl(`TeacherDetail?id=${teacher.id}`)}>
                           <div className={`group flex items-center gap-2 sm:gap-4 p-4 border-b border-slate-100 last:border-0 hover:bg-slate-50 transition-all ${podiumClass}`}>
                             <Avatar className="w-10 h-10 sm:w-14 sm:h-14 border-2 border-white shadow-sm flex-shrink-0">
-                              <AvatarImage src={teacher.photo_url} />
+                              <AvatarImage src={teacher.photo_url} loading="lazy" />
                               <AvatarFallback className="bg-gradient-to-br from-blue-600 to-blue-800 text-white font-semibold text-sm sm:text-base">
                                 {teacher.name.charAt(0)}
                               </AvatarFallback>
@@ -201,9 +208,14 @@ export default function TeachersList({ schoolId, onAddTeacher }) {
                 {hasMore &&
             <div className="mt-4 text-center">
                     <button
-                onClick={() => setShowAll(true)} className=" bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-sm font-medium transition-colors">
+                onClick={async () => {
+                  if (teachers.length <= 15) {
+                    await loadAllTeachers();
+                  }
+                  setShowAll(true);
+                }} className=" bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-sm font-medium transition-colors">
 
-                      Voir {filteredTeachers.length - initialDisplayCount} professeurs de plus
+                      Voir tous les professeurs
                     </button>
                   </div>
             }

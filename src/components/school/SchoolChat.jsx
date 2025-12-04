@@ -125,11 +125,15 @@ export default function SchoolChat({ schoolId, isHomePage = false }) {
   };
 
   useEffect(() => {
-    if (schoolId) {
+    loadUser();
+  }, []);
+
+  // Charger les messages UNIQUEMENT quand le dialog s'ouvre
+  useEffect(() => {
+    if (showDialog && schoolId && messages.length === 0) {
       loadMessages();
-      loadUser();
     }
-  }, [schoolId]);
+  }, [showDialog, schoolId]);
 
   useEffect(scrollToBottom, [messages]);
 
@@ -151,7 +155,8 @@ export default function SchoolChat({ schoolId, isHomePage = false }) {
   const loadMessages = async () => {
     if (!schoolId) return;
     setLoading(true);
-    const allMessages = await base44.entities.ChatMessage.filter({ school_id: schoolId }, "-created_date");
+    // Charger seulement les 20 derniers messages initialement
+    const allMessages = await base44.entities.ChatMessage.filter({ school_id: schoolId }, "-created_date", 20);
     const data = allMessages.filter((msg) => !msg.is_deleted);
     setMessages(data);
     setLoading(false);
@@ -503,9 +508,7 @@ Si la décision est "approved", la "reason" doit être null.`,
           </span>
           <span className="hidden sm:inline">💌</span>
         </h2>
-        {loading ?
-        <p className="text-white/80 text-sm">Chargement du dernier message...</p> :
-        lastMessage ?
+        {lastMessage ?
         <div className="mt-2 p-3 rounded-xl bg-white shadow-md">
             <p className="text-sm font-semibold line-clamp-2">
               <span className="font-bold text-blue-600">
@@ -518,7 +521,7 @@ Si la décision est "approved", la "reason" doit être null.`,
             </p>
           </div> :
 
-        <p className="text-white/80 text-sm">Et si tu ouvrais la conversation ? 💬</p>
+        <p className="text-white/80 text-sm">Clique pour ouvrir le chat 💬</p>
         }
       </div>
 
