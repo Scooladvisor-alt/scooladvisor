@@ -153,13 +153,20 @@ export default function ProfilePage() {
         base44.entities.School.list()
       ]);
       
+      console.log("All school reviews raw:", allSchoolReviewsRaw);
+      console.log("User email:", userEmail);
+      
       // Filtrer côté client par email exact de l'utilisateur
       const userTeacherReviews = allTeacherReviewsRaw.filter(r => r.created_by === userEmail);
       const userSchoolReviews = allSchoolReviewsRaw.filter(r => r.created_by === userEmail);
+      
+      console.log("User school reviews after filter:", userSchoolReviews);
 
       // Créer des maps pour accès rapide
       const teachersMap = new Map(allTeachers.map((t) => [t.id, t]));
       const schoolsMap = new Map(allSchools.map((s) => [s.id, s]));
+      
+      console.log("Schools map size:", schoolsMap.size);
 
       // Enrichir les avis professeurs avec les infos prof et école
       const enrichedTeacherReviews = userTeacherReviews
@@ -168,15 +175,18 @@ export default function ProfilePage() {
           const school = teacher ? schoolsMap.get(teacher.school_id) : null;
           return { ...review, teacher, school };
         })
-        .filter((r) => r.teacher); // Garder même si école n'existe pas, mais le prof doit exister
+        .filter((r) => r.teacher);
 
       // Enrichir les avis établissements avec les infos école
       const enrichedSchoolReviews = userSchoolReviews
-        .map((review) => ({
-          ...review,
-          school: schoolsMap.get(review.school_id)
-        }))
-        .filter((r) => r.school); // Ne garder que si école existe
+        .map((review) => {
+          const school = schoolsMap.get(review.school_id);
+          console.log("Review school_id:", review.school_id, "Found school:", school?.name);
+          return { ...review, school };
+        })
+        .filter((r) => r.school);
+      
+      console.log("Final enriched school reviews:", enrichedSchoolReviews);
 
       setTeacherReviews(enrichedTeacherReviews);
       setSchoolReviews(enrichedSchoolReviews);
