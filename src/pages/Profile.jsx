@@ -171,11 +171,29 @@ export default function ProfilePage() {
         .filter((r) => r.teacher);
 
       // Enrichir les avis établissements avec les infos école
-      // Note: on garde TOUS les avis école de l'utilisateur, même si l'école est supprimée
-      const enrichedSchoolReviews = userSchoolReviews.map((review) => {
-        const school = schoolsMap.get(review.school_id);
-        return { ...review, school: school || { id: review.school_id, name: "École supprimée" } };
-      });
+      // Récupérer les écoles manquantes individuellement si nécessaire
+      const enrichedSchoolReviews = await Promise.all(
+        userSchoolReviews.map(async (review) => {
+          let school = schoolsMap.get(review.school_id);
+          
+          // Si l'école n'est pas dans la map, essayer de la récupérer directement
+          if (!school && review.school_id) {
+            try {
+              const [fetchedSchool] = await base44.entities.School.filter({ id: review.school_id });
+              if (fetchedSchool) {
+                school = fetchedSchool;
+              }
+            } catch (e) {
+              console.error("Erreur récupération école:", e);
+            }
+          }
+          
+          return { 
+            ...review, 
+            school: school || { id: review.school_id, name: "École non trouvée" } 
+          };
+        })
+      );
 
       setTeacherReviews(enrichedTeacherReviews);
       setSchoolReviews(enrichedSchoolReviews);
