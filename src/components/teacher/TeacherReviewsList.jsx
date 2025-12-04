@@ -46,12 +46,15 @@ const getAvatarUrl = (avatar) => {
 export default function TeacherReviewsList({ teacherId, user, onReload, onEditReview, embedded = false }) {
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
   const [reportingReview, setReportingReview] = useState(null);
   const [likingReview, setLikingReview] = useState(null);
   const [localLikes, setLocalLikes] = useState({});
   const [userLikes, setUserLikes] = useState(new Set());
   const [reviewUsers, setReviewUsers] = useState({});
   const [expandedReviews, setExpandedReviews] = useState(new Set());
+  const [displayCount, setDisplayCount] = useState(6);
+  const [hasMoreReviews, setHasMoreReviews] = useState(false);
 
   useEffect(() => {
     loadReviews();
@@ -59,8 +62,10 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
 
   const loadReviews = async () => {
     setLoading(true);
-    const reviewsData = await TeacherReview.filter({ teacher_id: teacherId, status: "published" }, "-created_date");
+    // Charger seulement les 10 premiers avis initialement
+    const reviewsData = await TeacherReview.filter({ teacher_id: teacherId, status: "published" }, "-created_date", 10);
     setReviews(reviewsData);
+    setHasMoreReviews(reviewsData.length >= 10);
 
     // Charger les infos utilisateurs pour les avis non-anonymes
     const userEmails = [...new Set(reviewsData.filter((r) => !r.is_anonymous).map((r) => r.created_by))];
@@ -68,17 +73,23 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
 
     for (const email of userEmails) {
       try {
-        // Ne charger que pour le user connecté ou skip silencieusement
         if (user && email === user.email) {
           usersData[email] = user;
         }
       } catch (error) {
-
-        // Ignorer silencieusement les erreurs de chargement, as per instructions.
+        // Ignorer silencieusement les erreurs de chargement
       }}
 
     setReviewUsers(usersData);
     setLoading(false);
+  };
+
+  const loadAllReviews = async () => {
+    setLoadingMore(true);
+    const reviewsData = await TeacherReview.filter({ teacher_id: teacherId, status: "published" }, "-created_date");
+    setReviews(reviewsData);
+    setHasMoreReviews(false);
+    setLoadingMore(false);
   };
 
   const updateTeacherStats = async () => {
@@ -243,6 +254,7 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
   };
 
   const sortedReviews = [...reviews].sort((a, b) => (getLikeCount(b) || 0) - (getLikeCount(a) || 0));
+  const displayedReviews = sortedReviews.slice(0, displayCount);
 
   const Content = () => (
     <div className="flex-1 flex flex-col h-full">
@@ -294,7 +306,7 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
               .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
               .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
             `}</style>
-              {sortedReviews.slice(0, 2).map((review, index) => {
+              {displayedReviews.map((review, index) => {
               const reviewUser = reviewUsers[review.created_by];
               // Use stored avatar if available, otherwise fallback to user profile
               const rawAvatar = review.author_avatar || reviewUser?.profile_avatar;
@@ -310,7 +322,7 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
                     <div className="flex gap-3">
                       <Avatar className="w-10 h-10 border-2 border-white shadow-sm ring-1 ring-slate-100">
                          {avatarUrl ?
-                            <AvatarImage src={avatarUrl} /> : null}
+                            <AvatarImage src={avatarUrl} loading="lazy" /> : null}
                           <AvatarFallback className="bg-transparent">
                                <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/f5396bc58_a-humanized-black-graduation-cap-with-a-star-shape-3.png" alt="Avatar" className="w-full h-full object-cover" />
                           </AvatarFallback>
@@ -415,6 +427,30 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
               );
 
             })}
+            
+            {(hasMoreReviews || sortedReviews.length > displayCount) && (
+              <div className="text-center pt-4">
+                <button
+                  onClick={async () => {
+                    if (hasMoreReviews && reviews.length <= 10) {
+                      await loadAllReviews();
+                    }
+                    setDisplayCount(prev => prev + 10);
+                  }}
+                  disabled={loadingMore}
+                  className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-sm font-medium transition-colors"
+                >
+                  {loadingMore ? (
+                    <span className="flex items-center gap-2 text-slate-500">
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                      Chargement...
+                    </span>
+                  ) : (
+                    `Voir plus d'avis`
+                  )}
+                </button>
+              </div>
+            )}
             </div>
           }
       </div>
