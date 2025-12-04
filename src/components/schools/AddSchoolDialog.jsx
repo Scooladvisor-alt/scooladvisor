@@ -37,10 +37,15 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
     setAddressLoading(true);
     try {
       const response = await fetch(
-        `https://api-adresse.data.gouv.fr/search/?q=${encodeURIComponent(query)}&limit=5`
+        `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&format=json&addressdetails=1&limit=5`,
+        {
+          headers: {
+            'User-Agent': 'ScoolAdvisor/1.0'
+          }
+        }
       );
       const data = await response.json();
-      setAddressSuggestions(data.features || []);
+      setAddressSuggestions(data || []);
       setShowAddressSuggestions(true);
     } catch (error) {
       console.error("Error searching address:", error);
@@ -63,15 +68,33 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
     }
   }, [formData.address]);
 
-  const handleAddressSelected = (feature) => {
-    const properties = feature.properties;
+  const cityInputRef = useRef(null);
+
+  const handleAddressSelected = (place) => {
+    const address = place.address || {};
+    const displayName = place.display_name || '';
+    
+    // Extraire l'adresse (première partie avant la ville)
+    const addressParts = displayName.split(',');
+    const streetAddress = addressParts.slice(0, 2).join(',').trim();
+    
+    // Extraire la ville
+    const city = address.city || address.town || address.village || address.municipality || address.county || '';
+    
     setFormData({
       ...formData,
-      address: properties.name || properties.label,
-      city: properties.city,
+      address: streetAddress,
+      city: city,
     });
     setShowAddressSuggestions(false);
     setAddressSuggestions([]);
+    
+    // Focus sur le champ ville
+    setTimeout(() => {
+      if (cityInputRef.current) {
+        cityInputRef.current.focus();
+      }
+    }, 50);
   };
 
   useEffect(() => {
@@ -250,18 +273,18 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
             
             {showAddressSuggestions && addressSuggestions.length > 0 && (
               <div className="absolute z-50 w-full mt-1 bg-white rounded-lg shadow-lg border border-slate-200 max-h-60 overflow-y-auto">
-                {addressSuggestions.map((feature, index) => (
+                {addressSuggestions.map((place, index) => (
                   <button
                     key={index}
                     type="button"
                     onMouseDown={(e) => {
                       e.preventDefault();
-                      handleAddressSelected(feature);
+                      handleAddressSelected(place);
                     }}
                     className="w-full px-3 py-2 text-left hover:bg-blue-50 transition-colors border-b border-slate-100 last:border-b-0"
                   >
-                    <p className="text-sm font-semibold text-slate-900">{feature.properties.label}</p>
-                    <p className="text-xs text-slate-600">{feature.properties.context}</p>
+                    <p className="text-sm font-semibold text-slate-900">{place.display_name?.split(',').slice(0, 2).join(',')}</p>
+                    <p className="text-xs text-slate-600">{place.display_name?.split(',').slice(2).join(',').trim()}</p>
                   </button>
                 ))}
               </div>
@@ -272,6 +295,7 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
             <Label htmlFor="city" className="text-xs sm:text-sm">Ville *</Label>
             <Input
               id="city"
+              ref={cityInputRef}
               value={formData.city}
               onChange={(e) => setFormData({ ...formData, city: e.target.value })}
               required
