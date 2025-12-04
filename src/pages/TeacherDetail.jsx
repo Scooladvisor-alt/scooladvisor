@@ -189,7 +189,7 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-purple-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-pink-50/30 to-blue-50 flex items-center justify-center">
         <GradientSpinner size="w-12 h-12" />
       </div>);
 
@@ -207,7 +207,7 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
   const hasRating = teacher.average_rating !== undefined && teacher.average_rating !== null && teacher.average_rating > 0;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-purple-50 to-slate-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-pink-50/30 to-blue-50">
       {teacher &&
       <SEO
         title={`${teacher.name} - Avis Professeur ${teacher.subject} | ScoolAdvisor`}
@@ -311,7 +311,7 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
                   <div className="relative">
                     <Avatar className="w-20 h-20 sm:w-32 sm:h-32 border-4 border-white shadow-lg flex-shrink-0">
                       <AvatarImage src={teacher.photo_url} />
-                      <AvatarFallback className="bg-gradient-to-br from-purple-600 to-blue-600 text-white text-2xl sm:text-4xl font-semibold">
+                      <AvatarFallback className="bg-gradient-to-br from-[#FF4D8D] to-blue-500 text-white text-2xl sm:text-4xl font-semibold">
                         {teacher.name.charAt(0)}
                       </AvatarFallback>
                     </Avatar>
@@ -401,7 +401,7 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
                 <Button
                   onClick={handleAskAntonin}
                   variant="outline"
-                  className="flex-1 sm:flex-none border-2 border-purple-100 hover:bg-purple-50 hover:border-purple-200 text-slate-700 h-11 px-4 rounded-xl font-medium bg-white/50">
+                  className="flex-1 sm:flex-none border-2 border-pink-100 hover:bg-pink-50 hover:border-pink-200 text-slate-700 h-11 px-4 rounded-xl font-medium bg-white/50">
                   <Sparkles className="w-4 h-4 mr-2 text-[#FF4D8D]" />
                   <span className="hidden sm:inline bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent font-bold">
                     Demander à Antonin ce qu'il en pense
@@ -499,8 +499,11 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
         <DialogContent className="max-w-[95vw] sm:max-w-2xl max-h-[80vh] overflow-y-auto rounded-2xl">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2 text-lg sm:text-2xl">
-              <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-purple-600" />
-              L&apos;avis d&apos;Antonin 🤖 sur {teacher.name}
+              <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-[#FF4D8D]" />
+              <span className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
+                L'avis d'Antonin
+              </span>
+              <span className="text-slate-900">sur {teacher.name}</span>
             </DialogTitle>
           </DialogHeader>
           <div className="py-4 sm:py-6">
@@ -511,7 +514,7 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
               </div> :
 
             <div className="prose prose-slate max-w-none prose-sm sm:prose-base">
-                <div className="bg-gradient-to-r from-purple-50 to-blue-50 rounded-lg p-4 sm:p-6 border-2 border-purple-200">
+                <div className="bg-gradient-to-r from-pink-50 via-purple-50/50 to-blue-50 rounded-lg p-4 sm:p-6 border-2 border-pink-100">
                   <p className="text-slate-800 leading-relaxed text-base sm:text-lg whitespace-pre-wrap">
                     {antoninSummary}
                   </p>
