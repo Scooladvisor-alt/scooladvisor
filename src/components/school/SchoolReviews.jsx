@@ -102,12 +102,19 @@ export default function SchoolReviews({ schoolId, user, onReload, onEditReview, 
       await base44.entities.SchoolReview.delete(reviewId);
       toast.success("Avis supprimé avec succès.");
 
-      // Recharger les avis et mettre à jour les stats
+      // Recharger les avis APRÈS suppression
       const updatedReviews = await base44.entities.SchoolReview.filter({ school_id: schoolId, status: "published" }, "-created_date");
       setReviews(updatedReviews);
 
-      // Recalculer et mettre à jour les statistiques
-      await updateSchoolStats();
+      // Recalculer et mettre à jour les statistiques de l'établissement
+      const avgRating = updatedReviews.length > 0 
+        ? updatedReviews.reduce((sum, r) => sum + r.rating, 0) / updatedReviews.length 
+        : 0;
+      
+      await base44.entities.School.update(schoolId, {
+        average_rating: avgRating,
+        review_count: updatedReviews.length
+      });
 
       // Notifier le parent pour rafraîchir l'affichage
       onReload();
