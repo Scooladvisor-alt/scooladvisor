@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import React from "react";
 import { createPageUrl } from "@/utils";
 import { MapPin, Star, MessageSquare, Users, Globe } from "lucide-react"; 
 import { Badge } from "@/components/ui/badge";
