@@ -247,7 +247,7 @@ export default function SchoolDetailPage() {
                       }
                   <div className="flex items-center gap-2 mb-1 md:mb-2">
                     <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-slate-900 break-words">{school.name}</h1>
-                    {user && (user.role === 'admin' || user.role === 'moderator') && (
+                    {user && user.role === 'admin' && (
                       <SchoolAdminMenu school={school} user={user} onUpdate={loadData} />
                     )}
                   </div>

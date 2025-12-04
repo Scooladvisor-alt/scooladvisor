@@ -44,9 +44,24 @@ export default function TeacherAdminMenu({ teacher, user, onUpdate }) {
     name: teacher.name || "",
     subject: teacher.subject || "",
   });
-  const [avatarUrl, setAvatarUrl] = useState(teacher.photo_url || "");
+  const [selectedAvatar, setSelectedAvatar] = useState(teacher.photo_url || "");
 
-  const isAdmin = user && (user.role === "admin" || user.role === "moderator");
+  const avatarGallery = [
+    { id: "avatar1", url: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/d8ad15814_a-humanized-black-graduation-cap-with-a-star-shape.png", name: "Bleu" },
+    { id: "avatar2", url: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/639510ec4_a-humanized-black-graduation-cap-with-a-star-shape-2.png", name: "Violet" },
+    { id: "avatar3", url: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/f5396bc58_a-humanized-black-graduation-cap-with-a-star-shape-3.png", name: "Jaune" },
+    { id: "avatar4", url: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/cd2a7b336_a-humanized-black-graduation-cap-with-a-star-shape-4.png", name: "Vert" },
+    { id: "avatar5", url: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/5e2f6487e_a-humanized-black-graduation-cap-with-a-star-shape-5.png", name: "Cyan" },
+    { id: "default_male", url: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face", name: "Homme 1" },
+    { id: "default_female", url: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop&crop=face", name: "Femme 1" },
+    { id: "default_male2", url: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face", name: "Homme 2" },
+    { id: "default_female2", url: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face", name: "Femme 2" },
+    { id: "default_male3", url: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face", name: "Homme 3" },
+    { id: "default_female3", url: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&h=150&fit=crop&crop=face", name: "Femme 3" },
+    { id: "default_neutral", url: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=150&h=150&fit=crop&crop=face", name: "Pro 1" },
+  ];
+
+  const isAdmin = user && user.role === "admin";
   if (!isAdmin) return null;
 
   const logAction = async (actionType, details = "") => {
@@ -128,31 +143,16 @@ export default function TeacherAdminMenu({ teacher, user, onUpdate }) {
   };
 
   const handleUpdateAvatar = async () => {
+    if (!selectedAvatar) return;
     setLoading(true);
     try {
-      await base44.entities.Teacher.update(teacher.id, { photo_url: avatarUrl });
-      await logAction("update_avatar", `Avatar modifié: ${avatarUrl}`);
+      await base44.entities.Teacher.update(teacher.id, { photo_url: selectedAvatar });
+      await logAction("update_avatar", `Avatar modifié: ${selectedAvatar}`);
       toast.success("Avatar mis à jour");
       setShowAvatarDialog(false);
       onUpdate();
     } catch (error) {
       toast.error("Erreur lors de la mise à jour de l'avatar");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleFileUpload = async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-    
-    setLoading(true);
-    try {
-      const { file_url } = await base44.integrations.Core.UploadFile({ file });
-      setAvatarUrl(file_url);
-      toast.success("Image uploadée");
-    } catch (error) {
-      toast.error("Erreur lors de l'upload");
     } finally {
       setLoading(false);
     }
@@ -292,45 +292,52 @@ export default function TeacherAdminMenu({ teacher, user, onUpdate }) {
         </DialogContent>
       </Dialog>
 
-      {/* Modal Modifier Avatar */}
+      {/* Modal Modifier Avatar - Galerie */}
       <Dialog open={showAvatarDialog} onOpenChange={setShowAvatarDialog}>
-        <DialogContent className="sm:max-w-md">
+        <DialogContent className="sm:max-w-2xl max-h-[85vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
               <ImageIcon className="w-5 h-5 text-blue-600" />
-              Modifier l'avatar
+              Choisir un nouvel avatar
             </DialogTitle>
           </DialogHeader>
-          <div className="space-y-4 py-4">
-            <div className="flex justify-center">
-              {avatarUrl ? (
-                <img src={avatarUrl} alt="Preview" className="w-32 h-32 rounded-full object-cover border-4 border-slate-200" />
-              ) : (
-                <div className="w-32 h-32 rounded-full bg-slate-200 flex items-center justify-center">
-                  <ImageIcon className="w-12 h-12 text-slate-400" />
-                </div>
-              )}
-            </div>
-            <div className="space-y-2">
-              <Label>Uploader une image</Label>
-              <Input type="file" accept="image/*" onChange={handleFileUpload} disabled={loading} />
-            </div>
-            <div className="space-y-2">
-              <Label>Ou coller une URL</Label>
-              <Input
-                value={avatarUrl}
-                onChange={(e) => setAvatarUrl(e.target.value)}
-                placeholder="https://..."
-              />
+          <div className="py-4">
+            <div className="grid grid-cols-4 sm:grid-cols-6 gap-3">
+              {avatarGallery.map((avatar) => (
+                <button
+                  key={avatar.id}
+                  onClick={() => setSelectedAvatar(avatar.url)}
+                  className={`relative aspect-square rounded-xl overflow-hidden border-3 transition-all hover:scale-105 ${
+                    selectedAvatar === avatar.url
+                      ? "border-blue-500 ring-2 ring-blue-300 shadow-lg"
+                      : "border-slate-200 hover:border-blue-300"
+                  }`}
+                >
+                  <img
+                    src={avatar.url}
+                    alt={avatar.name}
+                    className="w-full h-full object-cover"
+                  />
+                  {selectedAvatar === avatar.url && (
+                    <div className="absolute inset-0 bg-blue-500/20 flex items-center justify-center">
+                      <div className="w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center">
+                        <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                      </div>
+                    </div>
+                  )}
+                </button>
+              ))}
             </div>
           </div>
           <DialogFooter className="gap-2">
             <Button variant="outline" onClick={() => setShowAvatarDialog(false)}>
               Annuler
             </Button>
-            <Button onClick={handleUpdateAvatar} disabled={loading}>
+            <Button onClick={handleUpdateAvatar} disabled={loading || !selectedAvatar}>
               {loading ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
-              Enregistrer
+              Valider
             </Button>
           </DialogFooter>
         </DialogContent>

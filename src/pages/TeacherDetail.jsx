@@ -310,7 +310,7 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
                         {user && (
                           <ReportTeacherButton teacher={teacher} onUpdate={loadData} variant="flag" />
                         )}
-                        {user && (user.role === 'admin' || user.role === 'moderator') && (
+                        {user && user.role === 'admin' && (
                           <TeacherAdminMenu teacher={teacher} user={user} onUpdate={loadData} />
                         )}
                       </div>
