@@ -146,16 +146,14 @@ export default function ProfilePage() {
     setReviewsLoading(true);
     try {
       // Charger TOUS les avis de l'utilisateur publiés
-      const [allTeacherReviews, allSchoolReviews] = await Promise.all([
-        base44.entities.TeacherReview.filter({
-          created_by: userEmail,
-          status: "published"
-        }, "-created_date"),
-        base44.entities.SchoolReview.filter({
-          created_by: userEmail,
-          status: "published"
-        }, "-created_date")
+      const [allTeacherReviewsRaw, allSchoolReviewsRaw] = await Promise.all([
+        base44.entities.TeacherReview.filter({ status: "published" }, "-created_date"),
+        base44.entities.SchoolReview.filter({ status: "published" }, "-created_date")
       ]);
+      
+      // Filtrer côté client par email exact
+      const allTeacherReviews = allTeacherReviewsRaw.filter(r => r.created_by === userEmail);
+      const allSchoolReviews = allSchoolReviewsRaw.filter(r => r.created_by === userEmail);
 
       // Récupérer les IDs des professeurs
       const teacherIds = [...new Set(allTeacherReviews.map((r) => r.teacher_id).filter(Boolean))];
