@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { base44 } from "@/api/base44Client";
 import {
   DropdownMenu,
@@ -45,21 +45,33 @@ export default function TeacherAdminMenu({ teacher, user, onUpdate }) {
     subject: teacher.subject || "",
   });
   const [selectedAvatar, setSelectedAvatar] = useState(teacher.photo_url || "");
+  const [avatarGallery, setAvatarGallery] = useState([]);
+  const [loadingAvatars, setLoadingAvatars] = useState(false);
 
-  const avatarGallery = [
-    { id: "avatar1", url: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/d8ad15814_a-humanized-black-graduation-cap-with-a-star-shape.png", name: "Bleu" },
-    { id: "avatar2", url: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/639510ec4_a-humanized-black-graduation-cap-with-a-star-shape-2.png", name: "Violet" },
-    { id: "avatar3", url: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/f5396bc58_a-humanized-black-graduation-cap-with-a-star-shape-3.png", name: "Jaune" },
-    { id: "avatar4", url: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/cd2a7b336_a-humanized-black-graduation-cap-with-a-star-shape-4.png", name: "Vert" },
-    { id: "avatar5", url: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/5e2f6487e_a-humanized-black-graduation-cap-with-a-star-shape-5.png", name: "Cyan" },
-    { id: "default_male", url: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face", name: "Homme 1" },
-    { id: "default_female", url: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop&crop=face", name: "Femme 1" },
-    { id: "default_male2", url: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face", name: "Homme 2" },
-    { id: "default_female2", url: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face", name: "Femme 2" },
-    { id: "default_male3", url: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face", name: "Homme 3" },
-    { id: "default_female3", url: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&h=150&fit=crop&crop=face", name: "Femme 3" },
-    { id: "default_neutral", url: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=150&h=150&fit=crop&crop=face", name: "Pro 1" },
-  ];
+  // Charger les avatars existants quand la modal s'ouvre
+  useEffect(() => {
+    if (showAvatarDialog) {
+      loadExistingAvatars();
+    }
+  }, [showAvatarDialog]);
+
+  const loadExistingAvatars = async () => {
+    setLoadingAvatars(true);
+    try {
+      const allTeachers = await base44.entities.Teacher.list();
+      const uniqueAvatars = [...new Set(
+        allTeachers
+          .filter(t => t.photo_url && t.photo_url.trim() !== "")
+          .map(t => t.photo_url)
+      )];
+      setAvatarGallery(uniqueAvatars);
+    } catch (error) {
+      console.error("Erreur chargement avatars:", error);
+      setAvatarGallery([]);
+    } finally {
+      setLoadingAvatars(false);
+    }
+  };
 
   const isAdmin = user && user.role === "admin";
   if (!isAdmin) return null;
@@ -302,34 +314,49 @@ export default function TeacherAdminMenu({ teacher, user, onUpdate }) {
             </DialogTitle>
           </DialogHeader>
           <div className="py-4">
-            <div className="grid grid-cols-4 sm:grid-cols-6 gap-3">
-              {avatarGallery.map((avatar) => (
-                <button
-                  key={avatar.id}
-                  onClick={() => setSelectedAvatar(avatar.url)}
-                  className={`relative aspect-square rounded-xl overflow-hidden border-3 transition-all hover:scale-105 ${
-                    selectedAvatar === avatar.url
-                      ? "border-blue-500 ring-2 ring-blue-300 shadow-lg"
-                      : "border-slate-200 hover:border-blue-300"
-                  }`}
-                >
-                  <img
-                    src={avatar.url}
-                    alt={avatar.name}
-                    className="w-full h-full object-cover"
-                  />
-                  {selectedAvatar === avatar.url && (
-                    <div className="absolute inset-0 bg-blue-500/20 flex items-center justify-center">
-                      <div className="w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center">
-                        <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                        </svg>
+            {loadingAvatars ? (
+              <div className="flex items-center justify-center py-12">
+                <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
+              </div>
+            ) : avatarGallery.length === 0 ? (
+              <div className="text-center py-12 text-slate-500">
+                Aucun avatar disponible
+              </div>
+            ) : (
+              <div className="grid grid-cols-4 sm:grid-cols-6 gap-3">
+                {avatarGallery.map((avatarUrl, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setSelectedAvatar(avatarUrl)}
+                    className={`relative aspect-square rounded-xl overflow-hidden border-2 transition-all hover:scale-105 ${
+                      selectedAvatar === avatarUrl
+                        ? "border-blue-500 ring-2 ring-blue-300 shadow-lg"
+                        : "border-slate-200 hover:border-blue-300"
+                    }`}
+                  >
+                    <img
+                      src={avatarUrl}
+                      alt={`Avatar ${index + 1}`}
+                      className="w-full h-full object-cover"
+                    />
+                    {teacher.photo_url === avatarUrl && (
+                      <div className="absolute top-1 right-1 bg-green-500 text-white text-[8px] px-1.5 py-0.5 rounded-full font-bold">
+                        Actuel
                       </div>
-                    </div>
-                  )}
-                </button>
-              ))}
-            </div>
+                    )}
+                    {selectedAvatar === avatarUrl && (
+                      <div className="absolute inset-0 bg-blue-500/20 flex items-center justify-center">
+                        <div className="w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center">
+                          <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                          </svg>
+                        </div>
+                      </div>
+                    )}
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
           <DialogFooter className="gap-2">
             <Button variant="outline" onClick={() => setShowAvatarDialog(false)}>
