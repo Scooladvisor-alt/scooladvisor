@@ -1,6 +1,6 @@
 import React, { useState, useEffect, lazy, Suspense } from "react";
 import { base44 } from "@/api/base44Client";
-import { MapPin, Users, Star, Plus, Award, ChevronLeft, Edit, Flag, Ban, Loader2, Trash2, Mail } from "lucide-react";
+import { MapPin, Users, Star, Plus, ChevronLeft, Flag, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useNavigate } from "react-router-dom";

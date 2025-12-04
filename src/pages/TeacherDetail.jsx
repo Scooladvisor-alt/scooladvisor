@@ -6,7 +6,6 @@ import {
   Star,
   BookOpen,
   ChevronLeft,
-  Trash2,
   Loader2,
   Sparkles,
   Users } from
