@@ -117,26 +117,7 @@ export default function TeacherDetailPage() {
     }
   };
 
-  const handleDeleteTeacher = async () => {
-    const canDelete = user && user.email === 'antownin@gmail.com';
-    if (!canDelete) {
-      toast.error("Action non autorisée.");
-      return;
-    }
-    if (confirm("Êtes-vous sûr de vouloir supprimer ce professeur ? Cette action est irréversible.")) {
-      try {
-        await base44.entities.Teacher.delete(teacherId);
-        toast.success("Professeur supprimé avec succès.");
-        if (school) {
-          navigate(createPageUrl(`SchoolDetail?id=${school.id}`));
-        } else {
-          navigate(createPageUrl("Schools"));
-        }
-      } catch (error) {
-        toast.error("Erreur lors de la suppression du professeur.");
-      }
-    }
-  };
+
 
   const handleAskAntonin = async () => {
     setLoadingAntonin(true);

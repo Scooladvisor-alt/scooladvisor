@@ -79,44 +79,7 @@ export default function SchoolDetailPage() {
     setShowAddReview(true);
   };
 
-  const handleToggleSchoolStatus = async () => {
-    const canModerate = user && (user.role === 'admin' || user.role === 'moderator');
-    if (!user || !canModerate) {
-      alert("Vous n'êtes pas autorisé à effectuer cette action.");
-      return;
-    }
-    const newStatus = schoolStatus === 'active' ? 'banned' : 'active';
-    const confirmMessage = `Êtes-vous sûr de vouloir ${newStatus === 'banned' ? 'bannir' : 'activer'} cet établissement ?`;
-    if (!confirm(confirmMessage)) return;
 
-    try {
-      await base44.entities.School.update(schoolId, { status: newStatus });
-      setSchoolStatus(newStatus);
-      setSchool((prevSchool) => ({ ...prevSchool, status: newStatus }));
-      alert(`Statut de l'établissement mis à jour: ${newStatus}`);
-    } catch (error) {
-      console.error("Error updating school status:", error);
-      alert("Échec de la mise à jour du statut de l'établissement.");
-    }
-  };
-
-  const handleDeleteSchool = async () => {
-    const canModerate = user && (user.role === 'admin' || user.role === 'moderator');
-    if (!user || !canModerate) {
-      alert("Vous n'êtes pas autorisé à effectuer cette action.");
-      return;
-    }
-    if (!confirm("Êtes-vous sûr de vouloir supprimer cet établissement ? Cette action est irréversible.")) return;
-
-    try {
-      await base44.entities.School.delete(schoolId);
-      alert("Établissement supprimé avec succès.");
-      navigate(createPageUrl("Schools"));
-    } catch (error) {
-      console.error("Error deleting school:", error);
-      alert("Échec de la suppression de l'établissement.");
-    }
-  };
 
   useEffect(() => {
     if (!loading && !school) {
