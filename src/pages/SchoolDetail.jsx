@@ -29,7 +29,7 @@ export default function SchoolDetailPage() {
   const [showAddTeacher, setShowAddTeacher] = useState(false);
   const [showAddReview, setShowAddReview] = useState(false);
   const [editingReview, setEditingReview] = useState(null);
-  const [schoolStatus, setSchoolStatus] = useState('active');
+
   const [showReportDialog, setShowReportDialog] = useState(false);
 
   useEffect(() => {
@@ -45,9 +45,7 @@ export default function SchoolDetailPage() {
       const schoolsData = await base44.entities.School.filter({ id: schoolId });
       const foundSchool = schoolsData[0];
       setSchool(foundSchool);
-      if (foundSchool) {
-        setSchoolStatus(foundSchool.status || 'active');
-      }
+
 
       let currentUser = null;
       try {

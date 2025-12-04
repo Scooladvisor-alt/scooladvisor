@@ -184,7 +184,7 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
   };
 
   const canModerate = user && (user.role === 'admin' || user.role === 'moderator');
-  const isAntonin = user && user.email === 'antownin@gmail.com';
+
   const hasRating = teacher.average_rating !== undefined && teacher.average_rating !== null && teacher.average_rating > 0;
 
   return (
