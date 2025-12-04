@@ -34,6 +34,7 @@ import Footer from "./components/shared/Footer";
 import { motion, AnimatePresence } from "framer-motion";
 import ErrorBoundary from "@/components/shared/ErrorBoundary";
 import SecurityGuard from "@/components/shared/SecurityGuard";
+import FloatingDecoration from "@/components/shared/FloatingDecoration";
 
 
 const BanDialog = ({ open, user }) => {
@@ -304,8 +305,8 @@ export default function Layout({ children }) {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-br from-slate-50 to-blue-50">
-
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-slate-50 to-blue-50 relative">
+      <FloatingDecoration />
       
       <style>{`
         @media (min-width: 640px) {
