@@ -240,11 +240,11 @@ export default function SchoolDetailPage() {
                       </button>
                     }
                   </div>
-                  {schoolStatus === 'banned' &&
-                  <Badge className="mb-2 bg-red-100 text-red-800 border-red-200 text-xs">
-                      Établissement Banni
-                    </Badge>
-                  }
+                  {school.status === 'banned' &&
+                      <Badge className="mb-2 bg-red-100 text-red-800 border-red-200 text-xs">
+                          Établissement Banni
+                        </Badge>
+                      }
                   <div className="flex items-center gap-2 mb-1 md:mb-2">
                     <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-slate-900 break-words">{school.name}</h1>
                     {user && (user.role === 'admin' || user.role === 'moderator') && (
