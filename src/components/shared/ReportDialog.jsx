@@ -26,6 +26,7 @@ export default function ReportDialog({ open, onOpenChange, reviewType, reviewId,
         review_type: reviewType,
         review_id: reviewId,
         reporter_email: user.email,
+        reporter_id: user.id,
         reason: reason,
         details: details,
         status: "pending"
