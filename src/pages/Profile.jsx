@@ -145,59 +145,41 @@ export default function ProfilePage() {
   const loadUserReviews = async (userEmail) => {
     setReviewsLoading(true);
     try {
-      // Charger TOUS les avis de l'utilisateur publiés
-      const [allTeacherReviewsRaw, allSchoolReviewsRaw] = await Promise.all([
+      // Charger TOUS les avis publiés ET tous les profs/écoles en parallèle
+      const [allTeacherReviewsRaw, allSchoolReviewsRaw, allTeachers, allSchools] = await Promise.all([
         base44.entities.TeacherReview.filter({ status: "published" }, "-created_date"),
-        base44.entities.SchoolReview.filter({ status: "published" }, "-created_date")
+        base44.entities.SchoolReview.filter({ status: "published" }, "-created_date"),
+        base44.entities.Teacher.list(),
+        base44.entities.School.list()
       ]);
       
-      // Filtrer côté client par email exact
-      const allTeacherReviews = allTeacherReviewsRaw.filter(r => r.created_by === userEmail);
-      const allSchoolReviews = allSchoolReviewsRaw.filter(r => r.created_by === userEmail);
-
-      // Récupérer les IDs des professeurs
-      const teacherIds = [...new Set(allTeacherReviews.map((r) => r.teacher_id).filter(Boolean))];
-      
-      // Charger les professeurs spécifiquement via id__in
-      let teachers = [];
-      if (teacherIds.length > 0) {
-        teachers = await base44.entities.Teacher.filter({ id__in: teacherIds });
-      }
-
-      // Récupérer tous les IDs d'écoles (ceux des avis école ET ceux des profs récupérés)
-      const reviewSchoolIds = allSchoolReviews.map((r) => r.school_id).filter(Boolean);
-      const teacherSchoolIds = teachers.map((t) => t.school_id).filter(Boolean);
-      const allSchoolIds = [...new Set([...reviewSchoolIds, ...teacherSchoolIds])];
-
-      // Charger les écoles spécifiquement via id__in
-      let schools = [];
-      if (allSchoolIds.length > 0) {
-        schools = await base44.entities.School.filter({ id__in: allSchoolIds });
-      }
+      // Filtrer côté client par email exact de l'utilisateur
+      const userTeacherReviews = allTeacherReviewsRaw.filter(r => r.created_by === userEmail);
+      const userSchoolReviews = allSchoolReviewsRaw.filter(r => r.created_by === userEmail);
 
       // Créer des maps pour accès rapide
-      const teachersMap = new Map(teachers.map((t) => [t.id, t]));
-      const schoolsMap = new Map(schools.map((s) => [s.id, s]));
+      const teachersMap = new Map(allTeachers.map((t) => [t.id, t]));
+      const schoolsMap = new Map(allSchools.map((s) => [s.id, s]));
 
-      // Enrichir les avis professeurs et filtrer les orphelins
-      const validTeacherReviews = allTeacherReviews
+      // Enrichir les avis professeurs avec les infos prof et école
+      const enrichedTeacherReviews = userTeacherReviews
         .map((review) => {
           const teacher = teachersMap.get(review.teacher_id);
           const school = teacher ? schoolsMap.get(teacher.school_id) : null;
           return { ...review, teacher, school };
         })
-        .filter((r) => r.teacher && r.school); // Ne garder que si prof et école existent
+        .filter((r) => r.teacher); // Garder même si école n'existe pas, mais le prof doit exister
 
-      // Enrichir les avis établissements et filtrer les orphelins
-      const validSchoolReviews = allSchoolReviews
+      // Enrichir les avis établissements avec les infos école
+      const enrichedSchoolReviews = userSchoolReviews
         .map((review) => ({
           ...review,
           school: schoolsMap.get(review.school_id)
         }))
         .filter((r) => r.school); // Ne garder que si école existe
 
-      setTeacherReviews(validTeacherReviews);
-      setSchoolReviews(validSchoolReviews);
+      setTeacherReviews(enrichedTeacherReviews);
+      setSchoolReviews(enrichedSchoolReviews);
     } catch (error) {
       console.error("Error loading user reviews:", error);
       setTeacherReviews([]);
