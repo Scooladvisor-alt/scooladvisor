@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { base44 } from "@/api/base44Client";
 import { motion } from "framer-motion";
-import { Plus, Search, Filter, TrendingUp, ArrowRight, Globe } from "lucide-react";
+import { Plus, Search, Filter, TrendingUp, ArrowRight, Globe, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -34,6 +34,7 @@ export default function SchoolsPage() {
   const [filteredSchools, setFilteredSchools] = useState([]);
   const [displayedSchools, setDisplayedSchools] = useState([]);
   const [displayCount, setDisplayCount] = useState(6);
+  const [loadingMore, setLoadingMore] = useState(false);
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
   const [showAddDialog, setShowAddDialog] = useState(false);
@@ -85,9 +86,9 @@ export default function SchoolsPage() {
     }
 
     try {
-      const allSchools = await base44.entities.School.list("-created_date");
-      const teachersData = await base44.entities.Teacher.filter({ status: "approved" });
-
+      // Charger seulement les 20 premiers établissements initialement
+      const allSchools = await base44.entities.School.list("-created_date", 50);
+      
       const uniqueSchools = [];
       const seenNames = new Set();
 
@@ -99,22 +100,51 @@ export default function SchoolsPage() {
         }
       }
 
+      setSchools(uniqueSchools);
+      
+      // Charger les counts en arrière-plan après l'affichage initial
+      loadTeacherCounts();
+    } catch (error) {
+      console.error("Error loading data:", error);
+      setSchools([]);
+    }
+
+    setLoading(false);
+  };
+
+  const loadTeacherCounts = async () => {
+    try {
+      const teachersData = await base44.entities.Teacher.filter({ status: "approved" });
       const counts = {};
       for (const teacher of teachersData) {
         counts[teacher.school_id] = (counts[teacher.school_id] || 0) + 1;
       }
-
-      setSchools(uniqueSchools);
-      setTeachers(teachersData);
       setTeacherCounts(counts);
+      setTeachers(teachersData);
     } catch (error) {
-      console.error("Error loading data:", error);
-      setSchools([]);
-      setTeachers([]);
-      setTeacherCounts({});
+      console.error("Error loading teacher counts:", error);
     }
+  };
 
-    setLoading(false);
+  const loadMoreSchools = async () => {
+    setLoadingMore(true);
+    try {
+      const allSchools = await base44.entities.School.list("-created_date");
+      const uniqueSchools = [];
+      const seenNames = new Set();
+
+      for (const school of allSchools) {
+        const normalizedName = normalizeString(school.name);
+        if (!seenNames.has(normalizedName)) {
+          seenNames.add(normalizedName);
+          uniqueSchools.push(school);
+        }
+      }
+      setSchools(uniqueSchools);
+    } catch (error) {
+      console.error("Error loading more schools:", error);
+    }
+    setLoadingMore(false);
   };
 
   const normalizeString = (str) => {
@@ -175,7 +205,10 @@ export default function SchoolsPage() {
     setFilteredSchools(filtered);
   };
 
-  const handleShowMore = () => {
+  const handleShowMore = async () => {
+    if (schools.length <= displayCount && schools.length < 100) {
+      await loadMoreSchools();
+    }
     setDisplayCount((prev) => prev + 50);
   };
 
@@ -527,7 +560,7 @@ export default function SchoolsPage() {
             </div>
 
             {filteredSchools.length > displayCount &&
-          <motion.div
+            <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             className="text-center mt-8">
@@ -537,13 +570,20 @@ export default function SchoolsPage() {
                   className="flex items-center w-full gap-4 cursor-pointer group py-4"
                 >
                   <div className="h-[2px] flex-1 bg-gradient-to-r from-transparent via-[#FF4D8D] to-purple-500 opacity-30 group-hover:opacity-100 transition-all duration-300" />
-                  <span className="text-sm sm:text-base font-bold bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent whitespace-nowrap transform group-hover:scale-105 transition-transform duration-300">
-                    Voir 50 écoles +
-                  </span>
+                  {loadingMore ? (
+                    <div className="flex items-center gap-2">
+                      <Loader2 className="w-4 h-4 animate-spin text-purple-500" />
+                      <span className="text-sm text-purple-500">Chargement...</span>
+                    </div>
+                  ) : (
+                    <span className="text-sm sm:text-base font-bold bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent whitespace-nowrap transform group-hover:scale-105 transition-transform duration-300">
+                      Voir 50 écoles +
+                    </span>
+                  )}
                   <div className="h-[2px] flex-1 bg-gradient-to-r from-purple-500 via-blue-500 to-transparent opacity-30 group-hover:opacity-100 transition-all duration-300" />
                 </div>
               </motion.div>
-          }
+            }
 
             {filteredSchools.length > 6 &&
           <div className="mt-8">
