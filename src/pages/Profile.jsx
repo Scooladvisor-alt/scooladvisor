@@ -317,7 +317,7 @@ export default function ProfilePage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}>
 
-          <Card className="bg-white/80 backdrop-blur-sm shadow-xl border-slate-200 mb-8">
+          <Card className="bg-white/80 backdrop-blur-sm shadow-xl border-slate-200 mb-8 relative z-10">
             <CardHeader className="border-b border-slate-100">
               <CardTitle className="tracking-tight text-3xl sm:text-4xl font-bold bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-[#4DA6FF] bg-clip-text text-transparent">Mon Profil
 
@@ -364,7 +364,7 @@ export default function ProfilePage() {
             </CardContent>
           </Card>
 
-          <Card className="bg-white/80 backdrop-blur-sm shadow-xl border-slate-200">
+          <Card className="bg-white/80 backdrop-blur-sm shadow-xl border-slate-200 relative z-10">
             <CardHeader className="border-b border-slate-100">
               <CardTitle className="flex items-center gap-2 text-2xl">
                 <TrendingUp className="w-6 h-6 text-[#FF4D8D]" />
