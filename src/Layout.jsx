@@ -35,6 +35,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import ErrorBoundary from "@/components/shared/ErrorBoundary";
 import SecurityGuard from "@/components/shared/SecurityGuard";
 import FloatingDecoration from "@/components/shared/FloatingDecoration";
+import { prefetchPage } from "@/components/shared/LinkPrefetch";
 
 
 const BanDialog = ({ open, user }) => {
@@ -365,20 +366,25 @@ export default function Layout({ children }) {
             </Link>
 
             <nav className="hidden md:flex items-center gap-1">
-              {navigationItems.map((item) =>
-              <Link
-                key={item.title}
-                to={item.url}
-                className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-200 ${
-                location.pathname === item.url ?
-                'bg-blue-50 text-blue-700 font-medium' :
-                'text-slate-600 hover:bg-slate-50 hover:text-slate-900'}`
-                }>
+              {navigationItems.map((item) => {
+                // Extraire le nom de la page pour le prefetch
+                const pageName = item.url.split('/').pop()?.split('?')[0] || '';
+                return (
+                <Link
+                  key={item.title}
+                  to={item.url}
+                  onMouseEnter={() => prefetchPage(pageName)}
+                  className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-200 ${
+                  location.pathname === item.url ?
+                  'bg-blue-50 text-blue-700 font-medium' :
+                  'text-slate-600 hover:bg-slate-50 hover:text-slate-900'}`
+                  }>
 
-                  <item.icon className="w-4 h-4" />
-                  <span className="text-sm">{item.title}</span>
-                </Link>
-              )}
+                    <item.icon className="w-4 h-4" />
+                    <span className="text-sm">{item.title}</span>
+                  </Link>
+                );
+              })}
 
               {user && (user.role === 'moderator' || user.role === 'admin') &&
               <Link

@@ -26,10 +26,16 @@ const typeColors = {
 export default function SchoolCard({ school, teacherCount }) {
   const hasRating = school.review_count > 0 && school.average_rating > 0;
 
+  // Prefetch au survol
+  const handleMouseEnter = useCallback(() => {
+    prefetchPage('SchoolDetail');
+  }, []);
+
   return (
     <Link 
       to={createPageUrl(`SchoolDetail?id=${school.id}`)} 
       className="block h-full w-full group"
+      onMouseEnter={handleMouseEnter}
     >
       <style>{`
         @keyframes shine {
