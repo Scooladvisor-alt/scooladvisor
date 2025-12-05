@@ -218,7 +218,6 @@ export default function SchoolDetailPage() {
           className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-slate-200 overflow-hidden mb-8">
 
           <div className="relative p-4 sm:p-6 md:p-8">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-[#FF4D8D]/10 via-purple-500/10 to-blue-500/5 rounded-bl-full" />
             
             <div className="relative">
               <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-3 md:gap-6 mb-4 md:mb-6">
