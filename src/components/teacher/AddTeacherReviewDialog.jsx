@@ -297,8 +297,7 @@ Réponds UNIQUEMENT par "approved" ou "rejected".`,
         const moderationResult = await sendToModerationWebhook(tempReviewForModeration, true);
 
         if (moderationResult === 'rejected') {
-          setError("❌ Votre avis ne respecte pas les règles de la communauté.");
-          setLoading(false);
+          setError("❌ Votre message ne respecte pas les règles de la communauté.");
           
           try {
             if (user.email !== 'antownin@gmail.com') {
@@ -322,6 +321,7 @@ Réponds UNIQUEMENT par "approved" ou "rejected".`,
             console.error("Error handling violation:", err);
           }
           
+          setLoading(false);
           return;
         }
 
@@ -412,14 +412,14 @@ Réponds UNIQUEMENT par "approved" ou "rejected".`,
 
     } catch (err) {
       console.error("Error during review submission:", err);
-      setLoading(false);
-      
       if (err.message && err.message.includes("authentication")) {
         setError("Vous devez être connecté pour publier un avis.");
       } else {
-        setError("❌ Erreur technique. Réessayez.");
         toast.error("❌ Erreur technique. Réessayez.");
+        setError("❌ Erreur technique. Réessayez.");
       }
+    } finally {
+      setLoading(false);
     }
   };
 
