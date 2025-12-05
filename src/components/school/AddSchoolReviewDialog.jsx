@@ -294,25 +294,30 @@ Réponds avec un objet JSON contenant:
 
         if (moderationResult.decision === 'rejected') {
           setError(getRejectionMessage(moderationResult.reason));
-          setLoading(false);
+          
+          try {
+            if (user.email !== 'antownin@gmail.com') {
+              const violationCount = (user.violation_count || 0) + 1;
+              await base44.auth.updateMe({ violation_count: violationCount });
 
-          if (user.email !== 'antownin@gmail.com') {
-            const violationCount = (user.violation_count || 0) + 1;
-            await base44.auth.updateMe({ violation_count: violationCount });
+              await base44.entities.Notification.create({
+                user_email: user.email,
+                title: "Modification d'avis refusée",
+                message: `Votre tentative de modification a été refusée par notre modération. ${violationCount >= 3 ? 'Votre compte a été banni.' : `Attention : ${3 - violationCount} avertissement(s) restant(s) avant bannissement.`}`,
+                type: "report",
+                is_read: false
+              });
 
-            await base44.entities.Notification.create({
-              user_email: user.email,
-              title: "Modification d'avis refusée",
-              message: `Votre tentative de modification a été refusée par notre modération. ${violationCount >= 3 ? 'Votre compte a été banni.' : `Attention : ${3 - violationCount} avertissement(s) restant(s) avant bannissement.`}`,
-              type: "report",
-              is_read: false
-            });
-
-            if (violationCount >= 3) {
-              await base44.auth.updateMe({ is_banned: true });
-              setTimeout(() => window.location.reload(), 4000);
+              if (violationCount >= 3) {
+                await base44.auth.updateMe({ is_banned: true });
+                setTimeout(() => window.location.reload(), 4000);
+              }
             }
+          } catch (err) {
+            console.error("Error handling violation:", err);
           }
+          
+          setLoading(false);
           return;
         }
 
@@ -344,28 +349,31 @@ Réponds avec un objet JSON contenant:
         const moderationResult = await sendToModerationWebhook(tempReviewForModeration, false);
 
         if (moderationResult.decision === 'rejected') {
-          if (user.email !== 'antownin@gmail.com') {
-            const violationCount = (user.violation_count || 0) + 1;
-            await base44.auth.updateMe({ violation_count: violationCount });
+          setError(getRejectionMessage(moderationResult.reason));
+          
+          try {
+            if (user.email !== 'antownin@gmail.com') {
+              const violationCount = (user.violation_count || 0) + 1;
+              await base44.auth.updateMe({ violation_count: violationCount });
 
-            await base44.entities.Notification.create({
-              user_email: user.email,
-              title: "Avis refusé et supprimé",
-              message: `Votre avis a été refusé par notre modération car il ne respectait pas nos règles. ${violationCount >= 3 ? 'Votre compte a été banni.' : `Attention : ${3 - violationCount} avertissement(s) restant(s) avant bannissement.`}`,
-              type: "report",
-              is_read: false
-            });
+              await base44.entities.Notification.create({
+                user_email: user.email,
+                title: "Avis refusé et supprimé",
+                message: `Votre avis a été refusé par notre modération car il ne respectait pas nos règles. ${violationCount >= 3 ? 'Votre compte a été banni.' : `Attention : ${3 - violationCount} avertissement(s) restant(s) avant bannissement.`}`,
+                type: "report",
+                is_read: false
+              });
 
-            if (violationCount >= 3) {
-              await base44.auth.updateMe({ is_banned: true });
-              setError(getRejectionMessage(moderationResult.reason) + " Votre compte a été banni.");
-              setTimeout(() => window.location.reload(), 4000);
-            } else {
-              setError(getRejectionMessage(moderationResult.reason));
+              if (violationCount >= 3) {
+                await base44.auth.updateMe({ is_banned: true });
+                setError(getRejectionMessage(moderationResult.reason) + " Votre compte a été banni.");
+                setTimeout(() => window.location.reload(), 4000);
+              }
             }
-          } else {
-            setError(getRejectionMessage(moderationResult.reason));
+          } catch (err) {
+            console.error("Error handling violation:", err);
           }
+          
           setLoading(false);
           return;
         }
@@ -445,7 +453,7 @@ Réponds avec un objet JSON contenant:
             </span>
           </DialogTitle>
           <p className="text-xs sm:text-sm text-slate-600 text-center mt-1">
-            Évaluez votre expérience selon {showStudentLifeBonus ? '5' : '4'} critères <span className="text-blue-600 font-medium">(Soyez bienveillant et constructif)</span>
+            Évaluez votre expérience selon {showStudentLifeBonus ? '5' : '4'} critères
           </p>
         </DialogHeader>
 
@@ -455,13 +463,6 @@ Réponds avec un objet JSON contenant:
             <AlertDescription className="text-green-800 text-xs sm:text-sm">
               Avis publié avec succès !
             </AlertDescription>
-          </Alert>
-        }
-
-        {error &&
-        <Alert variant="destructive" className="text-destructive pt-4 pr-4 pb-4 pl-5 text-sm rounded-lg [&>svg]:top-4 relative w-full border [&>svg+div]:translate-y-[-1px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-1\\n2 [&>svg~*]:pl-7 border-destructive/50 dark:border-destructive [&>svg]:text-destructive">
-            <AlertCircle className="h-4 w-4" />
-            <AlertDescription className="text-xs sm:text-sm">{error}</AlertDescription>
           </Alert>
         }
 
@@ -657,6 +658,13 @@ Réponds avec un objet JSON contenant:
               <strong>Avertissement légal :</strong> Chaque utilisateur est seul responsable de ses propos. Tout contenu diffamatoire, injurieux ou discriminatoire est interdit.
             </AlertDescription>
           </Alert>
+
+          {error &&
+          <Alert variant="destructive" className="text-destructive pt-4 pr-4 pb-4 pl-5 text-sm rounded-lg [&>svg]:top-4 relative w-full border [&>svg+div]:translate-y-[-1px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-1\\n2 [&>svg~*]:pl-7 border-destructive/50 dark:border-destructive [&>svg]:text-destructive">
+            <AlertCircle className="h-4 w-4" />
+            <AlertDescription className="text-xs sm:text-sm">{error}</AlertDescription>
+          </Alert>
+          }
 
           <DialogFooter>
             <Button type="submit" disabled={submitButtonDisabled} className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 text-primary-foreground px-4 py-2 w-full bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 disabled:bg-slate-300 text-white text-xs sm:text-base h-9 sm:h-10 shadow-md">

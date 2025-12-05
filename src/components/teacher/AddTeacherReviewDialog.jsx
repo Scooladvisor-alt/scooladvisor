@@ -298,25 +298,30 @@ Réponds UNIQUEMENT par "approved" ou "rejected".`,
 
         if (moderationResult === 'rejected') {
           setError("❌ Votre message ne respecte pas les règles de la communauté.");
-          setLoading(false);
+          
+          try {
+            if (user.email !== 'antownin@gmail.com') {
+              const violationCount = (user.violation_count || 0) + 1;
+              await base44.auth.updateMe({ violation_count: violationCount });
 
-          if (user.email !== 'antownin@gmail.com') {
-            const violationCount = (user.violation_count || 0) + 1;
-            await base44.auth.updateMe({ violation_count: violationCount });
+              await base44.entities.Notification.create({
+                user_email: user.email,
+                title: "Modification d'avis refusée",
+                message: `Votre tentative de modification a été refusée par notre modération. ${violationCount >= 3 ? 'Votre compte a été banni.' : `Attention : ${3 - violationCount} avertissement(s) restant(s) avant bannissement.`}`,
+                type: "report",
+                is_read: false
+              });
 
-            await base44.entities.Notification.create({
-              user_email: user.email,
-              title: "Modification d'avis refusée",
-              message: `Votre tentative de modification a été refusée par notre modération. ${violationCount >= 3 ? 'Votre compte a été banni.' : `Attention : ${3 - violationCount} avertissement(s) restant(s) avant bannissement.`}`,
-              type: "report",
-              is_read: false
-            });
-
-            if (violationCount >= 3) {
-              await base44.auth.updateMe({ is_banned: true });
-              setTimeout(() => window.location.reload(), 4000);
+              if (violationCount >= 3) {
+                await base44.auth.updateMe({ is_banned: true });
+                setTimeout(() => window.location.reload(), 4000);
+              }
             }
+          } catch (err) {
+            console.error("Error handling violation:", err);
           }
+          
+          setLoading(false);
           return;
         }
 
@@ -431,7 +436,7 @@ Réponds UNIQUEMENT par "approved" ou "rejected".`,
             </span>
           </DialogTitle>
           <p className="text-xs sm:text-sm text-slate-600">
-            Évaluez ce professeur selon 4 critères <span className="text-blue-600 font-medium">(Soyez bienveillant et constructif)</span>
+            Évaluez ce professeur selon 4 critères
           </p>
         </DialogHeader>
 
@@ -441,13 +446,6 @@ Réponds UNIQUEMENT par "approved" ou "rejected".`,
             <AlertDescription className="text-green-800 text-xs sm:text-sm">
               Avis publié avec succès !
             </AlertDescription>
-          </Alert>
-        }
-
-        {error &&
-        <Alert variant="destructive">
-            <AlertCircle className="h-4 w-4" />
-            <AlertDescription className="text-xs sm:text-sm">{error}</AlertDescription>
           </Alert>
         }
 
@@ -601,6 +599,13 @@ Réponds UNIQUEMENT par "approved" ou "rejected".`,
               <strong>Avertissement légal :</strong> Les propos diffamatoires, injurieux ou discriminatoires sont interdits et punissables par la loi.
             </AlertDescription>
           </Alert>
+
+          {error &&
+          <Alert variant="destructive">
+            <AlertCircle className="h-4 w-4" />
+            <AlertDescription className="text-xs sm:text-sm">{error}</AlertDescription>
+          </Alert>
+          }
 
           <DialogFooter>
             <Button
