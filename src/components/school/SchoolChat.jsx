@@ -350,10 +350,10 @@ Si la décision est "approved", la "reason" doit être null.`,
 
     if (decision === 'rejected') {
       toast.error("❌ Votre message ne respecte pas les règles de la communauté.", { duration: 5000 });
+      setPostLoading(false);
       const currentUser = await base44.auth.me();
       const violationCount = (currentUser.violation_count || 0) + 1;
       await base44.auth.updateMe({ violation_count: violationCount });
-      setPostLoading(false);
       return;
     }
 
@@ -376,10 +376,10 @@ Si la décision est "approved", la "reason" doit être null.`,
       setIsAnonymous(false);
       setShowDialog(false);
       loadMessages();
-      toast.success("Message publié ! 🎉");
+      toast.success("✅ Message publié !");
     } catch (error) {
       console.error('Error publishing message:', error);
-      toast.error("Erreur lors de la publication du message.");
+      toast.error("❌ Erreur technique. Réessayez.");
     } finally {
       setPostLoading(false);
     }
@@ -406,7 +406,7 @@ Si la décision est "approved", la "reason" doit être null.`,
     const { decision, reason } = moderationResult;
 
     if (decision === 'rejected') {
-      toast.error(`Ta modification a été refusée par la modération stricte. Raison : ${reason || 'Inconnue'}. Merci de rester respectueux et constructif.`);
+      toast.error("❌ Votre message ne respecte pas les règles de la communauté.");
       setPostLoading(false);
       setEditingMessageId(null);
       setEditedContent("");
@@ -422,9 +422,9 @@ Si la décision est "approved", la "reason" doit être null.`,
       setEditingMessageId(null);
       setEditedContent("");
       loadMessages();
-      toast.success("Message modifié !");
+      toast.success("✅ Message modifié !");
     } catch (error) {
-      toast.error("Erreur lors de la modification.");
+      toast.error("❌ Erreur technique. Réessayez.");
     } finally {
       setPostLoading(false);
     }

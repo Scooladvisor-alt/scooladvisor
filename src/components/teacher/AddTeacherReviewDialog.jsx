@@ -297,7 +297,7 @@ Réponds UNIQUEMENT par "approved" ou "rejected".`,
         const moderationResult = await sendToModerationWebhook(tempReviewForModeration, true);
 
         if (moderationResult === 'rejected') {
-          setError("Votre modification contient du contenu inapproprié et a été refusée par la modération. Votre avis original n'a pas été modifié.");
+          setError("❌ Votre message ne respecte pas les règles de la communauté.");
           setLoading(false);
 
           if (user.email !== 'antownin@gmail.com') {
@@ -399,7 +399,7 @@ Réponds UNIQUEMENT par "approved" ou "rejected".`,
 
       await updateTeacherStats(teacherId);
       setSuccess(true);
-      toast.success("Avis publié avec succès !");
+      toast.success("✅ Avis publié !");
       setTimeout(() => {
         onSuccess();
         onOpenChange(false);
@@ -410,8 +410,8 @@ Réponds UNIQUEMENT par "approved" ou "rejected".`,
       if (err.message && err.message.includes("authentication")) {
         setError("Vous devez être connecté pour publier un avis.");
       } else {
-        toast.error("Erreur lors de l'enregistrement de l'avis");
-        setError("Erreur lors de l'enregistrement de l'avis");
+        toast.error("❌ Erreur technique. Réessayez.");
+        setError("❌ Erreur technique. Réessayez.");
       }
     } finally {
       setLoading(false);
