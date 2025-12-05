@@ -192,7 +192,7 @@ Si la décision est "approved", "reason" peut être vide ou null.`,
     const moderationResponse = await sendToModerationWebhook(formattedMessage);
 
     if (moderationResponse.decision === 'rejected') {
-      toast.error("Votre avis ne respecte pas nos règles de modération.");
+      toast.error("❌ Votre message ne respecte pas les règles de la communauté.", { duration: 5000 });
       const violationCount = (user.violation_count || 0) + 1;
       await base44.auth.updateMe({ violation_count: violationCount });
       setNewMessage("");
@@ -427,23 +427,25 @@ Si la décision est "approved", "reason" peut être vide ou null.`,
                 </div>
               </div>
 
-              {user &&
-              <div className="flex items-center space-x-2">
-                  <Checkbox
-                  id="anonymous_national"
-                  checked={isAnonymous}
-                  onCheckedChange={setIsAnonymous} />
+              <div className="flex items-center justify-between">
+                {user &&
+                <div className="flex items-center space-x-2">
+                    <Checkbox
+                    id="anonymous_national"
+                    checked={isAnonymous}
+                    onCheckedChange={setIsAnonymous} />
 
-                  <Label htmlFor="anonymous_national" className="text-xs sm:text-sm cursor-pointer">
-                    Poster en anonyme 🕵️‍♂️
-                  </Label>
-                </div>
-              }
+                    <Label htmlFor="anonymous_national" className="text-xs sm:text-sm cursor-pointer">
+                      Poster en anonyme 🕵️‍♂️
+                    </Label>
+                  </div>
+                }
+                {!user && <div />}
 
-              <div className="flex justify-end gap-2 sm:gap-3">
-                <Button variant="ghost" onClick={() => setShowDialog(false)} size="sm" className="text-xs sm:text-base">
-                  Annuler
-                </Button>
+                <div className="flex gap-2 sm:gap-3">
+                  <Button variant="ghost" onClick={() => setShowDialog(false)} size="sm" className="text-xs sm:text-base">
+                    Annuler
+                  </Button>
                 {user ?
                 <Button
                   onClick={handlePublish}
@@ -456,19 +458,20 @@ Si la décision est "approved", "reason" peut être vide ou null.`,
                   </Button> :
 
                 <Button
-                  onClick={() => base44.auth.redirectToLogin(window.location.href)}
-                  className="bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:opacity-90 text-xs sm:text-base"
-                  size="sm">
+                    onClick={() => base44.auth.redirectToLogin(window.location.href)}
+                    className="bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:opacity-90 text-xs sm:text-base"
+                    size="sm">
 
                     <Send className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
                     Connecte-toi pour publier
                   </Button>
                 }
-              </div>
-            </div>
-          </div>
-        </DialogContent>
-      </Dialog>
+                </div>
+                </div>
+                </div>
+                </div>
+                </DialogContent>
+                </Dialog>
 
       <Dialog open={showReportDialog} onOpenChange={setShowReportDialog}>
         <DialogContent>
