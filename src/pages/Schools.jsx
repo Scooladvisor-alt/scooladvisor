@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, lazy, Suspense, useMemo } from "react";
 import { base44 } from "@/api/base44Client";
 import { motion } from "framer-motion";
 import { Plus, Search, Filter, TrendingUp, ArrowRight, Globe, Loader2 } from "lucide-react";
@@ -20,15 +20,23 @@ import {
   DialogTitle } from
 "@/components/ui/dialog";
 import SchoolCard from "../components/schools/SchoolCard";
-import AddSchoolDialog from "../components/schools/AddSchoolDialog";
-import NationalChatWidget from "../components/shared/NationalChatWidget";
 import { useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/utils";
 import SEO from "@/components/shared/SEO";
+import { usePrefetchOnIdle, prefetchPage } from "@/components/shared/LinkPrefetch";
+import { getCacheKey, getFromCache, setInCache } from "@/components/shared/DataCache";
+
+// Lazy load des composants lourds
+const AddSchoolDialog = lazy(() => import("../components/schools/AddSchoolDialog"));
+const NationalChatWidget = lazy(() => import("../components/shared/NationalChatWidget"));
 
 export default function SchoolsPage() {
   const navigate = useNavigate();
-  const [schools, setSchools] = useState([]);
+  const [schools, setSchools] = useState(() => {
+    // Initialiser depuis le cache si disponible
+    const cached = getFromCache(getCacheKey('schools', { initial: true }));
+    return cached || [];
+  });
   const [teachers, setTeachers] = useState([]);
   const [teacherCounts, setTeacherCounts] = useState({});
   const [filteredSchools, setFilteredSchools] = useState([]);
@@ -36,7 +44,7 @@ export default function SchoolsPage() {
   const [displayCount, setDisplayCount] = useState(6);
   const [loadingMore, setLoadingMore] = useState(false);
   const [allSchoolsLoaded, setAllSchoolsLoaded] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(() => !getFromCache(getCacheKey('schools', { initial: true })));
   const [user, setUser] = useState(null);
   const [showAddDialog, setShowAddDialog] = useState(false);
   const [showTeacherRoom, setShowTeacherRoom] = useState(false);
@@ -47,6 +55,9 @@ export default function SchoolsPage() {
 
   const [teacherSearchTerm, setTeacherSearchTerm] = useState("");
   const [teacherSuggestions, setTeacherSuggestions] = useState([]);
+
+  // Prefetch des pages critiques en idle
+  usePrefetchOnIdle(['SchoolDetail', 'TeacherDetail', 'Profile']);
 
   useEffect(() => {
     loadData();
@@ -87,25 +98,39 @@ export default function SchoolsPage() {
     }
 
     try {
-      // Charger les 50 premiers établissements initialement pour affichage rapide
-      const initialSchools = await base44.entities.School.list("-average_rating", 50);
+      // Vérifier le cache d'abord
+      const cacheKey = getCacheKey('schools', { initial: true });
+      const cached = getFromCache(cacheKey);
       
-      const uniqueSchools = [];
-      const seenNames = new Set();
+      if (cached && cached.length > 0) {
+        setSchools(cached);
+        setAllSchoolsLoaded(cached.length < 50);
+        // Rafraîchir en arrière-plan
+        loadTeacherCounts();
+      } else {
+        // Charger les 50 premiers établissements initialement pour affichage rapide
+        const initialSchools = await base44.entities.School.list("-average_rating", 50);
+        
+        const uniqueSchools = [];
+        const seenNames = new Set();
 
-      for (const school of initialSchools) {
-        const normalizedName = normalizeString(school.name);
-        if (!seenNames.has(normalizedName)) {
-          seenNames.add(normalizedName);
-          uniqueSchools.push(school);
+        for (const school of initialSchools) {
+          const normalizedName = normalizeString(school.name);
+          if (!seenNames.has(normalizedName)) {
+            seenNames.add(normalizedName);
+            uniqueSchools.push(school);
+          }
         }
-      }
 
-      setSchools(uniqueSchools);
-      setAllSchoolsLoaded(initialSchools.length < 50);
-      
-      // Charger les counts en arrière-plan après l'affichage initial
-      loadTeacherCounts();
+        setSchools(uniqueSchools);
+        setAllSchoolsLoaded(initialSchools.length < 50);
+        
+        // Mettre en cache
+        setInCache(cacheKey, uniqueSchools, 'schools');
+        
+        // Charger les counts en arrière-plan après l'affichage initial
+        loadTeacherCounts();
+      }
     } catch (error) {
       console.error("Error loading data:", error);
       setSchools([]);
@@ -597,17 +622,21 @@ export default function SchoolsPage() {
 
             {filteredSchools.length > 6 &&
           <div className="mt-8">
-                <NationalChatWidget isHomePage={true} />
+                <Suspense fallback={<div className="h-24 bg-gradient-to-r from-pink-100 to-purple-100 rounded-xl animate-pulse" />}>
+                  <NationalChatWidget isHomePage={true} />
+                </Suspense>
               </div>
           }
           </>
         }
       </div>
 
-      <AddSchoolDialog
-        open={showAddDialog}
-        onOpenChange={setShowAddDialog}
-        onSuccess={loadData} />
+      <Suspense fallback={null}>
+        <AddSchoolDialog
+          open={showAddDialog}
+          onOpenChange={setShowAddDialog}
+          onSuccess={loadData} />
+      </Suspense>
 
 
       <Dialog open={showTeacherRoom} onOpenChange={setShowTeacherRoom}>

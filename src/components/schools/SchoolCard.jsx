@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { Link } from "react-router-dom";
+import { prefetchPage } from "@/components/shared/LinkPrefetch";
 import { createPageUrl } from "@/utils";
 import { MapPin, Star, MessageSquare, Users, Globe } from "lucide-react"; 
 import { Badge } from "@/components/ui/badge";
