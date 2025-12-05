@@ -531,7 +531,7 @@ Si la décision est "approved", la "reason" doit être null.`,
             <DialogTitle className="text-xl sm:text-2xl font-bold flex items-center gap-2">
               <MessageSquare className="w-5 h-5 sm:w-6 sm:h-6" style={{ stroke: "url(#chat-gradient)" }} />
               <span className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
-                Chat Général et souvenirs de l'Établissement
+                Chat Général de l'École
               </span>
               <span>💌</span>
             </DialogTitle>
