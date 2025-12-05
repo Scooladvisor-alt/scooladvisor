@@ -166,18 +166,6 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
     }
 
     try {
-      if (showCustomSubject) {
-        // Check duplicates for subject
-        const existingSubject = await base44.entities.CustomSubject.filter({ subject_name: cleanSubject });
-        if (existingSubject.length === 0) {
-            await base44.entities.CustomSubject.create({
-            subject_name: cleanSubject,
-            proposed_by: limitCheck.userEmail,
-            status: "pending"
-            });
-        }
-      }
-
       const tempTeacher = {
         name: cleanName,
         subject: cleanSubject,
