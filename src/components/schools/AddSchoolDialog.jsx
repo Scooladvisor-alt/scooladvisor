@@ -166,7 +166,8 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
         setFormData({ name: "", type: "lycee", address: "", city: "" });
         setSuccess(false);
         onOpenChange(false);
-        onSuccess();
+        // Force le rechargement pour afficher immédiatement le nouvel établissement
+        window.location.reload();
       }, 1500);
     } catch (err) {
       console.error("Error creating school:", err);

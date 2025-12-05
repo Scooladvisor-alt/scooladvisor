@@ -274,7 +274,7 @@ Réponds UNIQUEMENT par "approved" ou "rejected".`,
         const moderationResult = await sendToModerationWebhook(tempReviewForModeration, true);
 
         if (moderationResult === 'rejected') {
-          setError("Votre avis ne respecte pas nos règles de modération.");
+          setError("❌ Votre message ne respecte pas les règles de la communauté.");
           setLoading(false);
 
           if (user.email !== 'antownin@gmail.com') {
@@ -339,13 +339,13 @@ Réponds UNIQUEMENT par "approved" ou "rejected".`,
 
             if (violationCount >= 3) {
               await base44.auth.updateMe({ is_banned: true });
-              setError("Votre avis ne respecte pas nos règles de modération. Votre compte a été banni.");
+              setError("❌ Votre message ne respecte pas les règles de la communauté. Votre compte a été banni.");
               setTimeout(() => window.location.reload(), 4000);
             } else {
-              setError("Votre avis ne respecte pas nos règles de modération.");
+              setError("❌ Votre message ne respecte pas les règles de la communauté.");
             }
           } else {
-            setError("Votre avis ne respecte pas nos règles de modération.");
+            setError("❌ Votre message ne respecte pas les règles de la communauté.");
           }
           setLoading(false);
           return;
