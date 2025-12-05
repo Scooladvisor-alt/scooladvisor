@@ -324,13 +324,13 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
           <div className="space-y-1 sm:space-y-2">
             <Label className="text-xs sm:text-sm">Avatar du professeur</Label>
             <div className="w-full bg-slate-50 rounded-lg p-2 sm:p-3 border border-slate-200">
-              <div className="grid grid-cols-5 gap-1.5 sm:gap-2">
+              <div className="grid grid-cols-5 gap-1.5 sm:gap-3">
                 {displayedAvatars.map((avatar) =>
                 <button
                   key={avatar.id}
                   type="button"
                   onClick={() => setFormData({ ...formData, photo_url: avatar.url })}
-                  className={`p-1 sm:p-1.5 rounded-lg border-2 transition-all ${
+                  className={`p-1 sm:p-2 rounded-lg border-2 transition-all ${
                   formData.photo_url === avatar.url ?
                   'border-blue-600 bg-blue-50 shadow-md' :
                   'border-slate-200 hover:border-blue-300 bg-white'}`
@@ -339,7 +339,7 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
                     <img
                     src={avatar.url}
                     alt={avatar.name}
-                    className="w-full h-12 sm:h-16 object-cover rounded-md" />
+                    className="w-full h-12 sm:h-24 md:h-28 object-contain rounded-md" />
 
                   </button>
                 )}
