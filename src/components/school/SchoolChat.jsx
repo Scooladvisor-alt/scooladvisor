@@ -533,7 +533,6 @@ Si la décision est "approved", la "reason" doit être null.`,
               <span className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
                 Chat Général et souvenirs de l'Établissement
               </span>
-              <span>💌</span>
             </DialogTitle>
           </DialogHeader>
 
