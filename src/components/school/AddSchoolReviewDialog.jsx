@@ -131,7 +131,7 @@ export default function AddSchoolReviewDialog({ open, onOpenChange, schoolId, ex
 
   const sendToModerationWebhook = async (reviewData, isEdit = false) => {
     const user = await base44.auth.me();
-    if (user.email === 'antownin@gmail.com') return 'approved';
+    if (user.email === 'antownin@gmail.com') return { decision: 'approved', reason: null };
 
     try {
       const moderationResult = await base44.integrations.Core.InvokeLLM({
@@ -167,20 +167,39 @@ En cas de doute léger sur une formulation maladroite mais sans malveillance app
 En cas de doute sur une attaque déguisée, rejette.
 
 📊 Décision requise :
-Réponds UNIQUEMENT par "approved" ou "rejected".`,
+Réponds avec un objet JSON contenant:
+- decision: "approved" ou "rejected"
+- reason: Si rejected, indique la raison parmi: "insulte", "discrimination", "diffamation", "harcelement", "contenu_inapproprie", "spam"`,
         response_json_schema: {
           type: "object",
           properties: {
-            decision: { type: "string", enum: ["approved", "rejected"] }
-          }
+            decision: { type: "string", enum: ["approved", "rejected"] },
+            reason: { type: "string", enum: ["insulte", "discrimination", "diffamation", "harcelement", "contenu_inapproprie", "spam"] }
+          },
+          required: ["decision"]
         }
       });
 
-      return moderationResult.decision === 'rejected' ? 'rejected' : 'approved';
+      return {
+        decision: moderationResult.decision === 'rejected' ? 'rejected' : 'approved',
+        reason: moderationResult.reason || null
+      };
     } catch (error) {
       console.error("Error in moderation:", error);
-      return 'approved';
+      return { decision: 'approved', reason: null };
     }
+  };
+
+  const getRejectionMessage = (reason) => {
+    const messages = {
+      insulte: "❌ Votre avis contient des propos injurieux ou vulgaires.",
+      discrimination: "❌ Votre avis contient des propos discriminatoires.",
+      diffamation: "❌ Votre avis porte atteinte à la réputation d'une personne.",
+      harcelement: "❌ Votre avis contient des propos relevant du harcèlement.",
+      contenu_inapproprie: "❌ Votre avis contient du contenu inapproprié.",
+      spam: "❌ Votre avis a été détecté comme du spam."
+    };
+    return messages[reason] || "❌ Votre avis ne respecte pas les règles de la communauté.";
   };
 
   const checkSchoolLimit = async (user) => {
@@ -273,8 +292,8 @@ Réponds UNIQUEMENT par "approved" ou "rejected".`,
         const tempReviewForModeration = { comment: formData.comment };
         const moderationResult = await sendToModerationWebhook(tempReviewForModeration, true);
 
-        if (moderationResult === 'rejected') {
-          setError("❌ Votre message ne respecte pas les règles de la communauté.");
+        if (moderationResult.decision === 'rejected') {
+          setError(getRejectionMessage(moderationResult.reason));
           setLoading(false);
 
           if (user.email !== 'antownin@gmail.com') {
@@ -324,7 +343,7 @@ Réponds UNIQUEMENT par "approved" ou "rejected".`,
         const tempReviewForModeration = { comment: formData.comment };
         const moderationResult = await sendToModerationWebhook(tempReviewForModeration, false);
 
-        if (moderationResult === 'rejected') {
+        if (moderationResult.decision === 'rejected') {
           if (user.email !== 'antownin@gmail.com') {
             const violationCount = (user.violation_count || 0) + 1;
             await base44.auth.updateMe({ violation_count: violationCount });
@@ -339,13 +358,13 @@ Réponds UNIQUEMENT par "approved" ou "rejected".`,
 
             if (violationCount >= 3) {
               await base44.auth.updateMe({ is_banned: true });
-              setError("❌ Votre message ne respecte pas les règles de la communauté. Votre compte a été banni.");
+              setError(getRejectionMessage(moderationResult.reason) + " Votre compte a été banni.");
               setTimeout(() => window.location.reload(), 4000);
             } else {
-              setError("❌ Votre message ne respecte pas les règles de la communauté.");
+              setError(getRejectionMessage(moderationResult.reason));
             }
           } else {
-            setError("❌ Votre message ne respecte pas les règles de la communauté.");
+            setError(getRejectionMessage(moderationResult.reason));
           }
           setLoading(false);
           return;
@@ -406,9 +425,9 @@ Réponds UNIQUEMENT par "approved" ou "rejected".`,
 
   const criteria = [
   { key: "ambiance", label: "Ambiance générale", icon: Heart, color: "text-pink-600", description: "C'est la famille ?", gradient: "bg-gradient-to-r from-pink-50 to-rose-100", sliderClass: "slider-pink" },
-  { key: "staff_quality", label: "Qualité du personnel", icon: Users, color: "text-blue-600", description: "Administration, surveillants, professeurs, encadrement...", gradient: "bg-gradient-to-r from-blue-50 to-cyan-100", sliderClass: "slider-blue" },
-  { key: "facilities", label: "Locaux", icon: Building2, color: "text-purple-600", description: "Architecture, propreté, confort des espaces intérieurs et extérieurs, équipements sportifs et numériques.", gradient: "bg-gradient-to-r from-purple-50 to-indigo-100", sliderClass: "slider-purple" },
-  { key: "cafeteria", label: "Cantine / Restauration", icon: Utensils, color: "text-orange-600", description: "Qualité des repas, choix des menus, tarifs, confort de l'espace.", gradient: "bg-gradient-to-r from-orange-50 to-amber-100", sliderClass: "slider-orange" }];
+  { key: "staff_quality", label: "Qualité du personnel", icon: Users, color: "text-blue-600", description: "Administration, surveillants, profs...", gradient: "bg-gradient-to-r from-blue-50 to-cyan-100", sliderClass: "slider-blue" },
+  { key: "facilities", label: "Locaux", icon: Building2, color: "text-purple-600", description: "Architecture, propreté, équipements...", gradient: "bg-gradient-to-r from-purple-50 to-indigo-100", sliderClass: "slider-purple" },
+  { key: "cafeteria", label: "Cantine", icon: Utensils, color: "text-orange-600", description: "Qualité des repas, choix...", gradient: "bg-gradient-to-r from-orange-50 to-amber-100", sliderClass: "slider-orange" }];
 
 
   const showStudentLifeBonus = school && (school.type === 'ecole_commerce' || school.type === 'universite' || school.type === 'ecole_ingenieur');
@@ -419,13 +438,13 @@ Réponds UNIQUEMENT par "approved" ou "rejected".`,
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-[95vw] sm:max-w-4xl max-h-[90vh] overflow-y-auto rounded-2xl">
-        <DialogHeader>
-          <DialogTitle className="text-lg sm:text-2xl font-bold">
+        <DialogHeader className="text-center pb-2">
+          <DialogTitle className="text-lg sm:text-2xl font-bold text-center">
             <span className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
               {existingReview ? "Modifier mon avis" : "Noter l'établissement"}
             </span>
           </DialogTitle>
-          <p className="text-xs sm:text-sm text-slate-600">
+          <p className="text-xs sm:text-sm text-slate-600 text-center mt-1">
             Évaluez votre expérience selon {showStudentLifeBonus ? '5' : '4'} critères <span className="text-blue-600 font-medium">(Soyez bienveillant et constructif)</span>
           </p>
         </DialogHeader>
@@ -469,37 +488,37 @@ Réponds UNIQUEMENT par "approved" ou "rejected".`,
               return (
                 <div
                   key={key}
-                  className={`rounded-lg p-3 sm:p-4 border border-slate-200 transition-all duration-500 relative overflow-hidden ${
+                  className={`rounded-lg p-2 sm:p-3 border border-slate-200 transition-all duration-500 relative overflow-hidden ${
                   isMax ? gradient : 'bg-slate-50'} ${
                   isFlashing ? 'animate-widget-shine ring-2 ring-offset-2 ring-offset-white ring-yellow-400' : ''}`}>
 
-                  <div className="flex items-center gap-2 mb-1 sm:mb-2 relative z-10">
-                    <Icon className={`w-4 h-4 sm:w-5 sm:h-5 ${color}`} />
-                    <Label className="font-semibold text-xs sm:text-sm">{label}</Label>
+                  <div className="flex items-center justify-between gap-2 relative z-10">
+                    <div className="flex items-center gap-2 flex-1 min-w-0">
+                      <Icon className={`w-4 h-4 flex-shrink-0 ${color}`} />
+                      <div className="min-w-0">
+                        <Label className="font-semibold text-xs sm:text-sm block">{label}</Label>
+                        <p className="text-[9px] sm:text-[10px] text-slate-500 truncate">{description}</p>
+                      </div>
+                    </div>
+                    <div className={`flex items-center gap-0.5 px-2 py-1 rounded-md border min-w-[45px] justify-center transition-colors duration-300 ${isMax ? 'bg-white/80 border-transparent shadow-sm' : 'bg-white border-slate-200'}`}>
+                      <span className={`text-sm sm:text-base font-bold ${isMax ? 'text-slate-900' : 'text-slate-900'}`}>{formData[key].toFixed(2).replace(/[.,]00$/, "")}</span>
+                      <span className="text-[9px] sm:text-xs text-slate-500">/5</span>
+                    </div>
                   </div>
-                  <p className="text-[10px] sm:text-xs text-slate-600 mb-2 sm:mb-3 relative z-10">{description}</p>
-                  <div className="flex items-center gap-3 sm:gap-4 relative z-10">
-                    <div className={sliderClass + " flex-1"}>
-                      <Slider
-                        value={[formData[key]]}
-                        onValueChange={([value]) => {
-                          setFormData({ ...formData, [key]: value });
-                          if (value === 5 && formData[key] !== 5) {
-                            setFlashingWidgets((prev) => ({ ...prev, [key]: true }));
-                            setTimeout(() => setFlashingWidgets((prev) => ({ ...prev, [key]: false })), 500);
-                          }
-                        }}
-                        min={0}
-                        max={5}
-                        step={0.25}
-                        disabled={!canEdit} />
-
-                    </div>
-
-                    <div className={`flex items-center gap-1 px-2 py-1 sm:px-3 sm:py-1.5 rounded-lg border min-w-[50px] sm:min-w-[60px] justify-center transition-colors duration-300 ${isMax ? 'bg-white/80 border-transparent shadow-sm' : 'bg-white border-slate-200'}`}>
-                      <span className={`text-base sm:text-xl font-bold transition-colors ${isMax ? 'text-slate-900' : 'text-slate-900'}`}>{formData[key].toFixed(2).replace(/[.,]00$/, "")}</span>
-                      <span className="text-[10px] sm:text-sm text-slate-500">/5</span>
-                    </div>
+                  <div className={sliderClass + " mt-2 relative z-10"}>
+                    <Slider
+                      value={[formData[key]]}
+                      onValueChange={([value]) => {
+                        setFormData({ ...formData, [key]: value });
+                        if (value === 5 && formData[key] !== 5) {
+                          setFlashingWidgets((prev) => ({ ...prev, [key]: true }));
+                          setTimeout(() => setFlashingWidgets((prev) => ({ ...prev, [key]: false })), 500);
+                        }
+                      }}
+                      min={0}
+                      max={5}
+                      step={0.25}
+                      disabled={!canEdit} />
                   </div>
                 </div>);
 
@@ -577,49 +596,40 @@ Réponds UNIQUEMENT par "approved" ou "rejected".`,
             <Label htmlFor="comment" className="text-sm sm:text-base">
               Appréciation générale *
             </Label>
-            <Textarea
-              id="comment"
-              value={formData.comment}
-              onChange={(e) => {
-                const text = e.target.value;
-                if (text.length <= MAX_COMMENT_LENGTH) {
-                  setFormData({ ...formData, comment: text });
-                }
-              }}
-              placeholder="Décris ton expérience dans cet établissement (ambiance, locaux, staff...)"
-              rows={4}
-              className="text-sm sm:text-base"
-              disabled={!canEdit} />
-
-            <div className="flex justify-between text-[10px] text-slate-400">
-              <span>
-                {formData.comment.length} / {MAX_COMMENT_LENGTH} caractères 
-                <span className="ml-1">(minimum 10)</span>
-              </span>
-              {formData.comment.length >= MAX_COMMENT_LENGTH &&
-              <span className="text-red-600 font-medium">Limite atteinte !</span>
-              }
-            </div>
-          </div>
-          
-          <div className="flex items-start space-x-3 p-2 sm:p-3 rounded-lg bg-blue-50 border border-blue-200">
-             <Checkbox
-              id="is_anonymous"
-              checked={formData.is_anonymous}
-              onCheckedChange={(checked) => setFormData({ ...formData, is_anonymous: checked })}
-              className="mt-0.5"
-              disabled={!canEdit} />
-
-            <div className="grid gap-1.5 leading-none">
-              <label
-                htmlFor="is_anonymous"
-                className="text-xs sm:text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-
-                Publier en anonyme
-              </label>
-              <p className="text-[10px] sm:text-xs text-slate-500">
-                Votre nom d'utilisateur ne sera pas affiché publiquement.
-              </p>
+            <div className="relative">
+              <Textarea
+                id="comment"
+                value={formData.comment}
+                onChange={(e) => {
+                  const text = e.target.value;
+                  if (text.length <= MAX_COMMENT_LENGTH) {
+                    setFormData({ ...formData, comment: text });
+                  }
+                }}
+                placeholder="Décris ton expérience dans cet établissement (ambiance, locaux, staff...)"
+                rows={4}
+                className="text-sm sm:text-base pb-10"
+                disabled={!canEdit} />
+              
+              <div className="absolute bottom-2 left-3 right-3 flex items-center justify-between">
+                <label 
+                  htmlFor="is_anonymous_inline"
+                  className="flex items-center gap-1.5 cursor-pointer group"
+                >
+                  <Checkbox
+                    id="is_anonymous_inline"
+                    checked={formData.is_anonymous}
+                    onCheckedChange={(checked) => setFormData({ ...formData, is_anonymous: checked })}
+                    className="h-3.5 w-3.5"
+                    disabled={!canEdit} />
+                  <span className="text-[10px] sm:text-xs text-slate-400 group-hover:text-slate-600 transition-colors">
+                    Anonyme {formData.is_anonymous && <span className="text-blue-500">✓</span>}
+                  </span>
+                </label>
+                <span className={`text-[10px] ${formData.comment.length >= MAX_COMMENT_LENGTH ? 'text-red-500 font-medium' : 'text-slate-400'}`}>
+                  {formData.comment.length}/{MAX_COMMENT_LENGTH}
+                </span>
+              </div>
             </div>
           </div>
           
