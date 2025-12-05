@@ -383,7 +383,7 @@ Réponds UNIQUEMENT par "approved" ou "rejected".`,
       if (err.message && err.message.includes("authentication")) {
         setError("Vous devez être connecté pour publier un avis.");
       } else {
-        setError("Erreur lors de l'enregistrement de l'avis.");
+        setError("❌ Erreur technique lors de l'enregistrement de l'avis. Réessayez.");
       }
     } finally {
       setLoading(false);
