@@ -42,6 +42,7 @@ export default function SchoolsPage() {
   const [user, setUser] = useState(null);
   const [showAddDialog, setShowAddDialog] = useState(false);
   const [showTeacherRoom, setShowTeacherRoom] = useState(false);
+  const [totalSchoolCount, setTotalSchoolCount] = useState(0);
 
   const [searchTerm, setSearchTerm] = useState("");
   const [typeFilter, setTypeFilter] = useState("all");
@@ -106,6 +107,9 @@ export default function SchoolsPage() {
       setSchools(uniqueSchools);
       setAllSchoolsLoaded(initialSchools.length < 50);
       
+      // Charger le nombre total d'établissements en arrière-plan
+      loadTotalSchoolCount();
+      
       // Charger les counts en arrière-plan après l'affichage initial
       loadTeacherCounts();
     } catch (error) {
@@ -114,6 +118,23 @@ export default function SchoolsPage() {
     }
 
     setLoading(false);
+  };
+
+  const loadTotalSchoolCount = async () => {
+    try {
+      const allSchools = await base44.entities.School.list();
+      const activeSchools = allSchools.filter(s => !s.is_deleted);
+      const uniqueSchools = new Set();
+      
+      for (const school of activeSchools) {
+        const normalizedName = normalizeString(school.name);
+        uniqueSchools.add(normalizedName);
+      }
+      
+      setTotalSchoolCount(uniqueSchools.size);
+    } catch (error) {
+      console.error("Error loading total school count:", error);
+    }
   };
 
   const loadTeacherCounts = async () => {
@@ -455,7 +476,7 @@ export default function SchoolsPage() {
             <div className="flex items-center justify-between gap-3 pt-3 border-t border-slate-100 mt-3">
               <div className="flex items-center gap-1 sm:gap-1.5 text-[10px] sm:text-sm text-slate-600">
                 <Filter className="w-3 h-3 sm:w-4 sm:h-4" />
-                <span>{schools.length} établissement(s) au total</span>
+                <span>{totalSchoolCount > 0 ? totalSchoolCount : schools.length} établissement(s) au total</span>
               </div>
 
               <div className="flex sm:hidden items-center space-x-2 whitespace-nowrap">
