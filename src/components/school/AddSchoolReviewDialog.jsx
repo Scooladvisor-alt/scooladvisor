@@ -457,14 +457,7 @@ Réponds avec un objet JSON contenant:
           </p>
         </DialogHeader>
 
-        {success &&
-        <Alert className="bg-green-50 border-green-200">
-            <CheckCircle className="h-4 w-4 text-green-600" />
-            <AlertDescription className="text-green-800 text-xs sm:text-sm">
-              Avis publié avec succès !
-            </AlertDescription>
-          </Alert>
-        }
+
 
         <style>{`
           .slider-pink .bg-primary { background-color: #ec4899; }
@@ -658,6 +651,15 @@ Réponds avec un objet JSON contenant:
               <strong>Avertissement légal :</strong> Chaque utilisateur est seul responsable de ses propos. Tout contenu diffamatoire, injurieux ou discriminatoire est interdit.
             </AlertDescription>
           </Alert>
+
+          {success &&
+          <Alert className="bg-green-50 border-green-200">
+            <CheckCircle className="h-4 w-4 text-green-600" />
+            <AlertDescription className="text-green-800 text-xs sm:text-sm">
+              ✅ Avis publié avec succès !
+            </AlertDescription>
+          </Alert>
+          }
 
           {error &&
           <Alert variant="destructive" className="text-destructive pt-4 pr-4 pb-4 pl-5 text-sm rounded-lg [&>svg]:top-4 relative w-full border [&>svg+div]:translate-y-[-1px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-1\\n2 [&>svg~*]:pl-7 border-destructive/50 dark:border-destructive [&>svg]:text-destructive">

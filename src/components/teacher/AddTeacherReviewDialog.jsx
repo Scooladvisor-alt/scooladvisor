@@ -440,14 +440,7 @@ Réponds UNIQUEMENT par "approved" ou "rejected".`,
           </p>
         </DialogHeader>
 
-        {success &&
-        <Alert className="bg-green-50 border-green-200">
-            <CheckCircle className="h-4 w-4 text-green-600" />
-            <AlertDescription className="text-green-800 text-xs sm:text-sm">
-              Avis publié avec succès !
-            </AlertDescription>
-          </Alert>
-        }
+
 
         <style>{`
           .slider-pink .bg-primary { background-color: #ec4899; }
@@ -596,9 +589,18 @@ Réponds UNIQUEMENT par "approved" ou "rejected".`,
           <Alert className="bg-red-50 border-red-300">
             <AlertCircle className="h-4 w-4" />
             <AlertDescription className="text-red-900 text-[10px] sm:text-sm font-medium">
-              <strong>Avertissement légal :</strong> Les propos diffamatoires, injurieux ou discriminatoires sont interdits et punissables par la loi.
+              <strong>Avertissement légal :</strong> Chaque utilisateur est seul responsable de ses propos. Tout contenu diffamatoire, injurieux ou discriminatoire est interdit.
             </AlertDescription>
           </Alert>
+
+          {success &&
+          <Alert className="bg-green-50 border-green-200">
+            <CheckCircle className="h-4 w-4 text-green-600" />
+            <AlertDescription className="text-green-800 text-xs sm:text-sm">
+              ✅ Avis publié avec succès !
+            </AlertDescription>
+          </Alert>
+          }
 
           {error &&
           <Alert variant="destructive">
