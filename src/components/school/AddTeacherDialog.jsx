@@ -59,7 +59,8 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
     name: "",
     subject: "",
     customSubject: "",
-    photo_url: teacherAvatars[0].url
+    photo_url: teacherAvatars[0].url,
+    is_former: false
   });
 
   const checkTeacherLimits = async () => {
@@ -194,14 +195,15 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
         teaching_avg: 0,
         grading_avg: 0,
         review_count: 0,
-        status_report_count: 0
+        status_report_count: 0,
+        is_former: formData.is_former
       });
 
       setSuccess(true);
       setTimeout(() => {
         onSuccess();
         onOpenChange(false);
-        setFormData({ name: "", subject: "", customSubject: "", photo_url: teacherAvatars[0].url });
+        setFormData({ name: "", subject: "", customSubject: "", photo_url: teacherAvatars[0].url, is_former: false });
         setShowCustomSubject(false);
         setSuccess(false);
       }, 2000);
@@ -250,14 +252,26 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
         <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-5">
           <div className="space-y-1 sm:space-y-2">
             <Label htmlFor="name" className="text-xs sm:text-sm">Nom du professeur *</Label>
-            <Input
-              id="name"
-              value={formData.name}
-              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-              required
-              placeholder="M. Dupont"
-              className="h-9 sm:h-10 text-xs sm:text-sm" />
-
+            <div className="flex items-center gap-3">
+              <Input
+                id="name"
+                value={formData.name}
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                required
+                placeholder="M. Dupont"
+                className="h-9 sm:h-10 text-xs sm:text-sm flex-1" />
+              <div className="flex items-center gap-2 bg-orange-50 px-3 py-2 rounded-lg border border-orange-200">
+                <input
+                  type="checkbox"
+                  id="is_former"
+                  checked={formData.is_former}
+                  onChange={(e) => setFormData({ ...formData, is_former: e.target.checked })}
+                  className="w-4 h-4 text-orange-600 rounded focus:ring-orange-500" />
+                <label htmlFor="is_former" className="text-xs font-medium text-orange-800 whitespace-nowrap cursor-pointer">
+                  Ancien prof
+                </label>
+              </div>
+            </div>
           </div>
 
           {!showCustomSubject ?
@@ -330,7 +344,7 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
                   key={avatar.id}
                   type="button"
                   onClick={() => setFormData({ ...formData, photo_url: avatar.url })}
-                  className={`p-1 sm:p-2 rounded-lg border-2 transition-all ${
+                  className={`p-1 rounded-lg border-2 transition-all ${
                   formData.photo_url === avatar.url ?
                   'border-blue-600 bg-blue-50 shadow-md' :
                   'border-slate-200 hover:border-blue-300 bg-white'}`
@@ -339,7 +353,7 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
                     <img
                     src={avatar.url}
                     alt={avatar.name}
-                    className="w-full h-12 sm:h-24 md:h-28 object-contain rounded-md" />
+                    className="w-full h-10 sm:h-16 md:h-20 object-contain rounded-md" />
 
                   </button>
                 )}
