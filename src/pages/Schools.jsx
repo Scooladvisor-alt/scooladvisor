@@ -506,7 +506,7 @@ export default function SchoolsPage() {
             <div className="flex items-center justify-between gap-3 pt-3 border-t border-slate-100 mt-3">
               <div className="flex items-center gap-1 sm:gap-1.5 text-[10px] sm:text-sm text-slate-600">
                 <Filter className="w-3 h-3 sm:w-4 sm:h-4" />
-                <span>{totalSchoolCount > 0 ? totalSchoolCount : schools.length} établissement(s) au total</span>
+                <span>{filteredSchools.length} établissement(s)</span>
               </div>
 
               <div className="flex sm:hidden items-center space-x-2 whitespace-nowrap">
