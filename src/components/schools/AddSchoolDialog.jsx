@@ -6,6 +6,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AlertCircle, CheckCircle2, Loader2 } from "lucide-react";
@@ -19,6 +20,7 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
     type: "lycee",
     address: "",
     city: "",
+    isInternational: false,
   });
 
   const [addressSuggestions, setAddressSuggestions] = useState([]);
@@ -147,23 +149,25 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
         type: formData.type,
         address: cleanAddress,
         city: cleanCity,
-        region: "", // Sera mis à jour automatiquement
+        region: formData.isInternational ? "International" : "",
         status: "approved",
         average_rating: 0,
         review_count: 0,
         is_deleted: false
       });
 
-      // Appeler la fonction de détection automatique France/International
-      try {
-        await detectInternationalSchool({ schoolId: newSchool.id });
-      } catch (err) {
-        console.log("Detection internationale non critique:", err);
+      // Appeler la fonction de détection automatique seulement si pas déjà marqué international
+      if (!formData.isInternational) {
+        try {
+          await detectInternationalSchool({ schoolId: newSchool.id });
+        } catch (err) {
+          console.log("Detection internationale non critique:", err);
+        }
       }
 
       setSuccess(true);
       setTimeout(() => {
-        setFormData({ name: "", type: "lycee", address: "", city: "" });
+        setFormData({ name: "", type: "lycee", address: "", city: "", isInternational: false });
         setSuccess(false);
         onOpenChange(false);
         if (onSuccess) onSuccess();
@@ -184,6 +188,7 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
           type: "lycee",
           address: "", 
           city: "",
+          isInternational: false,
         });
         setError(null);
         setSuccess(false);
@@ -299,6 +304,20 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
               placeholder="Paris"
               className="h-9 sm:h-10 text-xs sm:text-sm"
             />
+          </div>
+
+          <div className="flex items-center space-x-2 p-3 bg-blue-50 rounded-lg border border-blue-200">
+            <Checkbox
+              id="isInternational"
+              checked={formData.isInternational}
+              onCheckedChange={(checked) => setFormData({ ...formData, isInternational: checked })}
+            />
+            <label
+              htmlFor="isInternational"
+              className="text-xs sm:text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer text-slate-700"
+            >
+              Cet établissement est situé en dehors de la France
+            </label>
           </div>
           
           <DialogFooter className="flex flex-col sm:flex-row sm:justify-end sm:items-center gap-2 mt-4 sm:mt-6">

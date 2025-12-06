@@ -47,6 +47,7 @@ export default function SchoolsPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [typeFilter, setTypeFilter] = useState("all");
   const [internationalOnly, setInternationalOnly] = useState(false);
+  const [internationalSchoolsLoaded, setInternationalSchoolsLoaded] = useState(false);
 
   const [teacherSearchTerm, setTeacherSearchTerm] = useState("");
   const [teacherSuggestions, setTeacherSuggestions] = useState([]);
@@ -56,8 +57,37 @@ export default function SchoolsPage() {
   }, []);
 
   useEffect(() => {
-    filterSchools();
+    if (internationalOnly && !allSchoolsLoaded && !internationalSchoolsLoaded) {
+      loadAllSchoolsForInternational();
+    } else {
+      filterSchools();
+    }
   }, [schools, searchTerm, typeFilter, internationalOnly]);
+
+  const loadAllSchoolsForInternational = async () => {
+    if (internationalSchoolsLoaded || allSchoolsLoaded) return;
+    
+    setLoading(true);
+    try {
+      const allSchools = await base44.entities.School.list("-average_rating");
+      const uniqueSchools = [];
+      const seenNames = new Set();
+
+      for (const school of allSchools) {
+        const normalizedName = normalizeString(school.name);
+        if (!seenNames.has(normalizedName)) {
+          seenNames.add(normalizedName);
+          uniqueSchools.push(school);
+        }
+      }
+      setSchools(uniqueSchools);
+      setAllSchoolsLoaded(true);
+      setInternationalSchoolsLoaded(true);
+    } catch (error) {
+      console.error("Error loading all schools:", error);
+    }
+    setLoading(false);
+  };
 
   useEffect(() => {
     setDisplayedSchools(filteredSchools.slice(0, displayCount));
