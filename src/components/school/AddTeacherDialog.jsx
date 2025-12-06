@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { AlertCircle, Clock, Plus, ChevronDown } from "lucide-react";
+import { AlertCircle, CheckCircle, Plus, ChevronDown } from "lucide-react";
 
 const predefinedSubjects = [
 "Français",
@@ -234,10 +234,10 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
         </DialogHeader>
 
         {success &&
-        <Alert className="bg-blue-50 border-blue-200">
-            <Clock className="h-4 w-4 text-blue-600" />
-            <AlertDescription className="text-blue-800 text-xs sm:text-sm">
-              Professeur ajouté avec succès !
+        <Alert className="bg-green-50 border-green-200">
+            <CheckCircle className="h-4 w-4 text-green-600" />
+            <AlertDescription className="text-green-800 text-xs sm:text-sm">
+              ✅ Professeur ajouté avec succès !
             </AlertDescription>
           </Alert>
         }

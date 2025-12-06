@@ -429,14 +429,14 @@ Réponds UNIQUEMENT par "approved" ou "rejected".`,
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-[95vw] sm:max-w-4xl max-h-[90vh] overflow-y-auto rounded-2xl">
-        <DialogHeader>
-          <DialogTitle className="text-lg sm:text-2xl font-bold">
+        <DialogHeader className="text-center pb-2">
+          <DialogTitle className="text-lg sm:text-2xl font-bold text-center">
             <span className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
               {existingReview ? "Modifier mon avis" : "Noter ce professeur"}
             </span>
           </DialogTitle>
-          <p className="text-xs sm:text-sm text-slate-600">
-            Évaluez ce professeur selon 4 critères
+          <p className="text-xs sm:text-sm text-slate-600 text-center mt-1">
+            Évaluez votre expérience selon 4 critères
           </p>
         </DialogHeader>
 
@@ -466,38 +466,38 @@ Réponds UNIQUEMENT par "approved" ou "rejected".`,
               return (
                 <div
                   key={key}
-                  className={`rounded-lg p-3 sm:p-4 border border-slate-200 transition-all duration-500 relative overflow-hidden ${
+                  className={`rounded-lg p-2 sm:p-3 border border-slate-200 transition-all duration-500 relative overflow-hidden ${
                     isMax ? gradient : 'bg-slate-50'
                   } ${isFlashing ? 'animate-widget-shine ring-2 ring-offset-2 ring-offset-white ring-yellow-400' : ''}`}
                 >
-                  <div className="flex items-center gap-2 mb-1 sm:mb-2 relative z-10">
-                    <Icon className={`w-4 h-4 sm:w-5 sm:h-5 ${color}`} />
-                    <Label className="font-semibold text-xs sm:text-sm">{label}</Label>
+                  <div className="flex items-center justify-between gap-2 relative z-10">
+                    <div className="flex items-center gap-2 flex-1 min-w-0">
+                      <Icon className={`w-4 h-4 flex-shrink-0 ${color}`} />
+                      <div className="min-w-0">
+                        <Label className="font-semibold text-xs sm:text-sm block">{label}</Label>
+                        <p className="text-[9px] sm:text-[10px] text-slate-500 truncate">{description}</p>
+                      </div>
+                    </div>
+                    <div className={`flex items-center gap-0.5 px-2 py-1 rounded-md border min-w-[45px] justify-center transition-colors duration-300 ${isMax ? 'bg-white/80 border-transparent shadow-sm' : 'bg-white border-slate-200'}`}>
+                      <span className={`text-sm sm:text-base font-bold ${isMax ? 'text-slate-900' : 'text-slate-900'}`}>{formData[key].toFixed(2).replace(/[.,]00$/, "")}</span>
+                      <span className="text-[9px] sm:text-xs text-slate-500">/5</span>
+                    </div>
                   </div>
-                  <p className="text-[10px] sm:text-xs text-slate-600 mb-2 sm:mb-3 relative z-10">{description}</p>
-                  <div className="flex items-center gap-3 sm:gap-4 relative z-10">
-                    <div className={sliderClass + " flex-1"}>
-                      <Slider
-                        value={[formData[key]]}
-                        onValueChange={([value]) => {
-                          setFormData({ ...formData, [key]: value });
-                          if (value === 5 && formData[key] !== 5) {
-                            setFlashingWidgets(prev => ({ ...prev, [key]: true }));
-                            setTimeout(() => setFlashingWidgets(prev => ({ ...prev, [key]: false })), 500);
-                          }
-                        }}
-                        min={0}
-                        max={5}
-                        step={0.5}
-                        className="flex-1"
-                        disabled={!canEdit}
-                      />
-                    </div>
-
-                    <div className={`flex items-center gap-1 px-2 py-1 sm:px-3 sm:py-1.5 rounded-lg border min-w-[50px] sm:min-w-[60px] justify-center transition-colors duration-300 ${isMax ? 'bg-white/80 border-transparent shadow-sm' : 'bg-white border-slate-200'}`}>
-                      <span className={`text-base sm:text-xl font-bold transition-colors ${isMax ? 'text-slate-900' : 'text-slate-900'}`}>{formData[key].toFixed(1)}</span>
-                      <span className="text-[10px] sm:text-sm text-slate-500">/5</span>
-                    </div>
+                  <div className={sliderClass + " mt-2 relative z-10"}>
+                    <Slider
+                      value={[formData[key]]}
+                      onValueChange={([value]) => {
+                        setFormData({ ...formData, [key]: value });
+                        if (value === 5 && formData[key] !== 5) {
+                          setFlashingWidgets(prev => ({ ...prev, [key]: true }));
+                          setTimeout(() => setFlashingWidgets(prev => ({ ...prev, [key]: false })), 500);
+                        }
+                      }}
+                      min={0}
+                      max={5}
+                      step={0.25}
+                      disabled={!canEdit}
+                    />
                   </div>
                 </div>
               );
@@ -521,73 +521,65 @@ Réponds UNIQUEMENT par "approved" ou "rejected".`,
             <Label htmlFor="comment" className="text-sm sm:text-base">
               Appréciation générale *
             </Label>
-            <Textarea
-              id="comment"
-              value={formData.comment}
-              onChange={(e) => {
-                const text = e.target.value;
-                if (text.length <= MAX_COMMENT_LENGTH) {
-                  setFormData({ ...formData, comment: text });
-                }
-              }}
-              placeholder="Décris ton expérience avec ce prof (cours, ambiance, méthodes...)"
-              rows={4}
-              className="text-sm sm:text-base"
-              disabled={!canEdit} />
-
-            <div className="flex justify-between text-[10px] text-slate-400">
-              <span>
-                {formData.comment.length} / {MAX_COMMENT_LENGTH} caractères 
-                <span className="ml-1">(minimum 10)</span>
-              </span>
-              {formData.comment.length >= MAX_COMMENT_LENGTH &&
-              <span className="text-red-600 font-medium">Limite atteinte !</span>
-              }
+            <div className="relative">
+              <Textarea
+                id="comment"
+                value={formData.comment}
+                onChange={(e) => {
+                  const text = e.target.value;
+                  if (text.length <= MAX_COMMENT_LENGTH) {
+                    setFormData({ ...formData, comment: text });
+                  }
+                }}
+                placeholder="Décris ton expérience avec ce prof (cours, ambiance, méthodes...)"
+                rows={4}
+                className="text-sm sm:text-base pb-10"
+                disabled={!canEdit}
+              />
+              
+              <div className="absolute bottom-2 left-3 right-3 flex items-center justify-between">
+                <label 
+                  htmlFor="is_anonymous_inline"
+                  className="flex items-center gap-1.5 cursor-pointer group"
+                >
+                  <Checkbox
+                    id="is_anonymous_inline"
+                    checked={formData.is_anonymous}
+                    onCheckedChange={(checked) => setFormData({ ...formData, is_anonymous: checked })}
+                    className="h-3.5 w-3.5"
+                    disabled={!canEdit}
+                  />
+                  <span className="text-[10px] sm:text-xs text-slate-400 group-hover:text-slate-600 transition-colors">
+                    Anonyme {formData.is_anonymous && <span className="text-blue-500">✓</span>}
+                  </span>
+                </label>
+                <span className={`text-[10px] ${formData.comment.length >= MAX_COMMENT_LENGTH ? 'text-red-500 font-medium' : 'text-slate-400'}`}>
+                  {formData.comment.length}/{MAX_COMMENT_LENGTH}
+                </span>
+              </div>
             </div>
           </div>
 
-          <div className="flex items-start space-x-3 p-2 sm:p-3 rounded-lg bg-blue-50 border border-blue-200">
-            <Checkbox
-              id="is_anonymous"
-              checked={formData.is_anonymous}
-              onCheckedChange={(checked) => setFormData({ ...formData, is_anonymous: checked })}
-              className="mt-0.5"
-              disabled={!canEdit} />
-
-            <div className="grid gap-1.5 leading-none">
-              <label
-                htmlFor="is_anonymous"
-                className="text-xs sm:text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-
-                Publier en anonyme
-              </label>
-              <p className="text-[10px] sm:text-xs text-slate-500">
-                Votre nom ne sera pas affiché publiquement.
-              </p>
-            </div>
-          </div>
-
-          {/* New Certification Checkbox */}
           <div className="flex items-start space-x-3 p-3 sm:p-4 bg-green-50 rounded-lg border-2 border-green-300">
             <Checkbox
               id="certification"
               checked={formData.certification}
               onCheckedChange={(checked) => setFormData({ ...formData, certification: checked })}
               className="mt-0.5"
-              disabled={!canEdit} />
-
+              disabled={!canEdit}
+            />
             <div className="grid gap-1.5 leading-none">
               <label
                 htmlFor="certification"
-                className="text-xs sm:text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-green-900">
-
+                className="text-xs sm:text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-green-900"
+              >
                 Je certifie que cet avis est constructif et bienveillant.
               </label>
             </div>
           </div>
 
           <Alert className="bg-red-50 border-red-300">
-            <AlertCircle className="h-4 w-4" />
+            <AlertCircle className="h-4 w-4 text-red-600" />
             <AlertDescription className="text-red-900 text-[10px] sm:text-sm font-medium">
               <strong>Avertissement légal :</strong> Chaque utilisateur est seul responsable de ses propos. Tout contenu diffamatoire, injurieux ou discriminatoire est interdit.
             </AlertDescription>
@@ -603,7 +595,7 @@ Réponds UNIQUEMENT par "approved" ou "rejected".`,
           }
 
           {error &&
-          <Alert variant="destructive">
+          <Alert variant="destructive" className="text-destructive pt-4 pr-4 pb-4 pl-5 text-sm rounded-lg [&>svg]:top-4 relative w-full border [&>svg+div]:translate-y-[-1px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-1\\n2 [&>svg~*]:pl-7 border-destructive/50 dark:border-destructive [&>svg]:text-destructive">
             <AlertCircle className="h-4 w-4" />
             <AlertDescription className="text-xs sm:text-sm">{error}</AlertDescription>
           </Alert>
@@ -612,9 +604,9 @@ Réponds UNIQUEMENT par "approved" ou "rejected".`,
           <DialogFooter>
             <Button
               type="submit"
-              disabled={submitButtonDisabled} className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 text-primary-foreground shadow px-4 py-2 w-full bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 disabled:bg-slate-300 text-white text-xs sm:text-base h-9 sm:h-10">
-
-
+              disabled={submitButtonDisabled}
+              className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 text-primary-foreground px-4 py-2 w-full bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 disabled:bg-slate-300 text-white text-xs sm:text-base h-9 sm:h-10 shadow-md"
+            >
               {loading ? "Publication..." : existingReview ? "Modifier l'avis" : "Publier l'avis"}
             </Button>
           </DialogFooter>
