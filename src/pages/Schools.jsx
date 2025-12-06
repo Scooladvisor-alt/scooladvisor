@@ -674,7 +674,7 @@ export default function SchoolsPage() {
                       </div>
                     ) : (
                       <span className="text-sm sm:text-base font-bold bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent whitespace-nowrap transform group-hover:scale-105 transition-transform duration-300">
-                        {!allSchoolsLoaded ? "Voir tous les établissements" : `Voir ${Math.min(50, filteredSchools.length - displayCount)} écoles +`}
+                        Voir 50 établissements +
                       </span>
                     )}
                     <div className="h-[2px] flex-1 bg-gradient-to-r from-purple-500 via-blue-500 to-transparent opacity-30 group-hover:opacity-100 transition-all duration-300" />
