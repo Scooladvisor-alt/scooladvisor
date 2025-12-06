@@ -195,8 +195,8 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
       }
     }}>
       <DialogContent className="max-w-[90vw] sm:max-w-2xl max-h-[90vh] overflow-y-auto rounded-2xl">
-        <DialogHeader>
-          <DialogTitle className="text-lg sm:text-2xl font-bold">
+        <DialogHeader className="text-center">
+          <DialogTitle className="text-lg sm:text-2xl font-bold text-center">
             <span className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
               Ton établissement est absent ?
             </span>
@@ -275,7 +275,7 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
                   <button
                     key={index}
                     type="button"
-                    onClick={(e) => {
+                    onMouseDown={(e) => {
                       e.preventDefault();
                       e.stopPropagation();
                       handleAddressSelected(place);
@@ -295,29 +295,30 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
 
           <div className="space-y-1 sm:space-y-2">
             <Label htmlFor="city" className="text-xs sm:text-sm">Ville *</Label>
-            <Input
-              id="city"
-              ref={cityInputRef}
-              value={formData.city}
-              onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-              required
-              placeholder="Paris"
-              className="h-9 sm:h-10 text-xs sm:text-sm"
-            />
-          </div>
-
-          <div className="flex items-center space-x-2 p-3 bg-blue-50 rounded-lg border border-blue-200">
-            <Checkbox
-              id="isInternational"
-              checked={formData.isInternational}
-              onCheckedChange={(checked) => setFormData({ ...formData, isInternational: checked })}
-            />
-            <label
-              htmlFor="isInternational"
-              className="text-xs sm:text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer text-slate-700"
-            >
-              Cet établissement est situé en dehors de la France
-            </label>
+            <div className="flex gap-2 sm:gap-3">
+              <Input
+                id="city"
+                ref={cityInputRef}
+                value={formData.city}
+                onChange={(e) => setFormData({ ...formData, city: e.target.value })}
+                required
+                placeholder="Paris"
+                className="h-9 sm:h-10 text-xs sm:text-sm flex-1"
+              />
+              <div className="flex items-center space-x-2 px-3 bg-blue-50 rounded-lg border border-blue-200 whitespace-nowrap">
+                <Checkbox
+                  id="isInternational"
+                  checked={formData.isInternational}
+                  onCheckedChange={(checked) => setFormData({ ...formData, isInternational: checked })}
+                />
+                <label
+                  htmlFor="isInternational"
+                  className="text-xs sm:text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer text-slate-700"
+                >
+                  Hors France
+                </label>
+              </div>
+            </div>
           </div>
           
           <DialogFooter className="flex flex-col sm:flex-row sm:justify-end sm:items-center gap-2 mt-4 sm:mt-6">
