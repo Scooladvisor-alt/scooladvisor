@@ -134,17 +134,13 @@ export default function SchoolCard({ school, teacherCount }) {
             {school.name}
           </h3>
 
-          <div className="flex items-center gap-2 text-sm text-slate-600 mb-2">
+          <div className="flex items-center gap-2 text-sm text-slate-600 mb-4">
             <MapPin className="w-4 h-4 text-slate-400 flex-shrink-0" />
             <span className="truncate">{school.city}</span>
+            {school.region && school.region.trim().toLowerCase() === "international" && (
+              <Globe className="w-3.5 h-3.5 text-indigo-500 flex-shrink-0" title="International" />
+            )}
           </div>
-          
-          {school.region && school.region.trim().toLowerCase() === "international" && (
-            <div className="flex items-center gap-1.5 mb-4">
-              <Globe className="w-3.5 h-3.5 text-indigo-500 flex-shrink-0" />
-              <span className="text-xs font-medium text-indigo-600">International</span>
-            </div>
-          )}
         </div>
 
         <div className="grid grid-cols-2 gap-3 mt-auto">
