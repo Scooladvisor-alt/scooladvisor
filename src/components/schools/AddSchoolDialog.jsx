@@ -271,8 +271,9 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
                   <button
                     key={index}
                     type="button"
-                    onMouseDown={(e) => {
+                    onClick={(e) => {
                       e.preventDefault();
+                      e.stopPropagation();
                       handleAddressSelected(place);
                     }}
                     className="w-full px-3 py-2 text-left hover:bg-blue-50 transition-colors border-b border-slate-100 last:border-b-0 flex items-start gap-2"

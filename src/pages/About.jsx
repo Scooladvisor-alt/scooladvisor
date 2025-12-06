@@ -85,7 +85,7 @@ export default function AboutPage() {
           viewport={{ once: true }}
           className="grid grid-cols-1 md:grid-cols-3 gap-8">
 
-          <motion.div variants={itemVariants} className="bg-white rounded-3xl p-8 shadow-xl border border-slate-100 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
+          <motion.div variants={itemVariants} className="relative z-10 bg-white rounded-3xl p-8 shadow-xl border border-slate-100 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
             <div className="w-14 h-14 bg-pink-50 rounded-2xl flex items-center justify-center mb-6">
               <Target className="w-7 h-7 text-[#FF4D8D]" />
             </div>
@@ -95,7 +95,7 @@ export default function AboutPage() {
             </p>
           </motion.div>
 
-          <motion.div variants={itemVariants} className="bg-white rounded-3xl p-8 shadow-xl border border-slate-100 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
+          <motion.div variants={itemVariants} className="relative z-10 bg-white rounded-3xl p-8 shadow-xl border border-slate-100 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
             <div className="w-14 h-14 bg-purple-50 rounded-2xl flex items-center justify-center mb-6">
               <Heart className="w-7 h-7 text-purple-600" />
             </div>
@@ -105,7 +105,7 @@ export default function AboutPage() {
             </p>
           </motion.div>
 
-          <motion.div variants={itemVariants} className="bg-white rounded-3xl p-8 shadow-xl border border-slate-100 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
+          <motion.div variants={itemVariants} className="relative z-10 bg-white rounded-3xl p-8 shadow-xl border border-slate-100 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
             <div className="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center mb-6">
               <Users className="w-7 h-7 text-blue-600" />
             </div>
