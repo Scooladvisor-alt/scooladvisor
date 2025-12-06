@@ -43,6 +43,7 @@ export default function SchoolsPage() {
   const [showAddDialog, setShowAddDialog] = useState(false);
   const [showTeacherRoom, setShowTeacherRoom] = useState(false);
   const [totalSchoolCount, setTotalSchoolCount] = useState(0);
+  const [filteredTotalCount, setFilteredTotalCount] = useState(0);
 
   const [searchTerm, setSearchTerm] = useState("");
   const [typeFilter, setTypeFilter] = useState("all");
@@ -62,7 +63,40 @@ export default function SchoolsPage() {
     } else {
       filterSchools();
     }
+    updateFilteredTotalCount();
   }, [schools, searchTerm, typeFilter, internationalOnly]);
+
+  const updateFilteredTotalCount = async () => {
+    try {
+      let query = {};
+      
+      if (typeFilter !== "all") {
+        query.type = typeFilter;
+      }
+      
+      if (internationalOnly) {
+        query.region = "International";
+      }
+      
+      const allMatchingSchools = await base44.entities.School.filter(query);
+      const activeSchools = allMatchingSchools.filter(s => !s.is_deleted);
+      
+      if (searchTerm) {
+        const normalizedSearch = normalizeString(searchTerm);
+        const searchFiltered = activeSchools.filter((school) => {
+          const normalizedName = normalizeString(school.name);
+          const normalizedCity = normalizeString(school.city || "");
+          return normalizedName.includes(normalizedSearch) || normalizedCity.includes(normalizedSearch);
+        });
+        setFilteredTotalCount(searchFiltered.length);
+      } else {
+        setFilteredTotalCount(activeSchools.length);
+      }
+    } catch (error) {
+      console.error("Error counting filtered schools:", error);
+      setFilteredTotalCount(filteredSchools.length);
+    }
+  };
 
   const loadAllSchoolsForInternational = async () => {
     if (internationalSchoolsLoaded || allSchoolsLoaded) return;
@@ -506,7 +540,7 @@ export default function SchoolsPage() {
             <div className="flex items-center justify-between gap-3 pt-3 border-t border-slate-100 mt-3">
               <div className="flex items-center gap-1 sm:gap-1.5 text-[10px] sm:text-sm text-slate-600">
                 <Filter className="w-3 h-3 sm:w-4 sm:h-4" />
-                <span>{filteredSchools.length} établissement(s)</span>
+                <span>{filteredTotalCount} établissement(s)</span>
               </div>
 
               <div className="flex sm:hidden items-center space-x-2 whitespace-nowrap">
