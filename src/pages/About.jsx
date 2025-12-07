@@ -212,7 +212,7 @@ export default function AboutPage() {
           </Button>
         </Link>
       </div>
-    </div>
+      </div>
     </>
   );
 }
