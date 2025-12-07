@@ -1,22 +1,18 @@
 import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
-export default function SEO({ title, description, canonicalPath, noIndex = false }) {
+export default function SEO({ title, description, canonicalPath, noIndex = false, structuredData = null }) {
   const location = useLocation();
   const domain = "https://scooladvisor.fr";
   
-  // Construct the full canonical URL
-  // Ensure canonicalPath starts with /
   const safePath = canonicalPath.startsWith('/') ? canonicalPath : `/${canonicalPath}`;
   const canonicalUrl = `${domain}${safePath}`;
 
   useEffect(() => {
-    // Update Title
     if (title) {
       document.title = title;
     }
 
-    // Update Meta Description
     let metaDesc = document.querySelector("meta[name='description']");
     if (!metaDesc) {
       metaDesc = document.createElement('meta');
@@ -27,7 +23,6 @@ export default function SEO({ title, description, canonicalPath, noIndex = false
       metaDesc.content = description;
     }
 
-    // Update Canonical Link
     let linkCanonical = document.querySelector("link[rel='canonical']");
     if (!linkCanonical) {
       linkCanonical = document.createElement('link');
@@ -36,7 +31,24 @@ export default function SEO({ title, description, canonicalPath, noIndex = false
     }
     linkCanonical.href = canonicalUrl;
 
-    // Handle Robots Meta
+    // Open Graph tags
+    const updateOGTag = (property, content) => {
+      if (!content) return;
+      let meta = document.querySelector(`meta[property="${property}"]`);
+      if (!meta) {
+        meta = document.createElement('meta');
+        meta.setAttribute('property', property);
+        document.head.appendChild(meta);
+      }
+      meta.setAttribute('content', content);
+    };
+
+    updateOGTag('og:title', title);
+    updateOGTag('og:description', description);
+    updateOGTag('og:url', canonicalUrl);
+    updateOGTag('og:type', 'website');
+    updateOGTag('og:site_name', 'ScoolAdvisor');
+
     let metaRobots = document.querySelector("meta[name='robots']");
     if (!metaRobots) {
       metaRobots = document.createElement('meta');
@@ -44,9 +56,6 @@ export default function SEO({ title, description, canonicalPath, noIndex = false
       document.head.appendChild(metaRobots);
     }
 
-    // Logic for noindex
-    // If explicitly set to noIndex OR if the current URL parameters imply a duplication/technical state
-    // SECURITY UPDATE: Force noindex on sensitive routes
     const sensitiveRoutes = ['/profile', '/moderation', '/admin', '/login', '/register'];
     const isSensitive = sensitiveRoutes.some(route => location.pathname.toLowerCase().startsWith(route));
 
@@ -59,11 +68,22 @@ export default function SEO({ title, description, canonicalPath, noIndex = false
     if (shouldNoIndex) {
       metaRobots.content = "noindex, nofollow";
     } else {
-      // Restore default if it was set to noindex previously (SPA navigation)
       metaRobots.content = "index, follow";
     }
 
-  }, [title, description, canonicalUrl, noIndex, location]);
+    // JSON-LD structured data
+    if (structuredData) {
+      let script = document.querySelector('script[type="application/ld+json"]#structured-data');
+      if (!script) {
+        script = document.createElement('script');
+        script.setAttribute('type', 'application/ld+json');
+        script.setAttribute('id', 'structured-data');
+        document.head.appendChild(script);
+      }
+      script.textContent = JSON.stringify(structuredData);
+    }
+
+  }, [title, description, canonicalUrl, noIndex, location, structuredData]);
 
   return null;
 }

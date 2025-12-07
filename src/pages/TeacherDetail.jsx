@@ -193,7 +193,24 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
       <SEO
         title={`${teacher.name} - Avis Professeur ${teacher.subject} | ScoolAdvisor`}
         description={`Lisez les avis des élèves sur ${teacher.name}, professeur de ${teacher.subject} ${school ? `à ${school.name}` : ''}. Charge de travail, pédagogie et ambiance.`}
-        canonicalPath={`/teachers/${teacher.id}`} />
+        canonicalPath={`/teachers/${teacher.id}`}
+        structuredData={{
+          "@context": "https://schema.org",
+          "@type": "Person",
+          "name": teacher.name,
+          "jobTitle": `Professeur de ${teacher.subject}`,
+          "worksFor": school ? {
+            "@type": "EducationalOrganization",
+            "name": school.name
+          } : undefined,
+          "aggregateRating": teacher.average_rating && teacher.review_count > 0 ? {
+            "@type": "AggregateRating",
+            "ratingValue": teacher.average_rating,
+            "bestRating": "20",
+            "reviewCount": teacher.review_count
+          } : undefined
+        }}
+      />
 
       }
       <style>{`
