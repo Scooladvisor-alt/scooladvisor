@@ -27,7 +27,20 @@ export default function AboutPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-purple-50 to-blue-50">
+    <>
+      <SEO 
+        title="À propos de ScoolAdvisor - Notre Mission"
+        description="ScoolAdvisor est le réseau social des étudiants. Partagez votre expérience, notez vos établissements et professeurs. Une communauté authentique et transparente."
+        canonicalPath="/About"
+        structuredData={{
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          "name": "ScoolAdvisor",
+          "description": "Le réseau social des étudiants - Avis authentiques sur écoles et professeurs",
+          "url": window.location.origin
+        }}
+      />
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-purple-50 to-blue-50">
       <SEO
         title="ScoolAdvisor - C'est quoi ? Notre mission et nos valeurs"
         description="Découvrez la mission de ScoolAdvisor : apporter de la transparence dans l'éducation et aider étudiants et parents à faire les meilleurs choix d'orientation."

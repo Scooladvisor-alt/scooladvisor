@@ -122,7 +122,25 @@ export default function SchoolDetailPage() {
       <SEO
         title={`${school.name} (${school.city}) - Avis et Classement | ScoolAdvisor`}
         description={`Découvrez les avis authentiques des étudiants sur ${school.name} à ${school.city}. Note globale : ${school.average_rating ? school.average_rating.toFixed(1) : 'N/A'}/20.`}
-        canonicalPath={`/schools/${school.id}`} />
+        canonicalPath={`/schools/${school.id}`}
+        structuredData={{
+          "@context": "https://schema.org",
+          "@type": "EducationalOrganization",
+          "name": school.name,
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": school.address,
+            "addressLocality": school.city,
+            "addressCountry": school.region === "International" ? "" : "FR"
+          },
+          "aggregateRating": school.average_rating && school.review_count > 0 ? {
+            "@type": "AggregateRating",
+            "ratingValue": school.average_rating,
+            "bestRating": "20",
+            "reviewCount": school.review_count
+          } : undefined
+        }}
+      />
 
       }
       <style>{`

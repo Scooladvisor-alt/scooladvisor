@@ -325,6 +325,21 @@ export default function SchoolsPage() {
         title="ScoolAdvisor - L'avis des étudiants sur leurs écoles et professeurs"
         description="Recherchez votre établissement, consultez les avis des étudiants et notez vos professeurs. Le 1er site d'avis scolaires vérifiés."
         canonicalPath="/"
+        structuredData={{
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          "name": "ScoolAdvisor",
+          "description": "Le réseau social des étudiants - Avis authentiques sur écoles et professeurs",
+          "url": window.location.origin,
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": {
+              "@type": "EntryPoint",
+              "urlTemplate": `${window.location.origin}?search={search_term_string}`
+            },
+            "query-input": "required name=search_term_string"
+          }
+        }}
       />
       <style>{`
         @keyframes rotating-shine {
