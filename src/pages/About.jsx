@@ -41,10 +41,6 @@ export default function AboutPage() {
         }}
       />
       <div className="min-h-screen bg-gradient-to-br from-slate-50 via-purple-50 to-blue-50">
-      <SEO
-        title="ScoolAdvisor - C'est quoi ? Notre mission et nos valeurs"
-        description="Découvrez la mission de ScoolAdvisor : apporter de la transparence dans l'éducation et aider étudiants et parents à faire les meilleurs choix d'orientation."
-        canonicalPath="/About" />
 
 
       {/* Hero Section */}
@@ -216,6 +212,7 @@ export default function AboutPage() {
           </Button>
         </Link>
       </div>
-    </div>);
-
+    </div>
+    </>
+  );
 }
