@@ -28,6 +28,8 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
   const [addressLoading, setAddressLoading] = useState(false);
   const addressTimeoutRef = useRef(null);
   const addressInputRef = useRef(null);
+  const nameInputRef = useRef(null);
+  const [isAddressManuallyChanged, setIsAddressManuallyChanged] = useState(false);
 
   const searchAddress = async (query) => {
     if (query.length < 3) {
@@ -60,22 +62,23 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
   };
 
   useEffect(() => {
-    if (formData.address) {
+    if (formData.address && isAddressManuallyChanged) {
       if (addressTimeoutRef.current) {
         clearTimeout(addressTimeoutRef.current);
       }
       addressTimeoutRef.current = setTimeout(() => {
         searchAddress(formData.address);
       }, 300);
-    } else {
+    } else if (!formData.address) {
       setAddressSuggestions([]);
       setShowAddressSuggestions(false);
     }
-  }, [formData.address]);
+  }, [formData.address, isAddressManuallyChanged]);
 
   const cityInputRef = useRef(null);
 
   const handleAddressSelected = (place) => {
+    setIsAddressManuallyChanged(false);
     setFormData({
       ...formData,
       address: place.street || place.label,
@@ -84,12 +87,11 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
     setShowAddressSuggestions(false);
     setAddressSuggestions([]);
     
-    // Focus sur le champ ville si pas rempli automatiquement
     setTimeout(() => {
-      if (cityInputRef.current && !place.city) {
+      if (cityInputRef.current) {
         cityInputRef.current.focus();
       }
-    }, 50);
+    }, 100);
   };
 
   useEffect(() => {
@@ -102,6 +104,42 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
+
+  const getSchoolPrefix = (type) => {
+    const prefixes = {
+      'lycee': 'Lycée ',
+      'college': 'Collège ',
+      'universite': 'Université '
+    };
+    return prefixes[type] || '';
+  };
+
+  const hasLockedPrefix = (type) => {
+    return ['lycee', 'college', 'universite'].includes(type);
+  };
+
+  useEffect(() => {
+    if (hasLockedPrefix(formData.type)) {
+      const prefix = getSchoolPrefix(formData.type);
+      if (!formData.name.startsWith(prefix)) {
+        const userInput = formData.name.replace(/^(Lycée |Collège |Université )/i, '');
+        setFormData(prev => ({ ...prev, name: prefix + userInput }));
+      }
+    }
+  }, [formData.type]);
+
+  const handleNameChange = (value) => {
+    if (hasLockedPrefix(formData.type)) {
+      const prefix = getSchoolPrefix(formData.type);
+      if (!value.startsWith(prefix)) {
+        value = prefix + value.replace(/^(Lycée |Collège |Université )/i, '');
+      }
+      if (value.length < prefix.length) {
+        value = prefix;
+      }
+    }
+    setFormData({...formData, name: value});
+  };
 
   const capitalizeWords = (str) => {
     return str
@@ -167,8 +205,9 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
 
       setSuccess(true);
       setTimeout(() => {
-        setFormData({ name: "", type: "lycee", address: "", city: "", isInternational: false });
+        setFormData({ name: "Lycée ", type: "lycee", address: "", city: "", isInternational: false });
         setSuccess(false);
+        setIsAddressManuallyChanged(false);
         onOpenChange(false);
         if (onSuccess) onSuccess();
       }, 1000);
@@ -184,7 +223,7 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
       onOpenChange(isOpen);
       if (!isOpen) {
         setFormData({ 
-          name: "", 
+          name: "Lycée ", 
           type: "lycee",
           address: "", 
           city: "",
@@ -192,6 +231,7 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
         });
         setError(null);
         setSuccess(false);
+        setIsAddressManuallyChanged(false);
       }
     }}>
       <DialogContent className="max-w-[90vw] sm:max-w-2xl max-h-[90vh] overflow-y-auto rounded-2xl">
@@ -222,22 +262,24 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
 
         <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
           <div className="space-y-1 sm:space-y-2">
-            <Label htmlFor="name" className="text-xs sm:text-sm">Nom de l'établissement *</Label>
-            <Input
-              id="name"
-              value={formData.name}
-              onChange={(e) => setFormData({...formData, name: e.target.value})}
-              required
-              placeholder="Lycée Victor Hugo"
-              className="h-9 sm:h-10 text-xs sm:text-sm"
-            />
-          </div>
-
-          <div className="space-y-1 sm:space-y-2">
             <Label htmlFor="type" className="text-xs sm:text-sm">Type d'établissement *</Label>
             <Select 
               value={formData.type} 
-              onValueChange={(value) => setFormData({...formData, type: value})}
+              onValueChange={(value) => {
+                const newPrefix = getSchoolPrefix(value);
+                const oldPrefix = getSchoolPrefix(formData.type);
+                let newName = formData.name;
+                
+                if (hasLockedPrefix(formData.type) && formData.name.startsWith(oldPrefix)) {
+                  newName = formData.name.substring(oldPrefix.length);
+                }
+                
+                if (hasLockedPrefix(value)) {
+                  newName = newPrefix + newName.replace(/^(Lycée |Collège |Université )/i, '');
+                }
+                
+                setFormData({...formData, type: value, name: newName});
+              }}
             >
               <SelectTrigger id="type" className="h-9 sm:h-10 text-xs sm:text-sm">
                 <SelectValue placeholder="Sélectionnez un type" />
@@ -253,12 +295,45 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
             </Select>
           </div>
 
+          <div className="space-y-1 sm:space-y-2">
+            <Label htmlFor="name" className="text-xs sm:text-sm">Nom de l'établissement *</Label>
+            <Input
+              id="name"
+              ref={nameInputRef}
+              value={formData.name}
+              onChange={(e) => handleNameChange(e.target.value)}
+              onKeyDown={(e) => {
+                if (hasLockedPrefix(formData.type)) {
+                  const prefix = getSchoolPrefix(formData.type);
+                  const cursorPosition = e.target.selectionStart;
+                  if (cursorPosition < prefix.length && (e.key === 'Backspace' || e.key === 'Delete' || e.key === 'ArrowLeft')) {
+                    e.preventDefault();
+                  }
+                }
+              }}
+              onClick={(e) => {
+                if (hasLockedPrefix(formData.type)) {
+                  const prefix = getSchoolPrefix(formData.type);
+                  if (e.target.selectionStart < prefix.length) {
+                    e.target.setSelectionRange(prefix.length, prefix.length);
+                  }
+                }
+              }}
+              required
+              placeholder={hasLockedPrefix(formData.type) ? `${getSchoolPrefix(formData.type)}Victor Hugo` : "École de Commerce de Paris"}
+              className="h-9 sm:h-10 text-xs sm:text-sm"
+            />
+          </div>
+
           <div className="space-y-1 sm:space-y-2 relative" ref={addressInputRef}>
             <Label htmlFor="address" className="text-xs sm:text-sm">Adresse *</Label>
             <Input
               id="address"
               value={formData.address}
-              onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+              onChange={(e) => {
+                setIsAddressManuallyChanged(true);
+                setFormData({ ...formData, address: e.target.value });
+              }}
               required
               placeholder="10 rue de la République"
               className="h-9 sm:h-10 text-xs sm:text-sm"
