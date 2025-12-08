@@ -573,7 +573,7 @@ Réponds UNIQUEMENT par "approved" ou "rejected".`,
                 htmlFor="certification"
                 className="text-xs sm:text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-green-900"
               >
-                Je certifie que cet avis est constructif et bienveillant.
+                Je certifie que cet avis est bienveillant.
               </label>
             </div>
           </div>
