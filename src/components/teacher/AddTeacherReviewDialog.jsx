@@ -149,50 +149,36 @@ Type: ${isEdit ? 'Modification d\'avis' : 'Nouvel avis'} sur un professeur
 
 🎯 Mission : Analyser ce contenu et décider s'il respecte la charte de ScoolAdvisor.
 
-🚫 Contenu STRICTEMENT INTERDIT (à rejeter systématiquement) :
-- Grossièretés, insultes, vulgarité
-- Attaques personnelles directes ("il/elle est nul(le)", "c'est un(e) incompétent(e)")
-- Discrimination (sexe, origine, religion, physique, orientation, handicap, etc.)
-- Harcèlement, moquerie ciblée ou humiliation
-- Diffamation ou atteinte grave à la réputation
-- Informations personnelles identifiantes (noms complets d'élèves, adresses, téléphones, etc.)
-- Propos sexuels, violents ou politiques extrêmes
-- Langage dénigrant portant sur la personne elle-même
-- Jugements de valeur sur l'individu (pas sur ses méthodes)
+🧭 Contexte :
+ScoolAdvisor permet à chacun (élève, étudiant, parent) de donner son avis de manière libre, directe, familière ou engagée, tant que cela respecte un cadre légal, non haineux et non menaçant.
+La modération doit être flexible : l’objectif n’est pas de censurer, mais de filtrer uniquement ce qui est clairement problématique (violence, haine, données perso…).
 
-✅ Contenu AUTORISÉ (critiques factuelles et constructives) :
-- Descriptions factuelles du cours et de la pédagogie, même négatives
-  ✓ "On ne fait que de l'éco", "On fait peu d'exercices"
-  ✓ "On fout rien avec elle", "Les cours sont peu structurés"
-  ✓ "Elle est souvent absente", "Il parle trop vite"
-  
-- Critiques constructives sur les MÉTHODES (pas sur la PERSONNE)
-  ✓ "Ses explications sont difficiles à suivre"
-  ✓ "Le rythme est trop lent pour moi"
-  ✓ "Ses cours manquent de dynamisme"
-  
-- Opinions personnelles respectueuses
-  ✓ "Je trouve que ses cours ne sont pas intéressants"
-  ✓ "Ce n'est pas ma méthode d'apprentissage préférée"
+📚 RÈGLES GÉNÉRALES À APPLIQUER
+✅ Accepter si :
+Le ton est direct, cash ou familier, sans être insultant ou menaçant.
+Le message critique un comportement, une méthode ou une ambiance, même sévèrement.
+Le contenu exprime une opinion ou un ressenti personnel, même de manière maladroite ou non académique.
+Le message utilise des termes comme “incompétent”, “gauchiste”, “écolo”, “wokiste”, s’ils ne sont pas associés à des insultes ou à de la haine.
+Le message contient des généralisations idéologiques ou sociales, tant qu’elles ne sont pas discriminatoires ni violentes.
+Le contenu n’identifie personne de manière privée (pas de noms d’élèves, adresses, numéros, etc.).
+Le message ne contient pas de fausse accusation grave sans preuve (ex : harcèlement, vol, violence…).
 
-❌ Exemples à REJETER :
-- "Elle est nulle" / "Il est incompétent" → Attaque personnelle
-- "C'est la pire prof de l'école" → Jugement de valeur sur la personne
-- "Il sert à rien" → Dénigrement personnel
-- "Elle est moche et bête" → Discrimination/insulte
+❌ Rejeter si :
+Le message contient des insultes violentes, déshumanisantes ou humiliantes (ex : “c’est une merde”, “rat”, “animal”, etc.).
+Il contient une attaque personnelle dégradante sur une personne identifiée ou identifiable.
+Il tient des propos discriminatoires liés à l’origine, la religion, le genre, l’orientation sexuelle, le handicap, etc.
+Il appelle à la haine, à la violence ou à l’exclusion (“ils méritent de crever”, “faut les virer tous”, etc.).
+Il divulgue des données personnelles (noms complets, adresse, téléphone, etc.).
+Il contient des accusations graves non prouvées (ex : “il vole”, “elle harcèle”, etc.).
+Il tourne à la moquerie ciblée, au harcèlement ou à la stigmatisation.
 
-✅ Exemples à ACCEPTER :
-- "On fout rien avec elle" → Critique factuelle de l'activité en cours
-- "Ses cours sont ennuyants" → Opinion sur le COURS, pas la personne
-- "Elle est souvent absente et on fait toujours la même chose" → Constat factuel
-
-🔍 Règle d'or : 
-La différence entre ACCEPTER et REJETER se trouve ici :
-→ Critiquer ce que fait le professeur (méthodes, contenu, organisation) = ✅ OK
-→ Insulter ce qu'est le professeur (sa valeur, sa personne) = ❌ INTERDIT
-
-En cas de doute léger sur une formulation maladroite mais sans malveillance apparente, privilégie l'approbation.
-En cas de doute sur une attaque personnelle déguisée, rejette.
+🧠 CONSEILS POUR INTERPRÉTATION
+Tolère un langage imparfait, spontané, jeune, ironique ou provocateur.
+Sois souple sur le vocabulaire politique, tant qu’il ne sert pas à rabaisser ou à haïr.
+Cherche l’intention : est-ce un ressenti exprimé franchement ? ou une volonté de nuire ?
+Accepte le fond, même si la forme est un peu brute.
+En cas de doute sur une formulation maladroite mais non agressive → accepte.
+En cas de doute sur une attaque masquée ou une violence implicite → rejette.
 
 📊 Décision requise :
 Réponds UNIQUEMENT par "approved" ou "rejected".`,
