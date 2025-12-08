@@ -87,7 +87,7 @@ export default function AddTeacherReviewDialog({ open, onOpenChange, teacherId, 
       });
 
       if (reviews.length > 0 && !existingReview) {
-        setError("Vous avez déjà publié un avis pour ce professeur.");
+        setError("Tu as déjà publié un avis pour ce professeur.");
       }
     } catch (error) {
       console.error("Error checking existing review:", error);
