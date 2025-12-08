@@ -20,10 +20,10 @@ export default function AddSchoolReviewDialog({ open, onOpenChange, schoolId, ex
   const [school, setSchool] = useState(null);
   const [flashingWidgets, setFlashingWidgets] = useState({});
   const [formData, setFormData] = useState({
-    ambiance: 2.5,
-    staff_quality: 2.5,
-    facilities: 2.5,
-    cafeteria: 2.5,
+    ambiance: 0,
+    staff_quality: 0,
+    facilities: 0,
+    cafeteria: 0,
     student_life_bonus: 0,
     has_student_life: false,
     has_network: false,
@@ -142,33 +142,49 @@ export default function AddSchoolReviewDialog({ open, onOpenChange, schoolId, ex
 
 Type: ${isEdit ? 'Modification d\'avis' : 'Nouvel avis'} sur un établissement
 
-🎯 Mission : Analyser ce contenu et décider s'il respecte la charte de ScoolAdvisor.
+Mission : Analyser ce contenu et décider s'il respecte la charte de ScoolAdvisor — Avis sur un établissement
 
-🚫 Contenu STRICTEMENT INTERDIT (à rejeter systématiquement) :
-- Grossièretés, insultes, vulgarité
-- Attaques personnelles directes
-- Discrimination (sexe, origine, religion, physique, orientation, handicap, etc.)
-- Harcèlement, moquerie ciblée ou humiliation
-- Diffamation ou atteinte grave à la réputation
-- Informations personnelles identifiantes
-- Propos sexuels, violents ou politiques extrêmes
-- Langage dénigrant
+🧭 Contexte :
+ScoolAdvisor permet aux utilisateurs (élèves, étudiants, parents, anciens) d’exprimer librement leur avis sur un établissement scolaire ou universitaire.
+La plateforme autorise un langage spontané, direct, familier, engagé ou critique, tant que cela reste dans le respect des personnes et du cadre légal.
+🎯 L’objectif est de permettre à chacun de dire la vérité de son expérience, sans filtre inutile, tout en protégeant contre les débordements haineux, diffamatoires ou illégaux.
+📚 RÈGLES GÉNÉRALES À APPLIQUER
 
-✅ Contenu AUTORISÉ (critiques factuelles et constructives) :
-- Descriptions factuelles de l'établissement, même négatives
-- Critiques constructives sur les INSTALLATIONS, SERVICES, AMBIANCE
-- Opinions personnelles respectueuses
+✅ Accepter si :
+Le ton est cash, familier ou sarcastique, sans être violent ni haineux.
+Le message critique l’organisation, le fonctionnement, l’ambiance ou l’approche pédagogique de l’établissement.
+Le contenu exprime une opinion personnelle ou un vécu authentique, même avec émotion ou exaspération.
+Le texte contient des généralisations idéologiques ou culturelles ("ambiance très à gauche", "école très élitiste") tant que ce n’est pas haineux ou incitatif.
+Le message inclut des jugements d’expérience tels que :
+“On est pas encadrés”
+“On fout rien dans cette école”
+“C’est le chaos total”
+“On te laisse te débrouiller tout seul”
+Des mots comme “nuls”, “relous”, “incompétents”, “perchés”, “déconnectés”, peuvent être acceptés s’ils visent l’organisation ou le ressenti général, pas une personne identifiée.
+Il n’y a aucune donnée personnelle (nom de personnel administratif, élèves, adresse privée, etc.)
 
-🔍 Règle d'or : 
-→ Critiquer ce que fait/propose l'établissement = ✅ OK
-→ Insulter ou dénigrer = ❌ INTERDIT
+❌ Rejeter si :
+Le message contient des insultes violentes, haineuses ou humiliantes (ex : “c’est une décharge de merde).
+Il tient des propos discriminatoires (origine, religion, genre, orientation, handicap, etc.) même envers un groupe.
+Il appelle à la haine ou à l’exclusion (“faut fermer cette école”, “c’est que pour les blancs”, “qu’ils crèvent tous”).
+Il diffame gravement sans preuve (ex : “ils volent les subventions”, “le directeur est un escroc”).
+Il contient des données personnelles identifiables (nom complet d’élève, numéro de téléphone, adresse privée, etc.)
+Il sert uniquement à se moquer ou insulter sans argument réel.
+Il incite à la violence, la peur ou la panique (“je vais frapper les profs”).
 
-En cas de doute léger sur une formulation maladroite mais sans malveillance apparente, privilégie l'approbation.
-En cas de doute sur une attaque déguisée, rejette.
+🧠 CONSEILS POUR INTERPRÉTATION
+Sois souple : ce sont souvent des jeunes qui s’expriment.
+Tolère l’exagération, la colère, les “c’est le bordel”, “on fout rien”, etc.
+Cherche l’intention : est-ce une critique forte mais sincère ? ou une insulte gratuite ?
+Autorise les généralisations idéologiques ou culturelles, tant qu’il n’y a pas de haine.
+Refuse tout contenu qui attaque un groupe social ou personnellement identifiable.
+En cas de doute mais pas de haine → approved
+En cas de doute avec intention malveillante → rejected
 
-📊 Décision requise :
-Réponds avec un objet JSON contenant:
-- decision: "approved" ou "rejected"
+📊 Ta mission :
+Après analyse du contenu, réponds uniquement par :
+approved → si le message respecte la charte
+rejected → si le message enfreint les règles ci-dessus"
 - reason: Si rejected, indique la raison parmi: "insulte", "discrimination", "diffamation", "harcelement", "contenu_inapproprie", "spam"`,
         response_json_schema: {
           type: "object",
