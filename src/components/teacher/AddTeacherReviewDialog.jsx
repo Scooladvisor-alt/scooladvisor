@@ -19,10 +19,10 @@ export default function AddTeacherReviewDialog({ open, onOpenChange, teacherId, 
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
   const [formData, setFormData] = useState({
-    workload: 2.5,
-    friendliness: 2.5,
-    teaching_method: 2.5,
-    grading_severity: 2.5,
+    workload: 0,
+    friendliness: 0,
+    teaching_method: 0,
+    grading_severity: 0,
     comment: "",
     is_anonymous: false,
     certification: false // Added certification field
