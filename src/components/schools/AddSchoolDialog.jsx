@@ -165,17 +165,51 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
         return;
       }
 
-      // SECURITY: Improved duplicate check (Server-side filter first)
-      const existingSchoolsInCity = await base44.entities.School.filter({ city: cleanCity });
-      const normalizedNewAddress = `${cleanAddress}||${cleanCity}`.toLowerCase().trim();
+      // SECURITY: Improved duplicate check (Server-side filter first) with robust normalization
+      // Normalisation stricte pour éviter les doublons (ex: "Roissy-en-Brie" vs "Roissy en Brie")
+      const normalizeString = (str) => {
+        return str
+          .toLowerCase()
+          .normalize("NFD").replace(/[\u0300-\u036f]/g, "") // Enlève les accents
+          .replace(/[^a-z0-9]/g, ""); // Enlève TOUT sauf lettres et chiffres (espaces, tirets, virgules, etc.)
+      };
 
-      const duplicate = existingSchoolsInCity.find((school) => {
-        const normalizedExistingAddress = `${school.address}||${school.city}`.toLowerCase().trim();
-        return normalizedExistingAddress === normalizedNewAddress || school.name.toLowerCase() === cleanName.toLowerCase();
+      const normalizedNewCity = normalizeString(cleanCity);
+      const normalizedNewAddress = normalizeString(cleanAddress);
+      const normalizedNewName = normalizeString(cleanName);
+
+      // Récupérer toutes les écoles (ou filtrer large si possible, mais ici on veut être sûr)
+      // On filtre d'abord par ville normalisée si possible, mais comme on ne peut pas normaliser dans la requête DB,
+      // on récupère les écoles qui "ressemblent" ou on fait une recherche plus large si possible.
+      // Pour l'instant, on récupère les écoles de la ville exacte pour commencer, mais on va aussi
+      // vérifier s'il n'y a pas d'autres écoles avec des noms similaires globalement ou dans des villes proches si on pouvait.
+      // Limitation technique: on ne peut filtrer que sur les champs exacts.
+      // On va donc récupérer TOUTES les écoles (ou un grand nombre) pour faire la vérification en mémoire si la base n'est pas trop énorme,
+      // ou mieux, on essaie de filtrer par le début du nom de la ville ou du code postal si on l'avait.
+      
+      // Stratégie robuste : On récupère toutes les écoles (si < 10000 ça va).
+      // Si trop lourd, on se contente de la ville exacte fournie par l'utilisateur ET on avertit.
+      // Ici, on va récupérer toutes les écoles pour être sûr à 100% (le user a dit "plus jamais").
+      const allSchools = await base44.entities.School.list(); // Potentiellement lourd mais nécessaire pour la garantie absolue demandée
+      
+      const duplicate = allSchools.find((school) => {
+        if (school.is_deleted) return false;
+
+        const schoolNormName = normalizeString(school.name);
+        const schoolNormCity = normalizeString(school.city);
+        const schoolNormAddress = normalizeString(school.address);
+
+        // Check 1: Même nom normalisé ET même ville normalisée
+        if (schoolNormName === normalizedNewName && schoolNormCity === normalizedNewCity) return true;
+
+        // Check 2: Même adresse normalisée ET même ville normalisée (même si le nom diffère légèrement)
+        if (schoolNormAddress === normalizedNewAddress && schoolNormCity === normalizedNewCity) return true;
+
+        return false;
       });
 
       if (duplicate) {
-        setError(`Cet établissement existe déjà : ${duplicate.name}`);
+        setError(`Cet établissement existe déjà (ID: ${duplicate.id}) : ${duplicate.name} à ${duplicate.city}`);
         setLoading(false);
         return;
       }

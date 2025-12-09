@@ -353,6 +353,13 @@ export default function Layout({ children }) {
           background-size: 200% 100%;
           animation: subtle-shine 3s ease-in-out infinite;
         }
+
+        /* PREVENTION DU ZOOM SUR MOBILE POUR LES INPUTS */
+        @media screen and (max-width: 767px) {
+          input, select, textarea {
+            font-size: 16px !important;
+          }
+        }
       `}</style>
       
       <header className="bg-white/90 backdrop-blur-md border-b border-slate-200 sticky top-0 z-50 shadow-sm">
