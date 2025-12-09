@@ -58,8 +58,8 @@ export default function SchoolsPage() {
   }, []);
 
   useEffect(() => {
-    if (internationalOnly && !allSchoolsLoaded && !internationalSchoolsLoaded) {
-      loadAllSchoolsForInternational();
+    if ((typeFilter !== "all" || internationalOnly) && !allSchoolsLoaded) {
+      loadAllSchoolsForFiltering();
     } else {
       filterSchools();
     }
@@ -98,29 +98,56 @@ export default function SchoolsPage() {
     }
   };
 
-  const loadAllSchoolsForInternational = async () => {
-    if (internationalSchoolsLoaded || allSchoolsLoaded) return;
+  const loadAllSchoolsForFiltering = async () => {
+    if (allSchoolsLoaded) return;
     
-    setLoading(true);
     try {
       const allSchools = await base44.entities.School.list("-average_rating");
-      const uniqueSchools = [];
-      const seenNames = new Set();
-
-      for (const school of allSchools) {
-        const normalizedName = normalizeString(school.name);
-        if (!seenNames.has(normalizedName)) {
-          seenNames.add(normalizedName);
-          uniqueSchools.push(school);
-        }
-      }
+      const uniqueSchools = removeDuplicates(allSchools);
       setSchools(uniqueSchools);
       setAllSchoolsLoaded(true);
       setInternationalSchoolsLoaded(true);
     } catch (error) {
       console.error("Error loading all schools:", error);
     }
-    setLoading(false);
+  };
+
+  const removeDuplicates = (schoolsList) => {
+    const uniqueSchools = [];
+    const seenKeys = new Set();
+    const duplicateIds = new Set();
+
+    for (const school of schoolsList) {
+      if (school.is_deleted) continue;
+      
+      const normalizedName = normalizeString(school.name);
+      const normalizedAddress = normalizeString(school.address);
+      const uniqueKey = `${normalizedName}||${normalizedAddress}||${school.city}`;
+      
+      if (seenKeys.has(uniqueKey)) {
+        duplicateIds.add(school.id);
+      } else {
+        seenKeys.add(uniqueKey);
+        uniqueSchools.push(school);
+      }
+    }
+
+    if (duplicateIds.size > 0) {
+      deleteDuplicates(Array.from(duplicateIds));
+    }
+
+    return uniqueSchools;
+  };
+
+  const deleteDuplicates = async (ids) => {
+    try {
+      for (const id of ids) {
+        await base44.entities.School.update(id, { is_deleted: true });
+      }
+      console.log(`Suppression de ${ids.length} doublons effectuée`);
+    } catch (error) {
+      console.error("Error deleting duplicates:", error);
+    }
   };
 
   useEffect(() => {
@@ -154,27 +181,13 @@ export default function SchoolsPage() {
     }
 
     try {
-      // Charger les 50 premiers établissements initialement pour affichage rapide
       const initialSchools = await base44.entities.School.list("-average_rating", 50);
-      
-      const uniqueSchools = [];
-      const seenNames = new Set();
-
-      for (const school of initialSchools) {
-        const normalizedName = normalizeString(school.name);
-        if (!seenNames.has(normalizedName)) {
-          seenNames.add(normalizedName);
-          uniqueSchools.push(school);
-        }
-      }
+      const uniqueSchools = removeDuplicates(initialSchools);
 
       setSchools(uniqueSchools);
       setAllSchoolsLoaded(initialSchools.length < 50);
       
-      // Charger le nombre total d'établissements en arrière-plan
       loadTotalSchoolCount();
-      
-      // Charger les counts en arrière-plan après l'affichage initial
       loadTeacherCounts();
     } catch (error) {
       console.error("Error loading data:", error);
@@ -217,25 +230,14 @@ export default function SchoolsPage() {
 
   const loadMoreSchools = async () => {
     if (allSchoolsLoaded) {
-      // Si tout est déjà chargé, juste augmenter le display count
       setDisplayCount(prev => prev + 50);
       return;
     }
     
     setLoadingMore(true);
     try {
-      // Charger TOUS les établissements sans limite
       const allSchools = await base44.entities.School.list("-average_rating");
-      const uniqueSchools = [];
-      const seenNames = new Set();
-
-      for (const school of allSchools) {
-        const normalizedName = normalizeString(school.name);
-        if (!seenNames.has(normalizedName)) {
-          seenNames.add(normalizedName);
-          uniqueSchools.push(school);
-        }
-      }
+      const uniqueSchools = removeDuplicates(allSchools);
       setSchools(uniqueSchools);
       setAllSchoolsLoaded(true);
     } catch (error) {
