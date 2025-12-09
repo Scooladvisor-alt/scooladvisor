@@ -188,7 +188,7 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
         address: cleanAddress,
         city: cleanCity,
         region: formData.isInternational ? "International" : "",
-        status: "approved",
+        status: "approved", // Optimistic UI: approved by default for schools
         average_rating: 0,
         review_count: 0,
         is_deleted: false

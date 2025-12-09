@@ -349,12 +349,33 @@ export default function ProfilePage() {
                       <Mail className="w-4 h-4" />
                       <span className="text-sm">{user.email}</span>
                     </div>
-                    <div className="flex items-center justify-center sm:justify-start gap-2">
-                      <Shield className="w-4 h-4 text-blue-600" />
-                      <Badge className="bg-blue-100 text-blue-800 border-blue-200 text-sm">
-                        {user.role === 'admin' ? 'Administrateur' : user.role === 'moderator' ? 'Modérateur' : 'Étudiant'}
-                      </Badge>
+                    <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2">
+                      <div className="flex items-center gap-2">
+                        <Shield className="w-4 h-4 text-blue-600" />
+                        <Badge className="bg-blue-100 text-blue-800 border-blue-200 text-sm">
+                          {user.role === 'admin' ? 'Administrateur' : user.role === 'moderator' ? 'Modérateur' : 'Étudiant'}
+                        </Badge>
+                      </div>
+                      
+                      {/* Section Modération */}
+                      {(user.warnings_count > 0 || user.is_banned) && (
+                        <div className={`flex items-center gap-2 px-3 py-1 rounded-full border ${user.is_banned ? 'bg-red-50 border-red-200 text-red-700' : 'bg-orange-50 border-orange-200 text-orange-700'}`}>
+                          <Shield className="w-3.5 h-3.5" />
+                          <span className="text-xs font-medium">
+                            {user.is_banned 
+                              ? `Banni jusqu'au ${new Date(user.banned_until).toLocaleDateString()}` 
+                              : `${user.warnings_count} avertissement${user.warnings_count > 1 ? 's' : ''}`
+                            }
+                          </span>
+                        </div>
+                      )}
                     </div>
+                    
+                    {user.warnings_count > 0 && !user.is_banned && (
+                      <p className="text-xs text-slate-500 mt-2 italic">
+                        Attention : à partir de 3 avertissements, ton compte sera suspendu temporairement.
+                      </p>
+                    )}
                   </div>
                 </div>
               </div>
