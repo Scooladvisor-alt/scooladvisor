@@ -32,8 +32,8 @@ export default function TeachersList({ schoolId, onAddTeacher }) {
   useEffect(() => {
     const loadTeachers = async () => {
       setLoading(true);
-      // Charger seulement les 15 premiers profs initialement (triés par note)
-      const teachersData = await base44.entities.Teacher.filter({ school_id: schoolId, status: "approved" }, "-average_rating", 15);
+      // Charger jusqu'à 100 professeurs pour éviter qu'ils ne disparaissent
+      const teachersData = await base44.entities.Teacher.filter({ school_id: schoolId, status: "approved", is_deleted: false }, "-average_rating", 100);
       setTeachers(teachersData);
       setLoading(false);
     };
@@ -44,7 +44,7 @@ export default function TeachersList({ schoolId, onAddTeacher }) {
 
   const loadAllTeachers = async () => {
     setLoading(true);
-    const allTeachers = await base44.entities.Teacher.filter({ school_id: schoolId, status: "approved" });
+    const allTeachers = await base44.entities.Teacher.filter({ school_id: schoolId, status: "approved", is_deleted: false });
     const sortedTeachers = allTeachers.sort((a, b) => (b.average_rating || 0) - (a.average_rating || 0));
     setTeachers(sortedTeachers);
     setLoading(false);
@@ -209,7 +209,7 @@ export default function TeachersList({ schoolId, onAddTeacher }) {
             <div className="mt-4 text-center">
                     <button
                 onClick={async () => {
-                  if (teachers.length <= 15) {
+                  if (teachers.length >= 100) {
                     await loadAllTeachers();
                   }
                   setShowAll(true);
