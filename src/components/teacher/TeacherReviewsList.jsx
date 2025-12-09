@@ -53,43 +53,66 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
   const [userLikes, setUserLikes] = useState(new Set());
   const [reviewUsers, setReviewUsers] = useState({});
   const [expandedReviews, setExpandedReviews] = useState(new Set());
-  const [displayCount, setDisplayCount] = useState(6);
-  const [hasMoreReviews, setHasMoreReviews] = useState(false);
+  const [hasMoreReviews, setHasMoreReviews] = useState(true);
 
   useEffect(() => {
-    loadReviews();
-  }, [teacherId, user]); // Added user to dependencies for correct behavior when user changes
+    loadReviews(true);
+  }, [teacherId, user]);
 
-  const loadReviews = async () => {
-    setLoading(true);
-    // Charger seulement les 10 premiers avis initialement
-    const reviewsData = await TeacherReview.filter({ teacher_id: teacherId, status: "published" }, "-created_date", 10);
-    setReviews(reviewsData);
-    setHasMoreReviews(reviewsData.length >= 10);
+  const loadReviews = async (reset = false) => {
+    if (reset) {
+      setLoading(true);
+      setReviews([]);
+    } else {
+      setLoadingMore(true);
+    }
 
-    // Charger les infos utilisateurs pour les avis non-anonymes
-    const userEmails = [...new Set(reviewsData.filter((r) => !r.is_anonymous).map((r) => r.created_by))];
-    const usersData = {};
+    try {
+      const limit = 5;
+      const skip = reset ? 0 : reviews.length;
+      
+      // Utilisation de skip pour la pagination
+      const newReviews = await TeacherReview.filter(
+        { teacher_id: teacherId, status: "published" }, 
+        "-created_date", 
+        limit, 
+        skip
+      );
 
-    for (const email of userEmails) {
-      try {
-        if (user && email === user.email) {
-          usersData[email] = user;
+      if (newReviews.length < limit) {
+        setHasMoreReviews(false);
+      }
+
+      const updatedReviews = reset ? newReviews : [...reviews, ...newReviews];
+      setReviews(updatedReviews);
+
+      // Charger les infos utilisateurs pour les avis non-anonymes
+      const userEmails = [...new Set(newReviews.filter((r) => !r.is_anonymous).map((r) => r.created_by))];
+      // Note: On pourrait optimiser en ne chargeant que les nouveaux, mais on garde la logique simple
+      // On fusionne avec les existants
+      
+      const newUsersData = { ...reviewUsers };
+      for (const email of userEmails) {
+        if (!newUsersData[email] && user && email === user.email) {
+           newUsersData[email] = user;
         }
-      } catch (error) {
-        // Ignorer silencieusement les erreurs de chargement
-      }}
+      }
+      setReviewUsers(newUsersData);
 
-    setReviewUsers(usersData);
-    setLoading(false);
+    } catch (error) {
+      console.error("Error loading reviews:", error);
+    } finally {
+      setLoading(false);
+      setLoadingMore(false);
+    }
   };
 
-  const loadAllReviews = async () => {
-    setLoadingMore(true);
-    const reviewsData = await TeacherReview.filter({ teacher_id: teacherId, status: "published" }, "-created_date");
-    setReviews(reviewsData);
-    setHasMoreReviews(false);
-    setLoadingMore(false);
+  const handleScroll = (e) => {
+    const { scrollTop, scrollHeight, clientHeight } = e.target;
+    // Si on est proche du bas (à 50px près) et qu'on ne charge pas déjà et qu'il y en a plus
+    if (scrollHeight - scrollTop <= clientHeight + 50 && !loadingMore && !loading && hasMoreReviews) {
+      loadReviews(false);
+    }
   };
 
   const updateTeacherStats = async () => {
@@ -253,8 +276,8 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
     setExpandedReviews(newExpanded);
   };
 
-  const sortedReviews = [...reviews].sort((a, b) => (getLikeCount(b) || 0) - (getLikeCount(a) || 0));
-  const displayedReviews = sortedReviews.slice(0, displayCount);
+  // On garde l'ordre de chargement (par date) pour le scroll infini
+  const displayedReviews = reviews;
 
   const Content = () => (
     <div className="flex-1 flex flex-col h-full">
@@ -268,7 +291,7 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
           </linearGradient>
         </defs>
       </svg>
-      <div className="border-b border-slate-100 bg-gradient-to-r from-pink-500/10 via-purple-500/10 to-blue-500/10 p-4 mb-2">
+      <div className="border-b border-slate-100 bg-gradient-to-r from-pink-500/10 via-purple-500/10 to-blue-500/10 p-4 mb-2 flex-shrink-0">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="p-2 bg-white rounded-lg shadow-sm">
@@ -286,11 +309,11 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
       </div>
 
       <div className="flex-1 flex flex-col p-2 pt-2 overflow-hidden">
-          {loading ?
-          <div className="flex justify-center items-center h-48">
+          {loading && reviews.length === 0 ?
+          <div className="flex justify-center items-center h-full">
               <GradientSpinner size="w-8 h-8" />
             </div> :
-          sortedReviews.length === 0 ?
+          reviews.length === 0 ?
           <div className="text-center py-12">
               <div className="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-4 border border-slate-100">
                 <MessageSquare className="w-8 h-8 text-slate-300" />
@@ -299,7 +322,10 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
               <p className="text-sm text-slate-500 mt-1">Soyez le premier à noter !</p>
             </div> :
 
-          <div className="space-y-4 flex-1 overflow-y-auto pr-2 custom-scrollbar">
+          <div 
+            className="space-y-4 flex-1 overflow-y-auto pr-2 custom-scrollbar"
+            onScroll={handleScroll}
+          >
             <style>{`
               .custom-scrollbar::-webkit-scrollbar { width: 6px; }
               .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
@@ -428,27 +454,12 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
 
             })}
             
-            {(hasMoreReviews || sortedReviews.length > displayCount) && (
-              <div className="text-center pt-4">
-                <button
-                  onClick={async () => {
-                    if (hasMoreReviews && reviews.length <= 10) {
-                      await loadAllReviews();
-                    }
-                    setDisplayCount(prev => prev + 10);
-                  }}
-                  disabled={loadingMore}
-                  className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-sm font-medium transition-colors"
-                >
-                  {loadingMore ? (
-                    <span className="flex items-center gap-2 text-slate-500">
-                      <Loader2 className="w-4 h-4 animate-spin" />
-                      Chargement...
-                    </span>
-                  ) : (
-                    `Voir plus d'avis`
-                  )}
-                </button>
+            {loadingMore && (
+              <div className="text-center py-4">
+                <span className="flex items-center justify-center gap-2 text-slate-500 text-sm">
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  Chargement...
+                </span>
               </div>
             )}
             </div>
