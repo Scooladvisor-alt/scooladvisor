@@ -79,7 +79,7 @@ export default function SchoolsPage() {
       }
       
       const allMatchingSchools = await base44.entities.School.filter(query);
-      const activeSchools = allMatchingSchools.filter(s => !s.is_deleted);
+      const activeSchools = allMatchingSchools.filter(s => !s.is_deleted && s.status === 'approved');
       
       if (searchTerm) {
         const normalizedSearch = normalizeString(searchTerm);
@@ -154,8 +154,8 @@ export default function SchoolsPage() {
     }
 
     try {
-      // Charger les 50 premiers établissements initialement pour affichage rapide
-      const initialSchools = await base44.entities.School.list("-average_rating", 50);
+      // Charger TOUS les établissements dès le départ
+      const initialSchools = await base44.entities.School.list("-average_rating");
       
       const uniqueSchools = [];
       const seenNames = new Set();
@@ -169,7 +169,7 @@ export default function SchoolsPage() {
       }
 
       setSchools(uniqueSchools);
-      setAllSchoolsLoaded(initialSchools.length < 50);
+      setAllSchoolsLoaded(true);
       
       // Charger le nombre total d'établissements en arrière-plan
       loadTotalSchoolCount();
@@ -251,8 +251,8 @@ export default function SchoolsPage() {
   const filterSchools = () => {
     let filtered = [...schools];
 
-    // Exclure uniquement les écoles supprimées
-    filtered = filtered.filter((school) => !school.is_deleted);
+    // Exclure les écoles supprimées ET celles avec status != approved
+    filtered = filtered.filter((school) => !school.is_deleted && school.status === 'approved');
 
     if (searchTerm) {
       const normalizedSearch = normalizeString(searchTerm);
@@ -459,7 +459,7 @@ export default function SchoolsPage() {
         }
       `}</style>
       
-      <div className="max-w-7xl mx-auto px-4 py-8 md:py-12">
+      <div className="max-w-[1600px] mx-auto px-4 py-8 md:py-12">
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
