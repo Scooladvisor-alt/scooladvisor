@@ -41,9 +41,9 @@ export default function TeacherDetailPage() {
   const [loading, setLoading] = useState(true);
   const [showAddReview, setShowAddReview] = useState(false);
   const [editingReview, setEditingReview] = useState(null);
-  const [showSatoshiSummary, setShowSatoshiSummary] = useState(false);
-  const [satoshiSummary, setSatoshiSummary] = useState("");
-  const [loadingSatoshi, setLoadingSatoshi] = useState(false);
+  const [showAntoninSummary, setShowAntoninSummary] = useState(false);
+  const [antoninSummary, setAntoninSummary] = useState("");
+  const [loadingAntonin, setLoadingAntonin] = useState(false);
 
   useEffect(() => {
     if (teacherId) {
@@ -119,16 +119,16 @@ export default function TeacherDetailPage() {
 
 
 
-  const handleAskSatoshi = async () => {
-    setLoadingSatoshi(true);
-    setShowSatoshiSummary(true);
+  const handleAskAntonin = async () => {
+    setLoadingAntonin(true);
+    setShowAntoninSummary(true);
 
     try {
       const reviews = await base44.entities.TeacherReview.filter({ teacher_id: teacherId, status: "published" });
 
       if (!reviews || reviews.length === 0) {
-        setSatoshiSummary("Pas encore d'avis sur ce prof ! Sois le premier à dire ce que tu en penses 😎");
-        setLoadingSatoshi(false);
+        setAntoninSummary("Pas encore d'avis sur ce prof ! Sois le premier à dire ce que tu en penses 😎");
+        setLoadingAntonin(false);
         return;
       }
 
@@ -153,12 +153,12 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
         add_context_from_internet: false
       });
 
-      setSatoshiSummary(result);
+      setAntoninSummary(result);
     } catch (error) {
       console.error("Error generating summary:", error);
-      setSatoshiSummary("Oups, j'ai un petit bug. Réessaye plus tard !");
+      setAntoninSummary("Oups, j'ai un petit bug. Réessaye plus tard !");
     } finally {
-      setLoadingSatoshi(false);
+      setLoadingAntonin(false);
     }
   };
 
@@ -391,15 +391,15 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
                 </Button>
 
                 <Button
-                  onClick={handleAskSatoshi}
+                  onClick={handleAskAntonin}
                   variant="outline"
                   className="flex-1 sm:flex-none border-2 border-pink-100 hover:bg-pink-50 hover:border-pink-200 text-slate-700 h-11 px-4 rounded-xl font-medium bg-white/50">
                   <Sparkles className="w-4 h-4 mr-2 text-[#FF4D8D]" />
                   <span className="hidden sm:inline bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent font-bold">
-                    Demander à Satoshi ce qu'il en pense
+                    Demander à Antonin ce qu'il en pense
                   </span>
                   <span className="sm:hidden bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent font-bold">
-                    Avis de Satoshi
+                    Avis d'Antonin
                   </span>
                 </Button>
 
@@ -477,28 +477,28 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
 
       </Suspense>
 
-      <Dialog open={showSatoshiSummary} onOpenChange={setShowSatoshiSummary}>
+      <Dialog open={showAntoninSummary} onOpenChange={setShowAntoninSummary}>
         <DialogContent className="max-w-[95vw] sm:max-w-2xl max-h-[80vh] overflow-y-auto rounded-2xl">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2 text-lg sm:text-2xl">
               <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-[#FF4D8D]" />
               <span className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
-                L'avis de Satoshi
+                L'avis d'Antonin
               </span>
               <span className="text-slate-900">sur {teacher.name}</span>
             </DialogTitle>
           </DialogHeader>
           <div className="py-4 sm:py-6">
-            {loadingSatoshi ?
+            {loadingAntonin ?
             <div className="flex flex-col items-center justify-center py-8 sm:py-12">
                 <GradientSpinner size="w-10 h-10 sm:w-12 sm:h-12" className="mb-4" />
-                <p className="text-slate-600 text-sm sm:text-base">Satoshi 🤖 analyse les avis...</p>
+                <p className="text-slate-600 text-sm sm:text-base">Antonin 🤖 analyse les avis...</p>
               </div> :
 
             <div className="prose prose-slate max-w-none prose-sm sm:prose-base">
                 <div className="bg-gradient-to-r from-pink-50 via-purple-50/50 to-blue-50 rounded-lg p-4 sm:p-6 border-2 border-pink-100">
                   <p className="text-slate-800 leading-relaxed text-base sm:text-lg whitespace-pre-wrap">
-                    {satoshiSummary}
+                    {antoninSummary}
                   </p>
                 </div>
               </div>
