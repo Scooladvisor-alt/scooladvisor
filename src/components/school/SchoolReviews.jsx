@@ -39,9 +39,9 @@ export default function SchoolReviews({ schoolId, user, onReload, onEditReview, 
   const [reportingReview, setReportingReview] = React.useState(null);
   const [localLikes, setLocalLikes] = useState({});
   const [userLikes, setUserLikes] = useState(new Set());
-  const [showSatoshiSummary, setShowSatoshiSummary] = useState(false);
-  const [satoshiSummary, setSatoshiSummary] = useState("");
-  const [loadingSatoshi, setLoadingSatoshi] = useState(false);
+  const [showAntoninSummary, setShowAntoninSummary] = useState(false);
+  const [antoninSummary, setAntoninSummary] = useState("");
+  const [loadingAntonin, setLoadingAntonin] = useState(false);
   const [expandedReviews, setExpandedReviews] = useState(new Set());
 
   useEffect(() => {
@@ -216,14 +216,14 @@ export default function SchoolReviews({ schoolId, user, onReload, onEditReview, 
     setExpandedReviews(newExpanded);
   };
 
-  const handleAskSatoshi = async () => {
-    setLoadingSatoshi(true);
-    setShowSatoshiSummary(true);
+  const handleAskAntonin = async () => {
+    setLoadingAntonin(true);
+    setShowAntoninSummary(true);
 
     try {
       if (!reviews || reviews.length === 0) {
-        setSatoshiSummary("Pas encore d'avis sur cet établissement ! Sois le premier à dire ce que tu en penses 😎");
-        setLoadingSatoshi(false);
+        setAntoninSummary("Pas encore d'avis sur cet établissement ! Sois le premier à dire ce que tu en penses 😎");
+        setLoadingAntonin(false);
         return;
       }
 
@@ -236,7 +236,7 @@ export default function SchoolReviews({ schoolId, user, onReload, onEditReview, 
         comment: r.comment
       }));
 
-      const prompt = `Tu es Satoshi, une IA qui résume les avis des étudiants sur les profs et les établissements.
+      const prompt = `Tu es Antonin, une IA qui résume les avis des étudiants sur les profs et les établissements.
 
 Ton rôle : faire une synthèse courte, stylée et pleine de personnalité, comme si tu racontais ça à un pote, avec de l'humour, du bon sens et des images qui parlent.
 
@@ -277,19 +277,19 @@ ${JSON.stringify(reviewsSummary, null, 2)}
 
 IMPORTANT : Base-toi principalement sur les COMMENTAIRES des étudiants pour comprendre le ressenti réel. Les notes seules ne suffisent pas. Lis les commentaires pour saisir l'ambiance, les forces et les faiblesses de l'établissement.
 
-Rédige maintenant ton résumé façon "L'avis de Satoshi" en 3 phrases max.`;
+Rédige maintenant ton résumé façon "L'avis d'Antonin" en 3 phrases max.`;
 
       const result = await base44.integrations.Core.InvokeLLM({
         prompt: prompt,
         add_context_from_internet: false
       });
 
-      setSatoshiSummary(result);
+      setAntoninSummary(result);
     } catch (error) {
-      console.error("Error calling Satoshi:", error);
-      setSatoshiSummary("Oups, Satoshi a eu un bug ! Réessaie dans quelques instants 🤖");
+      console.error("Error calling Antonin:", error);
+      setAntoninSummary("Oups, Antonin a eu un bug ! Réessaie dans quelques instants 🤖");
     } finally {
-      setLoadingSatoshi(false);
+      setLoadingAntonin(false);
     }
   };
 
@@ -325,12 +325,12 @@ Rédige maintenant ton résumé façon "L'avis de Satoshi" en 3 phrases max.`;
             
             {reviews.length > 0 &&
             <Button
-              onClick={handleAskSatoshi}
+              onClick={handleAskAntonin}
               size="sm"
               className="bg-transparent hover:bg-purple-50 border-0 shadow-none">
 
                 <Sparkles className="w-4 h-4 mr-1 text-[#FF4D8D]" />
-                <span className="text-xs font-bold bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">Satoshi</span>
+                <span className="text-xs font-bold bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">Antonin</span>
               </Button>
             }
           </div>
@@ -526,28 +526,28 @@ Rédige maintenant ton résumé façon "L'avis de Satoshi" en 3 phrases max.`;
 
       }
 
-      <Dialog open={showSatoshiSummary} onOpenChange={setShowSatoshiSummary}>
+      <Dialog open={showAntoninSummary} onOpenChange={setShowAntoninSummary}>
         <DialogContent className="max-w-[95vw] sm:max-w-2xl max-h-[80vh] overflow-y-auto rounded-2xl">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2 text-lg sm:text-2xl">
               <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-[#FF4D8D]" />
               <span className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
-                L'avis de Satoshi
+                L'avis d'Antonin
               </span>
               <span className="text-slate-900">sur l'établissement</span>
             </DialogTitle>
           </DialogHeader>
           <div className="py-4 sm:py-6">
-            {loadingSatoshi ?
+            {loadingAntonin ?
             <div className="flex flex-col items-center justify-center py-8 sm:py-12">
                 <GradientSpinner size="w-10 h-10 sm:w-12 sm:h-12" className="mb-4" />
-                <p className="text-slate-600 text-sm sm:text-base">Satoshi 🤖 analyse les avis...</p>
+                <p className="text-slate-600 text-sm sm:text-base">Antonin 🤖 analyse les avis...</p>
               </div> :
 
             <div className="prose prose-slate max-w-none prose-sm sm:prose-base">
                 <div className="bg-gradient-to-r from-pink-50 via-purple-50 to-blue-50 rounded-lg p-4 sm:p-6 border-2 border-pink-100">
                   <p className="text-slate-800 leading-relaxed text-base sm:text-lg whitespace-pre-wrap">
-                    {satoshiSummary}
+                    {antoninSummary}
                   </p>
                 </div>
               </div>
