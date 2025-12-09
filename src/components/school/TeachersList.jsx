@@ -32,8 +32,8 @@ export default function TeachersList({ schoolId, onAddTeacher }) {
   useEffect(() => {
     const loadTeachers = async () => {
       setLoading(true);
-      // Charger jusqu'à 100 professeurs pour éviter qu'ils ne disparaissent
-      const teachersData = await base44.entities.Teacher.filter({ school_id: schoolId, status: "approved", is_deleted: false }, "-average_rating", 100);
+      // Charger TOUS les professeurs sans limite (5000 max par sécurité technique, mais c'est énorme)
+      const teachersData = await base44.entities.Teacher.filter({ school_id: schoolId, status: "approved", is_deleted: false }, "-average_rating", 5000);
       setTeachers(teachersData);
       setLoading(false);
     };
@@ -41,14 +41,6 @@ export default function TeachersList({ schoolId, onAddTeacher }) {
       loadTeachers();
     }
   }, [schoolId]);
-
-  const loadAllTeachers = async () => {
-    setLoading(true);
-    const allTeachers = await base44.entities.Teacher.filter({ school_id: schoolId, status: "approved", is_deleted: false });
-    const sortedTeachers = allTeachers.sort((a, b) => (b.average_rating || 0) - (a.average_rating || 0));
-    setTeachers(sortedTeachers);
-    setLoading(false);
-  };
 
   const podiumStyles = [
   'bg-gradient-to-r from-amber-200 via-amber-100 to-amber-200 border-amber-300',
@@ -63,11 +55,8 @@ export default function TeachersList({ schoolId, onAddTeacher }) {
   teacher.subject.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  // Determine initial number of teachers to display based on screen size
-  const initialDisplayCount = isMobile ? 4 : 10;
-
-  const displayedTeachers = showAll ? filteredTeachers : filteredTeachers.slice(0, initialDisplayCount);
-  const hasMore = filteredTeachers.length > initialDisplayCount && !showAll;
+  // Afficher tous les professeurs sans aucune limite d'affichage
+  const displayedTeachers = filteredTeachers;
 
   return (
     <>
@@ -205,20 +194,7 @@ export default function TeachersList({ schoolId, onAddTeacher }) {
               })}
                 </div>
 
-                {hasMore &&
-            <div className="mt-4 text-center">
-                    <button
-                onClick={async () => {
-                  if (teachers.length >= 100) {
-                    await loadAllTeachers();
-                  }
-                  setShowAll(true);
-                }} className=" bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-sm font-medium transition-colors">
-
-                      Voir tous les professeurs
-                    </button>
-                  </div>
-            }
+{/* Plus de bouton "Voir plus", tous les profs sont affichés */}
               </>
           }
         </CardContent>
