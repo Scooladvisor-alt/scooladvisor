@@ -338,6 +338,14 @@ export default function SchoolsPage() {
               "urlTemplate": `${window.location.origin}?search={search_term_string}`
             },
             "query-input": "required name=search_term_string"
+          },
+          "publisher": {
+            "@type": "Organization",
+            "name": "ScoolAdvisor",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/d395706ad_Gemini_Generated_Image_3m8bo23m8bo23m8b.png"
+            }
           }
         }}
       />

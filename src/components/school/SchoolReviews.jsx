@@ -386,10 +386,10 @@ Rédige maintenant ton résumé façon "L'avis de Satoshi" en 3 phrases max.`;
                       <div className="flex items-center gap-2 sm:gap-3 flex-1">
                         <Avatar className="w-8 h-8 sm:w-10 sm:h-10 border-2 border-slate-100">
                           {avatarUrl ?
-                        <AvatarImage src={avatarUrl} /> :
+                        <AvatarImage src={avatarUrl} loading="lazy" alt="Avatar utilisateur" /> :
                         null}
                           <AvatarFallback className="bg-transparent">
-                          <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/f5396bc58_a-humanized-black-graduation-cap-with-a-star-shape-3.png" alt="Avatar" className="w-full h-full object-cover" />
+                          <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/f5396bc58_a-humanized-black-graduation-cap-with-a-star-shape-3.png" alt="Avatar par défaut" className="w-full h-full object-cover" loading="lazy" />
                           </AvatarFallback>
                         </Avatar>
                         <div className="flex-1 min-w-0">

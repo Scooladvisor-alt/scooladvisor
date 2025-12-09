@@ -356,11 +356,14 @@ export default function Layout({ children }) {
       <header className="bg-white/90 backdrop-blur-md border-b border-slate-200 sticky top-0 z-50 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="flex items-center justify-between h-16">
-            <Link to={createPageUrl("Schools")} className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+            <Link to={createPageUrl("Schools")} className="flex items-center gap-2 hover:opacity-80 transition-opacity" aria-label="Retour à l'accueil Scooladvisor">
               <img
                 src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/d395706ad_Gemini_Generated_Image_3m8bo23m8bo23m8b.png"
-                alt="Scooladvisor"
-                className="h-14 w-14 sm:h-16 sm:w-16" />
+                alt="Logo Scooladvisor - Avis étudiants"
+                className="h-14 w-14 sm:h-16 sm:w-16"
+                loading="eager"
+                width="64"
+                height="64" />
 
               <span className="text-base sm:text-2xl font-bold bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 text-transparent bg-clip-text">Scooladvisor</span>
             </Link>
@@ -410,10 +413,10 @@ export default function Layout({ children }) {
                       <Button variant="ghost" className="flex items-center gap-2 hover:bg-slate-50 px-2 sm:px-4">
                         <Avatar className="w-8 h-8 border-2 border-blue-100">
                           {user.profile_avatar && user.profile_avatar !== 'letter' ?
-                      <AvatarImage src={getAvatarUrl(user.profile_avatar)} /> :
+                      <AvatarImage src={getAvatarUrl(user.profile_avatar)} loading="lazy" alt={`Avatar de ${user.full_name}`} /> :
                       null}
                           <AvatarFallback className="bg-transparent">
-                            <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/f5396bc58_a-humanized-black-graduation-cap-with-a-star-shape-3.png" alt="Avatar" className="w-full h-full object-cover" />
+                            <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/f5396bc58_a-humanized-black-graduation-cap-with-a-star-shape-3.png" alt="Avatar par défaut" className="w-full h-full object-cover" loading="lazy" />
                           </AvatarFallback>
                         </Avatar>
                         <span className="text-sm font-medium text-slate-900 hidden sm:block">{user.full_name?.split(' ')[0]}</span>
