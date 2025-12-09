@@ -25,7 +25,6 @@ const typeColors = {
 
 export default function SchoolCard({ school, teacherCount }) {
   const hasRating = school.review_count > 0 && school.average_rating > 0;
-  const schoolTypeName = typeLabels[school.type] || 'Établissement';
 
   // Prefetch au survol
   const handleMouseEnter = useCallback(() => {
@@ -37,7 +36,6 @@ export default function SchoolCard({ school, teacherCount }) {
       to={createPageUrl(`SchoolDetail?id=${school.id}`)} 
       className="block h-full w-full group"
       onMouseEnter={handleMouseEnter}
-      aria-label={`Voir la page de ${school.name} - ${schoolTypeName} à ${school.city}`}
     >
       <style>{`
         @keyframes shine {

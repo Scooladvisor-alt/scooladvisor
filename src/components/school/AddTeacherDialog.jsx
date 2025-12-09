@@ -143,26 +143,13 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
       return;
     }
 
-    // SECURITY: Sanitize and validate inputs
+    // SECURITY: Sanitize inputs
     const cleanName = security.sanitize(formData.name);
     const finalSubjectRaw = showCustomSubject ? formData.customSubject : formData.subject;
     const cleanSubject = security.sanitize(finalSubjectRaw);
 
     if (!cleanSubject || !cleanName) {
       setError("Veuillez vérifier les champs (caractères interdits détectés).");
-      setLoading(false);
-      return;
-    }
-
-    // Additional validation
-    if (cleanName.length < 2 || cleanName.length > 150) {
-      setError("Le nom doit contenir entre 2 et 150 caractères.");
-      setLoading(false);
-      return;
-    }
-
-    if (cleanSubject.length < 2 || cleanSubject.length > 100) {
-      setError("La matière doit contenir entre 2 et 100 caractères.");
       setLoading(false);
       return;
     }
@@ -365,9 +352,8 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
 
                     <img
                     src={avatar.url}
-                    alt={`Avatar professeur ${avatar.name}`}
-                    className="w-full h-10 sm:h-16 md:h-20 object-contain rounded-md"
-                    loading="lazy" />
+                    alt={avatar.name}
+                    className="w-full h-10 sm:h-16 md:h-20 object-contain rounded-md" />
 
                   </button>
                 )}

@@ -154,7 +154,7 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
     setError(null);
 
     try {
-      // SECURITY: Sanitize and validate inputs
+      // SECURITY: Sanitize inputs
       const cleanName = security.sanitize(formData.name);
       const cleanAddress = security.sanitize(formData.address);
       const cleanCity = security.sanitize(formData.city);
@@ -163,25 +163,6 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
          setError("Données invalides détectées.");
          setLoading(false);
          return;
-      }
-
-      // Additional validation
-      if (cleanName.length < 3 || cleanName.length > 200) {
-        setError("Le nom doit contenir entre 3 et 200 caractères.");
-        setLoading(false);
-        return;
-      }
-
-      if (cleanAddress.length < 5 || cleanAddress.length > 300) {
-        setError("L'adresse doit contenir entre 5 et 300 caractères.");
-        setLoading(false);
-        return;
-      }
-
-      if (cleanCity.length < 2 || cleanCity.length > 100) {
-        setError("La ville doit contenir entre 2 et 100 caractères.");
-        setLoading(false);
-        return;
       }
 
       // SECURITY: Improved duplicate check (Server-side filter first)
