@@ -141,7 +141,7 @@ export default function TeacherDetailPage() {
         comment: r.comment
       }));
 
-      const prompt = `Tu es un étudiant cool qui résume les avis sur ce professeur. 
+      const prompt = `Tu es Satoshi, un étudiant cool qui résume les avis sur ce professeur. 
 
 Voici les avis : ${JSON.stringify(reviewsSummary)}
 
@@ -156,7 +156,7 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
       setAntoninSummary(result);
     } catch (error) {
       console.error("Error generating summary:", error);
-      setAntoninSummary("Oups, j'ai un petit bug. Réessaye plus tard !");
+      setAntoninSummary("Oups, Satoshi a un petit bug. Réessaye plus tard !");
     } finally {
       setLoadingAntonin(false);
     }
@@ -396,10 +396,10 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
                   className="flex-1 sm:flex-none border-2 border-pink-100 hover:bg-pink-50 hover:border-pink-200 text-slate-700 h-11 px-4 rounded-xl font-medium bg-white/50">
                   <Sparkles className="w-4 h-4 mr-2 text-[#FF4D8D]" />
                   <span className="hidden sm:inline bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent font-bold">
-                    Demander à Antonin ce qu'il en pense
+                    Demander à Satoshi ce qu'il en pense
                   </span>
                   <span className="sm:hidden bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent font-bold">
-                    Avis d'Antonin
+                    Avis de Satoshi
                   </span>
                 </Button>
 
@@ -484,7 +484,7 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
             <DialogTitle className="flex items-center gap-2 text-lg sm:text-2xl">
               <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-[#FF4D8D]" />
               <span className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
-                L'avis d'Antonin
+                L'avis de Satoshi
               </span>
               <span className="text-slate-900">sur {teacher.name}</span>
             </DialogTitle>
@@ -493,7 +493,7 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
             {loadingAntonin ?
             <div className="flex flex-col items-center justify-center py-8 sm:py-12">
                 <GradientSpinner size="w-10 h-10 sm:w-12 sm:h-12" className="mb-4" />
-                <p className="text-slate-600 text-sm sm:text-base">Antonin 🤖 analyse les avis...</p>
+                <p className="text-slate-600 text-sm sm:text-base">Satoshi 🤖 analyse les avis...</p>
               </div> :
 
             <div className="prose prose-slate max-w-none prose-sm sm:prose-base">
