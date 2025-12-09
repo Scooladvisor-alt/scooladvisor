@@ -39,9 +39,9 @@ export default function SchoolReviews({ schoolId, user, onReload, onEditReview, 
   const [reportingReview, setReportingReview] = React.useState(null);
   const [localLikes, setLocalLikes] = useState({});
   const [userLikes, setUserLikes] = useState(new Set());
-  const [showAntoninSummary, setShowAntoninSummary] = useState(false);
-  const [antoninSummary, setAntoninSummary] = useState("");
-  const [loadingAntonin, setLoadingAntonin] = useState(false);
+  const [showSatoshiSummary, setShowSatoshiSummary] = useState(false);
+  const [satoshiSummary, setSatoshiSummary] = useState("");
+  const [loadingSatoshi, setLoadingSatoshi] = useState(false);
   const [expandedReviews, setExpandedReviews] = useState(new Set());
 
   useEffect(() => {
