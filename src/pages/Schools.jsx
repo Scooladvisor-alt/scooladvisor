@@ -58,8 +58,8 @@ export default function SchoolsPage() {
   }, []);
 
   useEffect(() => {
-    if ((internationalOnly || typeFilter !== "all") && !allSchoolsLoaded) {
-      loadAllSchoolsForFilters();
+    if (internationalOnly && !allSchoolsLoaded && !internationalSchoolsLoaded) {
+      loadAllSchoolsForInternational();
     } else {
       filterSchools();
     }
@@ -98,9 +98,10 @@ export default function SchoolsPage() {
     }
   };
 
-  const loadAllSchoolsForFilters = async () => {
-    if (allSchoolsLoaded) return;
+  const loadAllSchoolsForInternational = async () => {
+    if (internationalSchoolsLoaded || allSchoolsLoaded) return;
     
+    setLoading(true);
     try {
       const allSchools = await base44.entities.School.list("-average_rating");
       const uniqueSchools = [];
@@ -119,6 +120,7 @@ export default function SchoolsPage() {
     } catch (error) {
       console.error("Error loading all schools:", error);
     }
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -298,10 +300,6 @@ export default function SchoolsPage() {
     }
 
     setFilteredSchools(filtered);
-    
-    if (typeFilter !== "all" || internationalOnly || searchTerm) {
-      setDisplayCount(Math.max(filtered.length, 6));
-    }
   };
 
   const handleShowMore = async () => {
