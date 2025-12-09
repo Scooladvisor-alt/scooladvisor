@@ -20,7 +20,7 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
     type: "lycee",
     address: "",
     city: "",
-    isInternational: false,
+    isInternational: false
   });
 
   const [addressSuggestions, setAddressSuggestions] = useState([]);
@@ -45,7 +45,7 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
         `https://api-adresse.data.gouv.fr/search/?q=${encodeURIComponent(query)}&limit=5`
       );
       const data = await response.json();
-      const suggestions = (data.features || []).map(feature => ({
+      const suggestions = (data.features || []).map((feature) => ({
         label: feature.properties.label,
         street: feature.properties.name,
         city: feature.properties.city,
@@ -82,11 +82,11 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
     setFormData({
       ...formData,
       address: place.street || place.label,
-      city: place.city || '',
+      city: place.city || ''
     });
     setShowAddressSuggestions(false);
     setAddressSuggestions([]);
-    
+
     setTimeout(() => {
       if (cityInputRef.current) {
         cityInputRef.current.focus();
@@ -123,7 +123,7 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
       const prefix = getSchoolPrefix(formData.type);
       if (!formData.name.startsWith(prefix)) {
         const userInput = formData.name.replace(/^(Lycée |Collège |Université )/i, '');
-        setFormData(prev => ({ ...prev, name: prefix + userInput }));
+        setFormData((prev) => ({ ...prev, name: prefix + userInput }));
       }
     }
   }, [formData.type]);
@@ -138,14 +138,14 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
         value = prefix;
       }
     }
-    setFormData({...formData, name: value});
+    setFormData({ ...formData, name: value });
   };
 
   const capitalizeWords = (str) => {
-    return str
-      .split(' ')
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-      .join(' ');
+    return str.
+    split(' ').
+    map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).
+    join(' ');
   };
 
   const handleSubmit = async (e) => {
@@ -160,16 +160,16 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
       const cleanCity = security.sanitize(formData.city);
 
       if (!cleanName || !cleanAddress || !cleanCity) {
-         setError("Données invalides détectées.");
-         setLoading(false);
-         return;
+        setError("Données invalides détectées.");
+        setLoading(false);
+        return;
       }
 
       // SECURITY: Improved duplicate check (Server-side filter first)
       const existingSchoolsInCity = await base44.entities.School.filter({ city: cleanCity });
       const normalizedNewAddress = `${cleanAddress}||${cleanCity}`.toLowerCase().trim();
-      
-      const duplicate = existingSchoolsInCity.find(school => {
+
+      const duplicate = existingSchoolsInCity.find((school) => {
         const normalizedExistingAddress = `${school.address}||${school.city}`.toLowerCase().trim();
         return normalizedExistingAddress === normalizedNewAddress || school.name.toLowerCase() === cleanName.toLowerCase();
       });
@@ -222,12 +222,12 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
     <Dialog open={open} onOpenChange={(isOpen) => {
       onOpenChange(isOpen);
       if (!isOpen) {
-        setFormData({ 
-          name: "Lycée ", 
+        setFormData({
+          name: "Lycée ",
           type: "lycee",
-          address: "", 
+          address: "",
           city: "",
-          isInternational: false,
+          isInternational: false
         });
         setError(null);
         setSuccess(false);
@@ -244,43 +244,43 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
           </DialogTitle>
         </DialogHeader>
 
-        {success && (
-          <Alert className="bg-green-50 border-green-200">
+        {success &&
+        <Alert className="bg-green-50 border-green-200">
             <CheckCircle2 className="h-4 w-4 text-green-600" />
             <AlertDescription className="text-green-800 text-xs sm:text-sm">
               Établissement ajouté avec succès ! 🎉
             </AlertDescription>
           </Alert>
-        )}
+        }
 
-        {error && (
-          <Alert variant="destructive">
+        {error &&
+        <Alert variant="destructive">
             <AlertCircle className="h-4 w-4" />
             <AlertDescription className="text-xs sm:text-sm">{error}</AlertDescription>
           </Alert>
-        )}
+        }
 
         <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
           <div className="space-y-1 sm:space-y-2">
             <Label htmlFor="type" className="text-xs sm:text-sm">Type d'établissement *</Label>
-            <Select 
-              value={formData.type} 
+            <Select
+              value={formData.type}
               onValueChange={(value) => {
                 const newPrefix = getSchoolPrefix(value);
                 const oldPrefix = getSchoolPrefix(formData.type);
                 let newName = formData.name;
-                
+
                 if (hasLockedPrefix(formData.type) && formData.name.startsWith(oldPrefix)) {
                   newName = formData.name.substring(oldPrefix.length);
                 }
-                
+
                 if (hasLockedPrefix(value)) {
                   newName = newPrefix + newName.replace(/^(Lycée |Collège |Université )/i, '');
                 }
-                
-                setFormData({...formData, type: value, name: newName});
-              }}
-            >
+
+                setFormData({ ...formData, type: value, name: newName });
+              }}>
+
               <SelectTrigger id="type" className="h-9 sm:h-10 text-xs sm:text-sm">
                 <SelectValue placeholder="Sélectionnez un type" />
               </SelectTrigger>
@@ -321,8 +321,8 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
               }}
               required
               placeholder={hasLockedPrefix(formData.type) ? `${getSchoolPrefix(formData.type)}Victor Hugo` : "École de Commerce de Paris"}
-              className="h-9 sm:h-10 text-xs sm:text-sm"
-            />
+              className="h-9 sm:h-10 text-xs sm:text-sm" />
+
           </div>
 
           <div className="space-y-1 sm:space-y-2 relative" ref={addressInputRef}>
@@ -336,36 +336,36 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
               }}
               required
               placeholder="10 rue de la République"
-              className="h-9 sm:h-10 text-xs sm:text-sm"
-            />
-            {addressLoading && (
-              <div className="absolute right-3 top-9">
+              className="h-9 sm:h-10 text-xs sm:text-sm" />
+
+            {addressLoading &&
+            <div className="absolute right-3 top-9">
                 <Loader2 className="w-4 h-4 animate-spin text-blue-600" />
               </div>
-            )}
+            }
             
-            {showAddressSuggestions && addressSuggestions.length > 0 && (
-              <div className="absolute z-50 w-full mt-1 bg-white rounded-lg shadow-lg border border-slate-200 max-h-60 overflow-y-auto">
-                {addressSuggestions.map((place, index) => (
-                  <button
-                    key={index}
-                    type="button"
-                    onMouseDown={(e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      handleAddressSelected(place);
-                    }}
-                    className="w-full px-3 py-2 text-left hover:bg-blue-50 transition-colors border-b border-slate-100 last:border-b-0 flex items-start gap-2"
-                  >
+            {showAddressSuggestions && addressSuggestions.length > 0 &&
+            <div className="absolute z-50 w-full mt-1 bg-white rounded-lg shadow-lg border border-slate-200 max-h-60 overflow-y-auto">
+                {addressSuggestions.map((place, index) =>
+              <button
+                key={index}
+                type="button"
+                onMouseDown={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  handleAddressSelected(place);
+                }}
+                className="w-full px-3 py-2 text-left hover:bg-blue-50 transition-colors border-b border-slate-100 last:border-b-0 flex items-start gap-2">
+
                     <span className="text-blue-500 mt-0.5">📍</span>
                     <div>
                       <p className="text-sm font-semibold text-slate-900">{place.label}</p>
                       {place.context && <p className="text-xs text-slate-500">{place.context}</p>}
                     </div>
                   </button>
-                ))}
+              )}
               </div>
-            )}
+            }
           </div>
 
           <div className="space-y-1 sm:space-y-2">
@@ -378,18 +378,18 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
                 onChange={(e) => setFormData({ ...formData, city: e.target.value })}
                 required
                 placeholder="Paris"
-                className="h-9 sm:h-10 text-xs sm:text-sm flex-1"
-              />
-              <div className="flex items-center space-x-2 px-3 bg-blue-50 rounded-lg border border-blue-200 whitespace-nowrap">
+                className="h-9 sm:h-10 text-xs sm:text-sm flex-1" />
+
+              <div className="flex items-center space-x-2 px-3 bg-gradient-to-r from-pink-100 to-blue-100 rounded-lg border border-blue-200 whitespace-nowrap">
                 <Checkbox
                   id="isInternational"
                   checked={formData.isInternational}
-                  onCheckedChange={(checked) => setFormData({ ...formData, isInternational: checked })}
-                />
+                  onCheckedChange={(checked) => setFormData({ ...formData, isInternational: checked })} />
+
                 <label
                   htmlFor="isInternational"
-                  className="text-xs sm:text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer text-slate-700"
-                >
+                  className="text-xs sm:text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer text-slate-700">
+
                   Hors France
                 </label>
               </div>
@@ -397,31 +397,31 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
           </div>
           
           <DialogFooter className="flex flex-col sm:flex-row sm:justify-end sm:items-center gap-2 mt-4 sm:mt-6">
-            <Button 
-              type="button" 
-              variant="outline" 
+            <Button
+              type="button"
+              variant="outline"
               onClick={() => onOpenChange(false)}
-              className="text-xs sm:text-sm h-8 sm:h-10"
-            >
+              className="text-xs sm:text-sm h-8 sm:h-10">
+
               Annuler
             </Button>
-            <Button 
-              type="submit" 
+            <Button
+              type="submit"
               disabled={loading}
-              className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-white text-xs sm:text-sm h-8 sm:h-10 font-semibold shadow-md"
-            >
-              {loading ? (
-                <>
+              className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-white text-xs sm:text-sm h-8 sm:h-10 font-semibold shadow-md">
+
+              {loading ?
+              <>
                   <Loader2 className="w-3 h-3 sm:w-4 sm:h-4 mr-2 animate-spin" />
                   Ajout en cours...
-                </>
-              ) : (
-                "Ajouter l'établissement"
-              )}
+                </> :
+
+              "Ajouter l'établissement"
+              }
             </Button>
           </DialogFooter>
         </form>
       </DialogContent>
-    </Dialog>
-  );
+    </Dialog>);
+
 }
