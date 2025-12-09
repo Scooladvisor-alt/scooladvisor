@@ -384,16 +384,16 @@ export default function ProfilePage() {
                   </Button>
                 </div> :
 
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
                   {/* Colonne gauche : Avis professeurs */}
                   <div className="flex flex-col">
-                    <h3 className="text-lg font-semibold text-slate-900 mb-4 flex items-center justify-between gap-2 bg-white/90 backdrop-blur-sm py-2 sticky top-0 z-10 border-b border-slate-100">
+                    <h3 className="text-base sm:text-lg font-semibold text-slate-900 mb-3 sm:mb-4 flex items-center justify-between gap-2 bg-white/90 backdrop-blur-sm py-2 sticky top-0 z-10 border-b border-slate-100">
                       <div className="flex items-center gap-2">
-                        <Users className="w-5 h-5 text-[#FF4D8D]" />
-                        Mes professeurs ({teacherReviews.length})
+                        <Users className="w-4 h-4 sm:w-5 sm:h-5 text-[#FF4D8D]" />
+                        <span className="text-sm sm:text-base">Mes professeurs ({teacherReviews.length})</span>
                       </div>
                     </h3>
-                    <div className="space-y-3 overflow-y-auto pr-2 reviews-scroll h-[400px] sm:h-[500px]">
+                    <div className={`space-y-3 overflow-y-auto pr-2 reviews-scroll ${teacherReviews.length > 0 ? 'h-[400px] sm:h-[500px]' : 'h-auto'}`}>
                       {teacherReviews.length > 0 ?
                     <>
                       {teacherReviews.slice(0, visibleTeacherReviews).map((review) => (
@@ -401,12 +401,12 @@ export default function ProfilePage() {
                           key={review.id}
                           initial={{ opacity: 0, y: 10 }}
                           animate={{ opacity: 1, y: 0 }}
-                          className="border-2 border-slate-200 rounded-xl p-4 hover:border-pink-300 hover:shadow-lg transition-all bg-white relative group"
+                          className="border-2 border-slate-200 rounded-xl p-3 sm:p-4 hover:border-pink-300 hover:shadow-lg transition-all bg-white relative group"
                         >
-                          <div className="flex flex-col gap-3">
+                          <div className="flex flex-col gap-2 sm:gap-3">
                             {/* Header Info */}
-                            <div className="flex justify-between items-start">
-                              <div className="flex flex-col gap-1.5 flex-1 min-w-0">
+                            <div className="flex flex-col sm:flex-row justify-between items-start gap-2 sm:gap-0">
+                              <div className="flex flex-col gap-1 sm:gap-1.5 flex-1 min-w-0 w-full">
                                 {/* School Link */}
                                 <div 
                                   onClick={(e) => {
@@ -415,8 +415,8 @@ export default function ProfilePage() {
                                   }}
                                   className="flex items-center gap-1.5 text-slate-500 hover:text-blue-600 transition-colors cursor-pointer w-fit"
                                 >
-                                  <SchoolIcon className="w-3.5 h-3.5" />
-                                  <span className="text-xs font-semibold uppercase tracking-wide truncate max-w-full">
+                                  <SchoolIcon className="w-3 h-3 sm:w-3.5 sm:h-3.5 flex-shrink-0" />
+                                  <span className="text-[10px] sm:text-xs font-semibold uppercase tracking-wide truncate">
                                     {review.school?.name}
                                   </span>
                                 </div>
@@ -427,7 +427,7 @@ export default function ProfilePage() {
                                     e.stopPropagation();
                                     navigate(createPageUrl(`TeacherDetail?id=${review.teacher?.id}`));
                                   }}
-                                  className="text-lg font-bold text-slate-900 hover:text-[#FF4D8D] transition-colors cursor-pointer truncate w-fit"
+                                  className="text-base sm:text-lg font-bold text-slate-900 hover:text-[#FF4D8D] transition-colors cursor-pointer truncate w-fit"
                                 >
                                   {review.teacher?.name}
                                 </h4>
@@ -435,55 +435,55 @@ export default function ProfilePage() {
                                 {/* Subject Badge */}
                                 <Badge 
                                   variant="secondary" 
-                                  className="w-fit text-xs font-medium bg-purple-50 text-purple-700 border-purple-100"
+                                  className="w-fit text-[10px] sm:text-xs font-medium bg-purple-50 text-purple-700 border-purple-100"
                                 >
-                                  <BookOpen className="w-3 h-3 mr-1.5" />
+                                  <BookOpen className="w-3 h-3 mr-1" />
                                   {review.teacher?.subject || "Matière non renseignée"}
                                 </Badge>
                               </div>
 
                               {/* Rating Widget */}
-                              <div className="flex-shrink-0 bg-gradient-to-br from-amber-50 to-amber-100 px-2.5 py-1.5 rounded-lg border border-amber-200 flex items-center gap-1 shadow-sm">
-                                <Star className="w-4 h-4 text-amber-600 fill-amber-600" />
-                                <span className="text-base font-bold text-amber-900">
+                              <div className="flex-shrink-0 bg-gradient-to-br from-amber-50 to-amber-100 px-2 sm:px-2.5 py-1 sm:py-1.5 rounded-lg border border-amber-200 flex items-center gap-0.5 sm:gap-1 shadow-sm self-start sm:self-auto">
+                                <Star className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-600 fill-amber-600" />
+                                <span className="text-sm sm:text-base font-bold text-amber-900">
                                   {review.total_rating?.toFixed(1)}
                                 </span>
-                                <span className="text-[10px] text-amber-700 font-medium">/20</span>
+                                <span className="text-[9px] sm:text-[10px] text-amber-700 font-medium">/20</span>
                               </div>
                             </div>
 
                             {/* Criteria Grid */}
-                            <div className="grid grid-cols-4 gap-2 text-xs bg-slate-50 p-2 rounded-lg">
+                            <div className="grid grid-cols-4 gap-1.5 sm:gap-2 text-xs bg-slate-50 p-1.5 sm:p-2 rounded-lg">
                               <div className="flex flex-col items-center text-center gap-0.5">
-                                <span className="text-[10px] text-slate-500 uppercase">Charge</span>
-                                <span className="font-bold text-blue-600">{review.workload}/5</span>
+                                <span className="text-[9px] sm:text-[10px] text-slate-500 uppercase">Charge</span>
+                                <span className="text-xs sm:text-sm font-bold text-blue-600">{review.workload}/5</span>
                               </div>
                               <div className="flex flex-col items-center text-center gap-0.5">
-                                <span className="text-[10px] text-slate-500 uppercase">Amabilité</span>
-                                <span className="font-bold text-pink-600">{review.friendliness}/5</span>
+                                <span className="text-[9px] sm:text-[10px] text-slate-500 uppercase">Amabilité</span>
+                                <span className="text-xs sm:text-sm font-bold text-pink-600">{review.friendliness}/5</span>
                               </div>
                               <div className="flex flex-col items-center text-center gap-0.5">
-                                <span className="text-[10px] text-slate-500 uppercase">Pédago</span>
-                                <span className="font-bold text-purple-600">{review.teaching_method}/5</span>
+                                <span className="text-[9px] sm:text-[10px] text-slate-500 uppercase">Pédago</span>
+                                <span className="text-xs sm:text-sm font-bold text-purple-600">{review.teaching_method}/5</span>
                               </div>
                               <div className="flex flex-col items-center text-center gap-0.5">
-                                <span className="text-[10px] text-slate-500 uppercase">Notation</span>
-                                <span className="font-bold text-orange-600">{review.grading_severity}/5</span>
+                                <span className="text-[9px] sm:text-[10px] text-slate-500 uppercase">Notation</span>
+                                <span className="text-xs sm:text-sm font-bold text-orange-600">{review.grading_severity}/5</span>
                               </div>
                             </div>
 
                             {/* Review Content */}
                             <div className="bg-white rounded-lg">
-                              <p className="text-sm text-slate-700 leading-relaxed italic relative pl-3 border-l-2 border-pink-200">
+                              <p className="text-xs sm:text-sm text-slate-700 leading-relaxed italic relative pl-2 sm:pl-3 border-l-2 border-pink-200">
                                 "{review.comment}"
                               </p>
                             </div>
 
                             {/* Footer Date */}
-                            <div className="flex items-center justify-between text-xs text-slate-400 pt-2 border-t border-slate-100 mt-1">
-                              <span>Publié le {format(new Date(review.created_date), "d MMMM yyyy", { locale: fr })}</span>
+                            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between text-[10px] sm:text-xs text-slate-400 pt-1.5 sm:pt-2 border-t border-slate-100 mt-1 gap-1 sm:gap-0">
+                              <span>Publié le {format(new Date(review.created_date), "d MMM yyyy", { locale: fr })}</span>
                               {review.edit_count > 0 && (
-                                <span className="bg-slate-100 px-1.5 py-0.5 rounded text-[10px]">
+                                <span className="bg-slate-100 px-1.5 py-0.5 rounded text-[9px] sm:text-[10px]">
                                   Modifié {review.edit_count} fois
                                 </span>
                               )}
@@ -501,9 +501,18 @@ export default function ProfilePage() {
                       )}
                     </> :
 
-                    <div className="text-center py-12 text-slate-500">
-                          <Users className="w-12 h-12 mx-auto mb-3 text-slate-300" />
-                          <p className="text-sm">Aucun avis professeur</p>
+                    <div className="text-center py-6 sm:py-8 px-4 bg-gradient-to-br from-pink-50 to-purple-50 rounded-xl border-2 border-dashed border-pink-200">
+                          <Users className="w-10 h-10 sm:w-12 sm:h-12 mx-auto mb-2 sm:mb-3 text-pink-300" />
+                          <p className="text-xs sm:text-sm font-semibold text-slate-700 mb-1">Tu n'as pas encore noté de prof !</p>
+                          <p className="text-[10px] sm:text-xs text-slate-500 mb-3 sm:mb-4">Va sur un établissement pour noter ton premier professeur 🎓</p>
+                          <Button
+                            size="sm"
+                            onClick={() => navigate(createPageUrl("Schools"))}
+                            className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-white text-xs h-8"
+                          >
+                            <Star className="w-3 h-3 mr-1.5" />
+                            Noter mon premier prof
+                          </Button>
                         </div>
                     }
                     </div>
@@ -511,11 +520,11 @@ export default function ProfilePage() {
 
                   {/* Colonne droite : Avis établissements */}
                   <div className="flex flex-col">
-                    <h3 className="text-lg font-semibold text-slate-900 mb-4 flex items-center gap-2 bg-white/90 backdrop-blur-sm py-2 sticky top-0 z-10 border-b border-slate-100">
-                      <SchoolIcon className="w-5 h-5 text-blue-600" />
-                      Mes établissements ({schoolReviews.length})
+                    <h3 className="text-base sm:text-lg font-semibold text-slate-900 mb-3 sm:mb-4 flex items-center gap-2 bg-white/90 backdrop-blur-sm py-2 sticky top-0 z-10 border-b border-slate-100">
+                      <SchoolIcon className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600" />
+                      <span className="text-sm sm:text-base">Mes établissements ({schoolReviews.length})</span>
                     </h3>
-                    <div className="space-y-3 overflow-y-auto pr-2 reviews-scroll h-[400px] sm:h-[500px]">
+                    <div className={`space-y-3 overflow-y-auto pr-2 reviews-scroll ${schoolReviews.length > 0 ? 'h-[400px] sm:h-[500px]' : 'h-auto'}`}>
                       {schoolReviews.length > 0 ?
                     <>
                       {schoolReviews.slice(0, visibleSchoolReviews).map((review) => (
@@ -523,52 +532,52 @@ export default function ProfilePage() {
                           key={review.id}
                           initial={{ opacity: 0, y: 10 }}
                           animate={{ opacity: 1, y: 0 }}
-                          className="border-2 border-slate-200 rounded-xl p-4 hover:border-blue-300 hover:shadow-lg transition-all bg-white group"
+                          className="border-2 border-slate-200 rounded-xl p-3 sm:p-4 hover:border-blue-300 hover:shadow-lg transition-all bg-white group"
                         >
-                          <div className="flex flex-col gap-3">
-                            <div className="flex justify-between items-start">
-                              <div className="flex-1 min-w-0">
+                          <div className="flex flex-col gap-2 sm:gap-3">
+                            <div className="flex flex-col sm:flex-row justify-between items-start gap-2 sm:gap-0">
+                              <div className="flex-1 min-w-0 w-full">
                                 {/* School Link */}
                                 <h4 
                                   onClick={(e) => {
                                     e.stopPropagation();
                                     navigate(createPageUrl(`SchoolDetail?id=${review.school?.id}`));
                                   }}
-                                  className="text-lg font-bold text-slate-900 hover:text-blue-600 transition-colors cursor-pointer truncate w-fit mb-1"
+                                  className="text-base sm:text-lg font-bold text-slate-900 hover:text-blue-600 transition-colors cursor-pointer truncate w-fit mb-1"
                                 >
                                   {review.school?.name}
                                 </h4>
                                 
                                 {/* School Type Badge if available */}
                                 {review.school?.type && (
-                                  <Badge variant="outline" className="text-[10px] bg-blue-50 text-blue-700 border-blue-100 capitalize">
+                                  <Badge variant="outline" className="text-[9px] sm:text-[10px] bg-blue-50 text-blue-700 border-blue-100 capitalize">
                                     {review.school.type.replace('_', ' ')}
                                   </Badge>
                                 )}
                               </div>
                               
                               {/* Rating Widget */}
-                              <div className="flex-shrink-0 bg-gradient-to-br from-amber-50 to-amber-100 px-2.5 py-1.5 rounded-lg border border-amber-200 flex items-center gap-1 shadow-sm">
-                                <Star className="w-4 h-4 text-amber-600 fill-amber-600" />
-                                <span className="text-base font-bold text-amber-900">
+                              <div className="flex-shrink-0 bg-gradient-to-br from-amber-50 to-amber-100 px-2 sm:px-2.5 py-1 sm:py-1.5 rounded-lg border border-amber-200 flex items-center gap-0.5 sm:gap-1 shadow-sm self-start sm:self-auto">
+                                <Star className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-600 fill-amber-600" />
+                                <span className="text-sm sm:text-base font-bold text-amber-900">
                                   {review.rating?.toFixed(1)}
                                 </span>
-                                <span className="text-[10px] text-amber-700 font-medium">/20</span>
+                                <span className="text-[9px] sm:text-[10px] text-amber-700 font-medium">/20</span>
                               </div>
                             </div>
 
                             {/* Review Content */}
                             <div className="bg-white rounded-lg">
-                              <p className="text-sm text-slate-700 leading-relaxed italic relative pl-3 border-l-2 border-blue-200">
+                              <p className="text-xs sm:text-sm text-slate-700 leading-relaxed italic relative pl-2 sm:pl-3 border-l-2 border-blue-200">
                                 "{review.comment}"
                               </p>
                             </div>
 
                             {/* Footer Date */}
-                            <div className="flex items-center justify-between text-xs text-slate-400 pt-2 border-t border-slate-100 mt-1">
-                              <span>Publié le {format(new Date(review.created_date), "d MMMM yyyy", { locale: fr })}</span>
+                            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between text-[10px] sm:text-xs text-slate-400 pt-1.5 sm:pt-2 border-t border-slate-100 mt-1 gap-1 sm:gap-0">
+                              <span>Publié le {format(new Date(review.created_date), "d MMM yyyy", { locale: fr })}</span>
                               {review.edit_count > 0 && (
-                                <span className="bg-slate-100 px-1.5 py-0.5 rounded text-[10px]">
+                                <span className="bg-slate-100 px-1.5 py-0.5 rounded text-[9px] sm:text-[10px]">
                                   Modifié {review.edit_count} fois
                                 </span>
                               )}
@@ -586,9 +595,18 @@ export default function ProfilePage() {
                       )}
                     </> :
 
-                    <div className="text-center py-12 text-slate-500">
-                          <SchoolIcon className="w-12 h-12 mx-auto mb-3 text-slate-300" />
-                          <p className="text-sm">Aucun avis établissement</p>
+                    <div className="text-center py-6 sm:py-8 px-4 bg-gradient-to-br from-blue-50 to-purple-50 rounded-xl border-2 border-dashed border-blue-200">
+                          <SchoolIcon className="w-10 h-10 sm:w-12 sm:h-12 mx-auto mb-2 sm:mb-3 text-blue-300" />
+                          <p className="text-xs sm:text-sm font-semibold text-slate-700 mb-1">Tu n'as pas encore noté d'établissement !</p>
+                          <p className="text-[10px] sm:text-xs text-slate-500 mb-3 sm:mb-4">Partage ton expérience sur ton école 🏫</p>
+                          <Button
+                            size="sm"
+                            onClick={() => navigate(createPageUrl("Schools"))}
+                            className="bg-gradient-to-r from-blue-500 via-purple-500 to-[#FF4D8D] hover:from-blue-500/90 hover:via-purple-500/90 hover:to-[#FF4D8D]/90 text-white text-xs h-8"
+                          >
+                            <Star className="w-3 h-3 mr-1.5" />
+                            Noter mon premier établissement
+                          </Button>
                         </div>
                     }
                     </div>
