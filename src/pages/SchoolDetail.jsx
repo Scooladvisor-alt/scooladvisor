@@ -220,7 +220,7 @@ export default function SchoolDetailPage() {
         }
       `}</style>
       
-      <div className="max-w-[1400px] mx-auto px-4 py-8">
+      <div className="max-w-6xl mx-auto px-4 py-8">
         <Button
           variant="ghost"
           onClick={() => navigate(createPageUrl("Schools"))}
