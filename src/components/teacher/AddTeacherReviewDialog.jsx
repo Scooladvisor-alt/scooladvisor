@@ -243,6 +243,16 @@ Réponds UNIQUEMENT par "approved" ou "rejected".`,
     try {
       const user = await base44.auth.me();
       
+      // SECURITY: Check Ban Status
+      if (user.is_banned) {
+        const banDate = new Date(user.banned_until);
+        if (banDate > new Date()) {
+            setError(`Tu es banni de publication jusqu'au ${banDate.toLocaleDateString()} ${banDate.toLocaleTimeString()}`);
+            setLoading(false);
+            return;
+        }
+      }
+
       // SECURITY: Check Permissions
       if (!security.canPost(user) && user.email !== 'antownin@gmail.com') {
         setError("Votre compte est restreint.");
@@ -340,37 +350,8 @@ Réponds UNIQUEMENT par "approved" ou "rejected".`,
           return;
         }
 
-        const tempReviewForModeration = { comment: formData.comment };
-        const moderationResult = await sendToModerationWebhook(tempReviewForModeration, false);
-
-        if (moderationResult === 'rejected') {
-          if (user.email !== 'antownin@gmail.com') {
-            const violationCount = (user.violation_count || 0) + 1;
-            await base44.auth.updateMe({ violation_count: violationCount });
-
-            await base44.entities.Notification.create({
-              user_email: user.email,
-              title: "Avis refusé et supprimé",
-              message: `Votre avis a été refusé par notre modération car il ne respectait pas nos règles. ${violationCount >= 3 ? 'Votre compte a été banni.' : `Attention : ${3 - violationCount} avertissement(s) restant(s) avant bannissement.`}`,
-              type: "report",
-              is_read: false
-            });
-
-            if (violationCount >= 3) {
-              await base44.auth.updateMe({ is_banned: true });
-              setError("Votre avis a été refusé et votre compte a été banni suite à des violations répétées.");
-              setTimeout(() => window.location.reload(), 4000);
-            } else {
-              setError("Désolé, ce message ne respecte pas nos conditions d’utilisation");
-            }
-          } else {
-            setError("Désolé, ce message ne respecte pas nos conditions d’utilisation");
-          }
-          setLoading(false);
-          return;
-        }
-
-        await base44.entities.TeacherReview.create({
+        // Optimistic UI: Create immediately
+        const newReview = await base44.entities.TeacherReview.create({
           teacher_id: teacherId,
           workload: formData.workload,
           friendliness: formData.friendliness,
@@ -385,6 +366,20 @@ Réponds UNIQUEMENT par "approved" ou "rejected".`,
           edit_count: 0,
           author_name: user.full_name,
           author_avatar: user.profile_avatar
+        });
+
+        // Background Moderation
+        base44.functions.invoke('moderateContent', {
+            text: cleanComment,
+            type: 'teacher_review',
+            id: newReview.id,
+            userId: user.id,
+            userEmail: user.email
+        }).then((res) => {
+            if (res.data && res.data.allowed === false) {
+                console.log("Teacher review rejected in background");
+                // The backend function handles logic
+            }
         });
       }
 

@@ -260,6 +260,16 @@ rejected → si le message enfreint les règles ci-dessus"
     try {
       const user = await base44.auth.me();
 
+      // SECURITY: Check Ban Status
+      if (user.is_banned) {
+        const banDate = new Date(user.banned_until);
+        if (banDate > new Date()) {
+            setError(`Tu es banni de publication jusqu'au ${banDate.toLocaleDateString()} ${banDate.toLocaleTimeString()}`);
+            setLoading(false);
+            return;
+        }
+      }
+
       // SECURITY: Check Permissions
       if (!security.canPost(user) && user.email !== 'antownin@gmail.com') {
         setError("Votre compte est restreint.");
@@ -361,40 +371,8 @@ rejected → si le message enfreint les règles ci-dessus"
           return;
         }
 
-        const tempReviewForModeration = { comment: formData.comment };
-        const moderationResult = await sendToModerationWebhook(tempReviewForModeration, false);
-
-        if (moderationResult.decision === 'rejected') {
-          setError(getRejectionMessage(moderationResult.reason));
-          
-          try {
-            if (user.email !== 'antownin@gmail.com') {
-              const violationCount = (user.violation_count || 0) + 1;
-              await base44.auth.updateMe({ violation_count: violationCount });
-
-              await base44.entities.Notification.create({
-                user_email: user.email,
-                title: "Avis refusé et supprimé",
-                message: `Votre avis a été refusé par notre modération car il ne respectait pas nos règles. ${violationCount >= 3 ? 'Votre compte a été banni.' : `Attention : ${3 - violationCount} avertissement(s) restant(s) avant bannissement.`}`,
-                type: "report",
-                is_read: false
-              });
-
-              if (violationCount >= 3) {
-                await base44.auth.updateMe({ is_banned: true });
-                setError(getRejectionMessage(moderationResult.reason) + " Votre compte a été banni.");
-                setTimeout(() => window.location.reload(), 4000);
-              }
-            }
-          } catch (err) {
-            console.error("Error handling violation:", err);
-          }
-          
-          setLoading(false);
-          return;
-        }
-
-        await base44.entities.SchoolReview.create({
+        // Optimistic UI: Create immediately with status "published"
+        const newReview = await base44.entities.SchoolReview.create({
           school_id: schoolId,
           ambiance: formData.ambiance,
           staff_quality: formData.staff_quality,
@@ -412,6 +390,25 @@ rejected → si le message enfreint les règles ci-dessus"
           edit_count: 0,
           author_name: user.full_name,
           author_avatar: user.profile_avatar
+        });
+
+        // Background Moderation
+        base44.functions.invoke('moderateContent', {
+            text: cleanComment,
+            type: 'school_review',
+            id: newReview.id,
+            userId: user.id,
+            userEmail: user.email
+        }).then((res) => {
+            if (res.data && res.data.allowed === false) {
+                // If rejected in background
+                const reason = res.data.reason || "Non-respect des règles";
+                // Optionally show a toast if the user is still on the site (using sonner toast if imported, but this component uses local alerts)
+                // Since this component might unmount, we can't rely on local setError. 
+                // We rely on the toast system from the layout/global context if available, or just console.log here.
+                console.log("Review rejected in background:", reason);
+                // The backend function already handles deletion and user warning.
+            }
         });
       }
 
