@@ -420,14 +420,15 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
             <TeacherStats teacher={teacher} />
           </Suspense>
           
-          <Suspense fallback={<div className="p-4 bg-white rounded-lg shadow-md flex justify-center items-center h-64"><Loader2 className="w-8 h-8 animate-spin text-slate-400" /></div>}>
-            <TeacherReviewsList
-              teacherId={teacherId}
-              user={user}
-              onReload={loadData}
-              onEditReview={handleEditReview} />
-
-          </Suspense>
+          <div className="h-[360px]">
+            <Suspense fallback={<div className="p-4 bg-white rounded-lg shadow-md flex justify-center items-center h-full"><Loader2 className="w-8 h-8 animate-spin text-slate-400" /></div>}>
+              <TeacherReviewsList
+                teacherId={teacherId}
+                user={user}
+                onReload={loadData}
+                onEditReview={handleEditReview} />
+            </Suspense>
+          </div>
         </div>
 
         <div className="hidden lg:block">
