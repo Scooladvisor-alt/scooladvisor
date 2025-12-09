@@ -529,12 +529,26 @@ Rédige maintenant ton résumé façon "L'avis de Satoshi" en 3 phrases max.`;
       <Dialog open={showAntoninSummary} onOpenChange={setShowAntoninSummary}>
         <DialogContent className="max-w-[95vw] sm:max-w-2xl max-h-[80vh] overflow-y-auto rounded-2xl">
           <DialogHeader>
-            <DialogTitle className="flex items-center gap-2 text-lg sm:text-2xl">
-              <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-[#FF4D8D]" />
-              <span className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
-                L'avis de Satoshi
-              </span>
-              <span className="text-slate-900">sur l'établissement</span>
+            <style>{`
+              @keyframes shimmer {
+                0% { background-position: 0% 50%; }
+                100% { background-position: 200% 50%; }
+              }
+              .animate-shimmer {
+                animation: shimmer 3s linear infinite;
+                background-size: 200% auto;
+              }
+            `}</style>
+            <DialogTitle className="flex flex-row items-center gap-3 text-xl sm:text-2xl">
+              <Sparkles className="w-6 h-6 text-[#FF4D8D]" />
+              <div className="flex flex-wrap items-baseline gap-x-2">
+                <span className="font-bold bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent animate-shimmer">
+                  L'avis de Satoshi
+                </span>
+                <span className="text-slate-500 text-lg font-medium">
+                  sur l'établissement
+                </span>
+              </div>
             </DialogTitle>
           </DialogHeader>
           <div className="py-4 sm:py-6">
