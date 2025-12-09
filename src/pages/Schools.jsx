@@ -69,18 +69,18 @@ export default function SchoolsPage() {
   const updateFilteredTotalCount = async () => {
     try {
       let query = {};
-      
+
       if (typeFilter !== "all") {
         query.type = typeFilter;
       }
-      
+
       if (internationalOnly) {
         query.region = "International";
       }
-      
+
       const allMatchingSchools = await base44.entities.School.filter(query);
-      const activeSchools = allMatchingSchools.filter(s => !s.is_deleted);
-      
+      const activeSchools = allMatchingSchools.filter((s) => !s.is_deleted);
+
       if (searchTerm) {
         const normalizedSearch = normalizeString(searchTerm);
         const searchFiltered = activeSchools.filter((school) => {
@@ -100,7 +100,7 @@ export default function SchoolsPage() {
 
   const loadAllSchoolsForFiltering = async () => {
     if (allSchoolsLoaded) return;
-    
+
     try {
       const allSchools = await base44.entities.School.list("-average_rating");
       const uniqueSchools = removeDuplicates(allSchools);
@@ -119,11 +119,11 @@ export default function SchoolsPage() {
 
     for (const school of schoolsList) {
       if (school.is_deleted) continue;
-      
+
       const normalizedName = normalizeString(school.name);
       const normalizedAddress = normalizeString(school.address);
       const uniqueKey = `${normalizedName}||${normalizedAddress}||${school.city}`;
-      
+
       if (seenKeys.has(uniqueKey)) {
         duplicateIds.add(school.id);
       } else {
@@ -186,7 +186,7 @@ export default function SchoolsPage() {
 
       setSchools(uniqueSchools);
       setAllSchoolsLoaded(initialSchools.length < 50);
-      
+
       loadTotalSchoolCount();
       loadTeacherCounts();
     } catch (error) {
@@ -200,14 +200,14 @@ export default function SchoolsPage() {
   const loadTotalSchoolCount = async () => {
     try {
       const allSchools = await base44.entities.School.list();
-      const activeSchools = allSchools.filter(s => !s.is_deleted);
+      const activeSchools = allSchools.filter((s) => !s.is_deleted);
       const uniqueSchools = new Set();
-      
+
       for (const school of activeSchools) {
         const normalizedName = normalizeString(school.name);
         uniqueSchools.add(normalizedName);
       }
-      
+
       setTotalSchoolCount(uniqueSchools.size);
     } catch (error) {
       console.error("Error loading total school count:", error);
@@ -230,10 +230,10 @@ export default function SchoolsPage() {
 
   const loadMoreSchools = async () => {
     if (allSchoolsLoaded) {
-      setDisplayCount(prev => prev + 50);
+      setDisplayCount((prev) => prev + 50);
       return;
     }
-    
+
     setLoadingMore(true);
     try {
       const allSchools = await base44.entities.School.list("-average_rating");
@@ -323,7 +323,7 @@ export default function SchoolsPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-purple-50 to-blue-50">
-      <SEO 
+      <SEO
         title="ScoolAdvisor - L'avis des étudiants sur leurs écoles et professeurs"
         description="Recherchez votre établissement, consultez les avis des étudiants et notez vos professeurs. Le 1er site d'avis scolaires vérifiés."
         canonicalPath="/"
@@ -341,8 +341,8 @@ export default function SchoolsPage() {
             },
             "query-input": "required name=search_term_string"
           }
-        }}
-      />
+        }} />
+
       <style>{`
         @keyframes rotating-shine {
           0% { 
@@ -475,8 +475,8 @@ export default function SchoolsPage() {
           </div>
 
           <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold text-slate-900 mb-4 sm:mb-6 leading-tight relative z-10">
-            <span className="block text-5xl sm:text-5xl md:text-7xl lg:text-8xl bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent mb-2">
-              L'avis des étudiants
+            <span className="block text-6xl sm:text-5xl md:text-7xl lg:text-8xl bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent mb-2">L'avis des étudiants
+
             </span>
             <span className="block text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-slate-900">sur leurs écoles et professeurs</span>
           </h1>
@@ -674,30 +674,30 @@ export default function SchoolsPage() {
             </div>
 
             {(filteredSchools.length > displayCount || !allSchoolsLoaded) &&
-              <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="text-center mt-8">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="text-center mt-8">
 
-                  <div 
-                    onClick={handleShowMore}
-                    className="flex items-center w-full gap-4 cursor-pointer group py-4"
-                  >
+                  <div
+              onClick={handleShowMore}
+              className="flex items-center w-full gap-4 cursor-pointer group py-4">
+
                     <div className="h-[2px] flex-1 bg-gradient-to-r from-transparent via-[#FF4D8D] to-purple-500 opacity-30 group-hover:opacity-100 transition-all duration-300" />
-                    {loadingMore ? (
-                      <div className="flex items-center gap-2">
+                    {loadingMore ?
+              <div className="flex items-center gap-2">
                         <Loader2 className="w-4 h-4 animate-spin text-purple-500" />
                         <span className="text-sm text-purple-500">Chargement...</span>
-                      </div>
-                    ) : (
-                      <span className="text-sm sm:text-base font-bold bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent whitespace-nowrap transform group-hover:scale-105 transition-transform duration-300">
+                      </div> :
+
+              <span className="text-sm sm:text-base font-bold bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent whitespace-nowrap transform group-hover:scale-105 transition-transform duration-300">
                         Voir 50 établissements +
                       </span>
-                    )}
+              }
                     <div className="h-[2px] flex-1 bg-gradient-to-r from-purple-500 via-blue-500 to-transparent opacity-30 group-hover:opacity-100 transition-all duration-300" />
                   </div>
                 </motion.div>
-              }
+          }
 
             {filteredSchools.length > 6 &&
           <div className="mt-8">
@@ -881,18 +881,18 @@ export default function SchoolsPage() {
 
                 <div className="w-20 h-20 bg-gradient-to-br from-pink-100 to-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <motion.div
-                    animate={{ 
-                      rotate: [0, -10, 0, 10, 0],
-                      scale: [1, 1.1, 1],
-                      x: [0, -3, 3, 0],
-                      y: [0, -3, 0]
-                    }}
-                    transition={{ 
-                      duration: 3,
-                      repeat: Infinity,
-                      ease: "easeInOut"
-                    }}
-                  >
+                  animate={{
+                    rotate: [0, -10, 0, 10, 0],
+                    scale: [1, 1.1, 1],
+                    x: [0, -3, 3, 0],
+                    y: [0, -3, 0]
+                  }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}>
+
                     <Search className="w-10 h-10 text-[#FF4D8D]" />
                   </motion.div>
                 </div>
