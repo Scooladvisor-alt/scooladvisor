@@ -94,36 +94,50 @@ export default function AboutPage() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
 
-          <motion.div variants={itemVariants} className="relative z-10 bg-white rounded-3xl p-8 shadow-xl border border-slate-100 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
-            <div className="w-14 h-14 bg-pink-50 rounded-2xl flex items-center justify-center mb-6">
-              <Target className="w-7 h-7 text-[#FF4D8D]" />
+          {/* Card 1 - Dominant */}
+          <motion.div variants={itemVariants} className="lg:col-span-7 relative group">
+            <div className="absolute inset-0 bg-slate-900 rounded-2xl transform translate-x-2 translate-y-2 group-hover:translate-x-3 group-hover:translate-y-3 transition-transform" />
+            <div className="relative bg-white rounded-2xl p-8 border-2 border-slate-900 h-full flex flex-col">
+              <div className="w-16 h-16 bg-[#FF4D8D] rounded-xl flex items-center justify-center mb-6 border-2 border-slate-900 shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] transform -rotate-3 group-hover:rotate-0 transition-transform">
+                <Target className="w-8 h-8 text-white" />
+              </div>
+              <h3 className="text-3xl font-black text-slate-900 mb-4 uppercase italic tracking-tight">Orienter avec <span className="text-[#FF4D8D]">Force</span></h3>
+              <p className="text-lg text-slate-700 font-medium leading-relaxed">
+                Choisir son avenir, ce n'est pas jouer à la roulette russe. On te file les vraies infos, sans filtre, pour que tu puisses tracer ta route comme un chef. Fini le hasard.
+              </p>
             </div>
-            <h3 className="text-xl font-bold text-slate-900 mb-3">Orienter avec justesse</h3>
-            <p className="text-slate-600 leading-relaxed">
-              Choisir son école ou ses professeurs ne devrait pas être un pari. Nous offrons des retours d'expérience authentiques pour permettre à chacun de construire son parcours en toute confiance.
-            </p>
           </motion.div>
 
-          <motion.div variants={itemVariants} className="relative z-10 bg-white rounded-3xl p-8 shadow-xl border border-slate-100 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
-            <div className="w-14 h-14 bg-purple-50 rounded-2xl flex items-center justify-center mb-6">
-              <Heart className="w-7 h-7 text-purple-600" />
+          {/* Card 2 - Compact & Bold */}
+          <motion.div variants={itemVariants} className="lg:col-span-5 relative group mt-4 lg:mt-0">
+             <div className="absolute inset-0 bg-[#8B5CF6] rounded-2xl transform translate-x-2 translate-y-2 group-hover:translate-x-3 group-hover:translate-y-3 transition-transform" />
+            <div className="relative bg-white rounded-2xl p-8 border-2 border-slate-900 h-full flex flex-col">
+               <div className="w-16 h-16 bg-[#8B5CF6] rounded-xl flex items-center justify-center mb-6 border-2 border-slate-900 shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] transform rotate-3 group-hover:rotate-0 transition-transform">
+                <Heart className="w-8 h-8 text-white" />
+              </div>
+              <h3 className="text-2xl font-black text-slate-900 mb-4 uppercase italic">Pas de Haine,<br/>Que du <span className="text-[#8B5CF6]">Vrai</span></h3>
+              <p className="text-slate-700 font-medium leading-relaxed">
+                On ne casse pas pour le plaisir. On construit. La critique est une arme puissante seulement si elle est constructive et respectueuse.
+              </p>
             </div>
-            <h3 className="text-xl font-bold text-slate-900 mb-3">Bienveillance avant tout</h3>
-            <p className="text-slate-600 leading-relaxed">
-              Ici, on ne "casse" pas pour le plaisir. On construit. Les avis sont là pour aider les établissements à s'améliorer et les futurs élèves à savoir où ils mettent les pieds, toujours dans le respect.
-            </p>
           </motion.div>
 
-          <motion.div variants={itemVariants} className="relative z-10 bg-white rounded-3xl p-8 shadow-xl border border-slate-100 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
-            <div className="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center mb-6">
-              <Users className="w-7 h-7 text-blue-600" />
-            </div>
-            <h3 className="text-xl font-bold text-slate-900 mb-3">Pour tous les acteurs</h3>
-            <p className="text-slate-600 leading-relaxed">
-              Étudiants, parents, professeurs, administrations : ScoolAdvisor est le terrain d'entente où le dialogue s'ouvre pour une éducation plus transparente et plus humaine.
-            </p>
+          {/* Card 3 - Wide & Impactful */}
+          <motion.div variants={itemVariants} className="lg:col-span-12 relative group mt-4">
+             <div className="absolute inset-0 bg-[#3B82F6] rounded-2xl transform translate-x-2 translate-y-2 group-hover:translate-x-3 group-hover:translate-y-3 transition-transform" />
+             <div className="relative bg-white rounded-2xl p-8 sm:p-10 border-2 border-slate-900 flex flex-col md:flex-row items-center gap-8 h-full">
+                <div className="shrink-0 w-20 h-20 bg-[#3B82F6] rounded-xl flex items-center justify-center border-2 border-slate-900 shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] transform -rotate-6 group-hover:rotate-0 transition-transform">
+                  <Users className="w-10 h-10 text-white" />
+                </div>
+                <div>
+                   <h3 className="text-3xl font-black text-slate-900 mb-2 uppercase italic">L'Arène Éducative</h3>
+                   <p className="text-lg text-slate-700 font-medium leading-relaxed">
+                     Étudiants, parents, profs, administration : tout le monde dans la même équipe. ScoolAdvisor est le terrain où la vérité éclate pour une éducation plus transparente, plus humaine et plus performante.
+                   </p>
+                </div>
+             </div>
           </motion.div>
         </motion.div>
       </div>
