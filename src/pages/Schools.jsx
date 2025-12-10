@@ -454,12 +454,49 @@ export default function SchoolsPage() {
         }
         
         .gradient-border-button:hover .gradient-text {
-          background: linear-gradient(90deg, #e53e7d, #7c3aed, #2563eb);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
-        }
-      `}</style>
+            background: linear-gradient(90deg, #e53e7d, #7c3aed, #2563eb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+          }
+
+          @keyframes shine-sweep {
+            0% { transform: translateX(-100%) skewX(-15deg); }
+            100% { transform: translateX(200%) skewX(-15deg); }
+          }
+
+          .btn-shine-hover {
+            position: relative;
+            overflow: hidden;
+          }
+
+          .btn-shine-hover::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.4), transparent);
+            transform: translateX(-150%) skewX(-15deg);
+            transition: transform 0.5s;
+          }
+
+          .btn-shine-hover:hover::after {
+            animation: shine-sweep 0.75s ease-in-out;
+          }
+
+          .text-hover-effect {
+            display: inline-block;
+            transition: transform 0.3s ease, filter 0.3s ease;
+          }
+
+          .text-hover-effect:hover {
+            transform: scale(1.02) skewX(-2deg);
+            filter: brightness(1.1);
+            text-shadow: 0 4px 12px rgba(255, 77, 141, 0.3);
+          }
+        `}</style>
       
       <div className="max-w-7xl mx-auto px-4 py-8 md:py-12">
         <motion.div
@@ -474,9 +511,9 @@ export default function SchoolsPage() {
             </span>
           </div>
 
-          <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold text-slate-900 mb-4 sm:mb-6 leading-tight relative z-10">
-            <span className="block text-6xl sm:text-5xl md:text-7xl lg:text-8xl bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent mb-2">L'avis des étudiants
-
+          <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold text-slate-900 mb-4 sm:mb-6 leading-tight relative z-10 cursor-default">
+            <span className="text-hover-effect block text-6xl sm:text-5xl md:text-7xl lg:text-8xl bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent mb-2">
+              L'avis des étudiants
             </span>
             <span className="block text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-slate-900">sur leurs écoles et professeurs</span>
           </h1>
@@ -540,7 +577,7 @@ export default function SchoolsPage() {
                   setShowAddDialog(true);
                 }}
                 size="sm"
-                className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-white shadow-md h-7 px-2 text-[10px] font-semibold flex-1">
+                className="btn-shine-hover bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-white shadow-md h-7 px-2 text-[10px] font-semibold flex-1 hover:scale-105 transition-transform duration-200">
                 <Plus className="w-3 h-3 mr-1" />
                 Ajouter mon école
               </Button>
@@ -548,7 +585,7 @@ export default function SchoolsPage() {
               <Button
                 size="sm"
                 onClick={() => setShowTeacherRoom(true)}
-                className="bg-gradient-to-r from-blue-500 via-purple-500 to-[#FF4D8D] hover:from-blue-500/90 hover:via-purple-500/90 hover:to-[#FF4D8D]/90 text-white shadow-md h-7 px-2 text-[10px] font-semibold flex-1">
+                className="btn-shine-hover bg-gradient-to-r from-blue-500 via-purple-500 to-[#FF4D8D] hover:from-blue-500/90 hover:via-purple-500/90 hover:to-[#FF4D8D]/90 text-white shadow-md h-7 px-2 text-[10px] font-semibold flex-1 hover:scale-105 transition-transform duration-200">
                 <span>Salle des profs</span>
                 <ArrowRight className="w-3 h-3 ml-1" />
               </Button>
@@ -583,7 +620,7 @@ export default function SchoolsPage() {
                     setShowAddDialog(true);
                   }}
                   size="sm"
-                  className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-white shadow-md h-8 px-3 text-xs font-semibold">
+                  className="btn-shine-hover bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-white shadow-md h-8 px-3 text-xs font-semibold hover:scale-105 transition-transform duration-200">
                   <Plus className="w-3.5 h-3.5 mr-1" />
                   Ajouter mon école
                 </Button>
@@ -591,7 +628,7 @@ export default function SchoolsPage() {
                 <Button
                   size="sm"
                   onClick={() => setShowTeacherRoom(true)}
-                  className="bg-gradient-to-r from-blue-500 via-purple-500 to-[#FF4D8D] hover:from-blue-500/90 hover:via-purple-500/90 hover:to-[#FF4D8D]/90 text-white shadow-md h-8 px-3 text-xs font-semibold">
+                  className="btn-shine-hover bg-gradient-to-r from-blue-500 via-purple-500 to-[#FF4D8D] hover:from-blue-500/90 hover:via-purple-500/90 hover:to-[#FF4D8D]/90 text-white shadow-md h-8 px-3 text-xs font-semibold hover:scale-105 transition-transform duration-200">
                   <span>Visiter la salle des profs</span>
                   <ArrowRight className="w-3.5 h-3.5 ml-1.5" />
                 </Button>
