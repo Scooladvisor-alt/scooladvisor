@@ -1,15 +1,20 @@
-
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { ChevronLeft, AlertTriangle, Scale, Shield } from "lucide-react";
 import { createPageUrl } from "@/utils";
+import SEO from "@/components/shared/SEO";
 
 export default function TermsOfServicePage() {
   const navigate = useNavigate();
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 py-12 px-4">
+      <SEO 
+        title="Conditions d'Utilisation (CGU) - ScoolAdvisor"
+        description="Consultez les conditions générales d'utilisation de ScoolAdvisor. Règles de la communauté, responsabilité et droits des utilisateurs."
+        canonicalPath="/TermsOfService"
+      />
       <div className="max-w-4xl mx-auto">
         <Button 
           variant="ghost" 

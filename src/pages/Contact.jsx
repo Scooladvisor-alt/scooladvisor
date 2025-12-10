@@ -9,6 +9,7 @@ import { Mail, Send, CheckCircle, ChevronLeft } from "lucide-react";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
+import SEO from "@/components/shared/SEO";
 
 export default function ContactPage() {
   const navigate = useNavigate();
@@ -49,6 +50,11 @@ export default function ContactPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-50">
+      <SEO 
+        title="Contactez ScoolAdvisor - Une question ? Une suggestion ?"
+        description="Contactez l'équipe de ScoolAdvisor pour toute question, suggestion ou signalement. Nous sommes là pour vous aider."
+        canonicalPath="/Contact"
+      />
       <div className="max-w-3xl mx-auto px-4 py-8">
         <Button
           variant="ghost"

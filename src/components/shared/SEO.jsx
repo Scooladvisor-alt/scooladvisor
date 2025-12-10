@@ -61,7 +61,6 @@ export default function SEO({ title, description, canonicalPath, noIndex = false
 
     const shouldNoIndex = noIndex || 
                          isSensitive ||
-                         location.search.includes('id=') || 
                          location.search.includes('utm_') ||
                          location.search.includes('fbclid');
     

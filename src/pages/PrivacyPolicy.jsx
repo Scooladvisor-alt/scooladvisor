@@ -1,15 +1,20 @@
-
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { ChevronLeft, Lock, Eye, Database, UserCheck } from "lucide-react";
 import { createPageUrl } from "@/utils";
+import SEO from "@/components/shared/SEO";
 
 export default function PrivacyPolicyPage() {
   const navigate = useNavigate();
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 py-12 px-4">
+      <SEO 
+        title="Politique de Confidentialité - ScoolAdvisor"
+        description="Découvrez comment ScoolAdvisor protège vos données personnelles. Transparence, sécurité et respect de votre vie privée (RGPD)."
+        canonicalPath="/PrivacyPolicy"
+      />
       <div className="max-w-4xl mx-auto">
         <Button 
           variant="ghost" 
