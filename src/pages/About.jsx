@@ -28,7 +28,7 @@ export default function AboutPage() {
 
   return (
     <>
-      <SEO
+      <SEO 
         title="À propos de ScoolAdvisor - Notre Mission"
         description="ScoolAdvisor est le réseau social des étudiants. Partagez votre expérience, notez vos établissements et professeurs. Une communauté authentique et transparente."
         canonicalPath="/About"
@@ -38,8 +38,8 @@ export default function AboutPage() {
           "name": "ScoolAdvisor",
           "description": "Le réseau social des étudiants - Avis authentiques sur écoles et professeurs",
           "url": window.location.origin
-        }} />
-
+        }}
+      />
       <div className="min-h-screen bg-gradient-to-br from-slate-50 via-purple-50 to-blue-50">
 
 
@@ -52,10 +52,10 @@ export default function AboutPage() {
 
         <div className="max-w-4xl mx-auto text-center relative z-10">
           <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5 }}
-              className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full border border-purple-100 shadow-sm mb-8">
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5 }}
+            className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full border border-purple-100 shadow-sm mb-8">
 
             <Sparkles className="w-4 h-4 text-[#FF4D8D]" />
             <span className="text-sm font-medium bg-gradient-to-r from-[#FF4D8D] to-purple-600 bg-clip-text text-transparent">
@@ -64,21 +64,23 @@ export default function AboutPage() {
           </motion.div>
 
           <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="text-4xl sm:text-6xl md:text-7xl font-bold text-slate-900 mb-6 tracking-tight">
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-4xl sm:text-6xl md:text-7xl font-bold text-slate-900 mb-6 tracking-tight">
 
-            Scool quoi ? <br />
+            <span className="block text-6xl sm:text-8xl font-black italic uppercase tracking-tighter text-slate-900 mb-4 transform -rotate-2 origin-center drop-shadow-sm">
+              SCOOL QUOI ?
+            </span>
             <span className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
               ScoolAdvisor.
             </span>
           </motion.h1>
 
           <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="text-lg sm:text-xl text-slate-600 leading-relaxed max-w-2xl mx-auto mb-10">
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="text-lg sm:text-xl text-slate-600 leading-relaxed max-w-2xl mx-auto mb-10">
 
             Plus qu’un simple site d’avis, c’est une véritable communauté. Nous donnons aux étudiants et aux parents les clés pour mieux comprendre, choisir et éclairer leur avenir scolaire.
           </motion.p>
@@ -88,40 +90,54 @@ export default function AboutPage() {
       {/* Mission Section */}
       <div className="max-w-6xl mx-auto px-4 pb-24">
         <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
 
-          <motion.div variants={itemVariants} className="relative z-10 bg-white rounded-3xl p-8 shadow-xl border border-slate-100 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
-            <div className="w-14 h-14 bg-pink-50 rounded-2xl flex items-center justify-center mb-6">
-              <Target className="w-7 h-7 text-[#FF4D8D]" />
+          {/* Card 1 - Dominant */}
+          <motion.div variants={itemVariants} className="lg:col-span-7 relative group">
+            <div className="absolute inset-0 bg-slate-900 rounded-2xl transform translate-x-2 translate-y-2 group-hover:translate-x-3 group-hover:translate-y-3 transition-transform" />
+            <div className="relative bg-white rounded-2xl p-8 border-2 border-slate-900 h-full flex flex-col">
+              <div className="w-16 h-16 bg-[#FF4D8D] rounded-xl flex items-center justify-center mb-6 border-2 border-slate-900 shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] transform -rotate-3 group-hover:rotate-0 transition-transform">
+                <Target className="w-8 h-8 text-white" />
+              </div>
+              <h3 className="text-3xl font-black text-slate-900 mb-4 uppercase italic tracking-tight">Orienter avec <span className="text-[#FF4D8D]">Force</span></h3>
+              <p className="text-lg text-slate-700 font-medium leading-relaxed">
+                Choisir son avenir, ce n'est pas jouer à la roulette russe. On te file les vraies infos, sans filtre, pour que tu puisses tracer ta route comme un chef. Fini le hasard.
+              </p>
             </div>
-            <h3 className="absolute inset-0 bg-gradient-to-br from-blue-500 via-purple-500 to-[#FF4D8D] rounded-2xl transform translate-x-2 translate-y-2 group-hover:translate-x-3 group-hover:translate-y-3 transition-transform">Orienter avec justesse</h3>
-            <p className="text-slate-600 leading-relaxed">
-              Choisir son école ou ses professeurs ne devrait pas être un pari. Nous offrons des retours d'expérience authentiques pour permettre à chacun de construire son parcours en toute confiance.
-            </p>
           </motion.div>
 
-          <motion.div variants={itemVariants} className="relative z-10 bg-white rounded-3xl p-8 shadow-xl border border-slate-100 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
-            <div className="w-14 h-14 bg-purple-50 rounded-2xl flex items-center justify-center mb-6">
-              <Heart className="w-7 h-7 text-purple-600" />
+          {/* Card 2 - Compact & Bold */}
+          <motion.div variants={itemVariants} className="lg:col-span-5 relative group mt-4 lg:mt-0">
+             <div className="absolute inset-0 bg-[#8B5CF6] rounded-2xl transform translate-x-2 translate-y-2 group-hover:translate-x-3 group-hover:translate-y-3 transition-transform" />
+            <div className="relative bg-white rounded-2xl p-8 border-2 border-slate-900 h-full flex flex-col">
+               <div className="w-16 h-16 bg-[#8B5CF6] rounded-xl flex items-center justify-center mb-6 border-2 border-slate-900 shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] transform rotate-3 group-hover:rotate-0 transition-transform">
+                <Heart className="w-8 h-8 text-white" />
+              </div>
+              <h3 className="text-2xl font-black text-slate-900 mb-4 uppercase italic">Pas de Haine,<br/>Que du <span className="text-[#8B5CF6]">Vrai</span></h3>
+              <p className="text-slate-700 font-medium leading-relaxed">
+                On ne casse pas pour le plaisir. On construit. La critique est une arme puissante seulement si elle est constructive et respectueuse.
+              </p>
             </div>
-            <h3 className="text-xl font-bold text-slate-900 mb-3">Bienveillance avant tout</h3>
-            <p className="text-slate-600 leading-relaxed">
-              Ici, on ne "casse" pas pour le plaisir. On construit. Les avis sont là pour aider les établissements à s'améliorer et les futurs élèves à savoir où ils mettent les pieds, toujours dans le respect.
-            </p>
           </motion.div>
 
-          <motion.div variants={itemVariants} className="relative z-10 bg-white rounded-3xl p-8 shadow-xl border border-slate-100 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
-            <div className="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center mb-6">
-              <Users className="w-7 h-7 text-blue-600" />
-            </div>
-            <h3 className="text-xl font-bold text-slate-900 mb-3">Pour tous les acteurs</h3>
-            <p className="text-slate-600 leading-relaxed">
-              Étudiants, parents, professeurs, administrations : ScoolAdvisor est le terrain d'entente où le dialogue s'ouvre pour une éducation plus transparente et plus humaine.
-            </p>
+          {/* Card 3 - Wide & Impactful */}
+          <motion.div variants={itemVariants} className="lg:col-span-12 relative group mt-4">
+             <div className="absolute inset-0 bg-[#3B82F6] rounded-2xl transform translate-x-2 translate-y-2 group-hover:translate-x-3 group-hover:translate-y-3 transition-transform" />
+             <div className="relative bg-white rounded-2xl p-8 sm:p-10 border-2 border-slate-900 flex flex-col md:flex-row items-center gap-8 h-full">
+                <div className="shrink-0 w-20 h-20 bg-[#3B82F6] rounded-xl flex items-center justify-center border-2 border-slate-900 shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] transform -rotate-6 group-hover:rotate-0 transition-transform">
+                  <Users className="w-10 h-10 text-white" />
+                </div>
+                <div>
+                   <h3 className="text-3xl font-black text-slate-900 mb-2 uppercase italic">L'Arène Éducative</h3>
+                   <p className="text-lg text-slate-700 font-medium leading-relaxed">
+                     Étudiants, parents, profs, administration : tout le monde dans la même équipe. ScoolAdvisor est le terrain où la vérité éclate pour une éducation plus transparente, plus humaine et plus performante.
+                   </p>
+                </div>
+             </div>
           </motion.div>
         </motion.div>
       </div>
@@ -129,73 +145,106 @@ export default function AboutPage() {
       {/* Concept Detail */}
       <div className="bg-white px-1 py-24">
         <div className="max-w-7xl mx-auto px-4">
-          <div className="flex flex-col md:flex-row items-center gap-16">
+          <div className="flex flex-col gap-12">
+            {/* Full width Text Section */}
             <motion.div
-                initial={{ opacity: 0, x: -50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                className="flex-1">
+              initial={{ opacity: 0, y: -20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center max-w-4xl mx-auto">
 
-              <div className="relative">
+              <div className="relative inline-block">
                 <div className="absolute -top-10 -left-10 w-40 h-40 bg-yellow-200 rounded-full blur-3xl opacity-30" />
-                <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-6 relative z-10">
+                <h2 className="text-3xl sm:text-5xl font-black text-slate-900 mb-6 relative z-10 uppercase italic tracking-tight">
                   Pourquoi ScoolAdvisor ?
                 </h2>
               </div>
-              <div className="space-y-6 text-lg text-slate-600">
+              <div className="space-y-6 text-lg sm:text-xl text-slate-600 leading-relaxed">
                 <p>
                   On a tous connu ce moment d'hésitation devant Parcoursup, ou cette angoisse de ne pas savoir si cette école de commerce vaut vraiment son prix, ou si ce professeur à l'université est pédagogue.
                 </p>
                 <p>
-                  <strong className="text-purple-600">Le savoir, c'est le pouvoir.</strong> En partageant massivement nos expériences, nous créons une carte détaillée du paysage éducatif francophone.
+                  <strong className="text-purple-600 font-bold">Le savoir, c'est le pouvoir.</strong> En partageant massivement nos expériences, nous créons une carte détaillée du paysage éducatif francophone.
                 </p>
-                <ul className="space-y-4 mt-4">
-                  <li className="flex items-center gap-3">
-                    <div className="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
-                      <Shield className="w-3.5 h-3.5 text-green-600" />
-                    </div>
-                    <span>Des avis vérifiés et modérés pour éviter les faux profils.</span>
-                  </li>
-                  <li className="flex items-center gap-3">
-                    <div className="w-6 h-6 rounded-full bg-orange-100 flex items-center justify-center flex-shrink-0">
-                      <Lightbulb className="w-3.5 h-3.5 text-orange-600" />
-                    </div>
-                    <span>Une IA (Antonin) pour résumer l'essentiel en un clin d'œil.</span>
-                  </li>
-                  <li className="flex items-center gap-3">
-                    <div className="w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
-                      <GraduationCap className="w-3.5 h-3.5 text-blue-600" />
-                    </div>
-                    <span>Un outil indispensable pour l'orientation scolaire et pro.</span>
-                  </li>
-                </ul>
               </div>
             </motion.div>
-            
-            <motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                className="flex-1 relative w-full">
 
-               {/* Abstract Illustration representation */}
-               <div className="relative w-full max-w-md mx-auto my-4 sm:my-0">
-                  <div className="absolute inset-0 bg-gradient-to-br from-[#FF4D8D] via-purple-600 to-blue-600 rounded-[2rem] rotate-6 opacity-10 transform translate-y-2" />
-                  <div className="relative bg-white rounded-[2rem] shadow-2xl border border-slate-100 p-6 sm:p-8 flex flex-col items-center justify-center text-center overflow-hidden">
-                    <div className="w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-br from-pink-100 to-purple-100 rounded-full flex items-center justify-center mb-4 sm:mb-6 animate-bounce">
-                      <span className="text-3xl sm:text-4xl">🎓</span>
+            {/* Split Columns */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start">
+              {/* Left Column: 3 Widgets */}
+              <motion.div
+                initial={{ opacity: 0, x: -50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                className="space-y-6">
+                  
+                  {/* Widget 1 */}
+                  <div className="group bg-white border-2 border-slate-900 p-6 rounded-xl shadow-[6px_6px_0px_0px_rgba(15,23,42,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[3px_3px_0px_0px_rgba(15,23,42,1)] transition-all">
+                    <div className="flex items-center gap-5">
+                      <div className="w-14 h-14 bg-[#10B981] rounded-xl border-2 border-slate-900 flex items-center justify-center shrink-0 group-hover:rotate-6 transition-transform">
+                        <Shield className="w-7 h-7 text-white" />
+                      </div>
+                      <div>
+                        <h4 className="font-black text-slate-900 uppercase italic text-lg tracking-wide">No Fake Zone</h4>
+                        <p className="text-base font-medium text-slate-700 mt-1">Avis vérifiés & modérés. Ici, on ne triche pas.</p>
+                      </div>
                     </div>
-                    <h3 className="text-xl sm:text-2xl font-bold text-slate-900 mb-2">Rejoignez le mouvement</h3>
-                    <p className="text-sm sm:text-base text-slate-500 mb-6 sm:mb-8">Déjà des milliers d'avis partagés.</p>
-                    <Link to={createPageUrl("Schools")} className="w-full sm:w-auto">
-                      <Button className="w-full sm:w-auto bg-gradient-to-r from-[#FF4D8D] to-purple-600 text-white shadow-lg hover:shadow-xl hover:scale-105 transition-all rounded-full px-6 py-6 sm:px-8 sm:py-6 text-base sm:text-lg">
-                        Voir les écoles
-                        <ArrowRight className="ml-2 w-5 h-5" />
-                      </Button>
-                    </Link>
                   </div>
-               </div>
-            </motion.div>
+
+                  {/* Widget 2 */}
+                  <div className="group bg-white border-2 border-slate-900 p-6 rounded-xl shadow-[6px_6px_0px_0px_rgba(15,23,42,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[3px_3px_0px_0px_rgba(15,23,42,1)] transition-all">
+                    <div className="flex items-center gap-5">
+                      <div className="w-14 h-14 bg-[#F59E0B] rounded-xl border-2 border-slate-900 flex items-center justify-center shrink-0 group-hover:-rotate-6 transition-transform">
+                        <Lightbulb className="w-7 h-7 text-white" />
+                      </div>
+                      <div>
+                        <h4 className="font-black text-slate-900 uppercase italic text-lg tracking-wide">IA Surpuissante</h4>
+                        <p className="text-base font-medium text-slate-700 mt-1">Antonin résume tout. L'essentiel en 2 secondes.</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Widget 3 */}
+                  <div className="group bg-white border-2 border-slate-900 p-6 rounded-xl shadow-[6px_6px_0px_0px_rgba(15,23,42,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[3px_3px_0px_0px_rgba(15,23,42,1)] transition-all">
+                    <div className="flex items-center gap-5">
+                      <div className="w-14 h-14 bg-[#3B82F6] rounded-xl border-2 border-slate-900 flex items-center justify-center shrink-0 group-hover:rotate-6 transition-transform">
+                        <GraduationCap className="w-7 h-7 text-white" />
+                      </div>
+                      <div>
+                        <h4 className="font-black text-slate-900 uppercase italic text-lg tracking-wide">L'Outil Ultime</h4>
+                        <p className="text-base font-medium text-slate-700 mt-1">Pour ton orientation. Ne choisis plus au hasard.</p>
+                      </div>
+                    </div>
+                  </div>
+              </motion.div>
+              
+              {/* Right Column: Movement Widget */}
+              <motion.div
+                initial={{ opacity: 0, x: 50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                className="relative w-full h-full">
+
+                 <div className="relative w-full h-full min-h-[400px]">
+                    <div className="absolute inset-0 bg-slate-900 rounded-[2rem] transform rotate-2" />
+                    <div className="absolute inset-0 bg-gradient-to-br from-[#FF4D8D] via-purple-600 to-blue-600 rounded-[2rem] transform -rotate-1 opacity-90 border-2 border-slate-900" />
+                    
+                    <div className="relative bg-white rounded-[2rem] border-4 border-slate-900 p-8 sm:p-12 flex flex-col items-center justify-center text-center overflow-hidden h-full transform -rotate-2 hover:rotate-0 transition-all duration-500 shadow-[8px_8px_0px_0px_rgba(255,255,255,0.2)]">
+                      <div className="w-24 h-24 sm:w-32 sm:h-32 bg-slate-100 rounded-full flex items-center justify-center mb-8 border-4 border-slate-900 shadow-[4px_4px_0px_0px_rgba(15,23,42,1)]">
+                        <span className="text-4xl sm:text-6xl animate-bounce">🎓</span>
+                      </div>
+                      <h3 className="text-2xl sm:text-4xl font-black text-slate-900 mb-4 uppercase italic">Rejoignez le<br/>mouvement</h3>
+                      <p className="text-lg text-slate-600 font-medium mb-8">Déjà des milliers d'avis partagés. Ne reste pas sur le côté.</p>
+                      <Link to={createPageUrl("Schools")} className="w-full sm:w-auto">
+                        <Button className="w-full sm:w-auto bg-slate-900 hover:bg-slate-800 text-white shadow-[4px_4px_0px_0px_rgba(148,163,184,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all rounded-xl px-8 py-8 sm:px-10 sm:py-6 text-lg sm:text-xl font-bold uppercase tracking-wide border-2 border-transparent">
+                          Voir les écoles
+                          <ArrowRight className="ml-3 w-6 h-6" />
+                        </Button>
+                      </Link>
+                    </div>
+                 </div>
+              </motion.div>
+            </div>
           </div>
         </div>
       </div>
@@ -213,6 +262,6 @@ export default function AboutPage() {
         </Link>
       </div>
       </div>
-    </>);
-
+    </>
+  );
 }
