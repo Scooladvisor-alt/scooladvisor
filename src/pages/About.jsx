@@ -68,7 +68,9 @@ export default function AboutPage() {
             animate={{ opacity: 1, y: 0 }}
             className="text-4xl sm:text-6xl md:text-7xl font-bold text-slate-900 mb-6 tracking-tight">
 
-            Scool quoi ? <br />
+            <span className="block text-6xl sm:text-8xl font-black italic uppercase tracking-tighter text-slate-900 mb-4 transform -rotate-2 origin-center drop-shadow-sm">
+              SCOOL QUOI ?
+            </span>
             <span className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
               ScoolAdvisor.
             </span>
