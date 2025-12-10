@@ -28,7 +28,7 @@ export default function AboutPage() {
 
   return (
     <>
-      <SEO
+      <SEO 
         title="À propos de ScoolAdvisor - Notre Mission"
         description="ScoolAdvisor est le réseau social des étudiants. Partagez votre expérience, notez vos établissements et professeurs. Une communauté authentique et transparente."
         canonicalPath="/About"
@@ -38,8 +38,8 @@ export default function AboutPage() {
           "name": "ScoolAdvisor",
           "description": "Le réseau social des étudiants - Avis authentiques sur écoles et professeurs",
           "url": window.location.origin
-        }} />
-
+        }}
+      />
       <div className="min-h-screen bg-gradient-to-br from-slate-50 via-purple-50 to-blue-50">
 
 
@@ -52,10 +52,10 @@ export default function AboutPage() {
 
         <div className="max-w-4xl mx-auto text-center relative z-10">
           <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5 }}
-              className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full border border-purple-100 shadow-sm mb-8">
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5 }}
+            className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full border border-purple-100 shadow-sm mb-8">
 
             <Sparkles className="w-4 h-4 text-[#FF4D8D]" />
             <span className="text-sm font-medium bg-gradient-to-r from-[#FF4D8D] to-purple-600 bg-clip-text text-transparent">
@@ -64,9 +64,9 @@ export default function AboutPage() {
           </motion.div>
 
           <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="text-4xl sm:text-6xl md:text-7xl font-bold text-slate-900 mb-6 tracking-tight">
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-4xl sm:text-6xl md:text-7xl font-bold text-slate-900 mb-6 tracking-tight">
 
             <span className="block text-6xl sm:text-8xl font-black italic uppercase tracking-tighter text-slate-900 mb-4 transform -rotate-2 origin-center drop-shadow-sm">
               SCOOL QUOI ?
@@ -77,10 +77,10 @@ export default function AboutPage() {
           </motion.h1>
 
           <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="text-lg sm:text-xl text-slate-600 leading-relaxed max-w-2xl mx-auto mb-10">
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="text-lg sm:text-xl text-slate-600 leading-relaxed max-w-2xl mx-auto mb-10">
 
             Plus qu’un simple site d’avis, c’est une véritable communauté. Nous donnons aux étudiants et aux parents les clés pour mieux comprendre, choisir et éclairer leur avenir scolaire.
           </motion.p>
@@ -90,17 +90,17 @@ export default function AboutPage() {
       {/* Mission Section */}
       <div className="max-w-6xl mx-auto px-4 pb-24">
         <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
 
           {/* Card 1 - Dominant */}
           <motion.div variants={itemVariants} className="lg:col-span-7 relative group">
             <div className="absolute inset-0 bg-slate-900 rounded-2xl transform translate-x-2 translate-y-2 group-hover:translate-x-3 group-hover:translate-y-3 transition-transform" />
             <div className="relative bg-white rounded-2xl p-8 border-2 border-slate-900 h-full flex flex-col">
-              <div className="w-16 h-16 bg-gradient-to-tr from-[#3B82F6]/40 via-[#C084FC]/80 to-[#FF4D8D] rounded-xl flex items-center justify-center mb-6 border-2 border-slate-900 shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] transform -rotate-3 group-hover:rotate-0 transition-transform">
+              <div className="w-16 h-16 bg-[#FF4D8D] rounded-xl flex items-center justify-center mb-6 border-2 border-slate-900 shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] transform -rotate-3 group-hover:rotate-0 transition-transform">
                 <Target className="w-8 h-8 text-white" />
               </div>
               <h3 className="text-3xl font-black text-slate-900 mb-4 uppercase italic tracking-tight">Orienter avec <span className="text-[#FF4D8D]">Force</span></h3>
@@ -112,12 +112,12 @@ export default function AboutPage() {
 
           {/* Card 2 - Compact & Bold */}
           <motion.div variants={itemVariants} className="lg:col-span-5 relative group mt-4 lg:mt-0">
-             <div className="absolute inset-0 bg-gradient-to-br from-pink-500 to-blue-500 rounded-2xl transform translate-x-2 translate-y-2 group-hover:translate-x-3 group-hover:translate-y-3 transition-transform" />
+             <div className="absolute inset-0 bg-[#8B5CF6] rounded-2xl transform translate-x-2 translate-y-2 group-hover:translate-x-3 group-hover:translate-y-3 transition-transform" />
             <div className="relative bg-white rounded-2xl p-8 border-2 border-slate-900 h-full flex flex-col">
-               <div className="w-16 h-16 bg-gradient-to-br from-pink-500/80 to-blue-500 rounded-xl flex items-center justify-center mb-6 border-2 border-slate-900 shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] transform rotate-3 group-hover:rotate-0 transition-transform">
+               <div className="w-16 h-16 bg-[#8B5CF6] rounded-xl flex items-center justify-center mb-6 border-2 border-slate-900 shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] transform rotate-3 group-hover:rotate-0 transition-transform">
                 <Heart className="w-8 h-8 text-white" />
               </div>
-              <h3 className="text-2xl font-black text-slate-900 mb-4 uppercase italic">Pas de Haine,<br />Que du <span className="text-[#8B5CF6]">Vrai</span></h3>
+              <h3 className="text-2xl font-black text-slate-900 mb-4 uppercase italic">Pas de Haine,<br/>Que du <span className="text-[#8B5CF6]">Vrai</span></h3>
               <p className="text-slate-700 font-medium leading-relaxed">
                 On ne casse pas pour le plaisir. On construit. La critique est une arme puissante seulement si elle est constructive et respectueuse.
               </p>
@@ -126,9 +126,9 @@ export default function AboutPage() {
 
           {/* Card 3 - Wide & Impactful */}
           <motion.div variants={itemVariants} className="lg:col-span-12 relative group mt-4">
-             <div className="absolute inset-0 bg-gradient-to-r from-[#FF4D8D] to-[#3B82F6] rounded-2xl transform translate-x-2 translate-y-2 group-hover:translate-x-3 group-hover:translate-y-3 transition-transform" />
+             <div className="absolute inset-0 bg-[#3B82F6] rounded-2xl transform translate-x-2 translate-y-2 group-hover:translate-x-3 group-hover:translate-y-3 transition-transform" />
              <div className="relative bg-white rounded-2xl p-8 sm:p-10 border-2 border-slate-900 flex flex-col md:flex-row items-center gap-8 h-full">
-                <div className="">
+                <div className="shrink-0 w-20 h-20 bg-[#3B82F6] rounded-xl flex items-center justify-center border-2 border-slate-900 shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] transform -rotate-6 group-hover:rotate-0 transition-transform">
                   <Users className="w-10 h-10 text-white" />
                 </div>
                 <div>
@@ -148,10 +148,10 @@ export default function AboutPage() {
           <div className="flex flex-col gap-12">
             {/* Full width Text Section */}
             <motion.div
-                initial={{ opacity: 0, y: -20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="text-center max-w-4xl mx-auto">
+              initial={{ opacity: 0, y: -20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center max-w-4xl mx-auto">
 
               <div className="relative inline-block">
                 <div className="absolute -top-10 -left-10 w-40 h-40 bg-yellow-200 rounded-full blur-3xl opacity-30" />
@@ -173,10 +173,10 @@ export default function AboutPage() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start">
               {/* Left Column: 3 Widgets */}
               <motion.div
-                  initial={{ opacity: 0, x: -50 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  className="space-y-6">
+                initial={{ opacity: 0, x: -50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                className="space-y-6">
                   
                   {/* Widget 1 */}
                   <div className="group bg-white border-2 border-slate-900 p-6 rounded-xl shadow-[6px_6px_0px_0px_rgba(15,23,42,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[3px_3px_0px_0px_rgba(15,23,42,1)] transition-all">
@@ -220,10 +220,10 @@ export default function AboutPage() {
               
               {/* Right Column: Movement Widget */}
               <motion.div
-                  initial={{ opacity: 0, x: 50 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  className="relative w-full h-full">
+                initial={{ opacity: 0, x: 50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                className="relative w-full h-full">
 
                  <div className="relative w-full h-full min-h-[400px]">
                     <div className="absolute inset-0 bg-slate-900 rounded-[2rem] transform rotate-2" />
@@ -233,7 +233,7 @@ export default function AboutPage() {
                       <div className="w-24 h-24 sm:w-32 sm:h-32 bg-slate-100 rounded-full flex items-center justify-center mb-8 border-4 border-slate-900 shadow-[4px_4px_0px_0px_rgba(15,23,42,1)]">
                         <span className="text-4xl sm:text-6xl animate-bounce">🎓</span>
                       </div>
-                      <h3 className="text-2xl sm:text-4xl font-black text-slate-900 mb-4 uppercase italic">Rejoignez le<br />mouvement</h3>
+                      <h3 className="text-2xl sm:text-4xl font-black text-slate-900 mb-4 uppercase italic">Rejoignez le<br/>mouvement</h3>
                       <p className="text-lg text-slate-600 font-medium mb-8">Déjà des milliers d'avis partagés. Ne reste pas sur le côté.</p>
                       <Link to={createPageUrl("Schools")} className="w-full sm:w-auto">
                         <Button className="w-full sm:w-auto bg-slate-900 hover:bg-slate-800 text-white shadow-[4px_4px_0px_0px_rgba(148,163,184,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all rounded-xl px-8 py-8 sm:px-10 sm:py-6 text-lg sm:text-xl font-bold uppercase tracking-wide border-2 border-transparent">
@@ -262,6 +262,6 @@ export default function AboutPage() {
         </Link>
       </div>
       </div>
-    </>);
-
+    </>
+  );
 }
