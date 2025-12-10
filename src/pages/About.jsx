@@ -99,7 +99,7 @@ export default function AboutPage() {
           {/* Card 1 - Dominant */}
           <motion.div variants={itemVariants} className="lg:col-span-7 relative group">
             <div className="absolute inset-0 bg-slate-900 rounded-2xl transform translate-x-2 translate-y-2 group-hover:translate-x-3 group-hover:translate-y-3 transition-transform" />
-            <div className="relative bg-gradient-to-br from-[#FF4D8D]/10 to-[#FF4D8D]/30 rounded-2xl p-8 border-2 border-slate-900 h-full flex flex-col sm:flex-row items-center gap-6">
+            <div className="relative bg-white rounded-2xl p-8 border-2 border-slate-900 h-full flex flex-col sm:flex-row items-center gap-6">
               <div className="shrink-0 w-20 h-20 bg-[#FF4D8D] rounded-xl flex items-center justify-center border-2 border-slate-900 shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] transform -rotate-3 group-hover:rotate-0 transition-transform">
                 <Target className="w-10 h-10 text-white" />
               </div>
@@ -115,7 +115,7 @@ export default function AboutPage() {
           {/* Card 2 - Compact & Bold */}
           <motion.div variants={itemVariants} className="lg:col-span-5 relative group mt-4 lg:mt-0">
              <div className="absolute inset-0 bg-[#8B5CF6] rounded-2xl transform translate-x-2 translate-y-2 group-hover:translate-x-3 group-hover:translate-y-3 transition-transform" />
-            <div className="relative bg-gradient-to-br from-[#8B5CF6]/10 to-[#8B5CF6]/30 rounded-2xl p-8 border-2 border-slate-900 h-full flex flex-col sm:flex-row items-center gap-6">
+            <div className="relative bg-white rounded-2xl p-8 border-2 border-slate-900 h-full flex flex-col sm:flex-row items-center gap-6">
                <div className="shrink-0 w-20 h-20 bg-[#8B5CF6] rounded-xl flex items-center justify-center border-2 border-slate-900 shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] transform rotate-3 group-hover:rotate-0 transition-transform">
                 <Heart className="w-10 h-10 text-white" />
               </div>
@@ -131,7 +131,7 @@ export default function AboutPage() {
           {/* Card 3 - Wide & Impactful */}
           <motion.div variants={itemVariants} className="lg:col-span-12 relative group mt-4">
              <div className="absolute inset-0 bg-[#3B82F6] rounded-2xl transform translate-x-2 translate-y-2 group-hover:translate-x-3 group-hover:translate-y-3 transition-transform" />
-             <div className="relative bg-gradient-to-br from-[#3B82F6]/10 to-[#3B82F6]/30 rounded-2xl p-8 sm:p-10 border-2 border-slate-900 flex flex-col md:flex-row items-center gap-8 h-full">
+             <div className="relative bg-white rounded-2xl p-8 sm:p-10 border-2 border-slate-900 flex flex-col md:flex-row items-center gap-8 h-full">
                 <div className="shrink-0 w-20 h-20 bg-[#3B82F6] rounded-xl flex items-center justify-center border-2 border-slate-900 shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] transform -rotate-6 group-hover:rotate-0 transition-transform">
                   <Users className="w-10 h-10 text-white" />
                 </div>
