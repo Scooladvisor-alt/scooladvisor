@@ -884,7 +884,7 @@ export default function SchoolsPage() {
                   </motion.div>
                 </div>
                 <h3 className="text-xl font-bold text-slate-900 mb-2">Commence à chercher un prof</h3>
-                <p className="text-base text-slate-500 max-w-md mx-auto">Tape son nom ou sa matière pour découvrir son profil et lire les avis des autres élèves 🔍</p>
+                <p className="text-base text-slate-500 max-w-md mx-auto">Tape un nom ou une matière, découvre le prof 🔍</p>
               </div>
             }
             </div>
