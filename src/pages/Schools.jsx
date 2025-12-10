@@ -773,10 +773,10 @@ export default function SchoolsPage() {
                 <span className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-[#4DA6FF] bg-clip-text text-transparent">
                   Salle des profs
                 </span>
-                <span className="ml-2">🧑‍🏫</span>
+                <span className="ml-2"></span>
               </h1>
               <p className="text-sm sm:text-base text-gray-600 max-w-2xl mx-auto">
-                Explorez l'ensemble des établissements pour dénicher les profs les mieux notés 🎓
+                Explorez l'ensemble des scools pour dénicher un prof 😎
               </p>
             </motion.div>
           </div>
