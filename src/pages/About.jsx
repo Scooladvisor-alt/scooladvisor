@@ -132,9 +132,9 @@ export default function AboutPage() {
                   <Users className="w-10 h-10 text-white" />
                 </div>
                 <div>
-                   <h3 className="text-3xl font-black text-slate-900 mb-2 uppercase italic">L'Arène Éducative</h3>
+                   <h3 className="text-3xl font-black text-slate-900 mb-2 uppercase italic">Plateforme <span className="text-[#3B82F6]">Communautaire</span></h3>
                    <p className="text-lg text-slate-700 font-medium leading-relaxed">
-                     Étudiants, parents, profs, administration : tout le monde dans la même équipe. ScoolAdvisor est le terrain où la vérité éclate pour une éducation plus transparente, plus humaine et plus performante.
+                     Étudiants, parents, profs : on brise les silos. Ici, l'expérience de chacun profite à tous. Un espace d'échange direct et sans filtre pour construire ensemble l'école de demain.
                    </p>
                 </div>
              </div>
