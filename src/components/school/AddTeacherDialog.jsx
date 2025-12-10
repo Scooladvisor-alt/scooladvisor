@@ -131,9 +131,9 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
     // SECURITY: Check Permissions
     const user = await base44.auth.me();
     if (!security.canPost(user)) {
-       setError("Action non autorisée.");
-       setLoading(false);
-       return;
+      setError("Action non autorisée.");
+      setLoading(false);
+      return;
     }
 
     const limitCheck = await checkTeacherLimits();
@@ -156,14 +156,14 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
 
     // SECURITY: Anti-Duplicate Check
     const duplicateCheck = await base44.entities.Teacher.filter({
-        school_id: schoolId,
-        name: cleanName
+      school_id: schoolId,
+      name: cleanName
     });
-    
+
     if (duplicateCheck.length > 0) {
-        setError("Ce professeur existe déjà dans cet établissement.");
-        setLoading(false);
-        return;
+      setError("Ce professeur existe déjà dans cet établissement.");
+      setLoading(false);
+      return;
     }
 
     try {
@@ -225,6 +225,9 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
 
 
 
+
+
+
         <DialogHeader>
           <DialogTitle className="text-lg sm:text-2xl font-bold">
             <span className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
@@ -260,7 +263,7 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
                 required
                 placeholder="M. Dupont"
                 className="h-9 sm:h-10 text-xs sm:text-sm flex-1" />
-              <div className="flex items-center gap-2 bg-orange-50 px-3 py-2 rounded-lg border border-orange-200">
+              <div className="flex items-center gap-2 bg-gradient-to-r from-pink-50 to-blue-50 px-3 py-2 rounded-lg border border-pink-200">
                 <input
                   type="checkbox"
                   id="is_former"
