@@ -776,7 +776,7 @@ export default function SchoolsPage() {
                 <span className="ml-2"></span>
               </h1>
               <p className="text-sm sm:text-base text-gray-600 max-w-2xl mx-auto">
-                L'ensemble des scools pour dénicher un prof 😎
+                Toutes les scools pour dénicher un prof 😎
               </p>
             </motion.div>
           </div>
