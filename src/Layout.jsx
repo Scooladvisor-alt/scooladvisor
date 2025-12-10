@@ -361,17 +361,7 @@ export default function Layout({ children }) {
           }
         }
 
-        /* CURSEUR CRAYON PERSONNALISÉ (Desktop uniquement) */
-        @media (min-width: 1024px) {
-          body, a, button, input, select, textarea, [role="button"] {
-            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="%239333EA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(1px 1px 1px rgba(0,0,0,0.2));"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>') 0 24, auto !important;
-          }
 
-          /* Curseur pointer pour les éléments cliquables */
-          a:hover, button:hover, [role="button"]:hover, input:hover, select:hover, textarea:hover {
-             cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="%23FF4D8D" stroke="%23FF4D8D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(1px 1px 2px rgba(0,0,0,0.3)); transform: rotate(-10deg);"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>') 0 24, pointer !important;
-          }
-        }
         `}</style>
       
       <header className="bg-white/90 backdrop-blur-md border-b border-slate-200 sticky top-0 z-50 shadow-sm">
