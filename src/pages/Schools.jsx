@@ -719,7 +719,7 @@ export default function SchoolsPage() {
 
 
       <Dialog open={showTeacherRoom} onOpenChange={setShowTeacherRoom}>
-        <DialogContent className="max-w-[95vw] sm:max-w-5xl max-h-[90vh] overflow-hidden rounded-3xl bg-white border-none shadow-2xl">
+        <DialogContent className="max-w-[95vw] w-full sm:max-w-6xl h-[90vh] sm:h-[85vh] p-0 gap-0 flex flex-col bg-white border-none shadow-2xl rounded-2xl overflow-hidden">
           <style>{`
             @keyframes gentle-float {
               0%, 100% { transform: translateY(0px); }
@@ -763,123 +763,110 @@ export default function SchoolsPage() {
           `}</style>
           
           {/* En-tête redesigné */}
-          <div className="relative px-6 sm:px-8 pt-8 pb-6 text-center bg-gradient-to-br from-white via-pink-50/30 to-blue-50/30">
+          <div className="relative px-6 sm:px-8 pt-6 pb-4 text-center border-b border-slate-100 bg-white z-10 shrink-0">
             <motion.div
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4 }}>
 
-              <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-3">
+              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight mb-2">
                 <span className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-[#4DA6FF] bg-clip-text text-transparent">
                   Salle des profs
                 </span>
                 <span className="ml-2">🧑‍🏫</span>
               </h1>
-              <p className="text-base md:text-lg text-gray-600">
+              <p className="text-sm sm:text-base text-gray-600 max-w-2xl mx-auto">
                 Explorez l'ensemble des établissements pour dénicher les profs les mieux notés 🎓
               </p>
             </motion.div>
           </div>
 
-          {/* Barre de recherche */}
-          <div className="px-6 sm:px-8 pb-6">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.1 }}
-              className="relative">
+          <div className="flex-1 flex flex-col min-h-0 bg-slate-50/50">
+            {/* Barre de recherche - Fixe en haut de la zone de contenu */}
+            <div className="px-6 sm:px-8 py-4 bg-white/50 backdrop-blur-sm border-b border-slate-100 shrink-0">
+              <div className="max-w-3xl mx-auto relative">
+                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-slate-400 z-10" />
+                <Input
+                  placeholder="Nom du professeur ou matière..."
+                  value={teacherSearchTerm}
+                  onChange={(e) => setTeacherSearchTerm(e.target.value)}
+                  className="pl-12 h-12 text-base border border-slate-200 focus:border-pink-300 focus:ring-2 focus:ring-pink-100 rounded-xl bg-white shadow-sm transition-all w-full"
+                  autoFocus />
+              </div>
+            </div>
 
-              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-slate-400 z-10" />
-              <Input
-                placeholder="Nom du professeur ou matière..."
-                value={teacherSearchTerm}
-                onChange={(e) => setTeacherSearchTerm(e.target.value)}
-                className="pl-12 h-14 text-base border-2 border-slate-200 focus:border-pink-300 rounded-2xl bg-white shadow-sm transition-all"
-                autoFocus />
-
-            </motion.div>
-          </div>
-
-          {/* Zone de résultats */}
-          <div className="px-6 sm:px-8 pb-6 overflow-y-auto" style={{ maxHeight: '50vh' }}>
-            {teacherSearchTerm && teacherSuggestions.length === 0 ?
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="text-center py-16">
-
-                <div className="w-20 h-20 bg-gradient-to-br from-pink-100 to-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Search className="w-10 h-10 text-slate-400" />
+            {/* Zone de résultats - Scrollable */}
+            <div className="flex-1 overflow-y-auto px-4 sm:px-8 py-6 custom-scrollbar">
+              {teacherSearchTerm && teacherSuggestions.length === 0 ?
+              <div className="h-full flex flex-col items-center justify-center text-center">
+                <div className="w-16 h-16 bg-gradient-to-br from-pink-100 to-blue-100 rounded-full flex items-center justify-center mb-4">
+                  <Search className="w-8 h-8 text-slate-400" />
                 </div>
                 <p className="text-lg font-medium text-slate-700">Aucun professeur trouvé</p>
                 <p className="text-sm text-slate-500 mt-1">Essaie une autre recherche</p>
-              </motion.div> :
-            teacherSearchTerm && teacherSuggestions.length > 0 ?
-            <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-4">
-                {teacherSuggestions.map((teacher, index) => {
-                const school = schools.find((s) => s.id === teacher.school_id);
-                return (
-                  <motion.button
-                    key={teacher.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.05, duration: 0.3 }}
-                    onClick={() => handleTeacherClick(teacher)}
-                    className="teacher-card-shimmer group p-2 sm:p-4 text-left bg-white rounded-2xl border-2 border-slate-100 hover:border-pink-200 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
-
-                      <div className="flex flex-col items-center text-center gap-3">
-                        {/* Photo de profil */}
-                        <div className="relative">
-                          <img
-                          src={teacher.photo_url}
-                          alt={teacher.name}
-                          className="w-20 h-20 rounded-full object-cover border-4 border-white shadow-md group-hover:border-pink-200 transition-all" />
-
-                          {teacher.average_rating > 0 &&
-                        <div className="absolute -top-1 -right-1 flex items-center gap-0.5 bg-gradient-to-br from-amber-300 to-amber-400 px-2 py-1 rounded-full border-2 border-white shadow-md">
-                              <span className="text-xs font-bold text-white">
-                                {teacher.average_rating.toFixed(1)}
-                              </span>
-                              <span className="text-[10px] text-white/90">⭐️</span>
-                            </div>
-                        }
-                        </div>
-
-                        {/* Infos prof */}
-                        <div className="w-full">
-                          <h3 className="font-bold text-slate-900 text-base mb-1 truncate">
-                            {teacher.name}
-                          </h3>
-                          
-                          <div className="inline-flex items-center gap-1.5 bg-gradient-to-r from-pink-100 to-blue-100 px-3 py-1 rounded-full mb-2">
-                            <span className="text-xs font-semibold bg-gradient-to-r from-[#FF4D8D] to-[#4DA6FF] bg-clip-text text-transparent">
-                              {teacher.subject}
-                            </span>
-                          </div>
-                          
-                          <p className="text-xs text-slate-500 truncate">
-                            📍 {school?.name || "Établissement inconnu"}
-                          </p>
-                        </div>
-
-                        {/* Bouton voir profil */}
-                        <div className="w-full mt-2 pt-3 border-t border-slate-100">
-                          <div className="text-xs font-semibold text-center bg-gradient-to-r from-[#FF4D8D] to-[#4DA6FF] bg-clip-text text-transparent group-hover:from-pink-600 group-hover:to-blue-600 transition-all">
-                            Voir le profil →
-                          </div>
-                        </div>
-                      </div>
-                    </motion.button>);
-
-              })}
               </div> :
+              teacherSearchTerm && teacherSuggestions.length > 0 ?
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 max-w-7xl mx-auto">
+                  {teacherSuggestions.map((teacher, index) => {
+                  const school = schools.find((s) => s.id === teacher.school_id);
+                  return (
+                    <motion.button
+                      key={teacher.id}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: index * 0.05, duration: 0.3 }}
+                      onClick={() => handleTeacherClick(teacher)}
+                      className="teacher-card-shimmer group p-4 text-left bg-white rounded-xl border border-slate-200 hover:border-pink-200 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 h-full flex flex-col">
 
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="text-center py-16">
+                        <div className="flex flex-col items-center text-center gap-3 flex-1">
+                          {/* Photo de profil */}
+                          <div className="relative shrink-0">
+                            <img
+                            src={teacher.photo_url}
+                            alt={teacher.name}
+                            className="w-20 h-20 rounded-full object-cover border-4 border-white shadow-sm group-hover:border-pink-100 transition-all" />
 
-                <div className="w-20 h-20 bg-gradient-to-br from-pink-100 to-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            {teacher.average_rating > 0 &&
+                          <div className="absolute -top-1 -right-1 flex items-center gap-0.5 bg-gradient-to-br from-amber-300 to-amber-400 px-2 py-0.5 rounded-full border-2 border-white shadow-sm">
+                                <span className="text-xs font-bold text-white">
+                                  {teacher.average_rating.toFixed(1)}
+                                </span>
+                                <span className="text-[10px] text-white/90">⭐️</span>
+                              </div>
+                          }
+                          </div>
+
+                          {/* Infos prof */}
+                          <div className="w-full flex-1 flex flex-col items-center">
+                            <h3 className="font-bold text-slate-900 text-base mb-1 truncate w-full">
+                              {teacher.name}
+                            </h3>
+                            
+                            <div className="inline-flex items-center gap-1.5 bg-gradient-to-r from-pink-50 to-blue-50 px-2.5 py-0.5 rounded-full mb-2 border border-slate-100">
+                              <span className="text-xs font-semibold bg-gradient-to-r from-[#FF4D8D] to-[#4DA6FF] bg-clip-text text-transparent">
+                                {teacher.subject}
+                              </span>
+                            </div>
+                            
+                            <p className="text-xs text-slate-500 line-clamp-2 min-h-[2.5em] leading-tight">
+                              📍 {school?.name || "Établissement inconnu"}
+                            </p>
+                          </div>
+
+                          {/* Bouton voir profil */}
+                          <div className="w-full mt-auto pt-3 border-t border-slate-100">
+                            <div className="text-xs font-semibold text-center text-slate-400 group-hover:text-pink-500 transition-colors flex items-center justify-center gap-1">
+                              Voir le profil <ArrowRight className="w-3 h-3" />
+                            </div>
+                          </div>
+                        </div>
+                      </motion.button>);
+
+                })}
+                </div> :
+
+              <div className="h-full flex flex-col items-center justify-center text-center pb-20">
+                <div className="w-20 h-20 bg-gradient-to-br from-pink-100 to-blue-100 rounded-full flex items-center justify-center mb-6 shadow-sm">
                   <motion.div
                   animate={{
                     rotate: [0, -10, 0, 10, 0],
@@ -896,23 +883,21 @@ export default function SchoolsPage() {
                     <Search className="w-10 h-10 text-[#FF4D8D]" />
                   </motion.div>
                 </div>
-                <p className="text-lg font-semibold text-slate-900 mb-2">Commence à chercher un prof</p>
-                <p className="text-sm text-slate-500">Tape son nom ou sa matière pour découvrir son profil 🔍</p>
-              </motion.div>
+                <h3 className="text-xl font-bold text-slate-900 mb-2">Commence à chercher un prof</h3>
+                <p className="text-base text-slate-500 max-w-md mx-auto">Tape son nom ou sa matière pour découvrir son profil et lire les avis des autres élèves 🔍</p>
+              </div>
             }
+            </div>
           </div>
 
           {/* Footer avec bouton de sortie */}
-          <div className="relative border-t border-slate-100 bg-gradient-to-r from-pink-50/20 to-blue-50/20 px-6 py-4">
+          <div className="relative border-t border-slate-100 bg-white px-6 py-4 z-10 shrink-0">
             <div className="flex justify-center">
               <Button
                 onClick={() => setShowTeacherRoom(false)}
-                variant="outline"
-                className="border-2 border-slate-200 hover:border-pink-300 hover:bg-pink-50 transition-all px-6 py-2 rounded-xl">
-
-                <span className="bg-gradient-to-r from-[#FF4D8D] to-[#4DA6FF] bg-clip-text text-transparent font-semibold">
-                  Quitter la salle
-                </span>
+                variant="ghost"
+                className="text-slate-500 hover:text-slate-900 hover:bg-slate-100 rounded-xl px-6">
+                Fermer
               </Button>
             </div>
           </div>
