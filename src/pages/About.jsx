@@ -165,26 +165,46 @@ export default function AboutPage() {
                 <p>
                   <strong className="text-purple-600">Le savoir, c'est le pouvoir.</strong> En partageant massivement nos expériences, nous créons une carte détaillée du paysage éducatif francophone.
                 </p>
-                <ul className="space-y-4 mt-4">
-                  <li className="flex items-center gap-3">
-                    <div className="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
-                      <Shield className="w-3.5 h-3.5 text-green-600" />
+                <div className="space-y-5 mt-8">
+                  {/* Widget 1 */}
+                  <div className="group bg-white border-2 border-slate-900 p-4 rounded-xl shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_rgba(15,23,42,1)] transition-all">
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 bg-[#10B981] rounded-lg border-2 border-slate-900 flex items-center justify-center shrink-0 group-hover:rotate-6 transition-transform">
+                        <Shield className="w-6 h-6 text-white" />
+                      </div>
+                      <div>
+                        <h4 className="font-black text-slate-900 uppercase italic text-sm tracking-wide">No Fake Zone</h4>
+                        <p className="text-sm font-semibold text-slate-700 mt-0.5">Avis vérifiés & modérés. Ici, on ne triche pas.</p>
+                      </div>
                     </div>
-                    <span>Des avis vérifiés et modérés pour éviter les faux profils.</span>
-                  </li>
-                  <li className="flex items-center gap-3">
-                    <div className="w-6 h-6 rounded-full bg-orange-100 flex items-center justify-center flex-shrink-0">
-                      <Lightbulb className="w-3.5 h-3.5 text-orange-600" />
+                  </div>
+
+                  {/* Widget 2 */}
+                  <div className="group bg-white border-2 border-slate-900 p-4 rounded-xl shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_rgba(15,23,42,1)] transition-all">
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 bg-[#F59E0B] rounded-lg border-2 border-slate-900 flex items-center justify-center shrink-0 group-hover:-rotate-6 transition-transform">
+                        <Lightbulb className="w-6 h-6 text-white" />
+                      </div>
+                      <div>
+                        <h4 className="font-black text-slate-900 uppercase italic text-sm tracking-wide">IA Surpuissante</h4>
+                        <p className="text-sm font-semibold text-slate-700 mt-0.5">Antonin résume tout. L'essentiel en 2 secondes.</p>
+                      </div>
                     </div>
-                    <span>Une IA (Antonin) pour résumer l'essentiel en un clin d'œil.</span>
-                  </li>
-                  <li className="flex items-center gap-3">
-                    <div className="w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
-                      <GraduationCap className="w-3.5 h-3.5 text-blue-600" />
+                  </div>
+
+                  {/* Widget 3 */}
+                  <div className="group bg-white border-2 border-slate-900 p-4 rounded-xl shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_rgba(15,23,42,1)] transition-all">
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 bg-[#3B82F6] rounded-lg border-2 border-slate-900 flex items-center justify-center shrink-0 group-hover:rotate-6 transition-transform">
+                        <GraduationCap className="w-6 h-6 text-white" />
+                      </div>
+                      <div>
+                        <h4 className="font-black text-slate-900 uppercase italic text-sm tracking-wide">L'Outil Ultime</h4>
+                        <p className="text-sm font-semibold text-slate-700 mt-0.5">Pour ton orientation. Ne choisis plus au hasard.</p>
+                      </div>
                     </div>
-                    <span>Un outil indispensable pour l'orientation scolaire et pro.</span>
-                  </li>
-                </ul>
+                  </div>
+                </div>
               </div>
             </motion.div>
             
