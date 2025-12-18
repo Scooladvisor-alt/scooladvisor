@@ -147,8 +147,9 @@ export default function AboutPage() {
       </div>
 
       {/* Concept Detail */}
-      <div className="bg-white px-1 py-24">
-        <div className="max-w-7xl mx-auto px-4">
+      <div className="relative px-1 py-24">
+        <div className="absolute inset-0 bg-gradient-to-b from-white/0 via-white/40 to-white/0 pointer-events-none" />
+        <div className="max-w-7xl mx-auto px-4 relative z-10">
           <div className="flex flex-col gap-12">
             {/* Full width Text Section */}
             <motion.div
@@ -159,7 +160,7 @@ export default function AboutPage() {
 
               <div className="relative inline-block">
                 <div className="absolute -top-10 -left-10 w-40 h-40 bg-yellow-200 rounded-full blur-3xl opacity-30" />
-                <h2 className="text-3xl sm:text-5xl font-black text-slate-900 mb-6 relative z-10 uppercase italic tracking-tight">
+                <h2 className="text-3xl sm:text-5xl font-black text-slate-800 mb-6 relative z-10 uppercase italic tracking-tight">
                   Pourquoi ScoolAdvisor ?
                 </h2>
               </div>
@@ -175,27 +176,14 @@ export default function AboutPage() {
 
             {/* Split Columns */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start">
-              {/* Left Column: 3 Widgets */}
+              {/* Left Column: 2 Widgets */}
               <motion.div
                 initial={{ opacity: 0, x: -50 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 className="space-y-6">
 
-                  {/* Widget 1 */}
-                  <div className="group bg-white/60 backdrop-blur-md border border-white/50 p-6 rounded-2xl shadow-lg hover:shadow-xl hover:bg-white/80 transition-all">
-                    <div className="flex items-center gap-5">
-                      <div className="w-14 h-14 bg-gradient-to-br from-[#10B981] to-emerald-600 rounded-2xl flex items-center justify-center shrink-0 group-hover:rotate-6 transition-transform shadow-lg shadow-emerald-200">
-                        <Shield className="w-7 h-7 text-white" />
-                      </div>
-                      <div>
-                        <h4 className="font-black text-slate-800 uppercase italic text-lg tracking-wide">No Fake Zone</h4>
-                        <p className="text-base font-medium text-slate-600 mt-1">Avis vérifiés & modérés. Ici, on ne triche pas.</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Widget 2 */}
+                  {/* Widget 1 - IA */}
                   <div className="group bg-white/60 backdrop-blur-md border border-white/50 p-6 rounded-2xl shadow-lg hover:shadow-xl hover:bg-white/80 transition-all">
                     <div className="flex items-center gap-5">
                       <div className="w-14 h-14 bg-gradient-to-br from-[#F59E0B] to-amber-600 rounded-2xl flex items-center justify-center shrink-0 group-hover:-rotate-6 transition-transform shadow-lg shadow-amber-200">
@@ -208,7 +196,7 @@ export default function AboutPage() {
                     </div>
                   </div>
 
-                  {/* Widget 3 */}
+                  {/* Widget 2 - Outil */}
                   <div className="group bg-white/60 backdrop-blur-md border border-white/50 p-6 rounded-2xl shadow-lg hover:shadow-xl hover:bg-white/80 transition-all">
                     <div className="flex items-center gap-5">
                       <div className="w-14 h-14 bg-gradient-to-br from-[#3B82F6] to-blue-600 rounded-2xl flex items-center justify-center shrink-0 group-hover:rotate-6 transition-transform shadow-lg shadow-blue-200">
