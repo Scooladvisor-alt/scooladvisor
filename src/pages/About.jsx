@@ -98,14 +98,14 @@ export default function AboutPage() {
 
           {/* Card 1 - Dominant */}
           <motion.div variants={itemVariants} className="lg:col-span-7 relative group">
-            <div className="absolute inset-0 bg-slate-900 rounded-2xl transform translate-x-2 translate-y-2 group-hover:translate-x-3 group-hover:translate-y-3 transition-transform" />
-            <div className="relative bg-gradient-to-br from-pink-50 via-white to-pink-50/20 rounded-2xl p-8 border-2 border-slate-900 h-full flex flex-col sm:flex-row items-center gap-6">
-              <div className="shrink-0 w-20 h-20 bg-gradient-to-br from-[#FF4D8D] to-pink-600 rounded-xl flex items-center justify-center border-2 border-slate-900 shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] transform -rotate-3 group-hover:rotate-0 transition-transform">
+            <div className="absolute inset-0 bg-gradient-to-r from-pink-200 to-rose-200 rounded-2xl blur-lg opacity-40 transform translate-x-2 translate-y-2 group-hover:opacity-60 transition-all" />
+            <div className="relative bg-white/60 backdrop-blur-xl rounded-2xl p-8 border border-white/50 shadow-xl h-full flex flex-col sm:flex-row items-center gap-6 hover:border-pink-200 transition-colors">
+              <div className="shrink-0 w-20 h-20 bg-gradient-to-br from-[#FF4D8D] to-pink-600 rounded-2xl flex items-center justify-center shadow-lg transform -rotate-3 group-hover:rotate-0 transition-transform">
                 <Target className="w-10 h-10 text-white shrink-0" />
               </div>
               <div>
-                <h3 className="text-3xl font-black text-slate-900 mb-2 uppercase italic tracking-tight">Orienter avec <span className="bg-gradient-to-r from-[#FF4D8D] to-pink-600 bg-clip-text text-transparent">Force</span></h3>
-                <p className="text-lg text-slate-700 font-medium leading-relaxed">
+                <h3 className="text-3xl font-black text-slate-800 mb-2 uppercase italic tracking-tight">Orienter avec <span className="bg-gradient-to-r from-[#FF4D8D] to-pink-600 bg-clip-text text-transparent">Force</span></h3>
+                <p className="text-lg text-slate-600 font-medium leading-relaxed">
                   Choisir son avenir, ce n'est pas jouer à la roulette russe. On te file les vraies infos, sans filtre, pour que tu puisses tracer ta route comme un chef. Fini le hasard.
                 </p>
               </div>
@@ -114,14 +114,14 @@ export default function AboutPage() {
 
           {/* Card 2 - Compact & Bold */}
           <motion.div variants={itemVariants} className="lg:col-span-5 relative group mt-4 lg:mt-0">
-             <div className="absolute inset-0 bg-[#8B5CF6] rounded-2xl transform translate-x-2 translate-y-2 group-hover:translate-x-3 group-hover:translate-y-3 transition-transform" />
-            <div className="relative bg-gradient-to-br from-purple-50 via-white to-purple-50/20 rounded-2xl p-8 border-2 border-slate-900 h-full flex flex-col sm:flex-row items-center gap-6">
-               <div className="shrink-0 w-20 h-20 bg-gradient-to-br from-[#8B5CF6] to-purple-600 rounded-xl flex items-center justify-center border-2 border-slate-900 shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] transform rotate-3 group-hover:rotate-0 transition-transform">
+             <div className="absolute inset-0 bg-gradient-to-r from-purple-200 to-indigo-200 rounded-2xl blur-lg opacity-40 transform translate-x-2 translate-y-2 group-hover:opacity-60 transition-all" />
+            <div className="relative bg-white/60 backdrop-blur-xl rounded-2xl p-8 border border-white/50 shadow-xl h-full flex flex-col sm:flex-row items-center gap-6 hover:border-purple-200 transition-colors">
+               <div className="shrink-0 w-20 h-20 bg-gradient-to-br from-[#8B5CF6] to-purple-600 rounded-2xl flex items-center justify-center shadow-lg transform rotate-3 group-hover:rotate-0 transition-transform">
                 <Heart className="w-10 h-10 text-white shrink-0" />
               </div>
               <div>
-                <h3 className="text-2xl font-black text-slate-900 mb-2 uppercase italic">Pas de Haine,<br/>Que du <span className="bg-gradient-to-r from-[#8B5CF6] to-purple-600 bg-clip-text text-transparent">Vrai</span></h3>
-                <p className="text-slate-700 font-medium leading-relaxed">
+                <h3 className="text-2xl font-black text-slate-800 mb-2 uppercase italic">Pas de Haine,<br/>Que du <span className="bg-gradient-to-r from-[#8B5CF6] to-purple-600 bg-clip-text text-transparent">Vrai</span></h3>
+                <p className="text-slate-600 font-medium leading-relaxed">
                   On ne casse pas pour le plaisir. On construit. La critique est une arme puissante seulement si elle est constructive et respectueuse.
                 </p>
               </div>
@@ -130,14 +130,14 @@ export default function AboutPage() {
 
           {/* Card 3 - Wide & Impactful */}
           <motion.div variants={itemVariants} className="lg:col-span-12 relative group mt-4">
-             <div className="absolute inset-0 bg-[#3B82F6] rounded-2xl transform translate-x-2 translate-y-2 group-hover:translate-x-3 group-hover:translate-y-3 transition-transform" />
-             <div className="relative bg-gradient-to-br from-blue-50 via-white to-blue-50/20 rounded-2xl p-8 sm:p-10 border-2 border-slate-900 flex flex-col md:flex-row items-center gap-8 h-full">
-                <div className="shrink-0 w-20 h-20 bg-gradient-to-br from-[#3B82F6] to-blue-600 rounded-xl flex items-center justify-center border-2 border-slate-900 shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] transform -rotate-6 group-hover:rotate-0 transition-transform">
+             <div className="absolute inset-0 bg-gradient-to-r from-blue-200 to-cyan-200 rounded-2xl blur-lg opacity-40 transform translate-x-2 translate-y-2 group-hover:opacity-60 transition-all" />
+             <div className="relative bg-white/60 backdrop-blur-xl rounded-2xl p-8 sm:p-10 border border-white/50 shadow-xl flex flex-col md:flex-row items-center gap-8 h-full hover:border-blue-200 transition-colors">
+                <div className="shrink-0 w-20 h-20 bg-gradient-to-br from-[#3B82F6] to-blue-600 rounded-2xl flex items-center justify-center shadow-lg transform -rotate-6 group-hover:rotate-0 transition-transform">
                   <Users className="w-10 h-10 text-white shrink-0" />
                 </div>
                 <div>
-                   <h3 className="text-3xl font-black text-slate-900 mb-2 uppercase italic">Plateforme <span className="bg-gradient-to-r from-[#3B82F6] to-blue-600 bg-clip-text text-transparent">Communautaire</span></h3>
-                   <p className="text-lg text-slate-700 font-medium leading-relaxed">
+                   <h3 className="text-3xl font-black text-slate-800 mb-2 uppercase italic">Plateforme <span className="bg-gradient-to-r from-[#3B82F6] to-blue-600 bg-clip-text text-transparent">Communautaire</span></h3>
+                   <p className="text-lg text-slate-600 font-medium leading-relaxed">
                      Étudiants, parents, profs : on brise les silos. Ici, l'expérience de chacun profite à tous. Un espace d'échange direct et sans filtre pour construire ensemble l'école de demain.
                    </p>
                 </div>
@@ -181,47 +181,47 @@ export default function AboutPage() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 className="space-y-6">
-                  
+
                   {/* Widget 1 */}
-                  <div className="group bg-white border-2 border-slate-900 p-6 rounded-xl shadow-[6px_6px_0px_0px_rgba(15,23,42,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[3px_3px_0px_0px_rgba(15,23,42,1)] transition-all">
+                  <div className="group bg-white/60 backdrop-blur-md border border-white/50 p-6 rounded-2xl shadow-lg hover:shadow-xl hover:bg-white/80 transition-all">
                     <div className="flex items-center gap-5">
-                      <div className="w-14 h-14 bg-[#10B981] rounded-xl border-2 border-slate-900 flex items-center justify-center shrink-0 group-hover:rotate-6 transition-transform">
+                      <div className="w-14 h-14 bg-gradient-to-br from-[#10B981] to-emerald-600 rounded-2xl flex items-center justify-center shrink-0 group-hover:rotate-6 transition-transform shadow-lg shadow-emerald-200">
                         <Shield className="w-7 h-7 text-white" />
                       </div>
                       <div>
-                        <h4 className="font-black text-slate-900 uppercase italic text-lg tracking-wide">No Fake Zone</h4>
-                        <p className="text-base font-medium text-slate-700 mt-1">Avis vérifiés & modérés. Ici, on ne triche pas.</p>
+                        <h4 className="font-black text-slate-800 uppercase italic text-lg tracking-wide">No Fake Zone</h4>
+                        <p className="text-base font-medium text-slate-600 mt-1">Avis vérifiés & modérés. Ici, on ne triche pas.</p>
                       </div>
                     </div>
                   </div>
 
                   {/* Widget 2 */}
-                  <div className="group bg-white border-2 border-slate-900 p-6 rounded-xl shadow-[6px_6px_0px_0px_rgba(15,23,42,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[3px_3px_0px_0px_rgba(15,23,42,1)] transition-all">
+                  <div className="group bg-white/60 backdrop-blur-md border border-white/50 p-6 rounded-2xl shadow-lg hover:shadow-xl hover:bg-white/80 transition-all">
                     <div className="flex items-center gap-5">
-                      <div className="w-14 h-14 bg-[#F59E0B] rounded-xl border-2 border-slate-900 flex items-center justify-center shrink-0 group-hover:-rotate-6 transition-transform">
+                      <div className="w-14 h-14 bg-gradient-to-br from-[#F59E0B] to-amber-600 rounded-2xl flex items-center justify-center shrink-0 group-hover:-rotate-6 transition-transform shadow-lg shadow-amber-200">
                         <Lightbulb className="w-7 h-7 text-white" />
                       </div>
                       <div>
-                        <h4 className="font-black text-slate-900 uppercase italic text-lg tracking-wide">IA Surpuissante</h4>
-                        <p className="text-base font-medium text-slate-700 mt-1">Antonin résume tout. L'essentiel en 2 secondes.</p>
+                        <h4 className="font-black text-slate-800 uppercase italic text-lg tracking-wide">IA Surpuissante</h4>
+                        <p className="text-base font-medium text-slate-600 mt-1">Antonin résume tout. L'essentiel en 2 secondes.</p>
                       </div>
                     </div>
                   </div>
 
                   {/* Widget 3 */}
-                  <div className="group bg-white border-2 border-slate-900 p-6 rounded-xl shadow-[6px_6px_0px_0px_rgba(15,23,42,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[3px_3px_0px_0px_rgba(15,23,42,1)] transition-all">
+                  <div className="group bg-white/60 backdrop-blur-md border border-white/50 p-6 rounded-2xl shadow-lg hover:shadow-xl hover:bg-white/80 transition-all">
                     <div className="flex items-center gap-5">
-                      <div className="w-14 h-14 bg-[#3B82F6] rounded-xl border-2 border-slate-900 flex items-center justify-center shrink-0 group-hover:rotate-6 transition-transform">
+                      <div className="w-14 h-14 bg-gradient-to-br from-[#3B82F6] to-blue-600 rounded-2xl flex items-center justify-center shrink-0 group-hover:rotate-6 transition-transform shadow-lg shadow-blue-200">
                         <GraduationCap className="w-7 h-7 text-white" />
                       </div>
                       <div>
-                        <h4 className="font-black text-slate-900 uppercase italic text-lg tracking-wide">L'Outil Ultime</h4>
-                        <p className="text-base font-medium text-slate-700 mt-1">Pour ton orientation. Ne choisis plus au hasard.</p>
+                        <h4 className="font-black text-slate-800 uppercase italic text-lg tracking-wide">L'Outil Ultime</h4>
+                        <p className="text-base font-medium text-slate-600 mt-1">Pour ton orientation. Ne choisis plus au hasard.</p>
                       </div>
                     </div>
                   </div>
               </motion.div>
-              
+
               {/* Right Column: Movement Widget */}
               <motion.div
                 initial={{ opacity: 0, x: 50 }}
@@ -230,17 +230,16 @@ export default function AboutPage() {
                 className="relative w-full h-full">
 
                  <div className="relative w-full h-full min-h-[400px]">
-                    <div className="absolute inset-0 bg-slate-900 rounded-[2rem] transform rotate-2" />
-                    <div className="absolute inset-0 bg-gradient-to-br from-[#FF4D8D] via-purple-600 to-blue-600 rounded-[2rem] transform -rotate-1 opacity-90 border-2 border-slate-900" />
-                    
-                    <div className="relative bg-white rounded-[2rem] border-4 border-slate-900 p-8 sm:p-12 flex flex-col items-center justify-center text-center overflow-hidden h-full transform -rotate-2 hover:rotate-0 transition-all duration-500 shadow-[8px_8px_0px_0px_rgba(255,255,255,0.2)]">
-                      <div className="w-24 h-24 sm:w-32 sm:h-32 bg-slate-100 rounded-full flex items-center justify-center mb-8 border-4 border-slate-900 shadow-[4px_4px_0px_0px_rgba(15,23,42,1)]">
+                    <div className="absolute inset-0 bg-gradient-to-r from-pink-300 via-purple-300 to-blue-300 rounded-[2rem] transform rotate-2 blur-xl opacity-30" />
+
+                    <div className="relative bg-white/80 backdrop-blur-xl rounded-[2rem] border border-white/60 p-8 sm:p-12 flex flex-col items-center justify-center text-center overflow-hidden h-full transform -rotate-1 hover:rotate-0 transition-all duration-500 shadow-2xl">
+                      <div className="w-24 h-24 sm:w-32 sm:h-32 bg-gradient-to-br from-slate-50 to-white rounded-full flex items-center justify-center mb-8 shadow-inner border border-slate-100">
                         <span className="text-4xl sm:text-6xl animate-bounce">🎓</span>
                       </div>
-                      <h3 className="text-2xl sm:text-4xl font-black text-slate-900 mb-4 uppercase italic">Rejoignez le<br/>mouvement</h3>
+                      <h3 className="text-2xl sm:text-4xl font-black text-slate-800 mb-4 uppercase italic">Rejoignez le<br/>mouvement</h3>
                       <p className="text-lg text-slate-600 font-medium mb-8">Déjà des milliers d'avis partagés. Ne reste pas sur le côté.</p>
                       <Link to={createPageUrl("Schools")} className="w-full sm:w-auto">
-                        <Button className="w-full sm:w-auto bg-slate-900 hover:bg-slate-800 text-white shadow-[4px_4px_0px_0px_rgba(148,163,184,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all rounded-xl px-8 py-8 sm:px-10 sm:py-6 text-lg sm:text-xl font-bold uppercase tracking-wide border-2 border-transparent">
+                        <Button className="w-full sm:w-auto bg-gradient-to-r from-slate-800 to-slate-900 hover:from-slate-700 hover:to-slate-800 text-white shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all rounded-xl px-8 py-8 sm:px-10 sm:py-6 text-lg sm:text-xl font-bold uppercase tracking-wide border border-transparent">
                           Voir les écoles
                           <ArrowRight className="ml-3 w-6 h-6" />
                         </Button>
