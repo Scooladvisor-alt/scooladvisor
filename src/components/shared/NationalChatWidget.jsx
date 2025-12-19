@@ -397,7 +397,7 @@ Si la décision est "approved", "reason" peut être vide ou null.`,
             }
           </div>
 
-          <div className="border-t bg-white p-3">
+          <div className="border-t bg-white p-3 rounded-b-2xl">
             <div className="relative">
               <Textarea
                 placeholder={user ? "Ton message..." : "Connecte-toi pour participer"}
@@ -408,7 +408,7 @@ Si la décision est "approved", "reason" peut être vide ou null.`,
                     setNewMessage(text);
                   }
                 }}
-                className="min-h-[80px] text-sm pr-20 pb-10 resize-none"
+                className="min-h-[80px] text-sm pr-20 pb-10 resize-none rounded-2xl"
                 disabled={!user} 
               />
               
