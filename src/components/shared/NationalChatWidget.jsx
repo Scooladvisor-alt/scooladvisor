@@ -338,9 +338,8 @@ Si la décision est "approved", "reason" peut être vide ou null.`,
 
         <h2 className="text-sm sm:text-xl font-bold text-white flex items-center gap-2 mb-2 sm:mb-3">
           <span className="text-white">
-            Micro National - L'espace libre des étudiants
+            Micro National
           </span>
-          <span className="hidden sm:inline">🎤</span>
         </h2>
         {loading ?
         <p className="text-white/80 text-sm">Chargement...</p> :
@@ -363,13 +362,9 @@ Si la décision est "approved", "reason" peut être vide ou null.`,
 
       <Dialog open={showDialog} onOpenChange={setShowDialog}>
         <DialogContent className="max-w-[95vw] sm:max-w-4xl h-[85vh] flex flex-col p-0 rounded-2xl">
-          <DialogHeader className="p-4 sm:p-6 pb-3 sm:pb-4 border-b">
-            <DialogTitle className="text-xl sm:text-2xl font-bold flex items-center gap-2">
-              <Mic className="w-5 h-5 sm:w-6 sm:h-6 text-[#FF4D8D]" />
-              <span className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
-                Micro National - L'espace libre
-              </span>
-              <span>🎤</span>
+          <DialogHeader className="p-6 border-b">
+            <DialogTitle className="text-xl font-bold text-slate-900">
+              Micro National
             </DialogTitle>
           </DialogHeader>
 
@@ -400,11 +395,11 @@ Si la décision est "approved", "reason" peut être vide ou null.`,
             }
           </div>
 
-          <div className="border-t bg-gradient-to-r from-pink-50 via-purple-50 to-blue-50 p-3 sm:p-6">
-            <div className="space-y-3 sm:space-y-4">
+          <div className="border-t bg-white p-4">
+            <div className="space-y-3">
               <div className="space-y-2">
                 <Textarea
-                  placeholder={user ? "Exprime-toi librement (10 caractères min)... 🎤" : "Connecte-toi pour participer 👋"}
+                  placeholder={user ? "Ton message..." : "Connecte-toi pour participer"}
                   value={newMessage}
                   onChange={(e) => {
                     const text = e.target.value;
