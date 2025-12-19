@@ -362,8 +362,8 @@ Si la décision est "approved", "reason" peut être vide ou null.`,
 
       <Dialog open={showDialog} onOpenChange={setShowDialog}>
         <DialogContent className="max-w-[95vw] sm:max-w-4xl h-[85vh] flex flex-col p-0 rounded-2xl">
-          <DialogHeader className="p-6 border-b">
-            <DialogTitle className="text-xl font-bold text-slate-900">
+          <DialogHeader className="p-4 border-b">
+            <DialogTitle className="text-lg font-bold bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
               Micro National
             </DialogTitle>
           </DialogHeader>
@@ -371,7 +371,7 @@ Si la décision est "approved", "reason" peut être vide ou null.`,
           <div className="flex-1 overflow-y-auto px-6 py-4">
             {messages.length === 0 ?
             <div className="text-center text-slate-500 py-16">
-                <p className="text-lg mb-4">C'est calme ici... Prends le micro ! 🎤</p>
+                <p className="text-lg mb-4 text-slate-500">C'est calme ici... Prends le micro !</p>
               </div> :
 
             <div className="space-y-3">
@@ -395,75 +395,63 @@ Si la décision est "approved", "reason" peut être vide ou null.`,
             }
           </div>
 
-          <div className="border-t bg-white p-4">
-            <div className="space-y-3">
-              <div className="space-y-2">
-                <Textarea
-                  placeholder={user ? "Ton message..." : "Connecte-toi pour participer"}
-                  value={newMessage}
-                  onChange={(e) => {
-                    const text = e.target.value;
-                    if (text.length <= MAX_MESSAGE_LENGTH) {
-                      setNewMessage(text);
-                    }
-                  }}
-                  className="min-h-[80px] sm:min-h-[120px] text-sm sm:text-base"
-                  disabled={!user} />
-
-                <div className="flex justify-between text-[10px] text-slate-400">
-                  <span>
-                    {newMessage.length} / {MAX_MESSAGE_LENGTH} caractères
-                    <span className="ml-1">(minimum 10)</span>
-                  </span>
-                  {newMessage.length >= MAX_MESSAGE_LENGTH &&
-                  <span className="text-red-600 font-medium">Limite atteinte !</span>
+          <div className="border-t bg-white p-3">
+            <div className="relative">
+              <Textarea
+                placeholder={user ? "Ton message..." : "Connecte-toi pour participer"}
+                value={newMessage}
+                onChange={(e) => {
+                  const text = e.target.value;
+                  if (text.length <= MAX_MESSAGE_LENGTH) {
+                    setNewMessage(text);
                   }
-                </div>
-              </div>
-
-              <div className="flex items-center justify-between">
-                {user &&
-                <div className="flex items-center space-x-2">
+                }}
+                className="min-h-[80px] text-sm pr-20 pb-10 resize-none"
+                disabled={!user} 
+              />
+              
+              <div className="absolute bottom-3 left-3 flex items-center gap-2">
+                {user && (
+                  <div className="flex items-center space-x-1.5 bg-slate-50 px-2 py-1 rounded-md border border-slate-100">
                     <Checkbox
-                    id="anonymous_national"
-                    checked={isAnonymous}
-                    onCheckedChange={setIsAnonymous} />
-
-                    <Label htmlFor="anonymous_national" className="text-xs sm:text-sm cursor-pointer">
-                      Poster en anonyme 🕵️‍♂️
+                      id="anonymous_national"
+                      checked={isAnonymous}
+                      onCheckedChange={setIsAnonymous} 
+                      className="h-3.5 w-3.5"
+                    />
+                    <Label htmlFor="anonymous_national" className="text-[10px] cursor-pointer font-medium text-slate-600">
+                      Anonyme
                     </Label>
                   </div>
-                }
-                {!user && <div />}
+                )}
+              </div>
 
-                <div className="flex gap-2 sm:gap-3">
-                  <Button variant="ghost" onClick={() => setShowDialog(false)} size="sm" className="text-xs sm:text-base">
-                    Annuler
-                  </Button>
-                {user ?
-                <Button
-                  onClick={handlePublish}
-                  disabled={!newMessage.trim() || postLoading || newMessage.length > MAX_MESSAGE_LENGTH || newMessage.length < 10} className="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 shadow hover:bg-primary/90 h-8 rounded-md px-3 bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 text-white hover:opacity-90 text-xs sm:text-base"
-
-                  size="sm">
-
-                    {postLoading ? <Loader2 className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2 animate-spin" /> : <Send className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />}
-                    Publier
-                  </Button> :
-
-                <Button
+              <div className="absolute bottom-3 right-3 flex items-center gap-2">
+                 <span className={`text-[10px] mr-2 ${newMessage.length >= MAX_MESSAGE_LENGTH ? 'text-red-500' : 'text-slate-400'}`}>
+                    {newMessage.length}/{MAX_MESSAGE_LENGTH}
+                 </span>
+                 
+                 {user ? (
+                   <Button
+                    onClick={handlePublish}
+                    disabled={!newMessage.trim() || postLoading || newMessage.length > MAX_MESSAGE_LENGTH || newMessage.length < 10}
+                    className="h-7 px-3 bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 text-white text-xs rounded-lg"
+                    size="sm"
+                   >
+                     {postLoading ? <Loader2 className="w-3 h-3 animate-spin" /> : <Send className="w-3 h-3" />}
+                   </Button>
+                 ) : (
+                   <Button
                     onClick={() => base44.auth.redirectToLogin(window.location.href)}
-                    className="bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:opacity-90 text-xs sm:text-base"
-                    size="sm">
-
-                    <Send className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
-                    Connecte-toi pour publier
-                  </Button>
-                }
-                </div>
-                </div>
-                </div>
-                </div>
+                    className="h-7 px-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-xs rounded-lg"
+                    size="sm"
+                   >
+                     Connexion
+                   </Button>
+                 )}
+              </div>
+            </div>
+          </div>
                 </DialogContent>
                 </Dialog>
 
@@ -530,17 +518,35 @@ const NationalMessageBubble = ({ message, user, onEdit, onSave, onCancelEdit, on
   const canEdit = isAuthor && (message.edit_count || 0) < 3;
 
   return (
-    <div className="w-full mb-3">
-      <div className="group relative bg-white p-4 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-all duration-300">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
+    <div className="w-full mb-2">
+      <div className="group relative bg-white p-3 rounded-xl border border-slate-100 shadow-sm hover:shadow-md transition-all duration-300">
+        <div className="flex items-center justify-between gap-2 mb-1.5">
           <div className="flex items-baseline gap-2">
-            <p className="font-bold text-sm bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
+            <p className="font-bold text-xs bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
               {message.is_anonymous ? "Anonyme" : message.author_name}
             </p>
             <p className="text-[10px] text-slate-400">
               {formatDistanceWithTimezone(message.created_date)}
               {message.is_edited && " (modifié)"}
             </p>
+          </div>
+          
+          <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+            {isAuthor && canEdit && (
+              <Button variant="ghost" size="icon" className="h-5 w-5 text-slate-400 hover:text-blue-500" onClick={() => onEdit(message)}>
+                <Edit className="w-3 h-3" />
+              </Button>
+            )}
+            {isAuthor && (
+              <Button variant="ghost" size="icon" className="h-5 w-5 text-slate-400 hover:text-red-500" onClick={() => onDelete(message.id)}>
+                <Trash2 className="w-3 h-3" />
+              </Button>
+            )}
+            {!isAuthor && user && (
+              <Button variant="ghost" size="icon" className="h-5 w-5 text-slate-300 hover:text-orange-500" onClick={() => onReport(message)}>
+                <Flag className="w-3 h-3" />
+              </Button>
+            )}
           </div>
         </div>
 
@@ -549,47 +555,21 @@ const NationalMessageBubble = ({ message, user, onEdit, onSave, onCancelEdit, on
             <Textarea
               value={editedContent}
               onChange={(e) => setEditedContent(e.target.value)}
-              className="bg-slate-50 text-slate-900 text-sm min-h-[80px] mb-2"
+              className="bg-slate-50 text-slate-900 text-sm min-h-[60px] mb-2"
             />
             <div className="flex gap-2 justify-end">
-              <Button size="sm" variant="ghost" onClick={onCancelEdit} className="h-8 text-xs">
+              <Button size="sm" variant="ghost" onClick={onCancelEdit} className="h-7 text-xs">
                 Annuler
               </Button>
-              <Button size="sm" onClick={() => onSave(message.id, editedContent, message.edit_count || 0)} className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 text-white h-8 text-xs border-0">
+              <Button size="sm" onClick={() => onSave(message.id, editedContent, message.edit_count || 0)} className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 text-white h-7 text-xs border-0">
                 <Save className="w-3 h-3 mr-1" /> Enregistrer
               </Button>
             </div>
           </div>
         ) : (
-          <p className="text-sm leading-relaxed text-slate-700 font-medium mb-4">
+          <p className="text-sm leading-relaxed text-slate-700 font-medium">
             {message.message}
           </p>
-        )}
-
-        {!isEditing && (
-          <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-slate-50 mt-2">
-            <div className="flex items-center gap-2">
-              {/* Like button functionality not fully implemented for national messages but placeholders kept if needed, currently simplified to match SchoolChat structure */}
-            </div>
-
-            <div className="flex items-center gap-1">
-              {isAuthor && canEdit && (
-                <Button variant="ghost" size="icon" className="h-8 w-8 text-slate-400 hover:text-blue-500 hover:bg-blue-50 rounded-full" onClick={() => onEdit(message)}>
-                  <Edit className="w-4 h-4" />
-                </Button>
-              )}
-              {isAuthor && (
-                <Button variant="ghost" size="icon" className="h-8 w-8 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-full" onClick={() => onDelete(message.id)}>
-                  <Trash2 className="w-4 h-4" />
-                </Button>
-              )}
-              {!isAuthor && user && (
-                <Button variant="ghost" size="icon" className="h-8 w-8 text-slate-300 hover:text-orange-500 hover:bg-orange-50 rounded-full" onClick={() => onReport(message)}>
-                  <Flag className="w-4 h-4" />
-                </Button>
-              )}
-            </div>
-          </div>
         )}
       </div>
     </div>
