@@ -363,8 +363,10 @@ Si la décision est "approved", "reason" peut être vide ou null.`,
       <Dialog open={showDialog} onOpenChange={setShowDialog}>
         <DialogContent className="max-w-[95vw] sm:max-w-4xl h-[85vh] flex flex-col p-0 rounded-2xl">
           <DialogHeader className="p-4 border-b">
-            <DialogTitle className="text-lg font-bold bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
-              Micro National
+            <DialogTitle className="text-lg font-bold">
+              <span className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
+                Micro National
+              </span>
             </DialogTitle>
           </DialogHeader>
 
@@ -419,7 +421,7 @@ Si la décision est "approved", "reason" peut être vide ou null.`,
                       onCheckedChange={setIsAnonymous} 
                       className="h-3.5 w-3.5"
                     />
-                    <Label htmlFor="anonymous_national" className="text-[10px] cursor-pointer font-medium text-slate-600">
+                    <Label htmlFor="anonymous_national" className="text-[10px] cursor-pointer font-bold bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
                       Anonyme
                     </Label>
                   </div>
