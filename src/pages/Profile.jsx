@@ -316,7 +316,7 @@ export default function ProfilePage() {
 
           <Card className="bg-white/80 backdrop-blur-sm shadow-xl border-slate-200 mb-8 relative z-10">
             <CardHeader className="border-b border-slate-100">
-              <CardTitle className="tracking-tight text-3xl sm:text-4xl font-bold bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-[#4DA6FF] bg-clip-text text-transparent">Mon Profil
+              <CardTitle className="tracking-tight text-3xl sm:text-4xl font-bold bg-gradient-to-r from-blue-500 via-purple-500 to-[#FF4D8D] bg-clip-text text-transparent">Mon Profil
 
               </CardTitle>
             </CardHeader>
