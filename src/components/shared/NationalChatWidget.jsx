@@ -332,45 +332,45 @@ Si la décision est "approved", "reason" peut être vide ou null.`,
 
   return (
     <>
-      <div className="my-6 sm:my-8 p-3 sm:p-4 rounded-xl bg-gradient-to-br from-[#FF4D8D] via-purple-500 to-blue-500 shadow-lg cursor-pointer hover:shadow-xl transition-all hover:-translate-y-1 relative overflow-hidden sticky bottom-4 z-10 group"
+      <div className="my-4 sm:my-6 p-2.5 sm:p-3 rounded-xl bg-gradient-to-br from-[#FF4D8D] via-purple-500 to-blue-500 shadow-lg cursor-pointer hover:shadow-xl transition-all hover:-translate-y-1 relative overflow-hidden sticky bottom-4 z-10 group"
       onClick={() => setShowDialog(true)}>
         <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/20 to-transparent z-0" style={{ transform: 'skewX(-20deg)' }} />
 
-        <h2 className="text-sm sm:text-xl font-bold text-white flex items-center gap-2 mb-2 sm:mb-3">
+        <h2 className="text-xs sm:text-base font-bold text-white flex items-center gap-2 mb-1.5 sm:mb-2">
           <span className="text-white">
             Micro National
           </span>
         </h2>
         {loading ?
-        <p className="text-white/80 text-sm">Chargement...</p> :
+        <p className="text-white/80 text-xs">Chargement...</p> :
         lastMessage ?
-        <div className="mt-2 p-3 rounded-xl bg-white shadow-md">
-            <p className="text-sm font-semibold line-clamp-2">
+        <div className="mt-1.5 p-2 rounded-lg bg-white shadow-sm">
+            <p className="text-xs font-semibold line-clamp-2">
               <span className="font-bold text-blue-600">
                 {lastMessage.is_anonymous ? 'Anonyme' : lastMessage.author_name}:
               </span>{' '}
               <span className="text-black">{lastMessage.message}</span>
             </p>
-            <p className="text-xs text-slate-500 mt-1.5 text-right">
+            <p className="text-[10px] text-slate-500 mt-1 text-right">
               {formatDateWithTimezone(lastMessage.created_date, "'Le' d MMM 'à' HH:mm")}
             </p>
           </div> :
 
-        <p className="text-white/80 text-sm">Et si tu ouvrais la conversation ? 💬</p>
+        <p className="text-white/80 text-xs">Et si tu ouvrais la conversation ? 💬</p>
         }
       </div>
 
       <Dialog open={showDialog} onOpenChange={setShowDialog}>
         <DialogContent className="max-w-[95vw] sm:max-w-4xl h-[85vh] flex flex-col p-0 rounded-2xl">
-          <DialogHeader className="p-4 border-b">
-            <DialogTitle className="text-lg font-bold">
+          <DialogHeader className="p-3 border-b">
+            <DialogTitle className="text-base font-bold">
               <span className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
                 Micro National
               </span>
             </DialogTitle>
           </DialogHeader>
 
-          <div className="flex-1 overflow-y-auto px-6 py-4">
+          <div className="flex-1 overflow-y-auto px-4 py-3">
             {messages.length === 0 ?
             <div className="text-center text-slate-500 py-16">
                 <p className="text-lg mb-4 text-slate-500">C'est calme ici... Prends le micro !</p>
@@ -397,7 +397,7 @@ Si la décision est "approved", "reason" peut être vide ou null.`,
             }
           </div>
 
-          <div className="border-t bg-white p-3 rounded-b-2xl">
+          <div className="border-t bg-white p-3">
             <div className="relative">
               <Textarea
                 placeholder={user ? "Ton message..." : "Connecte-toi pour participer"}
@@ -408,7 +408,7 @@ Si la décision est "approved", "reason" peut être vide ou null.`,
                     setNewMessage(text);
                   }
                 }}
-                className="min-h-[80px] text-sm pr-20 pb-10 resize-none rounded-2xl"
+                className="min-h-[80px] text-sm pr-20 pb-10 resize-none"
                 disabled={!user} 
               />
               
@@ -428,8 +428,8 @@ Si la décision est "approved", "reason" peut être vide ou null.`,
                 )}
               </div>
 
-              <div className="absolute bottom-3 right-3 flex items-center gap-2">
-                 <span className={`text-[10px] mr-2 ${newMessage.length >= MAX_MESSAGE_LENGTH ? 'text-red-500' : 'text-slate-400'}`}>
+              <div className="absolute bottom-2 right-2 flex items-center gap-2">
+                 <span className={`text-[9px] mr-1 ${newMessage.length >= MAX_MESSAGE_LENGTH ? 'text-red-500' : 'text-slate-400'}`}>
                     {newMessage.length}/{MAX_MESSAGE_LENGTH}
                  </span>
                  
@@ -437,15 +437,15 @@ Si la décision est "approved", "reason" peut être vide ou null.`,
                    <Button
                     onClick={handlePublish}
                     disabled={!newMessage.trim() || postLoading || newMessage.length > MAX_MESSAGE_LENGTH || newMessage.length < 10}
-                    className="h-7 px-3 bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 text-white text-xs rounded-lg"
+                    className="h-6 px-2.5 bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 text-white text-[10px] rounded-lg"
                     size="sm"
                    >
-                     {postLoading ? <Loader2 className="w-3 h-3 animate-spin" /> : <Send className="w-3 h-3" />}
+                     {postLoading ? <Loader2 className="w-2.5 h-2.5 animate-spin" /> : <Send className="w-2.5 h-2.5" />}
                    </Button>
                  ) : (
                    <Button
                     onClick={() => base44.auth.redirectToLogin(window.location.href)}
-                    className="h-7 px-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-xs rounded-lg"
+                    className="h-6 px-2.5 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-[10px] rounded-lg"
                     size="sm"
                    >
                      Connexion
@@ -520,9 +520,9 @@ const NationalMessageBubble = ({ message, user, onEdit, onSave, onCancelEdit, on
   const canEdit = isAuthor && (message.edit_count || 0) < 3;
 
   return (
-    <div className="w-full mb-2">
-      <div className="group relative bg-white p-3 rounded-xl border border-slate-100 shadow-sm hover:shadow-md transition-all duration-300">
-        <div className="flex items-center justify-between gap-2 mb-1.5">
+    <div className="w-full mb-1.5">
+      <div className="group relative bg-white p-2.5 rounded-xl border border-slate-100 shadow-sm hover:shadow-md transition-all duration-300">
+        <div className="flex items-center justify-between gap-2 mb-1">
           <div className="flex items-baseline gap-2">
             <p className="font-bold text-xs bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
               {message.is_anonymous ? "Anonyme" : message.author_name}
