@@ -175,7 +175,7 @@ export default function AboutPage() {
             </motion.div>
 
             {/* Split Columns */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-8 lg:gap-16 items-start">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 items-stretch">
               {/* Left Column: 2 Widgets */}
               <motion.div
                 initial={{ opacity: 0, x: -50 }}
