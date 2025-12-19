@@ -523,7 +523,7 @@ export default function SchoolsPage() {
               <div className="flex-1 relative w-full">
                 <Search className="absolute left-2.5 sm:left-3 top-1/2 transform -translate-y-1/2 w-3.5 h-3.5 sm:w-5 sm:h-5 text-slate-400 z-10" />
                 <Input
-                  placeholder="Rechercher un établissement ou une ville..."
+                  placeholder="Chercher école ou ville..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className="pl-8 sm:pl-10 h-9 sm:h-12 border-slate-200 focus:border-blue-400 text-xs sm:text-base w-full" />
