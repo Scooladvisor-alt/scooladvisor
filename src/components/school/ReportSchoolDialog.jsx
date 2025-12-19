@@ -101,7 +101,7 @@ export default function ReportSchoolDialog({ open, onOpenChange, schoolId }) {
           onChange={(e) => setDetails(e.target.value)}
           placeholder="Détails supplémentaires (optionnel)..."
           rows={3}
-          className="text-sm"
+          className="text-xs placeholder:text-xs"
         />
 
         <Alert className="bg-blue-50 border-blue-200">
