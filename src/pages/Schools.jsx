@@ -489,7 +489,7 @@ export default function SchoolsPage() {
 
         `}</style>
       
-      <div className="max-w-7xl mx-auto px-4 py-8 pb-4 md:py-12 md:pb-6">
+      <div className="max-w-7xl mx-auto px-4 pt-8 pb-0 md:pt-12 md:pb-0">
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -728,7 +728,7 @@ export default function SchoolsPage() {
           }
 
             {filteredSchools.length > 6 &&
-          <div className="mt-6 mb-2">
+          <div className="mt-4 mb-0">
                 <Suspense fallback={<div className="h-24 bg-gradient-to-r from-pink-100 to-purple-100 rounded-xl animate-pulse" />}>
                   <NationalChatWidget isHomePage={true} />
                 </Suspense>
