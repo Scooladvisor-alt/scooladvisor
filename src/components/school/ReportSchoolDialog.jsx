@@ -67,30 +67,30 @@ export default function ReportSchoolDialog({ open, onOpenChange, schoolId }) {
         </DialogHeader>
 
         <RadioGroup value={reason} onValueChange={setReason} className="space-y-3">
-          <div className="flex items-start space-x-3 p-3 rounded-lg border-2 border-red-200 hover:bg-red-50 transition-colors">
-            <RadioGroupItem value="fake_school" id="fake" className="mt-1" />
-            <Label htmlFor="fake" className="font-medium cursor-pointer flex-1 text-sm sm:text-base">
+          <div className="flex items-start space-x-3 p-3 rounded-lg border-2 border-pink-200 bg-pink-50/40 hover:bg-pink-50 hover:border-pink-300 transition-all cursor-pointer">
+            <RadioGroupItem value="fake_school" id="fake" className="mt-1 border-pink-400 text-pink-600" />
+            <Label htmlFor="fake" className="font-medium cursor-pointer flex-1 text-sm sm:text-base text-slate-800">
               Ce n'est pas un vrai établissement
             </Label>
           </div>
 
-          <div className="flex items-start space-x-3 p-3 rounded-lg border-2 border-orange-200 hover:bg-orange-50 transition-colors">
-            <RadioGroupItem value="inappropriate" id="inappropriate" className="mt-1" />
-            <Label htmlFor="inappropriate" className="font-medium cursor-pointer flex-1 text-sm sm:text-base">
+          <div className="flex items-start space-x-3 p-3 rounded-lg border-2 border-purple-200 bg-purple-50/40 hover:bg-purple-50 hover:border-purple-300 transition-all cursor-pointer">
+            <RadioGroupItem value="inappropriate" id="inappropriate" className="mt-1 border-purple-400 text-purple-600" />
+            <Label htmlFor="inappropriate" className="font-medium cursor-pointer flex-1 text-sm sm:text-base text-slate-800">
               Contenu inapproprié
             </Label>
           </div>
 
-          <div className="flex items-start space-x-3 p-3 rounded-lg border-2 border-yellow-200 hover:bg-yellow-50 transition-colors">
-            <RadioGroupItem value="duplicate" id="duplicate" className="mt-1" />
-            <Label htmlFor="duplicate" className="font-medium cursor-pointer flex-1 text-sm sm:text-base">
+          <div className="flex items-start space-x-3 p-3 rounded-lg border-2 border-indigo-200 bg-indigo-50/40 hover:bg-indigo-50 hover:border-indigo-300 transition-all cursor-pointer">
+            <RadioGroupItem value="duplicate" id="duplicate" className="mt-1 border-indigo-400 text-indigo-600" />
+            <Label htmlFor="duplicate" className="font-medium cursor-pointer flex-1 text-sm sm:text-base text-slate-800">
               Doublon
             </Label>
           </div>
 
-          <div className="flex items-start space-x-3 p-3 rounded-lg border-2 border-slate-200 hover:bg-slate-50 transition-colors">
-            <RadioGroupItem value="other" id="other" className="mt-1" />
-            <Label htmlFor="other" className="font-medium cursor-pointer flex-1 text-sm sm:text-base">
+          <div className="flex items-start space-x-3 p-3 rounded-lg border-2 border-blue-200 bg-blue-50/40 hover:bg-blue-50 hover:border-blue-300 transition-all cursor-pointer">
+            <RadioGroupItem value="other" id="other" className="mt-1 border-blue-400 text-blue-600" />
+            <Label htmlFor="other" className="font-medium cursor-pointer flex-1 text-sm sm:text-base text-slate-800">
               Autre raison
             </Label>
           </div>
