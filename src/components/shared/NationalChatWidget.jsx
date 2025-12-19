@@ -397,7 +397,7 @@ Si la décision est "approved", "reason" peut être vide ou null.`,
             }
           </div>
 
-          <div className="border-t bg-white p-3">
+          <div className="border-t bg-white p-2">
             <div className="relative">
               <Textarea
                 placeholder={user ? "Ton message..." : "Connecte-toi pour participer"}
@@ -408,13 +408,13 @@ Si la décision est "approved", "reason" peut être vide ou null.`,
                     setNewMessage(text);
                   }
                 }}
-                className="min-h-[80px] text-sm pr-20 pb-10 resize-none"
+                className="min-h-[60px] text-xs pr-20 pb-8 resize-none rounded-2xl"
                 disabled={!user} 
               />
               
-              <div className="absolute bottom-3 left-3 flex items-center gap-2">
+              <div className="absolute bottom-2 left-2 flex items-center gap-2">
                 {user && (
-                  <div className="flex items-center space-x-1.5 bg-slate-50 px-2 py-1 rounded-md border border-slate-100">
+                  <div className="flex items-center space-x-1 bg-slate-50 px-1.5 py-0.5 rounded-md border border-slate-100">
                     <Checkbox
                       id="anonymous_national"
                       checked={isAnonymous}
