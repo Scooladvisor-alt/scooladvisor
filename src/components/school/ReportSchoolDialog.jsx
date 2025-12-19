@@ -58,7 +58,12 @@ export default function ReportSchoolDialog({ open, onOpenChange, schoolId }) {
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-[90vw] sm:max-w-md rounded-2xl">
         <DialogHeader>
-          <DialogTitle className="text-lg sm:text-xl font-bold">Signaler cet établissement</DialogTitle>
+          <DialogTitle className="text-lg sm:text-xl font-bold flex items-center gap-2">
+            <AlertTriangle className="w-5 h-5 text-[#FF4D8D]" />
+            <span className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
+              Signaler cet établissement
+            </span>
+          </DialogTitle>
         </DialogHeader>
 
         <RadioGroup value={reason} onValueChange={setReason} className="space-y-3">
@@ -113,7 +118,7 @@ export default function ReportSchoolDialog({ open, onOpenChange, schoolId }) {
           <Button 
             onClick={handleReport} 
             disabled={loading}
-            className="bg-orange-600 hover:bg-orange-700 text-xs sm:text-sm"
+            className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-white shadow-md text-xs sm:text-sm font-semibold"
           >
             {loading ? "Envoi..." : "Envoyer le signalement"}
           </Button>
