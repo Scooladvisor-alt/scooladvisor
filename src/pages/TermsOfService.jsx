@@ -28,7 +28,7 @@ export default function TermsOfServicePage() {
         <div className="bg-white rounded-2xl shadow-xl p-8 md:p-12">
           <div className="flex items-center gap-3 mb-6">
             <Scale className="w-8 h-8 text-blue-600" />
-            <h1 className="text-4xl font-bold text-slate-900">Conditions d'Utilisation</h1>
+            <h1 className="text-4xl font-bold bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 bg-clip-text text-transparent">Conditions d'Utilisation</h1>
           </div>
 
           <p className="text-slate-600 mb-8">
@@ -49,8 +49,9 @@ export default function TermsOfServicePage() {
               <p className="mb-3">Les utilisateurs s'engagent à :</p>
               <ul className="list-disc pl-6 space-y-2">
                 <li>Fournir des informations exactes et à jour</li>
-                <li>Respecter les autres utilisateurs et la communauté</li>
-                <li>Ne pas publier de contenu illégal, diffamatoire ou offensant</li>
+                <li>Respecter les autres utilisateurs et la communauté (politesse et bienveillance)</li>
+                <li>Ne pas publier de contenu illégal, diffamatoire, offensant ou haineux</li>
+                <li>Ne pas spammer les chats (National et École)</li>
                 <li>Ne pas usurper l'identité d'une autre personne</li>
                 <li>Respecter les droits de propriété intellectuelle</li>
                 <li>Limiter les modifications de leurs avis et messages (maximum 3 modifications par contenu)</li>
@@ -77,14 +78,15 @@ export default function TermsOfServicePage() {
             </section>
 
             <section>
-              <h2 className="text-2xl font-semibold text-slate-900 mb-4">3. Publication d'Avis</h2>
-              <p className="mb-3">Les avis publiés sur Scooladvisor doivent :</p>
+              <h2 className="text-2xl font-semibold text-slate-900 mb-4">3. Publication d'Avis et Messages</h2>
+              <p className="mb-3">Les avis et messages (chats) publiés sur Scooladvisor doivent :</p>
               <ul className="list-disc pl-6 space-y-2">
-                <li>Être basés sur une expérience personnelle réelle</li>
-                <li>Être constructifs et bienveillants</li>
-                <li>Respecter la vie privée des personnes mentionnées</li>
-                <li>Ne contenir aucun propos haineux ou discriminatoire</li>
+                <li>Être basés sur une expérience personnelle réelle (pour les avis)</li>
+                <li>Être constructifs, polis et bienveillants (avis et chats)</li>
+                <li>Respecter la vie privée des personnes mentionnées (pas de doxing)</li>
+                <li>Ne contenir aucun propos haineux, discriminatoire ou sexuel</li>
                 <li>Ne pas contenir de fausses informations délibérées</li>
+                <li>Ne pas être du spam ou de la publicité non sollicitée</li>
                 <li>Ne peuvent être modifiés que 3 fois maximum après publication</li>
               </ul>
             </section>
@@ -93,8 +95,8 @@ export default function TermsOfServicePage() {
               <h2 className="text-2xl font-semibold text-slate-900 mb-4">4. Modération Automatisée par IA</h2>
               <p>
                 Scooladvisor utilise un système de modération automatique par intelligence artificielle pour garantir 
-                la qualité et le respect des contenus publiés. Tous les avis, commentaires et messages passent par cette 
-                modération avant publication ou modification. Les contenus inappropriés sont automatiquement refusés.
+                la qualité et le respect des contenus publiés. Tous les avis, commentaires et messages de chat (National et École) passent par cette 
+                modération avant publication ou modification. Les contenus jugés inappropriés, offensants ou contraires à nos valeurs sont automatiquement refusés par l'IA.
               </p>
             </section>
 

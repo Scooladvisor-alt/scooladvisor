@@ -28,7 +28,7 @@ export default function PrivacyPolicyPage() {
         <div className="bg-white rounded-2xl shadow-xl p-8 md:p-12">
           <div className="flex items-center gap-3 mb-6">
             <Lock className="w-8 h-8 text-green-600" />
-            <h1 className="text-4xl font-bold text-slate-900">Politique de Confidentialité</h1>
+            <h1 className="text-4xl font-bold bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 bg-clip-text text-transparent">Politique de Confidentialité</h1>
           </div>
 
           <p className="text-slate-600 mb-8">
@@ -50,9 +50,10 @@ export default function PrivacyPolicyPage() {
               </div>
               <p className="mb-3">Nous collectons les informations suivantes :</p>
               <ul className="list-disc pl-6 space-y-2">
-                <li><strong>Informations d'identification :</strong> nom, prénom, adresse email</li>
+                <li><strong>Informations d'identification :</strong> nom, prénom, adresse email, avatar</li>
                 <li><strong>Données de navigation :</strong> pages visitées, temps passé, actions effectuées</li>
-                <li><strong>Avis et commentaires :</strong> contenus publiés sur la plateforme</li>
+                <li><strong>Avis et commentaires :</strong> contenus publiés sur les écoles et professeurs</li>
+                <li><strong>Messages de chat :</strong> contributions au Chat National et aux chats d'écoles</li>
                 <li><strong>Données de connexion :</strong> adresse IP, type de navigateur, appareil utilisé</li>
               </ul>
             </section>
@@ -64,11 +65,11 @@ export default function PrivacyPolicyPage() {
               </div>
               <p className="mb-3">Vos données sont utilisées pour :</p>
               <ul className="list-disc pl-6 space-y-2">
-                <li>Créer et gérer votre compte utilisateur</li>
-                <li>Publier et gérer vos avis et commentaires</li>
+                <li>Créer et gérer votre compte utilisateur et votre profil public</li>
+                <li>Publier et gérer vos avis, commentaires et messages de chat</li>
                 <li>Améliorer nos services et l'expérience utilisateur</li>
                 <li>Assurer la sécurité de la plateforme et lutter contre les abus</li>
-                <li>Modérer automatiquement les contenus via notre IA</li>
+                <li>Modérer automatiquement les contenus (avis et chats) via notre IA</li>
                 <li>Vous envoyer des notifications importantes (optionnel)</li>
                 <li>Réaliser des statistiques anonymisées</li>
               </ul>
