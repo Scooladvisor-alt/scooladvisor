@@ -220,19 +220,19 @@ export default function AboutPage() {
                  <div className="relative w-full h-full min-h-[300px]">
                     <div className="absolute inset-0 bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 rounded-[2rem] transform rotate-2 blur-xl opacity-20" />
 
-                    <div className="relative bg-white/60 backdrop-blur-xl rounded-[2rem] border border-white/50 p-6 sm:p-8 flex flex-col items-center justify-center text-center overflow-hidden h-full transform -rotate-1 hover:rotate-0 transition-all duration-500 shadow-xl hover:shadow-2xl hover:border-purple-200">
-                      <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-pink-50 to-blue-50 rounded-2xl flex items-center justify-center mb-6 shadow-sm border border-white">
-                        <span className="text-3xl sm:text-4xl animate-bounce">🎓</span>
+                    <div className="relative bg-white/60 backdrop-blur-xl rounded-[2rem] border border-white/50 p-4 sm:p-6 flex flex-col items-center justify-center text-center overflow-hidden h-full transform -rotate-1 hover:rotate-0 transition-all duration-500 shadow-xl hover:shadow-2xl hover:border-purple-200">
+                      <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-pink-50 to-blue-50 rounded-2xl flex items-center justify-center mb-4 shadow-sm border border-white">
+                        <span className="text-2xl sm:text-3xl animate-bounce">🎓</span>
                       </div>
-                      <h3 className="text-xl sm:text-3xl font-black text-slate-800 mb-3 uppercase italic tracking-tight">
+                      <h3 className="text-lg sm:text-2xl font-black text-slate-800 mb-2 uppercase italic tracking-tight">
                         Rejoignez le<br/>
                         <span className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">Mouvement</span>
                       </h3>
-                      <p className="text-base sm:text-lg text-slate-600 font-medium mb-6 max-w-xs">Déjà des milliers d'avis partagés. Ne reste pas sur le côté.</p>
+                      <p className="text-sm sm:text-base text-slate-600 font-medium mb-4 max-w-xs">Déjà des milliers d'avis partagés.</p>
                       <Link to={createPageUrl("Schools")} className="w-full sm:w-auto">
-                        <Button className="w-full sm:w-auto bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-white shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all rounded-xl px-6 py-6 sm:px-8 sm:py-4 text-base sm:text-lg font-bold uppercase tracking-wide border border-white/20">
+                        <Button className="w-full sm:w-auto bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-white shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all rounded-xl px-6 py-3 sm:px-6 sm:py-3 text-sm sm:text-base font-bold uppercase tracking-wide border border-white/20">
                           Voir les écoles
-                          <ArrowRight className="ml-2 w-5 h-5" />
+                          <ArrowRight className="ml-2 w-4 h-4" />
                         </Button>
                       </Link>
                     </div>
