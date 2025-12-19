@@ -104,9 +104,9 @@ export default function AboutPage() {
                 <Target className="w-8 h-8 sm:w-10 sm:h-10 text-white shrink-0" />
               </div>
               <div>
-                <h3 className="text-2xl sm:text-3xl font-black text-slate-800 mb-2 uppercase italic tracking-tight text-center sm:text-left">Orienter avec <span className="bg-gradient-to-r from-[#FF4D8D] to-pink-600 bg-clip-text text-transparent">Force</span></h3>
+                <h3 className="text-2xl sm:text-3xl font-black text-slate-800 mb-2 uppercase italic tracking-tight text-center sm:text-left">Orienter avec <span className="bg-gradient-to-r from-[#FF4D8D] to-pink-600 bg-clip-text text-transparent">Confiance</span></h3>
                 <p className="text-base sm:text-lg text-slate-600 font-medium leading-relaxed text-center sm:text-left">
-                  Fini le hasard. On te file les vraies infos pour tracer ta route.
+                  Fini le hasard. On te donne les vraies infos, modérées avec intelligence, pour tracer ta route.
                 </p>
               </div>
             </div>
@@ -138,7 +138,7 @@ export default function AboutPage() {
                 <div>
                    <h3 className="text-2xl sm:text-3xl font-black text-slate-800 mb-2 uppercase italic text-center sm:text-left">Plateforme <span className="bg-gradient-to-r from-[#3B82F6] to-blue-600 bg-clip-text text-transparent">Communautaire</span></h3>
                    <p className="text-base sm:text-lg text-slate-600 font-medium leading-relaxed text-center sm:text-left">
-                     Étudiants, parents, profs : on brise les silos. Un espace sans filtre pour l'école de demain.
+                     Étudiants, parents, profs : on brise les silos. Un espace authentique pour l'école de demain.
                    </p>
                 </div>
              </div>
@@ -166,10 +166,10 @@ export default function AboutPage() {
               </div>
               <div className="space-y-4 sm:space-y-6 text-base sm:text-xl text-slate-600 leading-relaxed">
                 <p>
-                  Hésitation Parcoursup ? Doute sur une école ?
+                  Hésitation sur ton orientation ? Doute sur une école ?
                 </p>
                 <p>
-                  <strong className="text-purple-600 font-bold">Le savoir, c'est le pouvoir.</strong> On crée ensemble la carte de l'éducation.
+                  <strong className="text-slate-900 font-bold">Le savoir, c'est le pouvoir.</strong> On crée ensemble la carte de l'éducation.
                 </p>
               </div>
             </motion.div>
@@ -243,18 +243,7 @@ export default function AboutPage() {
         </div>
       </div>
 
-      {/* Footer Call to Action */}
-      <div className="py-12 sm:py-20 text-center px-4">
-        <h2 className="text-xl sm:text-3xl font-bold text-slate-900 mb-4 sm:mb-6">Prêt à faire entendre ta voix ?</h2>
-        <p className="text-sm sm:text-base text-slate-600 mb-6 sm:mb-8 max-w-xl mx-auto">
-          Ton expérience est précieuse pour les autres.
-        </p>
-        <Link to={createPageUrl("Schools")}>
-          <Button variant="outline" className="inline-flex items-center justify-center gap-2 whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-background shadow-sm hover:text-accent-foreground border-2 border-purple-200 hover:bg-pink-50 bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent px-6 sm:px-8 py-2 h-10 sm:h-12 rounded-xl text-sm sm:text-base font-medium">
-            Commencer
-          </Button>
-        </Link>
-      </div>
+
       </div>
     </>
   );
