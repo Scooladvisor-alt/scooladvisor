@@ -336,7 +336,7 @@ Si la décision est "approved", "reason" peut être vide ou null.`,
       </div>
 
       <Dialog open={showDialog} onOpenChange={setShowDialog}>
-        <DialogContent className="max-w-[95vw] sm:max-w-4xl h-[85vh] flex flex-col p-0 rounded-2xl">
+        <DialogContent className="max-w-[95vw] sm:max-w-3xl h-[85vh] flex flex-col p-0 rounded-2xl overflow-hidden">
           <DialogHeader className="p-3 border-b">
             <DialogTitle className="text-base font-bold">
               <span className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">

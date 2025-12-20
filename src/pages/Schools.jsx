@@ -747,7 +747,7 @@ export default function SchoolsPage() {
 
 
       <Dialog open={showTeacherRoom} onOpenChange={setShowTeacherRoom}>
-        <DialogContent className="max-w-[95vw] w-full sm:max-w-6xl h-[90vh] sm:h-[85vh] p-0 gap-0 flex flex-col bg-white border-none shadow-2xl rounded-2xl overflow-hidden">
+        <DialogContent className="max-w-[95vw] sm:max-w-3xl h-[85vh] p-0 gap-0 flex flex-col bg-white border-none shadow-2xl rounded-2xl overflow-hidden">
           <style>{`
             @keyframes gentle-float {
               0%, 100% { transform: translateY(0px); }

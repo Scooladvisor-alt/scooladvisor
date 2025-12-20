@@ -154,7 +154,7 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent>
+      <DialogContent className="max-w-[95vw] sm:max-w-3xl max-h-[85vh] overflow-y-auto rounded-2xl">
         <DialogHeader>
           <DialogTitle>Ajouter un nouveau professeur</DialogTitle>
         </DialogHeader>

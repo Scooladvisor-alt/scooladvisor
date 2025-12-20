@@ -108,7 +108,7 @@ const BanDialog = ({ open, user }) => {
         setShowAppeal(isOpen);
         if (!isOpen) setShowMainDialog(true);
       }}>
-        <DialogContent>
+        <DialogContent className="max-w-[95vw] sm:max-w-3xl max-h-[85vh] overflow-y-auto rounded-2xl">
           <DialogHeader>
             <DialogTitle>Contester le bannissement</DialogTitle>
           </DialogHeader>
@@ -187,7 +187,7 @@ function AvatarSelectionDialog({ open, onOpenChange, currentAvatar, onAvatarSele
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-[90vw] sm:max-w-2xl max-h-[85vh] overflow-y-auto rounded-2xl">
+      <DialogContent className="max-w-[95vw] sm:max-w-3xl max-h-[85vh] overflow-y-auto rounded-2xl">
         {/* Changed DialogHeader as per outline */}
           <DialogHeader className="p-4 sm:p-6 pb-3 sm:pb-4 border-b rounded-t-3xl relative">
             <DialogTitle className="text-xl sm:text-2xl font-bold flex items-center gap-2">

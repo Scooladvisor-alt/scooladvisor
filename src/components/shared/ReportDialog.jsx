@@ -48,7 +48,7 @@ export default function ReportDialog({ open, onOpenChange, reviewType, reviewId,
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-[90vw] sm:max-w-md rounded-2xl">
+      <DialogContent className="max-w-[95vw] sm:max-w-3xl max-h-[85vh] overflow-y-auto rounded-2xl">
         <DialogHeader>
           <DialogTitle className="text-lg sm:text-xl font-bold flex items-center gap-2">
             <AlertTriangle className="w-5 h-5 text-[#FF4D8D]" />
