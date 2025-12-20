@@ -530,7 +530,7 @@ Réponds UNIQUEMENT par "approved" ou "rejected".`,
                     className="h-3.5 w-3.5"
                     disabled={!canEdit}
                   />
-                  <span className="text-[10px] sm:text-xs text-slate-400 group-hover:text-slate-600 transition-colors">
+                  <span className="text-[10px] sm:text-xs font-bold bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
                     Anonyme {formData.is_anonymous && <span className="text-blue-500">✓</span>}
                   </span>
                 </label>
