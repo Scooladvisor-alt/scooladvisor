@@ -5,13 +5,13 @@ import { base44 } from "@/api/base44Client";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Mic, Send, Loader2, Edit, Trash2, Save, Flag, AlertCircle } from "lucide-react";
+import { Mic, Send, Loader2, Edit, Trash2, Save, Flag } from "lucide-react";
 import { format, formatDistanceToNow } from "date-fns";
 import { fr } from "date-fns/locale";
 import { toast } from "sonner";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import ReportDialog from "@/components/shared/ReportDialog";
 
 // Helper function pour corriger le fuseau horaire
 const formatDateWithTimezone = (dateString, formatStr) => {
@@ -37,8 +37,6 @@ export default function NationalChatWidget() {
   const [editingMessageId, setEditingMessageId] = useState(null);
   const [editedContent, setEditedContent] = useState("");
   const [reportingMessage, setReportingMessage] = useState(null);
-  const [reportReason, setReportReason] = useState("");
-  const [reportDetails, setReportDetails] = useState("");
   const [showReportDialog, setShowReportDialog] = useState(false);
 
   const MAX_MESSAGE_LENGTH = 300;
@@ -305,30 +303,7 @@ Si la décision est "approved", "reason" peut être vide ou null.`,
     setShowReportDialog(true);
   };
 
-  const handleSubmitReport = async () => {
-    if (!reportReason) {
-      toast.error("Veuillez sélectionner une raison.");
-      return;
-    }
 
-    try {
-      await Report.create({
-        review_type: "national_message",
-        review_id: reportingMessage.id,
-        reporter_email: user.email,
-        reason: reportReason,
-        details: reportDetails || `Message signalé: "${reportingMessage.message.substring(0, Math.min(reportingMessage.message.length, 100))}"`,
-        status: "pending"
-      });
-      toast.success("Message signalé. Merci pour votre vigilance.");
-      setShowReportDialog(false);
-      setReportingMessage(null);
-      setReportReason("");
-      setReportDetails("");
-    } catch (error) {
-      toast.error("Erreur lors du signalement.");
-    }
-  };
 
   return (
     <>
@@ -457,59 +432,15 @@ Si la décision est "approved", "reason" peut être vide ou null.`,
                 </DialogContent>
                 </Dialog>
 
-      <Dialog open={showReportDialog} onOpenChange={setShowReportDialog}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle className="flex items-center gap-2">
-              <AlertCircle className="w-5 h-5 text-red-600" />
-              Signaler ce message
-            </DialogTitle>
-          </DialogHeader>
-          <div className="space-y-4">
-            <div className="space-y-2">
-              <Label>Raison du signalement *</Label>
-              <Select value={reportReason} onValueChange={setReportReason}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Sélectionnez une raison" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="diffamation">Diffamation</SelectItem>
-                  <SelectItem value="injure">Injure ou vulgarité</SelectItem>
-                  <SelectItem value="hors_sujet">Hors sujet</SelectItem>
-                  <SelectItem value="fausse_info">Fausse information</SelectItem>
-                  <SelectItem value="harcelement">Harcèlement ou moquerie</SelectItem>
-                  <SelectItem value="contenu_sensible">Contenu sensible/choquant</SelectItem>
-                  <SelectItem value="autre">Autre</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="space-y-2">
-              <Label>Détails (optionnel)</Label>
-              <Textarea
-                placeholder="Expliquez pourquoi vous signalez ce message..."
-                value={reportDetails}
-                onChange={(e) => setReportDetails(e.target.value)}
-                rows={3} />
-
-            </div>
-            {reportingMessage &&
-            <div className="p-3 bg-gray-50 rounded-md text-sm text-gray-600">
-                <p className="font-semibold">Message signalé:</p>
-                <p className="italic">"{reportingMessage.message}"</p>
-              </div>
-            }
-          </div>
-          <DialogFooter>
-            <Button variant="ghost" onClick={() => setShowReportDialog(false)}>
-              Annuler
-            </Button>
-            <Button onClick={handleSubmitReport} className="bg-red-600 hover:bg-red-700 text-white">
-              Envoyer le signalement
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+      {showReportDialog && reportingMessage && (
+        <ReportDialog
+          open={showReportDialog}
+          onOpenChange={setShowReportDialog}
+          reviewType="national_message"
+          reviewId={reportingMessage.id}
+          onSuccess={() => setReportingMessage(null)}
+        />
+      )}
     </>);
 
 }

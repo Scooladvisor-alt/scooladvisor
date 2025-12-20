@@ -11,6 +11,7 @@ import { fr } from "date-fns/locale";
 import { toast } from "sonner";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
+import ReportDialog from "@/components/shared/ReportDialog";
 
 const ChatBubble = ({ message, user, onEdit, onSave, onCancelEdit, onDelete, onReport, onLike, editingMessageId, setEditedContent, editedContent, isLiked, likeCount }) => {
   const isAuthor = user && message.author_email === user.email;
@@ -115,6 +116,8 @@ export default function SchoolChat({ schoolId, isHomePage = false }) {
   const [editedContent, setEditedContent] = useState("");
   const [localLikes, setLocalLikes] = useState({});
   const [userLikes, setUserLikes] = useState(new Set());
+  const [showReportDialog, setShowReportDialog] = useState(false);
+  const [reportingMessageId, setReportingMessageId] = useState(null);
   const messagesEndRef = useRef(null);
 
   const MAX_MESSAGE_LENGTH = 300;
@@ -448,28 +451,13 @@ Si la décision est "approved", la "reason" doit être null.`,
     }
   };
 
-  const handleReport = async (messageId) => {
+  const handleReport = (messageId) => {
     if (!user) {
       toast.error("Vous devez être connecté pour signaler un message.");
       return;
     }
-
-    if (!confirm("Voulez-vous signaler ce message aux modérateurs ?")) return;
-
-    try {
-      await base44.entities.Report.create({
-        review_type: "chat_message",
-        review_id: messageId,
-        reporter_email: user.email,
-        reason: "inappropriate",
-        details: `Message de chat signalé par ${user.email}`,
-        status: "pending"
-      });
-      toast.success("Message signalé. Merci pour votre vigilance, nous allons examiner cela.");
-    } catch (error) {
-      console.error("Error reporting message:", error);
-      toast.error("Erreur lors du signalement du message.");
-    }
+    setReportingMessageId(messageId);
+    setShowReportDialog(true);
   };
 
   const lastMessage = messages[0];
@@ -639,6 +627,16 @@ Si la décision est "approved", la "reason" doit être null.`,
           </div>
         </DialogContent>
       </Dialog>
+
+      {showReportDialog && reportingMessageId && (
+        <ReportDialog
+          open={showReportDialog}
+          onOpenChange={setShowReportDialog}
+          reviewType="chat_message"
+          reviewId={reportingMessageId}
+          onSuccess={() => setReportingMessageId(null)}
+        />
+      )}
     </>);
 
 }

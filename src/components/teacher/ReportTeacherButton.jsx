@@ -131,24 +131,29 @@ export default function ReportTeacherButton({ teacher, onUpdate, variant = "defa
       <Dialog open={showDialog} onOpenChange={setShowDialog}>
         <DialogContent className="rounded-2xl w-[95%] max-w-lg">
           <DialogHeader>
-            <DialogTitle className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">Signaler ce professeur</DialogTitle>
+            <DialogTitle className="text-lg sm:text-xl font-bold flex items-center gap-2">
+              <AlertTriangle className="w-5 h-5 text-[#FF4D8D]" />
+              <span className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
+                Signaler ce professeur
+              </span>
+            </DialogTitle>
           </DialogHeader>
 
           <RadioGroup value={reportType} onValueChange={setReportType} className="space-y-3">
-            <div className="flex items-start space-x-3 p-4 rounded-lg border-2 border-amber-200 hover:bg-amber-50 transition-colors">
-              <RadioGroupItem value="former" id="former" className="mt-1" />
+            <div className="flex items-start space-x-3 p-3 rounded-lg border-2 border-amber-200 bg-amber-50/40 hover:bg-amber-50 hover:border-amber-300 transition-all cursor-pointer">
+              <RadioGroupItem value="former" id="former" className="mt-1 border-amber-400 text-amber-600" />
               <div className="flex-1">
-                <Label htmlFor="former" className="font-semibold text-slate-900 cursor-pointer flex items-center gap-2">
+                <Label htmlFor="former" className="font-medium text-slate-900 cursor-pointer flex items-center gap-2 text-sm sm:text-base">
                   <UserX className="w-4 h-4 text-amber-600" />
                   Ne fait plus partie de l'établissement
                 </Label>
               </div>
             </div>
 
-            <div className="flex items-start space-x-3 p-4 rounded-lg border-2 border-red-200 hover:bg-red-50 transition-colors">
-              <RadioGroupItem value="fraud" id="fraud" className="mt-1" />
+            <div className="flex items-start space-x-3 p-3 rounded-lg border-2 border-red-200 bg-red-50/40 hover:bg-red-50 hover:border-red-300 transition-all cursor-pointer">
+              <RadioGroupItem value="fraud" id="fraud" className="mt-1 border-red-400 text-red-600" />
               <div className="flex-1">
-                <Label htmlFor="fraud" className="font-semibold text-slate-900 cursor-pointer flex items-center gap-2">
+                <Label htmlFor="fraud" className="font-medium text-slate-900 cursor-pointer flex items-center gap-2 text-sm sm:text-base">
                   <XCircle className="w-4 h-4 text-red-600" />
                   Ce n'est pas un vrai professeur
                 </Label>
@@ -163,16 +168,16 @@ export default function ReportTeacherButton({ teacher, onUpdate, variant = "defa
             </AlertDescription>
           </Alert>
 
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setShowDialog(false)}>
+          <DialogFooter className="gap-2">
+            <Button variant="outline" onClick={() => setShowDialog(false)} className="text-xs sm:text-sm">
               Annuler
             </Button>
             <Button 
               onClick={handleReport} 
               disabled={loading}
-              className="bg-orange-600 hover:bg-orange-700"
+              className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-white shadow-md text-xs sm:text-sm font-semibold"
             >
-              {loading ? "Signalement..." : "Confirmer"}
+              {loading ? "Signalement..." : "Confirmer le signalement"}
             </Button>
           </DialogFooter>
         </DialogContent>

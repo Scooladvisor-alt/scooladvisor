@@ -77,28 +77,45 @@ export default function ReportTeacherStatusButton({ teacher, onUpdate }) {
       </Button>
 
       <Dialog open={showDialog} onOpenChange={setShowDialog}>
-        <DialogContent>
+        <DialogContent className="max-w-[90vw] sm:max-w-md rounded-2xl">
           <DialogHeader>
-            <DialogTitle>Signaler ce professeur</DialogTitle>
+            <DialogTitle className="text-lg sm:text-xl font-bold flex items-center gap-2">
+              <AlertTriangle className="w-5 h-5 text-[#FF4D8D]" />
+              <span className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
+                Signaler ce professeur
+              </span>
+            </DialogTitle>
           </DialogHeader>
 
-          <Alert className="bg-amber-50 border-amber-200">
-            <AlertTriangle className="h-4 w-4 text-amber-600" />
-            <AlertDescription className="text-amber-800">
-              Vous êtes sur le point de signaler que <strong>{teacher.name}</strong> ne fait plus partie de cet établissement.
-              <br /><br />
-              Après 5 signalements, ce professeur sera automatiquement marqué comme "Ancien professeur".
-            </AlertDescription>
-          </Alert>
+          <div className="space-y-4">
+             <div className="flex items-start space-x-3 p-3 rounded-lg border-2 border-amber-200 bg-amber-50/40">
+                <div className="mt-1">
+                   <AlertTriangle className="w-5 h-5 text-amber-600" />
+                </div>
+                <div className="flex-1">
+                  <p className="font-medium text-slate-800 text-sm sm:text-base">Ne fait plus partie de l'établissement</p>
+                  <p className="text-xs sm:text-sm text-slate-600 mt-1">
+                    Vous signalez que <strong>{teacher.name}</strong> n'enseigne plus ici.
+                  </p>
+                </div>
+             </div>
 
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setShowDialog(false)}>
+             <Alert className="bg-blue-50 border-blue-200">
+              <AlertTriangle className="h-4 w-4 text-blue-600" />
+              <AlertDescription className="text-blue-800 text-xs sm:text-sm">
+                Après 5 signalements confirmés, ce professeur sera automatiquement marqué comme "Ancien professeur".
+              </AlertDescription>
+            </Alert>
+          </div>
+
+          <DialogFooter className="gap-2">
+            <Button variant="outline" onClick={() => setShowDialog(false)} className="text-xs sm:text-sm">
               Annuler
             </Button>
             <Button 
               onClick={handleReport} 
               disabled={loading}
-              className="bg-orange-600 hover:bg-orange-700"
+              className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-white shadow-md text-xs sm:text-sm font-semibold"
             >
               {loading ? "Signalement..." : "Confirmer le signalement"}
             </Button>
