@@ -191,7 +191,7 @@ export default function AboutPage() {
                       </div>
                       <div>
                         <h4 className="font-black text-slate-800 uppercase italic text-base sm:text-lg tracking-wide">IA Surpuissante</h4>
-                        <p className="text-sm sm:text-base font-medium text-slate-600 mt-1">Antonin résume tout en 2s.</p>
+                        <p className="text-sm sm:text-base font-medium text-slate-600 mt-1">Satoshi résume tout en 2s.</p>
                       </div>
                     </div>
                   </div>
