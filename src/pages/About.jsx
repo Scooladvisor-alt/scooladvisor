@@ -88,62 +88,86 @@ export default function AboutPage() {
       </div>
 
       {/* Mission Section */}
-      <div className="max-w-6xl mx-auto px-4 pb-12 sm:pb-24">
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 items-stretch">
+      <div className="max-w-7xl mx-auto px-4 pb-12 sm:pb-24">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+          
+          {/* Left Content - Cards Stack */}
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="lg:col-span-7 flex flex-col gap-6">
 
-          {/* Card 1 - Dominant */}
-          <motion.div variants={itemVariants} className="lg:col-span-7 relative group">
-            <div className="absolute inset-0 bg-gradient-to-r from-pink-200 to-rose-200 rounded-2xl blur-lg opacity-40 transform translate-x-2 translate-y-2 group-hover:opacity-60 transition-all" />
-            <div className="relative bg-white/60 backdrop-blur-xl rounded-2xl p-6 sm:p-8 border border-white/50 shadow-xl h-full flex flex-col sm:flex-row items-center gap-4 sm:gap-6 hover:border-pink-200 transition-colors">
-              <div className="shrink-0 w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-[#FF4D8D] to-pink-600 rounded-2xl flex items-center justify-center shadow-lg transform -rotate-3 group-hover:rotate-0 transition-transform">
-                <Target className="w-8 h-8 sm:w-10 sm:h-10 text-white shrink-0" />
-              </div>
-              <div>
-                <h3 className="text-2xl sm:text-3xl font-black text-slate-800 mb-2 uppercase italic tracking-tight text-center sm:text-left">Orienter avec <span className="bg-gradient-to-r from-[#FF4D8D] to-pink-600 bg-clip-text text-transparent">Confiance</span></h3>
-                <p className="text-base sm:text-lg text-slate-600 font-medium leading-relaxed text-center sm:text-left">
-                  Fini le hasard. On te donne les vraies infos, modérées avec intelligence, pour tracer ta route.
-                </p>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Card 2 - Compact & Bold */}
-          <motion.div variants={itemVariants} className="lg:col-span-5 relative group mt-0 lg:mt-0">
-             <div className="absolute inset-0 bg-gradient-to-r from-purple-200 to-indigo-200 rounded-2xl blur-lg opacity-40 transform translate-x-2 translate-y-2 group-hover:opacity-60 transition-all" />
-            <div className="relative bg-white/60 backdrop-blur-xl rounded-2xl p-6 sm:p-8 border border-white/50 shadow-xl h-full flex flex-col sm:flex-row items-center gap-4 sm:gap-6 hover:border-purple-200 transition-colors">
-               <div className="shrink-0 w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-[#8B5CF6] to-purple-600 rounded-2xl flex items-center justify-center shadow-lg transform rotate-3 group-hover:rotate-0 transition-transform">
-                <Heart className="w-8 h-8 sm:w-10 sm:h-10 text-white shrink-0" />
-              </div>
-              <div>
-                <h3 className="text-xl sm:text-2xl font-black text-slate-800 mb-2 uppercase italic text-center sm:text-left">Pas de Haine,<br/>Que du <span className="bg-gradient-to-r from-[#8B5CF6] to-purple-600 bg-clip-text text-transparent">Vrai</span></h3>
-                <p className="text-sm sm:text-base text-slate-600 font-medium leading-relaxed text-center sm:text-left">
-                  On construit, on ne casse pas. La critique constructive est notre arme.
-                </p>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Card 3 - Wide & Impactful */}
-          <motion.div variants={itemVariants} className="lg:col-span-12 relative group mt-0">
-             <div className="absolute inset-0 bg-gradient-to-r from-blue-200 to-cyan-200 rounded-2xl blur-lg opacity-40 transform translate-x-2 translate-y-2 group-hover:opacity-60 transition-all" />
-             <div className="relative bg-white/60 backdrop-blur-xl rounded-2xl p-6 sm:p-10 border border-white/50 shadow-xl flex flex-col md:flex-row items-center gap-4 sm:gap-8 h-full hover:border-blue-200 transition-colors">
-                <div className="shrink-0 w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-[#3B82F6] to-blue-600 rounded-2xl flex items-center justify-center shadow-lg transform -rotate-6 group-hover:rotate-0 transition-transform">
-                  <Users className="w-8 h-8 sm:w-10 sm:h-10 text-white shrink-0" />
+            {/* Card 1 */}
+            <motion.div variants={itemVariants} className="relative group">
+              <div className="absolute inset-0 bg-gradient-to-r from-pink-200 to-rose-200 rounded-2xl blur-lg opacity-40 transform translate-x-2 translate-y-2 group-hover:opacity-60 transition-all" />
+              <div className="relative bg-white/60 backdrop-blur-xl rounded-2xl p-6 sm:p-8 border border-white/50 shadow-xl flex flex-col sm:flex-row items-center gap-4 sm:gap-6 hover:border-pink-200 transition-colors">
+                <div className="shrink-0 w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-[#FF4D8D] to-pink-600 rounded-2xl flex items-center justify-center shadow-lg transform -rotate-3 group-hover:rotate-0 transition-transform">
+                  <Target className="w-8 h-8 sm:w-10 sm:h-10 text-white shrink-0" />
                 </div>
                 <div>
-                   <h3 className="text-2xl sm:text-3xl font-black text-slate-800 mb-2 uppercase italic text-center sm:text-left">Plateforme <span className="bg-gradient-to-r from-[#3B82F6] to-blue-600 bg-clip-text text-transparent">Communautaire</span></h3>
-                   <p className="text-base sm:text-lg text-slate-600 font-medium leading-relaxed text-center sm:text-left">
-                     Étudiants, parents, profs : on brise les silos. Un espace authentique pour l'école de demain.
-                   </p>
+                  <h3 className="text-2xl sm:text-3xl font-black text-slate-800 mb-2 uppercase italic tracking-tight text-center sm:text-left">Orienter avec <span className="bg-gradient-to-r from-[#FF4D8D] to-pink-600 bg-clip-text text-transparent">Confiance</span></h3>
+                  <p className="text-base sm:text-lg text-slate-600 font-medium leading-relaxed text-center sm:text-left">
+                    Fini le hasard. On te donne les vraies infos, modérées avec intelligence, pour tracer ta route.
+                  </p>
                 </div>
-             </div>
+              </div>
+            </motion.div>
+
+            {/* Card 2 */}
+            <motion.div variants={itemVariants} className="relative group">
+               <div className="absolute inset-0 bg-gradient-to-r from-purple-200 to-indigo-200 rounded-2xl blur-lg opacity-40 transform translate-x-2 translate-y-2 group-hover:opacity-60 transition-all" />
+              <div className="relative bg-white/60 backdrop-blur-xl rounded-2xl p-6 sm:p-8 border border-white/50 shadow-xl flex flex-col sm:flex-row items-center gap-4 sm:gap-6 hover:border-purple-200 transition-colors">
+                 <div className="shrink-0 w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-[#8B5CF6] to-purple-600 rounded-2xl flex items-center justify-center shadow-lg transform rotate-3 group-hover:rotate-0 transition-transform">
+                  <Heart className="w-8 h-8 sm:w-10 sm:h-10 text-white shrink-0" />
+                </div>
+                <div>
+                  <h3 className="text-xl sm:text-2xl font-black text-slate-800 mb-2 uppercase italic text-center sm:text-left">Pas de Haine,<br/>Que du <span className="bg-gradient-to-r from-[#8B5CF6] to-purple-600 bg-clip-text text-transparent">Vrai</span></h3>
+                  <p className="text-sm sm:text-base text-slate-600 font-medium leading-relaxed text-center sm:text-left">
+                    On construit, on ne casse pas. La critique constructive est notre arme.
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Card 3 */}
+            <motion.div variants={itemVariants} className="relative group">
+               <div className="absolute inset-0 bg-gradient-to-r from-blue-200 to-cyan-200 rounded-2xl blur-lg opacity-40 transform translate-x-2 translate-y-2 group-hover:opacity-60 transition-all" />
+               <div className="relative bg-white/60 backdrop-blur-xl rounded-2xl p-6 sm:p-8 border border-white/50 shadow-xl flex flex-col md:flex-row items-center gap-4 sm:gap-6 hover:border-blue-200 transition-colors">
+                  <div className="shrink-0 w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-[#3B82F6] to-blue-600 rounded-2xl flex items-center justify-center shadow-lg transform -rotate-6 group-hover:rotate-0 transition-transform">
+                    <Users className="w-8 h-8 sm:w-10 sm:h-10 text-white shrink-0" />
+                  </div>
+                  <div>
+                     <h3 className="text-2xl sm:text-3xl font-black text-slate-800 mb-2 uppercase italic text-center sm:text-left">Plateforme <span className="bg-gradient-to-r from-[#3B82F6] to-blue-600 bg-clip-text text-transparent">Communautaire</span></h3>
+                     <p className="text-base sm:text-lg text-slate-600 font-medium leading-relaxed text-center sm:text-left">
+                       Étudiants, parents, profs : on brise les silos. Un espace authentique pour l'école de demain.
+                     </p>
+                  </div>
+               </div>
+            </motion.div>
+
           </motion.div>
-        </motion.div>
+
+          {/* Right Content - Image */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="lg:col-span-5 relative hidden lg:block h-full">
+              <div className="relative z-10 h-full flex items-center justify-center">
+                <img 
+                  src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/0d58fb685_image.png" 
+                  alt="Communauté ScoolAdvisor" 
+                  className="w-full h-auto object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-500 max-h-[800px]"
+                />
+              </div>
+              {/* Decorative background blob behind image */}
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-gradient-to-br from-pink-200/40 via-purple-200/40 to-blue-200/40 rounded-full blur-3xl -z-10" />
+          </motion.div>
+
+        </div>
       </div>
 
       {/* Concept Detail */}
