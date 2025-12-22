@@ -126,6 +126,17 @@ function checkFrenchPatterns(city, address) {
             return false; // Pas en France
         }
     }
+
+    // Ajout de détection de pays générique (noms de pays en anglais/français courants)
+    const countryPatterns = [
+        /\b(deutschland|italia|españa|maroc|tunisie|algérie|china|japan|korea|australia|brasil|russia|india)\b/i
+    ];
+    
+    for (const pattern of countryPatterns) {
+        if (pattern.test(fullText)) {
+            return false;
+        }
+    }
     
     // Si on trouve un indicateur français, c'est en France
     for (const pattern of frenchIndicators) {
@@ -162,10 +173,10 @@ Deno.serve(async (req) => {
         const isInFrance = await isLocationInFrance(school.city || '', school.address || '');
         
         // Mettre à jour la région
-        const newRegion = isInFrance ? '' : 'international';
+        const newRegion = isInFrance ? '' : 'International';
         
-        // Seulement mettre à jour si la région change
-        if (school.region !== newRegion) {
+        // Seulement mettre à jour si la région change (ou si c'était "international" minuscule)
+        if (school.region !== newRegion && school.region !== 'International') {
             await base44.asServiceRole.entities.School.update(schoolId, {
                 region: newRegion
             });
