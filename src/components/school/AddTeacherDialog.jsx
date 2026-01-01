@@ -31,22 +31,7 @@ const predefinedSubjects = [
 "Sciences de gestion et numérique"];
 
 
-const teacherAvatars = [
-{ id: 'teacher1', url: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/6242bec45_a-3d-stylized-character-designed-as-a-modern--clev.png", name: "Prof 1" },
-{ id: 'teacher2', url: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/c672e9a49_a-confident-and-clever-female-professor-with-brigh.png", name: "Prof 2" },
-{ id: 'teacher3', url: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/b17bde77c_a-3d-stylized-character-designed-as-a-wise--clever.png", name: "Prof 3" },
-{ id: 'teacher4', url: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/d4a68d2a3_a-3d-stylized-character-designed-as-an-experienced.png", name: "Prof 4" },
-{ id: 'teacher5', url: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/2b9f3fb6d_a-young--expressive-female-professor-with-short-or-2.png", name: "Prof 5" },
-{ id: 'teacher6', url: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/5bcfdc746_a-young--expressive-female-professor-with-short-or-3.png", name: "Prof 6" },
-{ id: 'teacher7', url: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/a07c73e8b_a-3d-stylized-male-character-representing-a-prof-.png", name: "Prof 7" },
-{ id: 'teacher8', url: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/962da596e_a-3d-stylized-character-of-a-middle-aged-bald-male.png", name: "Prof 8" },
-{ id: 'teacher9', url: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/758c3f628_a-3d-stylized-character-of-a-middle-aged-blonde-fe.png", name: "Prof 9" },
-{ id: 'teacher10', url: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/1ff02d2e8_a-3d-stylized-character-of-a-mature-female-profess.png", name: "Prof 10" },
-{ id: 'teacher11', url: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/7d26ed436_a-3d-stylized-character-designed-as-an-experienced.png", name: "Prof 11" },
-{ id: 'teacher12', url: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/0963162b7_3d-stylized-character-designed-as-an-experienced--.png", name: "Prof 12" },
-{ id: 'teacher13', url: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/ea41f3042_3d-stylized-portrait-of-a-40-year-old-french-femal.png", name: "Prof 13" },
-{ id: 'teacher14', url: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/00ea97ada_3d-stylized-portrait-of-a-40-year-old-french-male-.png", name: "Prof 14" },
-{ id: 'teacher15', url: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/830c78bd6_3d-stylized-portrait-of-a-40-year-old-french-femal-2.png", name: "Prof 15" }];
+const teacherAvatars = [];
 
 
 export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSuccess }) {
@@ -59,7 +44,7 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
     name: "",
     subject: "",
     customSubject: "",
-    photo_url: teacherAvatars[0].url,
+    photo_url: teacherAvatars.length > 0 ? teacherAvatars[0].url : "",
     is_former: false
   });
 
@@ -203,7 +188,7 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
       setTimeout(() => {
         onSuccess();
         onOpenChange(false);
-        setFormData({ name: "", subject: "", customSubject: "", photo_url: teacherAvatars[0].url, is_former: false });
+        setFormData({ name: "", subject: "", customSubject: "", photo_url: teacherAvatars.length > 0 ? teacherAvatars[0].url : "", is_former: false });
         setShowCustomSubject(false);
         setSuccess(false);
       }, 2000);
@@ -213,8 +198,6 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
     }
     setLoading(false);
   };
-
-  const displayedAvatars = showMoreAvatars ? teacherAvatars : teacherAvatars.slice(0, 10);
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -341,37 +324,34 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
           <div className="space-y-1 sm:space-y-2">
             <Label className="text-xs sm:text-sm">Avatar du professeur</Label>
             <div className="w-full bg-slate-50 rounded-lg p-2 sm:p-3 border border-slate-200">
-              <div className="grid grid-cols-5 gap-1.5 sm:gap-3">
-                {displayedAvatars.map((avatar) =>
-                <button
-                  key={avatar.id}
-                  type="button"
-                  onClick={() => setFormData({ ...formData, photo_url: avatar.url })}
-                  className={`p-1 rounded-lg border-2 transition-all ${
-                  formData.photo_url === avatar.url ?
-                  'border-blue-600 bg-blue-50 shadow-md' :
-                  'border-slate-200 hover:border-blue-300 bg-white'}`
-                  }>
-
-                    <img
-                    src={avatar.url}
-                    alt={avatar.name}
-                    className="w-full h-10 sm:h-16 md:h-20 object-contain rounded-md" />
-
-                  </button>
-                )}
-              </div>
-              
-              {!showMoreAvatars &&
-              <button
-                type="button"
-                onClick={() => setShowMoreAvatars(true)}
-                className="w-full mt-2 flex items-center justify-center gap-1 text-blue-600 hover:text-blue-700 text-xs py-1">
-
-                  <span>voir les autres</span>
-                  <ChevronDown className="w-3 h-3" />
-                </button>
-              }
+              {teacherAvatars.length > 0 ? (
+                <div className="grid grid-cols-5 gap-1.5 sm:gap-3 max-h-[300px] overflow-y-auto pr-1">
+                  {teacherAvatars.map((avatar) => (
+                    <button
+                      key={avatar.id}
+                      type="button"
+                      onClick={() => setFormData({ ...formData, photo_url: avatar.url })}
+                      className={`p-1 rounded-lg border-2 transition-all ${
+                        formData.photo_url === avatar.url ?
+                        'border-blue-600 bg-blue-50 shadow-md' :
+                        'border-slate-200 hover:border-blue-300 bg-white'
+                      }`}
+                    >
+                      <img
+                        src={avatar.url}
+                        alt={avatar.name}
+                        className="w-full h-10 sm:h-16 md:h-20 object-contain rounded-md" 
+                      />
+                    </button>
+                  ))}
+                </div>
+              ) : (
+                <div className="text-center py-6 text-slate-500 text-xs sm:text-sm italic">
+                  Aucun avatar disponible pour le moment.
+                  <br />
+                  Ils seront bientôt ajoutés ! 📸
+                </div>
+              )}
             </div>
           </div>
 
