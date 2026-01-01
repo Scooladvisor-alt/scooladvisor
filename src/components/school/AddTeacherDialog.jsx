@@ -421,10 +421,10 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
                     className={`relative rounded-lg transition-all overflow-hidden ${
                       isSelected 
                         ? 'p-[3px] bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 shadow-md' 
-                        : 'border-2 border-slate-200 hover:border-blue-300 bg-white'
+                        : 'p-[2px] bg-slate-200 hover:bg-gradient-to-r hover:from-[#FF4D8D]/50 hover:via-purple-500/50 hover:to-blue-500/50'
                     }`}
                   >
-                    <div className={`rounded-md w-full h-full flex items-center justify-center ${isSelected ? 'bg-white p-[1px]' : 'p-1'}`}>
+                    <div className="rounded-md w-full h-full flex items-center justify-center bg-white p-1">
                       <img
                         src={avatar.url}
                         alt={avatar.name}
