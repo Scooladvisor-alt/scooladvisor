@@ -411,24 +411,29 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
             <div className="w-full bg-slate-50 rounded-lg p-2 sm:p-3 border border-slate-200">
               {teacherAvatars.length > 0 ? (
                 <div className="grid grid-cols-6 gap-1.5 sm:gap-3 max-h-[300px] overflow-y-auto pr-1">
-                  {teacherAvatars.map((avatar) => (
-                    <button
-                      key={avatar.id}
-                      type="button"
-                      onClick={() => setFormData({ ...formData, photo_url: avatar.url })}
-                      className={`p-1 rounded-lg border-2 transition-all ${
-                        formData.photo_url === avatar.url ?
-                        'border-blue-600 bg-blue-50 shadow-md' :
-                        'border-slate-200 hover:border-blue-300 bg-white'
-                      }`}
-                    >
+                  {teacherAvatars.map((avatar) => {
+                const isSelected = formData.photo_url === avatar.url;
+                return (
+                  <button
+                    key={avatar.id}
+                    type="button"
+                    onClick={() => setFormData({ ...formData, photo_url: avatar.url })}
+                    className={`relative rounded-lg transition-all overflow-hidden ${
+                      isSelected 
+                        ? 'p-[3px] bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 shadow-md' 
+                        : 'border-2 border-slate-200 hover:border-blue-300 bg-white'
+                    }`}
+                  >
+                    <div className={`rounded-md w-full h-full flex items-center justify-center ${isSelected ? 'bg-white p-[1px]' : 'p-1'}`}>
                       <img
                         src={avatar.url}
                         alt={avatar.name}
                         className="w-full h-10 sm:h-16 md:h-20 object-contain rounded-md" 
                       />
-                    </button>
-                  ))}
+                    </div>
+                  </button>
+                );
+              })}
                 </div>
               ) : (
                 <div className="text-center py-6 text-slate-500 text-xs sm:text-sm italic">
