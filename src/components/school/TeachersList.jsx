@@ -42,12 +42,6 @@ export default function TeachersList({ schoolId, onAddTeacher }) {
     }
   }, [schoolId]);
 
-  const podiumStyles = [
-  'bg-gradient-to-r from-amber-200 via-amber-100 to-amber-200 border-amber-300',
-  'bg-gradient-to-r from-slate-200 via-slate-100 to-slate-200 border-slate-300',
-  'bg-gradient-to-r from-orange-200 via-orange-100 to-orange-200 border-orange-300'];
-
-
   const podiumIconColors = ['text-amber-500', 'text-slate-500', 'text-orange-500'];
 
   const filteredTeachers = teachers.filter((teacher) =>
@@ -150,7 +144,7 @@ export default function TeachersList({ schoolId, onAddTeacher }) {
                 <div className="teachers-list-scrollable">
                   {displayedTeachers.map((teacher, index) => {
                 const isPodium = teacher.review_count > 0 && index < 3;
-                const podiumClass = isPodium ? podiumStyles[index] : 'hover:border-blue-300 bg-white';
+                const podiumClass = 'hover:border-blue-300 bg-white';
 
                 return (
                   <motion.div
