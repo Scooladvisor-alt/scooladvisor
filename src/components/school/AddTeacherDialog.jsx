@@ -31,7 +31,38 @@ const predefinedSubjects = [
 "Sciences de gestion et numérique"];
 
 
-const teacherAvatars = [];
+const teacherAvatars = [
+  { id: 'avatar1', url: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/e9adea65a_3d-stylized-portrait-of-a-40-year-old-french-femal1.png", name: "Avatar 1" },
+  { id: 'avatar2', url: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/ee3b6a834_3d-stylized-portrait-of-a-40-year-old-french-femal.png", name: "Avatar 2" },
+  { id: 'avatar3', url: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/21140f986_3d-stylized-portrait-of-a-40-year-old-french-male-1.png", name: "Avatar 3" },
+  { id: 'avatar4', url: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/9c2debfb2_3d-stylized-portrait-of-a-40-year-old-french-male-.png", name: "Avatar 4" },
+  { id: 'avatar5', url: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/6477234f2_3d-stylized-portrait-of-a-47-year-old-french-femal.png", name: "Avatar 5" },
+  { id: 'avatar6', url: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/4ad46a841_a-3d-stylized-character-designed-as-a-wise--clever.png", name: "Avatar 6" },
+  { id: 'avatar7', url: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/8548ab7bc_a-3d-stylized-character-of-a-distinguished-senior-.png", name: "Avatar 7" },
+  { id: 'avatar8', url: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/2df7514e1_a-3d-stylized-character-of-a-far-left-male-profess1.png", name: "Avatar 8" },
+  { id: 'avatar9', url: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/cb005e0e3_a-3d-stylized-character-of-a-far-left-male-profess.png", name: "Avatar 9" },
+  { id: 'avatar10', url: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/bfb28ca03_a-3d-stylized-character-of-a-mature-black-female-p.png", name: "Avatar 10" },
+  { id: 'avatar11', url: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/1df71def2_a-3d-stylized-character-of-a-middle-aged-bald-male.png", name: "Avatar 11" },
+  { id: 'avatar12', url: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/3401f44f9_a-3d-stylized-character-of-a-middle-aged-male-prof1.png", name: "Avatar 12" },
+  { id: 'avatar13', url: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/8df82aac9_a-3d-stylized-character-of-a-middle-aged-male-prof.png", name: "Avatar 13" },
+  { id: 'avatar14', url: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/d543c99da_a-3d-stylized-character-of-a-young-black-female-pr.png", name: "Avatar 14" },
+  { id: 'avatar15', url: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/3f9e2d766_a-3d-stylized-character-of-a-young-male-professor-.png", name: "Avatar 15" },
+  { id: 'avatar16', url: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/1635b03d7_a-3d-stylized-character-of-a-young-progressive-mal.png", name: "Avatar 16" },
+  { id: 'avatar17', url: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/1db025fc3_a-3d-stylized-character-of-an-elderly-male-profess.png", name: "Avatar 17" },
+  { id: 'avatar18', url: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/00300b279_a-3d-stylized-character-unpeu-de-cheveux-of-a-youn.png", name: "Avatar 18" },
+  { id: 'avatar19', url: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/74fa7afa3_a-3d-stylized-male-character-representing-a-black-1.png", name: "Avatar 19" },
+  { id: 'avatar20', url: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/095c14bd5_a-3d-stylized-male-character-representing-a-black-.png", name: "Avatar 20" },
+  { id: 'avatar21', url: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/724bfaeea_a-3d-stylized-male-character-representing-a-young-.png", name: "Avatar 21" },
+  { id: 'avatar22', url: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/87dfbfbe1_a-3d-stylized-portrait-of-a-40-year-old-french-wom.png", name: "Avatar 22" },
+  { id: 'avatar23', url: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/9ca4c4bc1_a-3d-stylized-portrait-of-a-51-year-old-french-wom.png", name: "Avatar 23" },
+  { id: 'avatar24', url: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/38510b2d8_a-3d-stylized-portrait-of-a-55-year-old-french-fem.png", name: "Avatar 24" },
+  { id: 'avatar25', url: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/7f487a938_a-3d-stylized-portrait-of-a-75-year-old-obese-fema.png", name: "Avatar 25" },
+  { id: 'avatar26', url: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/2f1a80b2d_a-3d-stylized-portrait-of-a-young-french-male-prof.png", name: "Avatar 26" },
+  { id: 'avatar27', url: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/4d5fc138f_a-high-quality-3d-semi-realistic-avatar-of-a-50-wo.png", name: "Avatar 27" },
+  { id: 'avatar28', url: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/4fdcd180b_a-high-quality-3d-semi-realistic-hrender-of-a-wise.png", name: "Avatar 28" },
+  { id: 'avatar29', url: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/844474e63_a-high-quality-3d-stylized-character-of-a-senior-b.png", name: "Avatar 29" },
+  { id: 'avatar30', url: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/c4f7b9868_a-professional-front-facing-portrait-of-a-35-50-ye.png", name: "Avatar 30" }
+];
 
 
 export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSuccess }) {
@@ -325,7 +356,7 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
             <Label className="text-xs sm:text-sm">Avatar du professeur</Label>
             <div className="w-full bg-slate-50 rounded-lg p-2 sm:p-3 border border-slate-200">
               {teacherAvatars.length > 0 ? (
-                <div className="grid grid-cols-5 gap-1.5 sm:gap-3 max-h-[300px] overflow-y-auto pr-1">
+                <div className="grid grid-cols-6 gap-1.5 sm:gap-3 max-h-[300px] overflow-y-auto pr-1">
                   {teacherAvatars.map((avatar) => (
                     <button
                       key={avatar.id}
