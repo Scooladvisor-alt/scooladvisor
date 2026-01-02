@@ -143,7 +143,7 @@ export default function TeachersList({ schoolId, onAddTeacher }) {
           <>
                 <div className="teachers-list-scrollable">
                   {displayedTeachers.map((teacher, index) => {
-                const isPodium = teacher.review_count > 0 && index < 3;
+                const isPodium = index < 3;
                 const podiumClass = 'hover:border-blue-300 bg-white';
 
                 return (
