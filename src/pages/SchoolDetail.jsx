@@ -35,6 +35,16 @@ export default function SchoolDetailPage() {
   useEffect(() => {
     if (schoolId) {
       loadData();
+      
+      const savedTeacher = localStorage.getItem('pending_teacher_submission_school_' + schoolId);
+      if (savedTeacher) {
+        setShowAddTeacher(true);
+      }
+
+      const savedReview = localStorage.getItem('pending_school_review_school_' + schoolId);
+      if (savedReview) {
+        setShowAddReview(true);
+      }
     }
   }, [schoolId]);
 
@@ -333,26 +343,14 @@ export default function SchoolDetailPage() {
 
               <div className="flex flex-col sm:flex-row gap-3">
                 <Button
-                  onClick={() => {
-                    if (!user) {
-                      base44.auth.redirectToLogin(window.location.href);
-                      return;
-                    }
-                    setShowAddTeacher(true);
-                  }}
+                  onClick={() => setShowAddTeacher(true)}
                   className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-white shadow-lg w-full sm:flex-1 h-11">
                   <Plus className="w-4 h-4 mr-2 text-white" />
                   Ajouter un professeur
                 </Button>
 
                 <Button
-                  onClick={() => {
-                    if (!user) {
-                      base44.auth.redirectToLogin(window.location.href);
-                      return;
-                    }
-                    setShowAddReview(true);
-                  }}
+                  onClick={() => setShowAddReview(true)}
                   className="bg-gradient-to-r from-yellow-400 via-yellow-500 to-amber-500 hover:from-yellow-500 hover:via-yellow-600 hover:to-amber-600 text-white shadow-lg w-full sm:flex-1 h-11">
                   <Star className="w-4 h-4 mr-2" />
                   Noter l'établissement
@@ -373,13 +371,7 @@ export default function SchoolDetailPage() {
             <Suspense fallback={<div className="p-4 bg-white rounded-lg shadow-md flex justify-center items-center h-full"><Loader2 className="w-8 h-8 animate-spin text-slate-400" /></div>}>
               <TeachersList
                 schoolId={schoolId}
-                onAddTeacher={() => {
-                  if (!user) {
-                    base44.auth.redirectToLogin(window.location.href);
-                    return;
-                  }
-                  setShowAddTeacher(true);
-                }} />
+                onAddTeacher={() => setShowAddTeacher(true)} />
 
             </Suspense>
           </div>
@@ -395,13 +387,7 @@ export default function SchoolDetailPage() {
                 }}
                 onEditReview={handleEditReview}
                 canModerate={canModerate}
-                onAddReview={() => {
-                  if (!user) {
-                    base44.auth.redirectToLogin(window.location.href);
-                    return;
-                  }
-                  setShowAddReview(true);
-                }} />
+                onAddReview={() => setShowAddReview(true)} />
 
 
             </Suspense>

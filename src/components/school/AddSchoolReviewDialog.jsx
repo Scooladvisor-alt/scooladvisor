@@ -83,6 +83,19 @@ export default function AddSchoolReviewDialog({ open, onOpenChange, schoolId, ex
           is_anonymous: false,
           certification: false
         });
+        
+        // Restore from local storage if exists
+        const savedData = localStorage.getItem('pending_school_review_school_' + schoolId);
+        if (savedData) {
+          try {
+            const parsed = JSON.parse(savedData);
+            setFormData(parsed);
+            localStorage.removeItem('pending_school_review_school_' + schoolId);
+          } catch (e) {
+            console.error("Failed to parse saved review", e);
+          }
+        }
+
         checkExistingReview();
       }
       setError(null);
@@ -258,7 +271,18 @@ rejected → si le message enfreint les règles ci-dessus"
     setError(null);
 
     try {
-      const user = await base44.auth.me();
+      let user = null;
+      try {
+        user = await base44.auth.me();
+      } catch (e) {
+        user = null;
+      }
+
+      if (!user) {
+        localStorage.setItem('pending_school_review_school_' + schoolId, JSON.stringify(formData));
+        await base44.auth.redirectToLogin(window.location.href);
+        return;
+      }
 
       // SECURITY: Check Ban Status
       if (user.is_banned) {

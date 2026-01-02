@@ -22,6 +22,19 @@ export default function TeacherLoveNotes({ teacherId, user }) {
   useEffect(() => {
     if (teacherId) {
       loadNotes();
+      
+      const savedNote = localStorage.getItem('pending_love_note_teacher_' + teacherId);
+      if (savedNote) {
+        try {
+          const parsed = JSON.parse(savedNote);
+          setNewMessage(parsed.message || "");
+          setIsAnonymous(parsed.isAnonymous || false);
+          setShowForm(true);
+          localStorage.removeItem('pending_love_note_teacher_' + teacherId);
+        } catch (e) {
+          console.error("Failed to parse saved love note", e);
+        }
+      }
     }
   }, [teacherId]);
 
@@ -39,6 +52,7 @@ export default function TeacherLoveNotes({ teacherId, user }) {
 
   const handleSend = async () => {
     if (!user) {
+      localStorage.setItem('pending_love_note_teacher_' + teacherId, JSON.stringify({ message: newMessage, isAnonymous }));
       base44.auth.redirectToLogin(window.location.href);
       return;
     }
@@ -135,10 +149,6 @@ Réponds par JSON : { "decision": "approved" | "rejected", "reason": "raison cou
             size="sm"
             className="text-pink-600 hover:text-pink-700 hover:bg-pink-50"
             onClick={() => {
-              if (!user) {
-                base44.auth.redirectToLogin(window.location.href);
-                return;
-              }
               setShowForm(!showForm);
             }}>
 

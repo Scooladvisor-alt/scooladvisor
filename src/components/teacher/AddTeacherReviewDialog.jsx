@@ -72,6 +72,19 @@ export default function AddTeacherReviewDialog({ open, onOpenChange, teacherId, 
         });
       } else {
         resetForm();
+        
+        // Restore from local storage
+        const savedData = localStorage.getItem('pending_teacher_review_teacher_' + teacherId);
+        if (savedData) {
+          try {
+            const parsed = JSON.parse(savedData);
+            setFormData(parsed);
+            localStorage.removeItem('pending_teacher_review_teacher_' + teacherId);
+          } catch (e) {
+            console.error("Failed to parse saved teacher review", e);
+          }
+        }
+
         checkExistingReview();
       }
     }
@@ -241,7 +254,18 @@ Réponds UNIQUEMENT par "approved" ou "rejected".`,
     setError(null);
 
     try {
-      const user = await base44.auth.me();
+      let user = null;
+      try {
+        user = await base44.auth.me();
+      } catch (e) {
+        user = null;
+      }
+
+      if (!user) {
+        localStorage.setItem('pending_teacher_review_teacher_' + teacherId, JSON.stringify(formData));
+        await base44.auth.redirectToLogin(window.location.href);
+        return;
+      }
       
       // SECURITY: Check Ban Status
       if (user.is_banned) {

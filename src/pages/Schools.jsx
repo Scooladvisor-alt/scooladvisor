@@ -55,6 +55,10 @@ export default function SchoolsPage() {
 
   useEffect(() => {
     loadData();
+    const savedSchool = localStorage.getItem('pending_school_submission');
+    if (savedSchool) {
+      setShowAddDialog(true);
+    }
   }, []);
 
   useEffect(() => {
@@ -561,10 +565,6 @@ export default function SchoolsPage() {
             <div className="flex sm:hidden items-center gap-2 mt-2">
               <Button
                 onClick={() => {
-                  if (!user) {
-                    base44.auth.redirectToLogin(window.location.href);
-                    return;
-                  }
                   setShowAddDialog(true);
                 }}
                 size="sm"
@@ -604,10 +604,6 @@ export default function SchoolsPage() {
               <div className="hidden sm:flex items-center gap-2">
                 <Button
                   onClick={() => {
-                    if (!user) {
-                      base44.auth.redirectToLogin(window.location.href);
-                      return;
-                    }
                     setShowAddDialog(true);
                   }}
                   size="sm"
@@ -670,10 +666,6 @@ export default function SchoolsPage() {
               </p>
               <Button
               onClick={() => {
-                if (!user) {
-                  base44.auth.redirectToLogin(window.location.href);
-                  return;
-                }
                 setShowAddDialog(true);
               }}
               className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-white shadow-lg hover:shadow-xl transition-all hover:scale-105 font-semibold">

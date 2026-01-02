@@ -193,13 +193,39 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
     }
   };
 
+  useEffect(() => {
+    const savedData = localStorage.getItem('pending_teacher_submission_school_' + schoolId);
+    if (savedData && open) {
+      try {
+        const parsed = JSON.parse(savedData);
+        setFormData(parsed);
+        localStorage.removeItem('pending_teacher_submission_school_' + schoolId);
+      } catch (e) {
+        console.error("Failed to parse saved teacher submission", e);
+      }
+    }
+  }, [open, schoolId]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
 
+    // Check authentication
+    let user = null;
+    try {
+      user = await base44.auth.me();
+    } catch (e) {
+      user = null;
+    }
+
+    if (!user) {
+      localStorage.setItem('pending_teacher_submission_school_' + schoolId, JSON.stringify(formData));
+      await base44.auth.redirectToLogin(window.location.href);
+      return;
+    }
+
     // SECURITY: Check Permissions
-    const user = await base44.auth.me();
     if (!security.canPost(user)) {
       setError("Action non autorisée.");
       setLoading(false);

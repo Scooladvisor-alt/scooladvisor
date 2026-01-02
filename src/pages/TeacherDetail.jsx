@@ -48,6 +48,11 @@ export default function TeacherDetailPage() {
   useEffect(() => {
     if (teacherId) {
       loadData();
+      
+      const savedReview = localStorage.getItem('pending_teacher_review_teacher_' + teacherId);
+      if (savedReview) {
+        setShowAddReview(true);
+      }
     }
   }, [teacherId]);
 
@@ -377,10 +382,6 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
               <div className="flex flex-col sm:flex-row flex-wrap gap-3 mt-4">
                 <Button
                   onClick={() => {
-                    if (!user) {
-                      base44.auth.redirectToLogin(window.location.href);
-                      return;
-                    }
                     setShowAddReview(true);
                     setEditingReview(null);
                   }} 

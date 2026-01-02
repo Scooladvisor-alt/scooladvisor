@@ -62,6 +62,20 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
   };
 
   useEffect(() => {
+    const savedData = localStorage.getItem('pending_school_submission');
+    if (savedData && open) {
+      try {
+        const parsed = JSON.parse(savedData);
+        setFormData(parsed);
+        // Clean up immediately after restoring to avoid re-restoring if cancelled
+        localStorage.removeItem('pending_school_submission');
+      } catch (e) {
+        console.error("Failed to parse saved school submission", e);
+      }
+    }
+  }, [open]);
+
+  useEffect(() => {
     if (formData.address && isAddressManuallyChanged) {
       if (addressTimeoutRef.current) {
         clearTimeout(addressTimeoutRef.current);
@@ -154,6 +168,20 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
     setError(null);
 
     try {
+      // Check authentication
+      let user = null;
+      try {
+        user = await base44.auth.me();
+      } catch (error) {
+        user = null;
+      }
+
+      if (!user) {
+        localStorage.setItem('pending_school_submission', JSON.stringify(formData));
+        await base44.auth.redirectToLogin(window.location.href);
+        return;
+      }
+
       // SECURITY: Sanitize inputs
       const cleanName = security.sanitize(formData.name);
       const cleanAddress = security.sanitize(formData.address);
