@@ -89,10 +89,12 @@ export default function AddSchoolReviewDialog({ open, onOpenChange, schoolId, ex
         if (savedData) {
           try {
             const parsed = JSON.parse(savedData);
-            setFormData(parsed);
+            // Fusionner avec les valeurs par défaut pour éviter les valeurs undefined
+            setFormData(prev => ({ ...prev, ...parsed }));
             localStorage.removeItem('pending_school_review_school_' + schoolId);
           } catch (e) {
             console.error("Failed to parse saved review", e);
+            localStorage.removeItem('pending_school_review_school_' + schoolId); // Nettoyage préventif
           }
         }
 

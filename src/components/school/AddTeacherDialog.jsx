@@ -198,10 +198,12 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
     if (savedData && open) {
       try {
         const parsed = JSON.parse(savedData);
-        setFormData(parsed);
+        // Fusionner avec les valeurs par défaut
+        setFormData(prev => ({ ...prev, ...parsed }));
         localStorage.removeItem('pending_teacher_submission_school_' + schoolId);
       } catch (e) {
         console.error("Failed to parse saved teacher submission", e);
+        localStorage.removeItem('pending_teacher_submission_school_' + schoolId);
       }
     }
   }, [open, schoolId]);

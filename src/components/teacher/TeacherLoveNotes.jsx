@@ -27,12 +27,15 @@ export default function TeacherLoveNotes({ teacherId, user }) {
       if (savedNote) {
         try {
           const parsed = JSON.parse(savedNote);
-          setNewMessage(parsed.message || "");
-          setIsAnonymous(parsed.isAnonymous || false);
-          setShowForm(true);
+          if (parsed && typeof parsed === 'object') {
+            setNewMessage(parsed.message || "");
+            setIsAnonymous(!!parsed.isAnonymous);
+            setShowForm(true);
+          }
           localStorage.removeItem('pending_love_note_teacher_' + teacherId);
         } catch (e) {
           console.error("Failed to parse saved love note", e);
+          localStorage.removeItem('pending_love_note_teacher_' + teacherId);
         }
       }
     }

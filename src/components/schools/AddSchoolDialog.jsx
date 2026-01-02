@@ -66,11 +66,13 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
     if (savedData && open) {
       try {
         const parsed = JSON.parse(savedData);
-        setFormData(parsed);
+        // Fusionner avec les valeurs par défaut
+        setFormData(prev => ({ ...prev, ...parsed }));
         // Clean up immediately after restoring to avoid re-restoring if cancelled
         localStorage.removeItem('pending_school_submission');
       } catch (e) {
         console.error("Failed to parse saved school submission", e);
+        localStorage.removeItem('pending_school_submission');
       }
     }
   }, [open]);

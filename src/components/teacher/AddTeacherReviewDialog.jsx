@@ -78,10 +78,12 @@ export default function AddTeacherReviewDialog({ open, onOpenChange, teacherId, 
         if (savedData) {
           try {
             const parsed = JSON.parse(savedData);
-            setFormData(parsed);
+            // Fusionner avec les valeurs par défaut pour éviter les valeurs undefined
+            setFormData(prev => ({ ...prev, ...parsed }));
             localStorage.removeItem('pending_teacher_review_teacher_' + teacherId);
           } catch (e) {
             console.error("Failed to parse saved teacher review", e);
+            localStorage.removeItem('pending_teacher_review_teacher_' + teacherId); // Nettoyage préventif
           }
         }
 
