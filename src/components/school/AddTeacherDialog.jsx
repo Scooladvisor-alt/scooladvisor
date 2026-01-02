@@ -7,8 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { AlertCircle, CheckCircle, Plus, ChevronDown, GripVertical } from "lucide-react";
-import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
+import { AlertCircle, CheckCircle, Plus, ChevronDown } from "lucide-react";
 
 const predefinedSubjects = [
 "Français",
@@ -126,8 +125,6 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
   const [success, setSuccess] = useState(false);
   const [showCustomSubject, setShowCustomSubject] = useState(false);
   const [showMoreAvatars, setShowMoreAvatars] = useState(false);
-  const [avatarsList, setAvatarsList] = useState(teacherAvatars);
-  const [isAdmin, setIsAdmin] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     subject: "",
@@ -135,79 +132,6 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
     photo_url: teacherAvatars.length > 0 ? teacherAvatars[0].url : "",
     is_former: false
   });
-
-  useEffect(() => {
-    loadAvatarsOrder();
-    checkAdmin();
-  }, []);
-
-  const checkAdmin = async () => {
-    try {
-      const user = await base44.auth.me();
-      setIsAdmin(user && (user.role === 'admin' || user.email === 'antownin@gmail.com'));
-    } catch (e) {
-      setIsAdmin(false);
-    }
-  };
-
-  const loadAvatarsOrder = async () => {
-    try {
-      const configs = await base44.entities.AppConfig.filter({ key: "teacher_avatars_order" });
-      if (configs.length > 0 && configs[0].value && Array.isArray(configs[0].value.order)) {
-        const orderedIds = configs[0].value.order;
-        // Reorder avatars based on saved IDs, append new ones at the end
-        const orderedAvatars = [];
-        const avatarsMap = new Map(teacherAvatars.map(a => [a.id, a]));
-        
-        orderedIds.forEach(id => {
-          if (avatarsMap.has(id)) {
-            orderedAvatars.push(avatarsMap.get(id));
-            avatarsMap.delete(id);
-          }
-        });
-        
-        // Add remaining (new) avatars
-        avatarsMap.forEach(avatar => orderedAvatars.push(avatar));
-        setAvatarsList(orderedAvatars);
-        
-        // Update selected photo if it was the default first one
-        if (formData.photo_url === teacherAvatars[0].url && orderedAvatars.length > 0) {
-           // Only change if user hasn't selected something else manually (hard to track here but ok for init)
-        }
-      }
-    } catch (error) {
-      console.error("Error loading avatars order:", error);
-    }
-  };
-
-  const onDragEnd = async (result) => {
-    if (!result.destination) return;
-
-    const items = Array.from(avatarsList);
-    const [reorderedItem] = items.splice(result.source.index, 1);
-    items.splice(result.destination.index, 0, reorderedItem);
-
-    setAvatarsList(items);
-
-    // Save new order
-    try {
-      const configs = await base44.entities.AppConfig.filter({ key: "teacher_avatars_order" });
-      const newOrder = items.map(a => a.id);
-      
-      if (configs.length > 0) {
-        await base44.entities.AppConfig.update(configs[0].id, {
-          value: { order: newOrder }
-        });
-      } else {
-        await base44.entities.AppConfig.create({
-          key: "teacher_avatars_order",
-          value: { order: newOrder }
-        });
-      }
-    } catch (error) {
-      console.error("Error saving avatars order:", error);
-    }
-  };
 
   const checkTeacherLimits = async () => {
     const user = await base44.auth.me();
@@ -511,91 +435,34 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
           }
 
           <div className="space-y-1 sm:space-y-2">
-            <div className="flex justify-between items-center">
-              <Label className="text-xs sm:text-sm">Avatar du professeur</Label>
-              {isAdmin && <span className="text-[10px] text-blue-600 font-medium">Mode Admin : Déplace les avatars pour changer l'ordre</span>}
-            </div>
-            
+            <Label className="text-xs sm:text-sm">Avatar du professeur</Label>
             <div className="w-full bg-slate-50 rounded-lg p-2 sm:p-3 border border-slate-200">
-              {avatarsList.length > 0 ? (
-                isAdmin ? (
-                  <DragDropContext onDragEnd={onDragEnd}>
-                    <Droppable droppableId="avatars-grid" direction="horizontal">
-                      {(provided) => (
-                        <div 
-                          {...provided.droppableProps}
-                          ref={provided.innerRef}
-                          className="flex flex-wrap gap-2 sm:gap-3 max-h-[300px] overflow-y-auto pr-1 p-1"
-                        >
-                          {avatarsList.map((avatar, index) => {
-                            const isSelected = formData.photo_url === avatar.url;
-                            return (
-                              <Draggable key={avatar.id} draggableId={avatar.id} index={index}>
-                                {(provided, snapshot) => (
-                                  <div
-                                    ref={provided.innerRef}
-                                    {...provided.draggableProps}
-                                    {...provided.dragHandleProps}
-                                    style={{ ...provided.draggableProps.style }}
-                                    className="relative w-[15%] min-w-[60px] flex-grow-0"
-                                  >
-                                    <button
-                                      type="button"
-                                      onClick={() => setFormData({ ...formData, photo_url: avatar.url })}
-                                      className={`relative rounded-lg transition-all overflow-hidden w-full ${
-                                        isSelected 
-                                          ? 'p-[3px] bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 shadow-md' 
-                                          : 'p-[2px] bg-slate-200 hover:bg-gradient-to-r hover:from-[#FF4D8D]/50 hover:via-purple-500/50 hover:to-blue-500/50'
-                                      } ${snapshot.isDragging ? 'opacity-50 scale-105 z-50' : ''}`}
-                                    >
-                                      <div className="absolute top-1 right-1 z-10 bg-black/20 rounded p-0.5">
-                                        <GripVertical className="w-3 h-3 text-white" />
-                                      </div>
-                                      <div className="rounded-md w-full h-full flex items-center justify-center bg-white p-1">
-                                        <img
-                                          src={avatar.url}
-                                          alt={avatar.name}
-                                          className="w-full h-10 sm:h-16 md:h-20 object-contain rounded-md" 
-                                        />
-                                      </div>
-                                    </button>
-                                  </div>
-                                )}
-                              </Draggable>
-                            );
-                          })}
-                          {provided.placeholder}
-                        </div>
-                      )}
-                    </Droppable>
-                  </DragDropContext>
-                ) : (
-                  <div className="grid grid-cols-6 gap-1.5 sm:gap-3 max-h-[300px] overflow-y-auto pr-1">
-                    {avatarsList.map((avatar) => {
-                      const isSelected = formData.photo_url === avatar.url;
-                      return (
-                        <button
-                          key={avatar.id}
-                          type="button"
-                          onClick={() => setFormData({ ...formData, photo_url: avatar.url })}
-                          className={`relative rounded-lg transition-all overflow-hidden ${
-                            isSelected 
-                              ? 'p-[3px] bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 shadow-md' 
-                              : 'p-[2px] bg-slate-200 hover:bg-gradient-to-r hover:from-[#FF4D8D]/50 hover:via-purple-500/50 hover:to-blue-500/50'
-                          }`}
-                        >
-                          <div className="rounded-md w-full h-full flex items-center justify-center bg-white p-1">
-                            <img
-                              src={avatar.url}
-                              alt={avatar.name}
-                              className="w-full h-10 sm:h-16 md:h-20 object-contain rounded-md" 
-                            />
-                          </div>
-                        </button>
-                      );
-                    })}
-                  </div>
-                )
+              {teacherAvatars.length > 0 ? (
+                <div className="grid grid-cols-6 gap-1.5 sm:gap-3 max-h-[300px] overflow-y-auto pr-1">
+                  {teacherAvatars.map((avatar) => {
+                const isSelected = formData.photo_url === avatar.url;
+                return (
+                  <button
+                    key={avatar.id}
+                    type="button"
+                    onClick={() => setFormData({ ...formData, photo_url: avatar.url })}
+                    className={`relative rounded-lg transition-all overflow-hidden ${
+                      isSelected 
+                        ? 'p-[3px] bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 shadow-md' 
+                        : 'p-[2px] bg-slate-200 hover:bg-gradient-to-r hover:from-[#FF4D8D]/50 hover:via-purple-500/50 hover:to-blue-500/50'
+                    }`}
+                  >
+                    <div className="rounded-md w-full h-full flex items-center justify-center bg-white p-1">
+                      <img
+                        src={avatar.url}
+                        alt={avatar.name}
+                        className="w-full h-10 sm:h-16 md:h-20 object-contain rounded-md" 
+                      />
+                    </div>
+                  </button>
+                );
+              })}
+                </div>
               ) : (
                 <div className="text-center py-6 text-slate-500 text-xs sm:text-sm italic">
                   Aucun avatar disponible pour le moment.
