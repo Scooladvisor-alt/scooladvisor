@@ -184,29 +184,6 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
     }
   };
 
-  const moveAllToPool = async () => {
-    const all = [...gridAvatars, ...poolAvatars];
-    setGridAvatars([]);
-    setPoolAvatars(all);
-    
-    // Save empty order
-    try {
-      const configs = await base44.entities.AppConfig.filter({ key: "teacher_avatars_order" });
-      if (configs.length > 0) {
-        await base44.entities.AppConfig.update(configs[0].id, {
-          value: { order: [] }
-        });
-      } else {
-         await base44.entities.AppConfig.create({
-          key: "teacher_avatars_order",
-          value: { order: [] }
-        });
-      }
-    } catch (error) {
-      console.error("Error clearing avatars order:", error);
-    }
-  };
-
   const onDragEnd = async (result) => {
     const { source, destination } = result;
 
@@ -575,18 +552,7 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
                     <div className="space-y-4">
                       {/* ZONE DE GRILLE (DESTINATION) */}
                       <div>
-                        <div className="flex justify-between items-end mb-1">
-                          <Label className="text-xs text-slate-500 block">Votre sélection (Ordre affiché)</Label>
-                          <Button 
-                            type="button" 
-                            variant="ghost" 
-                            size="sm" 
-                            onClick={moveAllToPool} 
-                            className="h-5 text-[10px] text-red-500 hover:text-red-700 hover:bg-red-50 px-2"
-                          >
-                            Tout retirer vers la réserve
-                          </Button>
-                        </div>
+                        <Label className="text-xs text-slate-500 mb-1 block">Votre sélection (Ordre affiché)</Label>
                         <Droppable droppableId="grid" direction="horizontal">
                           {(provided, snapshot) => (
                             <div 
