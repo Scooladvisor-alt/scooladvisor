@@ -525,7 +525,7 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
                         <div 
                           {...provided.droppableProps}
                           ref={provided.innerRef}
-                          className="flex flex-wrap max-h-[300px] overflow-y-auto p-1"
+                          className="flex flex-wrap gap-2 sm:gap-3 max-h-[300px] overflow-y-auto pr-1 p-1"
                         >
                           {avatarsList.map((avatar, index) => {
                             const isSelected = formData.photo_url === avatar.url;
@@ -537,7 +537,7 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
                                     {...provided.draggableProps}
                                     {...provided.dragHandleProps}
                                     style={{ ...provided.draggableProps.style }}
-                                    className="w-1/3 sm:w-1/4 md:w-1/6 p-1 sm:p-2"
+                                    className="relative w-[15%] min-w-[60px] flex-grow-0"
                                   >
                                     <button
                                       type="button"
