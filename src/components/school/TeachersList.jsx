@@ -42,7 +42,7 @@ export default function TeachersList({ schoolId, onAddTeacher }) {
     }
   }, [schoolId]);
 
-  const podiumIconColors = ['text-yellow-500', 'text-slate-400', 'text-amber-700'];
+  const podiumIconColors = ['text-yellow-500', 'text-slate-400', 'text-orange-600'];
 
   const filteredTeachers = teachers.filter((teacher) =>
   teacher.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
