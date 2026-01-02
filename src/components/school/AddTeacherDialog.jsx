@@ -525,7 +525,7 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
                         <div 
                           {...provided.droppableProps}
                           ref={provided.innerRef}
-                          className="flex flex-wrap w-full p-1"
+                          className="flex flex-wrap content-start p-1 min-h-[200px]"
                         >
                           {avatarsList.map((avatar, index) => {
                             const isSelected = formData.photo_url === avatar.url;
@@ -536,21 +536,17 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
                                     ref={provided.innerRef}
                                     {...provided.draggableProps}
                                     {...provided.dragHandleProps}
-                                    style={{ 
-                                      ...provided.draggableProps.style,
-                                      left: 'auto', 
-                                      top: 'auto'
-                                    }}
-                                    className="w-1/6 p-1 sm:p-2"
+                                    style={{ ...provided.draggableProps.style }}
+                                    className="w-[16.66%] p-1 sm:p-1.5"
                                   >
                                     <button
                                       type="button"
                                       onClick={() => setFormData({ ...formData, photo_url: avatar.url })}
-                                      className={`relative rounded-lg transition-all overflow-hidden w-full aspect-square ${
+                                      className={`relative rounded-lg transition-all overflow-hidden w-full ${
                                         isSelected 
                                           ? 'p-[3px] bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 shadow-md' 
                                           : 'p-[2px] bg-slate-200 hover:bg-gradient-to-r hover:from-[#FF4D8D]/50 hover:via-purple-500/50 hover:to-blue-500/50'
-                                      } ${snapshot.isDragging ? 'opacity-50 scale-105 z-50 shadow-2xl ring-2 ring-purple-500' : ''}`}
+                                      } ${snapshot.isDragging ? 'opacity-50 scale-105 z-50' : ''}`}
                                     >
                                       <div className="absolute top-1 right-1 z-10 bg-black/20 rounded p-0.5">
                                         <GripVertical className="w-3 h-3 text-white" />
@@ -559,7 +555,7 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
                                         <img
                                           src={avatar.url}
                                           alt={avatar.name}
-                                          className="w-full h-full object-contain rounded-md" 
+                                          className="w-full h-10 sm:h-16 md:h-20 object-contain rounded-md" 
                                         />
                                       </div>
                                     </button>
