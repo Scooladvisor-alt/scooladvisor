@@ -525,7 +525,7 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
                         <div 
                           {...provided.droppableProps}
                           ref={provided.innerRef}
-                          className="flex flex-wrap gap-2 p-2 max-h-[400px] overflow-y-auto bg-slate-100/50 rounded-lg min-h-[200px]"
+                          className="flex flex-wrap gap-2 sm:gap-3 max-h-[300px] overflow-y-auto pr-1 p-1"
                         >
                           {avatarsList.map((avatar, index) => {
                             const isSelected = formData.photo_url === avatar.url;
@@ -536,35 +536,27 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
                                     ref={provided.innerRef}
                                     {...provided.draggableProps}
                                     {...provided.dragHandleProps}
-                                    style={{ 
-                                      ...provided.draggableProps.style,
-                                      width: '15.5%', // Fix width for grid-like behavior (approx 6 cols)
-                                      margin: '0.5%', 
-                                    }}
-                                    className={`relative flex-shrink-0 aspect-square ${snapshot.isDragging ? 'z-50 shadow-2xl scale-110 ring-2 ring-purple-500 rounded-xl' : ''}`}
+                                    style={{ ...provided.draggableProps.style }}
+                                    className="relative w-[15%] min-w-[60px] flex-grow-0"
                                   >
                                     <button
                                       type="button"
                                       onClick={() => setFormData({ ...formData, photo_url: avatar.url })}
-                                      className={`w-full h-full relative rounded-xl transition-all overflow-hidden group ${
+                                      className={`relative rounded-lg transition-all overflow-hidden w-full ${
                                         isSelected 
                                           ? 'p-[3px] bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 shadow-md' 
-                                          : 'p-[2px] bg-white border-2 border-slate-200 hover:border-purple-300'
-                                      } ${snapshot.isDragging ? 'bg-white' : ''}`}
+                                          : 'p-[2px] bg-slate-200 hover:bg-gradient-to-r hover:from-[#FF4D8D]/50 hover:via-purple-500/50 hover:to-blue-500/50'
+                                      } ${snapshot.isDragging ? 'opacity-50 scale-105 z-50' : ''}`}
                                     >
-                                      <div className="absolute top-1 right-1 z-20 bg-black/30 rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity cursor-grab active:cursor-grabbing">
+                                      <div className="absolute top-1 right-1 z-10 bg-black/20 rounded p-0.5">
                                         <GripVertical className="w-3 h-3 text-white" />
                                       </div>
-                                      <div className="rounded-lg w-full h-full flex items-center justify-center bg-white overflow-hidden relative">
+                                      <div className="rounded-md w-full h-full flex items-center justify-center bg-white p-1">
                                         <img
                                           src={avatar.url}
                                           alt={avatar.name}
-                                          className="w-full h-full object-cover transform hover:scale-110 transition-transform duration-300"
-                                          draggable={false}
+                                          className="w-full h-10 sm:h-16 md:h-20 object-contain rounded-md" 
                                         />
-                                        {isSelected && (
-                                          <div className="absolute inset-0 bg-purple-500/10 z-10" />
-                                        )}
                                       </div>
                                     </button>
                                   </div>
