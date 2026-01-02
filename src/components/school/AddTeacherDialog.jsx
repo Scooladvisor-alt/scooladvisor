@@ -126,8 +126,7 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
   const [success, setSuccess] = useState(false);
   const [showCustomSubject, setShowCustomSubject] = useState(false);
   const [showMoreAvatars, setShowMoreAvatars] = useState(false);
-  const [gridAvatars, setGridAvatars] = useState([]);
-  const [poolAvatars, setPoolAvatars] = useState([]);
+  const [avatarsList, setAvatarsList] = useState(teacherAvatars);
   const [isAdmin, setIsAdmin] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
@@ -154,83 +153,55 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
   const loadAvatarsOrder = async () => {
     try {
       const configs = await base44.entities.AppConfig.filter({ key: "teacher_avatars_order" });
-      const avatarsMap = new Map(teacherAvatars.map(a => [a.id, a]));
-      let initialGrid = [];
-      let initialPool = [];
-
       if (configs.length > 0 && configs[0].value && Array.isArray(configs[0].value.order)) {
         const orderedIds = configs[0].value.order;
+        // Reorder avatars based on saved IDs, append new ones at the end
+        const orderedAvatars = [];
+        const avatarsMap = new Map(teacherAvatars.map(a => [a.id, a]));
         
         orderedIds.forEach(id => {
           if (avatarsMap.has(id)) {
-            initialGrid.push(avatarsMap.get(id));
+            orderedAvatars.push(avatarsMap.get(id));
             avatarsMap.delete(id);
           }
         });
         
-        // Remaining avatars go to pool
-        avatarsMap.forEach(avatar => initialPool.push(avatar));
-      } else {
-        // No config: All avatars in pool initially (as requested)
-        initialPool = [...teacherAvatars];
+        // Add remaining (new) avatars
+        avatarsMap.forEach(avatar => orderedAvatars.push(avatar));
+        setAvatarsList(orderedAvatars);
+        
+        // Update selected photo if it was the default first one
+        if (formData.photo_url === teacherAvatars[0].url && orderedAvatars.length > 0) {
+           // Only change if user hasn't selected something else manually (hard to track here but ok for init)
+        }
       }
-
-      setGridAvatars(initialGrid);
-      setPoolAvatars(initialPool);
-
     } catch (error) {
       console.error("Error loading avatars order:", error);
-      setPoolAvatars(teacherAvatars); // Fallback
     }
   };
 
   const onDragEnd = async (result) => {
-    const { source, destination } = result;
+    if (!result.destination) return;
 
-    // Dropped outside
-    if (!destination) return;
+    const items = Array.from(avatarsList);
+    const [reorderedItem] = items.splice(result.source.index, 1);
+    items.splice(result.destination.index, 0, reorderedItem);
 
-    // No movement
-    if (source.droppableId === destination.droppableId && source.index === destination.index) return;
+    setAvatarsList(items);
 
-    let newGrid = Array.from(gridAvatars);
-    let newPool = Array.from(poolAvatars);
-
-    let movedItem;
-
-    // Remove from source
-    if (source.droppableId === 'grid') {
-      [movedItem] = newGrid.splice(source.index, 1);
-    } else {
-      [movedItem] = newPool.splice(source.index, 1);
-    }
-
-    // Add to destination
-    if (destination.droppableId === 'grid') {
-      newGrid.splice(destination.index, 0, movedItem);
-    } else {
-      newPool.splice(destination.index, 0, movedItem);
-    }
-
-    setGridAvatars(newGrid);
-    setPoolAvatars(newPool);
-
-    // Save new order (Grid + Pool concatenated)
-    // IMPORTANT: Users see Grid followed by Pool in standard view (or just Grid if we want to hide Pool?)
-    // Assuming we want to save the "Active" order as Grid items first.
-    const fullOrder = [...newGrid, ...newPool].map(a => a.id);
-
+    // Save new order
     try {
       const configs = await base44.entities.AppConfig.filter({ key: "teacher_avatars_order" });
+      const newOrder = items.map(a => a.id);
       
       if (configs.length > 0) {
         await base44.entities.AppConfig.update(configs[0].id, {
-          value: { order: fullOrder }
+          value: { order: newOrder }
         });
       } else {
         await base44.entities.AppConfig.create({
           key: "teacher_avatars_order",
-          value: { order: fullOrder }
+          value: { order: newOrder }
         });
       }
     } catch (error) {
@@ -546,126 +517,61 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
             </div>
             
             <div className="w-full bg-slate-50 rounded-lg p-2 sm:p-3 border border-slate-200">
-              {teacherAvatars.length > 0 ? (
+              {avatarsList.length > 0 ? (
                 isAdmin ? (
                   <DragDropContext onDragEnd={onDragEnd}>
-                    <div className="space-y-4">
-                      {/* ZONE DE GRILLE (DESTINATION) */}
-                      <div>
-                        <Label className="text-xs text-slate-500 mb-1 block">Votre sélection (Ordre affiché)</Label>
-                        <Droppable droppableId="grid" direction="horizontal">
-                          {(provided, snapshot) => (
-                            <div 
-                              {...provided.droppableProps}
-                              ref={provided.innerRef}
-                              className={`grid grid-cols-6 gap-2 min-h-[100px] p-2 rounded-lg transition-colors ${snapshot.isDraggingOver ? 'bg-blue-50 border-blue-200 border-dashed border-2' : 'bg-white border border-slate-100'}`}
-                            >
-                              {gridAvatars.map((avatar, index) => {
-                                const isSelected = formData.photo_url === avatar.url;
-                                return (
-                                  <Draggable key={avatar.id} draggableId={avatar.id} index={index}>
-                                    {(provided, snapshot) => (
-                                      <div
-                                        ref={provided.innerRef}
-                                        {...provided.draggableProps}
-                                        {...provided.dragHandleProps}
-                                        style={{ ...provided.draggableProps.style }}
-                                        className="relative"
-                                      >
-                                        <button
-                                          type="button"
-                                          onClick={() => setFormData({ ...formData, photo_url: avatar.url })}
-                                          className={`relative rounded-lg transition-all overflow-hidden w-full ${
-                                            isSelected 
-                                              ? 'p-[3px] bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 shadow-md' 
-                                              : 'p-[2px] bg-slate-200 hover:bg-gradient-to-r hover:from-[#FF4D8D]/50 hover:via-purple-500/50 hover:to-blue-500/50'
-                                          } ${snapshot.isDragging ? 'opacity-50 scale-105 z-50' : ''}`}
-                                        >
-                                          <div className="absolute top-1 right-1 z-10 bg-black/20 rounded p-0.5 cursor-grab">
-                                            <GripVertical className="w-3 h-3 text-white" />
-                                          </div>
-                                          <div className="rounded-md w-full h-full flex items-center justify-center bg-white p-1">
-                                            <img
-                                              src={avatar.url}
-                                              alt={avatar.name}
-                                              className="w-full h-10 sm:h-16 md:h-20 object-contain rounded-md" 
-                                            />
-                                          </div>
-                                        </button>
+                    <Droppable droppableId="avatars-grid" direction="horizontal">
+                      {(provided) => (
+                        <div 
+                          {...provided.droppableProps}
+                          ref={provided.innerRef}
+                          className="flex flex-wrap gap-2 sm:gap-3 max-h-[300px] overflow-y-auto pr-1 p-1"
+                        >
+                          {avatarsList.map((avatar, index) => {
+                            const isSelected = formData.photo_url === avatar.url;
+                            return (
+                              <Draggable key={avatar.id} draggableId={avatar.id} index={index}>
+                                {(provided, snapshot) => (
+                                  <div
+                                    ref={provided.innerRef}
+                                    {...provided.draggableProps}
+                                    {...provided.dragHandleProps}
+                                    style={{ ...provided.draggableProps.style }}
+                                    className="relative w-[15%] min-w-[60px] flex-grow-0"
+                                  >
+                                    <button
+                                      type="button"
+                                      onClick={() => setFormData({ ...formData, photo_url: avatar.url })}
+                                      className={`relative rounded-lg transition-all overflow-hidden w-full ${
+                                        isSelected 
+                                          ? 'p-[3px] bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 shadow-md' 
+                                          : 'p-[2px] bg-slate-200 hover:bg-gradient-to-r hover:from-[#FF4D8D]/50 hover:via-purple-500/50 hover:to-blue-500/50'
+                                      } ${snapshot.isDragging ? 'opacity-50 scale-105 z-50' : ''}`}
+                                    >
+                                      <div className="absolute top-1 right-1 z-10 bg-black/20 rounded p-0.5">
+                                        <GripVertical className="w-3 h-3 text-white" />
                                       </div>
-                                    )}
-                                  </Draggable>
-                                );
-                              })}
-                              {provided.placeholder}
-                              {gridAvatars.length === 0 && (
-                                <div className="col-span-6 flex items-center justify-center text-slate-400 text-xs italic h-20 border-2 border-dashed border-slate-200 rounded-lg">
-                                  Glissez les avatars ici pour les ordonner
-                                </div>
-                              )}
-                            </div>
-                          )}
-                        </Droppable>
-                      </div>
-
-                      {/* ZONE DE RESERVE (SOURCE) */}
-                      <div>
-                        <Label className="text-xs text-slate-500 mb-1 block">Réserve (Tous les avatars)</Label>
-                        <Droppable droppableId="pool" direction="horizontal">
-                          {(provided, snapshot) => (
-                            <div 
-                              {...provided.droppableProps}
-                              ref={provided.innerRef}
-                              className={`flex gap-2 overflow-x-auto p-2 rounded-lg min-h-[80px] ${snapshot.isDraggingOver ? 'bg-slate-100' : 'bg-slate-50'}`}
-                            >
-                              {poolAvatars.map((avatar, index) => {
-                                const isSelected = formData.photo_url === avatar.url;
-                                return (
-                                  <Draggable key={avatar.id} draggableId={avatar.id} index={index}>
-                                    {(provided, snapshot) => (
-                                      <div
-                                        ref={provided.innerRef}
-                                        {...provided.draggableProps}
-                                        {...provided.dragHandleProps}
-                                        style={{ ...provided.draggableProps.style }}
-                                        className="relative min-w-[60px] w-16 sm:w-20"
-                                      >
-                                        <button
-                                          type="button"
-                                          onClick={() => setFormData({ ...formData, photo_url: avatar.url })}
-                                          className={`relative rounded-lg transition-all overflow-hidden w-full ${
-                                            isSelected 
-                                              ? 'p-[3px] bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 shadow-md' 
-                                              : 'p-[2px] bg-slate-200 hover:bg-gradient-to-r hover:from-[#FF4D8D]/50 hover:via-purple-500/50 hover:to-blue-500/50'
-                                          } ${snapshot.isDragging ? 'opacity-50 scale-105 z-50' : ''}`}
-                                        >
-                                          <div className="absolute top-1 right-1 z-10 bg-black/20 rounded p-0.5 cursor-grab">
-                                            <GripVertical className="w-3 h-3 text-white" />
-                                          </div>
-                                          <div className="rounded-md w-full h-full flex items-center justify-center bg-white p-1">
-                                            <img
-                                              src={avatar.url}
-                                              alt={avatar.name}
-                                              className="w-full h-10 sm:h-16 md:h-20 object-contain rounded-md" 
-                                            />
-                                          </div>
-                                        </button>
+                                      <div className="rounded-md w-full h-full flex items-center justify-center bg-white p-1">
+                                        <img
+                                          src={avatar.url}
+                                          alt={avatar.name}
+                                          className="w-full h-10 sm:h-16 md:h-20 object-contain rounded-md" 
+                                        />
                                       </div>
-                                    )}
-                                  </Draggable>
-                                );
-                              })}
-                              {provided.placeholder}
-                            </div>
-                          )}
-                        </Droppable>
-                      </div>
-                    </div>
+                                    </button>
+                                  </div>
+                                )}
+                              </Draggable>
+                            );
+                          })}
+                          {provided.placeholder}
+                        </div>
+                      )}
+                    </Droppable>
                   </DragDropContext>
                 ) : (
-                  // MODE UTILISATEUR NORMAL (Affiche Grid + Pool combinés)
                   <div className="grid grid-cols-6 gap-1.5 sm:gap-3 max-h-[300px] overflow-y-auto pr-1">
-                    {[...gridAvatars, ...poolAvatars].map((avatar) => {
+                    {avatarsList.map((avatar) => {
                       const isSelected = formData.photo_url === avatar.url;
                       return (
                         <button
