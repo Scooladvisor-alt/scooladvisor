@@ -68,9 +68,8 @@ export default function AddSchoolReviewDialog({ open, onOpenChange, schoolId, ex
             has_network: existingReview.has_network || false,
             comment: existingReview.comment,
             is_anonymous: existingReview.is_anonymous,
-            is_former_student: existingReview.is_former_student || false,
             certification: true
-            });
+          });
         }
       } else {
         setFormData({
@@ -83,7 +82,6 @@ export default function AddSchoolReviewDialog({ open, onOpenChange, schoolId, ex
           has_network: false,
           comment: "",
           is_anonymous: false,
-          is_former_student: false,
           certification: false
         });
         
@@ -356,7 +354,6 @@ rejected → si le message enfreint les règles ci-dessus"
           rating: totalRating,
           comment: cleanComment,
           is_anonymous: formData.is_anonymous,
-          is_former_student: formData.is_former_student,
           edit_count: (existingReview.edit_count || 0) + 1,
           author_name: user.full_name,
           author_avatar: user.profile_avatar,
@@ -393,7 +390,6 @@ rejected → si le message enfreint les règles ci-dessus"
           rating: totalRating,
           comment: cleanComment,
           is_anonymous: formData.is_anonymous,
-          is_former_student: formData.is_former_student,
           status: "published",
           report_count: 0,
           like_count: 0,
@@ -632,27 +628,11 @@ rejected → si le message enfreint les règles ci-dessus"
                   <span className="text-[10px] sm:text-xs font-bold bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
                     Anonyme {formData.is_anonymous && <span className="text-blue-500">✓</span>}
                   </span>
-                  </label>
-
-                  <label 
-                  htmlFor="is_former_student_inline"
-                  className="flex items-center gap-1.5 cursor-pointer group"
-                  >
-                  <Checkbox
-                    id="is_former_student_inline"
-                    checked={formData.is_former_student}
-                    onCheckedChange={(checked) => setFormData({ ...formData, is_former_student: checked })}
-                    className={`h-3.5 w-3.5 ${formData.is_former_student ? 'bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 border-transparent text-white' : ''}`}
-                    disabled={!canEdit} />
-                  <span className="text-[10px] sm:text-xs font-bold bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
-                    Ancien élève {formData.is_former_student && <span className="text-blue-500">✓</span>}
-                  </span>
-                  </label>
-
-                  <span className={`text-[10px] ${formData.comment.length >= MAX_COMMENT_LENGTH ? 'text-red-500 font-medium' : 'text-slate-400'}`}>
+                </label>
+                <span className={`text-[10px] ${formData.comment.length >= MAX_COMMENT_LENGTH ? 'text-red-500 font-medium' : 'text-slate-400'}`}>
                   {formData.comment.length}/{MAX_COMMENT_LENGTH}
-                  </span>
-                  </div>
+                </span>
+              </div>
             </div>
           </div>
           
