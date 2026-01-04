@@ -72,12 +72,35 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
       const skip = reset ? 0 : reviews.length;
       
       // Utilisation de skip pour la pagination
-      const newReviews = await TeacherReview.filter(
+      // Fetch published reviews OR rejected reviews by current user
+      // Note: Filtering complex OR conditions in one go is limited, so we fetch published
+      // and we could try to fetch user's rejected ones separately if needed, 
+      // but simpler to fetch broader list if list is small, OR make 2 queries.
+      // Strategy: Fetch published normally. 
+      // Also fetch "rejected" reviews made by "me".
+      
+      const publishedReviews = await TeacherReview.filter(
         { teacher_id: teacherId, status: "published" }, 
         "-created_date", 
         limit, 
         skip
       );
+
+      let myRejectedReviews = [];
+      if (user && reset) { // Only load rejected on first load to avoid pagination mess
+         myRejectedReviews = await TeacherReview.filter(
+            { teacher_id: teacherId, status: "rejected", created_by: user.email },
+            "-created_date"
+         );
+      }
+
+      // Merge and sort
+      let newReviews = [...publishedReviews, ...myRejectedReviews];
+      // Sort by date desc
+      newReviews.sort((a, b) => new Date(b.created_date) - new Date(a.created_date));
+      
+      // Deduplicate by ID just in case
+      newReviews = newReviews.filter((v, i, a) => a.findIndex(t => t.id === v.id) === i);
 
       if (newReviews.length < limit) {
         setHasMoreReviews(false);
@@ -338,11 +361,23 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
               const rawAvatar = review.author_avatar || reviewUser?.profile_avatar;
               const avatarUrl = rawAvatar && rawAvatar !== 'letter' ? getAvatarUrl(rawAvatar) : null;
 
+              const isRejected = review.status === 'rejected';
+              
               return (
                 <div
                   key={review.id}
-                  className="group relative p-5 rounded-2xl border border-slate-100 bg-white shadow-[0_2px_8px_-2px_rgba(0,0,0,0.05)] hover:shadow-[0_8px_16px_-4px_rgba(0,0,0,0.08)] transition-all duration-300 hover:border-purple-100"
+                  className={`group relative p-5 rounded-2xl border transition-all duration-300
+                    ${isRejected ? 'bg-slate-50 border-slate-200 opacity-75 grayscale-[0.5]' : 'bg-white border-slate-100 hover:border-purple-100 shadow-[0_2px_8px_-2px_rgba(0,0,0,0.05)] hover:shadow-[0_8px_16px_-4px_rgba(0,0,0,0.08)]'}
+                  `}
                 >
+                  {isRejected && (
+                    <div className="mb-3 p-2 bg-red-50 border border-red-100 rounded-lg flex items-center gap-2">
+                        <AlertCircle className="w-4 h-4 text-red-500" />
+                        <span className="text-xs font-medium text-red-700">
+                            Visible uniquement par vous (contenu refusé par la modération)
+                        </span>
+                    </div>
+                  )}
                   {/* Header */}
                   <div className="flex justify-between items-start gap-4">
                     <div className="flex gap-3">

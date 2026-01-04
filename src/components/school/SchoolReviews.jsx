@@ -48,8 +48,17 @@ export default function SchoolReviews({ schoolId, user, onReload, onEditReview, 
     const loadReviews = async () => {
       setLoading(true);
       try {
-        const reviewsData = await base44.entities.SchoolReview.filter({ school_id: schoolId, status: "published" }, "-created_date");
-        setReviews(reviewsData);
+        const publishedReviews = await base44.entities.SchoolReview.filter({ school_id: schoolId, status: "published" }, "-created_date");
+        
+        let myRejectedReviews = [];
+        if (user) {
+            myRejectedReviews = await base44.entities.SchoolReview.filter({ school_id: schoolId, status: "rejected", created_by: user.email }, "-created_date");
+        }
+
+        const allReviews = [...publishedReviews, ...myRejectedReviews];
+        allReviews.sort((a, b) => new Date(b.created_date) - new Date(a.created_date));
+        
+        setReviews(allReviews);
       } catch (error) {
         console.error("Error loading school reviews:", error);
         setReviews([]);
@@ -380,8 +389,14 @@ Rédige maintenant ton résumé façon "L'avis de Satoshi" en 3 phrases max.`;
               {sortedReviews.slice(0, 2).map((review) => {
               const avatarUrl = review.author_avatar && review.author_avatar !== 'letter' ? getAvatarUrl(review.author_avatar) : null;
 
+              const isRejected = review.status === 'rejected';
               return (
-                <div key={review.id} className="p-2 rounded-lg border border-slate-200 bg-white space-y-1.5">
+                <div key={review.id} className={`p-2 rounded-lg border space-y-1.5 ${isRejected ? 'bg-slate-100 border-slate-300 opacity-70' : 'bg-white border-slate-200'}`}>
+                    {isRejected && (
+                        <div className="text-[10px] text-red-600 bg-red-50 px-2 py-1 rounded border border-red-100 mb-1 flex items-center gap-1">
+                            <AlertCircle className="w-3 h-3" /> Visible uniquement par vous (refusé)
+                        </div>
+                    )}
                     <div className="flex items-start justify-between">
                       <div className="flex items-center gap-2 sm:gap-3 flex-1">
                         <Avatar className="w-8 h-8 sm:w-10 sm:h-10 border-2 border-slate-100">

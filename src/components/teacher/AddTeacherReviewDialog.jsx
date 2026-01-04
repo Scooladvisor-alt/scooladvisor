@@ -315,38 +315,7 @@ Réponds UNIQUEMENT par "approved" ou "rejected".`,
           return;
         }
 
-        const tempReviewForModeration = { comment: formData.comment };
-        const moderationResult = await sendToModerationWebhook(tempReviewForModeration, true);
-
-        if (moderationResult === 'rejected') {
-          setError("❌ Votre message ne respecte pas les règles de la communauté.");
-          
-          try {
-            if (user.email !== 'antownin@gmail.com') {
-              const violationCount = (user.violation_count || 0) + 1;
-              await base44.auth.updateMe({ violation_count: violationCount });
-
-              await base44.entities.Notification.create({
-                user_email: user.email,
-                title: "Modification d'avis refusée",
-                message: `Votre tentative de modification a été refusée par notre modération. ${violationCount >= 3 ? 'Votre compte a été banni.' : `Attention : ${3 - violationCount} avertissement(s) restant(s) avant bannissement.`}`,
-                type: "report",
-                is_read: false
-              });
-
-              if (violationCount >= 3) {
-                await base44.auth.updateMe({ is_banned: true });
-                setTimeout(() => window.location.reload(), 4000);
-              }
-            }
-          } catch (err) {
-            console.error("Error handling violation:", err);
-          }
-          
-          setLoading(false);
-          return;
-        }
-
+        // Update immediately
         const updatedReview = await base44.entities.TeacherReview.update(existingReview.id, {
           workload: formData.workload,
           friendliness: formData.friendliness,
@@ -357,11 +326,24 @@ Réponds UNIQUEMENT par "approved" ou "rejected".`,
           is_anonymous: formData.is_anonymous,
           edit_count: (existingReview.edit_count || 0) + 1,
           author_name: user.full_name,
-          author_avatar: user.profile_avatar
+          author_avatar: user.profile_avatar,
+          status: 'published' // Reset status to published on edit until moderation checks it
         });
+
         if (setExistingReview) {
-          setExistingReview(updatedReview); // Update parent's existingReview state
+          setExistingReview(updatedReview);
         }
+
+        // Background moderation
+        import("@/functions/moderateContent").then(({ moderateContent }) => {
+             moderateContent({
+                type: 'teacher_review',
+                id: existingReview.id,
+                text: cleanComment,
+                userId: user.id,
+                userEmail: user.email
+             }).catch(console.error);
+        });
 
 
       } else {
@@ -376,7 +358,7 @@ Réponds UNIQUEMENT par "approved" ou "rejected".`,
           return;
         }
 
-        // Optimistic UI: Create immediately
+        // Create immediately with status published
         const newReview = await base44.entities.TeacherReview.create({
           teacher_id: teacherId,
           workload: formData.workload,
@@ -395,17 +377,14 @@ Réponds UNIQUEMENT par "approved" ou "rejected".`,
         });
 
         // Background Moderation
-        base44.functions.invoke('moderateContent', {
-            text: cleanComment,
-            type: 'teacher_review',
-            id: newReview.id,
-            userId: user.id,
-            userEmail: user.email
-        }).then((res) => {
-            if (res.data && res.data.allowed === false) {
-                console.log("Teacher review rejected in background");
-                // The backend function handles logic
-            }
+        import("@/functions/moderateContent").then(({ moderateContent }) => {
+             moderateContent({
+                type: 'teacher_review',
+                id: newReview.id,
+                text: cleanComment,
+                userId: user.id,
+                userEmail: user.email
+             }).catch(console.error);
         });
       }
 

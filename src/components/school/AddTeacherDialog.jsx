@@ -265,22 +265,7 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
     }
 
     try {
-      const tempTeacher = {
-        name: cleanName,
-        subject: cleanSubject,
-        school_id: schoolId,
-        created_by: limitCheck.userEmail,
-        id: 'temp-' + Date.now()
-      };
-
-      const isApproved = await sendToModerationWebhook(tempTeacher);
-
-      if (!isApproved) {
-        setError("Cette demande d'ajout de professeur a été refusée par la modération. Merci de vérifier les informations.");
-        setLoading(false);
-        return;
-      }
-
+      // Optimistic creation with approved status
       const newTeacher = await base44.entities.Teacher.create({
         school_id: schoolId,
         name: cleanName,
@@ -295,6 +280,17 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
         review_count: 0,
         status_report_count: 0,
         is_former: formData.is_former
+      });
+
+      // Background moderation
+      import("@/functions/moderateContent").then(({ moderateContent }) => {
+           moderateContent({
+              type: 'teacher_creation',
+              id: newTeacher.id,
+              text: { name: cleanName, subject: cleanSubject },
+              userId: user.id,
+              userEmail: user.email
+           }).catch(console.error);
       });
 
       setSuccess(true);
