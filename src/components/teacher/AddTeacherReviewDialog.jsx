@@ -13,6 +13,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AlertCircle, CheckCircle, Star, Heart, Brain, FileText, BookOpen } from "lucide-react";
 import { toast } from "sonner";
+import { moderateContent } from "@/functions/moderateContent";
 
 export default function AddTeacherReviewDialog({ open, onOpenChange, teacherId, existingReview, setExistingReview, onSuccess }) {
   const [loading, setLoading] = useState(false);
@@ -335,15 +336,13 @@ Réponds UNIQUEMENT par "approved" ou "rejected".`,
         }
 
         // Background moderation
-        import("@/functions/moderateContent").then(({ moderateContent }) => {
-             moderateContent({
-                type: 'teacher_review',
-                id: existingReview.id,
-                text: cleanComment,
-                userId: user.id,
-                userEmail: user.email
-             }).catch(console.error);
-        });
+        moderateContent({
+          type: 'teacher_review',
+          id: existingReview.id,
+          text: cleanComment,
+          userId: user.id,
+          userEmail: user.email
+        }).catch(console.error);
 
 
       } else {
@@ -377,15 +376,13 @@ Réponds UNIQUEMENT par "approved" ou "rejected".`,
         });
 
         // Background Moderation
-        import("@/functions/moderateContent").then(({ moderateContent }) => {
-             moderateContent({
-                type: 'teacher_review',
-                id: newReview.id,
-                text: cleanComment,
-                userId: user.id,
-                userEmail: user.email
-             }).catch(console.error);
-        });
+        moderateContent({
+          type: 'teacher_review',
+          id: newReview.id,
+          text: cleanComment,
+          userId: user.id,
+          userEmail: user.email
+        }).catch(console.error);
       }
 
       await updateTeacherStats(teacherId);

@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AlertCircle, CheckCircle, Plus, ChevronDown } from "lucide-react";
+import { moderateContent } from "@/functions/moderateContent";
 
 const predefinedSubjects = [
 "Français",
@@ -283,15 +284,13 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
       });
 
       // Background moderation
-      import("@/functions/moderateContent").then(({ moderateContent }) => {
-           moderateContent({
-              type: 'teacher_creation',
-              id: newTeacher.id,
-              text: { name: cleanName, subject: cleanSubject },
-              userId: user.id,
-              userEmail: user.email
-           }).catch(console.error);
-      });
+      moderateContent({
+        type: 'teacher_creation',
+        id: newTeacher.id,
+        text: { name: cleanName, subject: cleanSubject },
+        userId: user.id,
+        userEmail: user.email
+      }).catch(console.error);
 
       setSuccess(true);
       setTimeout(() => {

@@ -12,6 +12,7 @@ import { Slider } from "@/components/ui/slider";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AlertCircle, CheckCircle, Star, Heart, Users, Building2, Utensils } from "lucide-react";
+import { moderateContent } from "@/functions/moderateContent";
 
 export default function AddSchoolReviewDialog({ open, onOpenChange, schoolId, existingReview, onSuccess }) {
   const [loading, setLoading] = useState(false);
@@ -360,15 +361,13 @@ rejected → si le message enfreint les règles ci-dessus"
         });
 
         // Background moderation
-        import("@/functions/moderateContent").then(({ moderateContent }) => {
-             moderateContent({
-                type: 'school_review',
-                id: existingReview.id,
-                text: cleanComment,
-                userId: user.id,
-                userEmail: user.email
-             }).catch(console.error);
-        });
+        moderateContent({
+          type: 'school_review',
+          id: existingReview.id,
+          text: cleanComment,
+          userId: user.id,
+          userEmail: user.email
+        }).catch(console.error);
 
       } else {
         const existingReviews = await base44.entities.SchoolReview.filter({ school_id: schoolId, created_by: user.email });
@@ -400,15 +399,13 @@ rejected → si le message enfreint les règles ci-dessus"
         });
 
         // Background Moderation
-        import("@/functions/moderateContent").then(({ moderateContent }) => {
-             moderateContent({
-                type: 'school_review',
-                id: newReview.id,
-                text: cleanComment,
-                userId: user.id,
-                userEmail: user.email
-             }).catch(console.error);
-        });
+        moderateContent({
+          type: 'school_review',
+          id: newReview.id,
+          text: cleanComment,
+          userId: user.id,
+          userEmail: user.email
+        }).catch(console.error);
       }
 
       await updateSchoolStats(schoolId);
