@@ -478,7 +478,7 @@ export default function Layout({ children }) {
               onClick={() => setMobileMenuOpen(false)}
               className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all ${
               location.pathname === item.url ?
-              'bg-gradient-to-r from-[#FF4D8D]/10 via-purple-500/10 to-blue-500/10 text-purple-700 font-medium' :
+              'bg-gradient-to-r from-[#FF4D8D]/10 via-purple-500/10 to-blue-500/10 text-slate-900 font-medium' :
               'text-slate-600 hover:bg-slate-50'}`
               }>
 
@@ -508,7 +508,7 @@ export default function Layout({ children }) {
               onClick={() => setMobileMenuOpen(false)}
               className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all ${
               location.pathname === createPageUrl("Profile") ?
-              'bg-gradient-to-r from-[#FF4D8D]/10 via-purple-500/10 to-blue-500/10 text-purple-700 font-medium' :
+              'bg-gradient-to-r from-[#FF4D8D]/10 via-purple-500/10 to-blue-500/10 text-slate-900 font-medium' :
               'text-slate-600 hover:bg-slate-50'}`
               }>
 
