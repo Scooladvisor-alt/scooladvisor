@@ -28,7 +28,7 @@ export default function AboutPage() {
 
   return (
     <>
-      <SEO 
+      <SEO
         title="À propos de ScoolAdvisor - Notre Mission"
         description="ScoolAdvisor est le réseau social des étudiants. Partagez votre expérience, notez vos établissements et professeurs. Une communauté authentique et transparente."
         canonicalPath="/About"
@@ -38,8 +38,8 @@ export default function AboutPage() {
           "name": "ScoolAdvisor",
           "description": "Le réseau social des étudiants - Avis authentiques sur écoles et professeurs",
           "url": window.location.origin
-        }}
-      />
+        }} />
+
       <div className="min-h-screen bg-gradient-to-br from-slate-50 via-purple-50 to-blue-50">
 
 
@@ -52,10 +52,10 @@ export default function AboutPage() {
 
         <div className="max-w-4xl mx-auto text-center relative z-10">
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full border border-purple-100 shadow-sm mb-8">
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5 }}
+              className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full border border-purple-100 shadow-sm mb-8">
 
             <Sparkles className="w-4 h-4 text-[#FF4D8D]" />
             <span className="text-sm font-medium bg-gradient-to-r from-[#FF4D8D] to-purple-600 bg-clip-text text-transparent">
@@ -64,9 +64,9 @@ export default function AboutPage() {
           </motion.div>
 
           <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-3xl sm:text-6xl md:text-7xl font-bold text-slate-900 mb-4 sm:mb-6 tracking-tight">
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-3xl sm:text-6xl md:text-7xl font-bold text-slate-900 mb-4 sm:mb-6 tracking-tight">
 
             <span className="block text-5xl sm:text-8xl font-black italic uppercase tracking-tighter text-slate-900 mb-2 sm:mb-4 transform -rotate-2 origin-center drop-shadow-sm">
               SCOOL QUOI ?
@@ -77,10 +77,10 @@ export default function AboutPage() {
           </motion.h1>
 
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="text-base sm:text-xl text-slate-600 leading-relaxed max-w-2xl mx-auto mb-6 sm:mb-10">
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="text-base sm:text-xl text-slate-600 leading-relaxed max-w-2xl mx-auto mb-6 sm:mb-10">
 
             Plus qu’un site d’avis, c’est une communauté. Pour mieux comprendre, choisir et éclairer ton avenir.
           </motion.p>
@@ -90,11 +90,11 @@ export default function AboutPage() {
       {/* Mission Section */}
       <div className="max-w-6xl mx-auto px-4 pb-12 sm:pb-24">
         <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 items-stretch">
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 items-stretch">
 
           {/* Card 1 - Dominant */}
           <motion.div variants={itemVariants} className="lg:col-span-7 relative group">
@@ -120,7 +120,7 @@ export default function AboutPage() {
                 <Heart className="w-8 h-8 sm:w-10 sm:h-10 text-white shrink-0" />
               </div>
               <div>
-                <h3 className="text-xl sm:text-2xl font-black text-slate-800 mb-2 uppercase italic text-center sm:text-left">Pas de Haine,<br/>Que du <span className="bg-gradient-to-r from-[#8B5CF6] to-purple-600 bg-clip-text text-transparent">Vrai</span></h3>
+                <h3 className="text-xl sm:text-2xl font-black text-slate-800 mb-2 uppercase italic text-center sm:text-left">Pas de Haine,<br />Que du <span className="bg-gradient-to-r from-[#8B5CF6] to-purple-600 bg-clip-text text-transparent">Vrai</span></h3>
                 <p className="text-sm sm:text-base text-slate-600 font-medium leading-relaxed text-center sm:text-left">
                   On construit, on ne casse pas. La critique constructive est notre arme.
                 </p>
@@ -153,10 +153,10 @@ export default function AboutPage() {
           <div className="flex flex-col gap-8 sm:gap-12">
             {/* Full width Text Section */}
             <motion.div
-              initial={{ opacity: 0, y: -20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="text-center max-w-4xl mx-auto">
+                initial={{ opacity: 0, y: -20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="text-center max-w-4xl mx-auto">
 
               <div className="relative inline-block">
                 <div className="absolute -top-10 -left-10 w-40 h-40 bg-yellow-200 rounded-full blur-3xl opacity-30" />
@@ -178,10 +178,10 @@ export default function AboutPage() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 items-stretch">
               {/* Left Column: 2 Widgets */}
               <motion.div
-                initial={{ opacity: 0, x: -50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                className="space-y-4 sm:space-y-6">
+                  initial={{ opacity: 0, x: -50 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  className="space-y-4 sm:space-y-6">
 
                   {/* Widget 1 - IA */}
                   <div className="group bg-white/60 backdrop-blur-md border border-white/50 p-4 sm:p-6 rounded-2xl shadow-lg hover:shadow-xl hover:bg-white/80 transition-all">
@@ -212,20 +212,20 @@ export default function AboutPage() {
 
               {/* Right Column: Movement Widget */}
               <motion.div
-                initial={{ opacity: 0, x: 50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                className="relative w-full h-full">
+                  initial={{ opacity: 0, x: 50 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  className="relative w-full h-full">
 
                  <div className="relative w-full h-full min-h-[300px]">
                     <div className="absolute inset-0 bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 rounded-[2rem] transform rotate-2 blur-xl opacity-20" />
 
-                    <div className="relative bg-white/60 backdrop-blur-xl rounded-[2rem] border border-white/50 p-4 sm:p-6 flex flex-col items-center justify-center text-center overflow-hidden h-full transform -rotate-1 hover:rotate-0 transition-all duration-500 shadow-xl hover:shadow-2xl hover:border-purple-200">
+                    <div className="bg-white/60 mx-10 pt-20 pr-8 pb-10 pl-4 text-center rounded-[2rem] relative backdrop-blur-xl border border-white/50 sm:p-6 flex flex-col items-center justify-center overflow-hidden h-full transform -rotate-1 hover:rotate-0 transition-all duration-500 shadow-xl hover:shadow-2xl hover:border-purple-200">
                       <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-pink-50 to-blue-50 rounded-2xl flex items-center justify-center mb-4 shadow-sm border border-white">
                         <span className="text-2xl sm:text-3xl animate-bounce">🎓</span>
                       </div>
                       <h3 className="text-lg sm:text-2xl font-black text-slate-800 mb-2 uppercase italic tracking-tight">
-                        Rejoignez le<br/>
+                        Rejoignez le<br />
                         <span className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">Mouvement</span>
                       </h3>
                       <p className="text-sm sm:text-base text-slate-600 font-medium mb-4 max-w-xs">Déjà des milliers d'avis partagés.</p>
@@ -245,6 +245,6 @@ export default function AboutPage() {
 
 
       </div>
-    </>
-  );
+    </>);
+
 }
