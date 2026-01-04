@@ -22,7 +22,7 @@ export default function TeacherLoveNotes({ teacherId, user }) {
   useEffect(() => {
     if (teacherId) {
       loadNotes();
-      
+
       const savedNote = localStorage.getItem('pending_love_note_teacher_' + teacherId);
       if (savedNote) {
         try {
@@ -225,7 +225,7 @@ Réponds par JSON : { "decision": "approved" | "rejected", "reason": "raison cou
 
         <div className="space-y-3 max-h-[300px] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-pink-200 scrollbar-track-transparent">
             {notes.map((note) =>
-          <div key={note.id} className="bg-gradient-to-br from-white to-pink-50 p-3 rounded-lg border border-pink-100 shadow-sm relative group hover:shadow-md transition-all duration-200">
+          <div key={note.id} className="bg-gradient-to-br px-3 py-1 rounded-lg from-white to-pink-50 border border-pink-100 shadow-sm relative group hover:shadow-md transition-all duration-200">
                 {user && note.author_email === user.email &&
             <button
               onClick={() => handleDelete(note.id)}
