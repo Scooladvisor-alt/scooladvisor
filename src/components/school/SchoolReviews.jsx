@@ -412,6 +412,7 @@ Rédige maintenant ton résumé façon "L'avis de Satoshi" en 3 phrases max.`;
                             <div className="flex-1 min-w-0">
                               <p className="font-medium text-slate-900 text-xs sm:text-sm">
                                 {review.is_anonymous ? "Anonyme" : review.author_name || review.created_by?.split('@')[0] || "Utilisateur"}
+                                {review.is_former_student && <span className="text-slate-500 text-[10px] sm:text-xs ml-1 font-normal">(ancien élève)</span>}
                               </p>
                               <p className="text-[10px] sm:text-xs text-slate-500">
                                 {format(new Date(review.created_date), "d MMM yyyy", { locale: fr })}
