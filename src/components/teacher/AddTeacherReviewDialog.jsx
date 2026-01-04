@@ -526,41 +526,43 @@ Réponds UNIQUEMENT par "approved" ou "rejected".`,
               />
               
               <div className="absolute bottom-2 left-3 right-3 flex items-center justify-between">
-                <label 
-                  htmlFor="is_anonymous_inline"
-                  className="flex items-center gap-1.5 cursor-pointer group"
-                >
-                  <Checkbox
-                    id="is_anonymous_inline"
-                    checked={formData.is_anonymous}
-                    onCheckedChange={(checked) => setFormData({ ...formData, is_anonymous: checked })}
-                    className="h-3.5 w-3.5"
-                    disabled={!canEdit}
-                  />
-                  <span className="text-[10px] sm:text-xs font-bold bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
-                    Anonyme {formData.is_anonymous && <span className="text-blue-500">✓</span>}
-                  </span>
+                <div className="flex items-center gap-3">
+                  <label 
+                    htmlFor="is_anonymous_inline"
+                    className="flex items-center gap-1.5 cursor-pointer group"
+                  >
+                    <Checkbox
+                      id="is_anonymous_inline"
+                      checked={formData.is_anonymous}
+                      onCheckedChange={(checked) => setFormData({ ...formData, is_anonymous: checked })}
+                      className="h-3.5 w-3.5"
+                      disabled={!canEdit}
+                    />
+                    <span className="text-[10px] sm:text-xs font-bold bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
+                      Anonyme {formData.is_anonymous && <span className="text-blue-500">✓</span>}
+                    </span>
                   </label>
 
                   <label 
-                  htmlFor="is_former_student_inline"
-                  className="flex items-center gap-1.5 cursor-pointer group"
+                    htmlFor="is_former_student_inline"
+                    className="flex items-center gap-1.5 cursor-pointer group"
                   >
-                  <Checkbox
-                    id="is_former_student_inline"
-                    checked={formData.is_former_student}
-                    onCheckedChange={(checked) => setFormData({ ...formData, is_former_student: checked })}
-                    className={`h-3.5 w-3.5 ${formData.is_former_student ? 'bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 border-transparent text-white' : ''}`}
-                    disabled={!canEdit} />
-                  <span className="text-[10px] sm:text-xs font-bold bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
-                    Ancien élève {formData.is_former_student && <span className="text-blue-500">✓</span>}
-                  </span>
+                    <Checkbox
+                      id="is_former_student_inline"
+                      checked={formData.is_former_student}
+                      onCheckedChange={(checked) => setFormData({ ...formData, is_former_student: checked })}
+                      className="h-3.5 w-3.5"
+                      disabled={!canEdit} />
+                    <span className="text-[10px] sm:text-xs font-bold bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
+                      Je suis un ancien élève {formData.is_former_student && <span className="text-blue-500">✓</span>}
+                    </span>
                   </label>
+                </div>
 
-                  <span className={`text-[10px] ${formData.comment.length >= MAX_COMMENT_LENGTH ? 'text-red-500 font-medium' : 'text-slate-400'}`}>
+                <span className={`text-[10px] ${formData.comment.length >= MAX_COMMENT_LENGTH ? 'text-red-500 font-medium' : 'text-slate-400'}`}>
                   {formData.comment.length}/{MAX_COMMENT_LENGTH}
-                  </span>
-                  </div>
+                </span>
+              </div>
             </div>
           </div>
 
