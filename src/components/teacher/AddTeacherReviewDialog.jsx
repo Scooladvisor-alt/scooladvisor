@@ -26,6 +26,7 @@ export default function AddTeacherReviewDialog({ open, onOpenChange, teacherId, 
     grading_severity: 0,
     comment: "",
     is_anonymous: false,
+    is_former_student: false,
     certification: false // Added certification field
   });
 
@@ -49,6 +50,7 @@ export default function AddTeacherReviewDialog({ open, onOpenChange, teacherId, 
       grading_severity: 2.5,
       comment: "",
       is_anonymous: false,
+      is_former_student: false,
       certification: false // Reset certification
     });
     setError(null);
@@ -69,6 +71,7 @@ export default function AddTeacherReviewDialog({ open, onOpenChange, teacherId, 
           grading_severity: existingReview.grading_severity,
           comment: existingReview.comment,
           is_anonymous: existingReview.is_anonymous,
+          is_former_student: existingReview.is_former_student || false,
           certification: false // User must re-certify on edit
         });
       } else {
