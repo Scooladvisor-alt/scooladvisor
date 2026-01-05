@@ -36,6 +36,8 @@ import ErrorBoundary from "@/components/shared/ErrorBoundary";
 import SecurityGuard from "@/components/shared/SecurityGuard";
 import FloatingDecoration from "@/components/shared/FloatingDecoration";
 import { prefetchPage } from "@/components/shared/LinkPrefetch";
+import GradientSpinner from "@/components/shared/GradientSpinner";
+import { Suspense } from "react";
 
 
 const BanDialog = ({ open, user }) => {
@@ -564,7 +566,13 @@ export default function Layout({ children }) {
       <main className="flex-1">
         <ErrorBoundary>
           <SecurityGuard>
-            {children}
+            <Suspense fallback={
+              <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-blue-50">
+                <GradientSpinner size="w-12 h-12" />
+              </div>
+            }>
+              {children}
+            </Suspense>
           </SecurityGuard>
         </ErrorBoundary>
       </main>
