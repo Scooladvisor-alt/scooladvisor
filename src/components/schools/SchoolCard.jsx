@@ -26,20 +26,14 @@ export default function SchoolCard({ school, teacherCount }) {
   const navigate = useNavigate();
   const hasRating = school.review_count > 0 && school.average_rating > 0;
 
-  const handleClick = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    console.log('🔥 CLICK DÉTECTÉ - Navigation vers:', school.id, school.name);
-    const url = createPageUrl(`SchoolDetail?id=${school.id}`);
-    console.log('🔥 URL générée:', url);
-    navigate(url);
+  const handleClick = () => {
+    navigate(createPageUrl(`SchoolDetail?id=${school.id}`));
   };
 
   return (
     <div 
       onClick={handleClick}
-      className="block h-full w-full group cursor-pointer hover:bg-blue-50/30 transition-colors relative"
-      style={{ position: 'relative', zIndex: 1 }}
+      className="block h-full w-full group cursor-pointer"
     >
       <style>{`
         @keyframes shine {
