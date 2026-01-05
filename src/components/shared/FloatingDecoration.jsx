@@ -41,7 +41,7 @@ export default function FloatingDecoration() {
   return (
     <div 
       className="fixed inset-0 overflow-hidden pointer-events-none"
-      style={{ zIndex: -1, pointerEvents: 'none' }}
+      style={{ zIndex: 0 }}
     >
       {elements.map((el) => (
         <motion.div
@@ -53,8 +53,6 @@ export default function FloatingDecoration() {
             top: `${el.y}%`,
             fontSize: `${el.size}px`,
             opacity: el.opacity,
-            pointerEvents: "none",
-            userSelect: "none",
           }}
           animate={{
             y: [0, -15, 0, 15, 0],

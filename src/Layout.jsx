@@ -364,7 +364,7 @@ export default function Layout({ children }) {
 
         `}</style>
       
-      <header className="bg-white/90 backdrop-blur-md border-b border-slate-200 sticky top-0 z-30 shadow-sm">
+      <header className="bg-white/90 backdrop-blur-md border-b border-slate-200 sticky top-0 z-50 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="flex items-center justify-between h-16">
             <Link to={createPageUrl("Schools")} className="flex items-center gap-2 hover:opacity-80 transition-opacity">
@@ -539,12 +539,9 @@ export default function Layout({ children }) {
             opacity: 0,
             transition: { duration: 0.5 }
           }}
-          className="flex justify-center px-4 py-2 pointer-events-none">
-            <style>{`
-              .login-message-content { pointer-events: auto; }
-            `}</style>
+          className="flex justify-center px-4 py-2">
 
-            <div className="relative bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-xl shadow-md px-3 py-1.5 sm:px-6 sm:py-3 max-w-2xl login-message-content">
+            <div className="relative bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-xl shadow-md px-3 py-1.5 sm:px-6 sm:py-3 max-w-2xl">
               <div className="absolute inset-0 rounded-xl animate-subtle-shine" />
               
               <div className="relative flex flex-col sm:flex-row items-center gap-2 sm:gap-4">

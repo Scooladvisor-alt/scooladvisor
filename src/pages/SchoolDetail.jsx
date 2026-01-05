@@ -3,7 +3,7 @@ import { base44 } from "@/api/base44Client";
 import { MapPin, Users, Star, Plus, ChevronLeft, Flag, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/utils";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -20,8 +20,7 @@ import GradientSpinner from "@/components/shared/GradientSpinner";
 
 export default function SchoolDetailPage() {
   const navigate = useNavigate();
-  const location = useLocation();
-  const urlParams = new URLSearchParams(location.search);
+  const urlParams = new URLSearchParams(window.location.search);
   const schoolId = urlParams.get('id');
 
   const [school, setSchool] = useState(null);
@@ -34,9 +33,6 @@ export default function SchoolDetailPage() {
   const [showReportDialog, setShowReportDialog] = useState(false);
 
   useEffect(() => {
-    console.log("SchoolDetail useEffect - schoolId:", schoolId);
-    console.log("URL search:", location.search);
-    
     if (schoolId) {
       loadData();
       
@@ -49,32 +45,17 @@ export default function SchoolDetailPage() {
       if (savedReview) {
         setShowAddReview(true);
       }
-    } else {
-      console.error("No schoolId in URL");
-      setLoading(false);
     }
-  }, [schoolId, location.search]);
+  }, [schoolId]);
 
   const loadData = async () => {
     setLoading(true);
-    setSchool(null);
 
     try {
-      if (!schoolId) {
-        setSchool(null);
-        setLoading(false);
-        return;
-      }
+      const schoolsData = await base44.entities.School.filter({ id: schoolId });
+      const foundSchool = schoolsData[0];
+      setSchool(foundSchool);
 
-      // Fetch ALL schools and find the one with matching ID
-      const allSchools = await base44.entities.School.list();
-      const foundSchool = allSchools.find(s => s.id === schoolId);
-      
-      if (foundSchool && !foundSchool.is_deleted) {
-        setSchool(foundSchool);
-      } else {
-        setSchool(null);
-      }
 
       let currentUser = null;
       try {
@@ -87,7 +68,6 @@ export default function SchoolDetailPage() {
       console.error("Error loading school data:", error);
       setSchool(null);
     }
-    
     setLoading(false);
   };
 
@@ -109,7 +89,11 @@ export default function SchoolDetailPage() {
 
 
 
-  // Removed automatic redirect to prevent immediate exit on load issues
+  useEffect(() => {
+    if (!loading && !school) {
+      window.location.href = "/";
+    }
+  }, [loading, school]);
 
   if (loading) {
     return (
@@ -119,18 +103,7 @@ export default function SchoolDetailPage() {
 
   }
 
-  if (!school) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 p-8 flex flex-col items-center justify-center text-center">
-        <h1 className="text-2xl font-bold text-slate-900 mb-4">Établissement introuvable</h1>
-        <p className="text-slate-600 mb-6">L'établissement que vous cherchez n'existe pas ou a été supprimé.</p>
-        <Button onClick={() => navigate(createPageUrl("Schools"))}>
-          <ChevronLeft className="w-4 h-4 mr-2" />
-          Retour à l'accueil
-        </Button>
-      </div>
-    );
-  }
+  if (!school) return null;
 
   const typeLabels = {
     college: "Collège",
@@ -337,7 +310,7 @@ export default function SchoolDetailPage() {
                       <span className="text-lg font-bold text-amber-900">{school.average_rating.toFixed(1)}</span>
                       <span className="text-sm text-amber-700">/ 20</span>
                       <span className="text-xs text-amber-600 ml-1">basé sur :</span>
-                      <span className="text-sm font-semibold text-amber-800">{school.review_count} avis}</span>
+                      <span className="text-sm font-semibold text-amber-800">{school.review_count} avis</span>
                     </div>
                     
                     <div className="relative z-10 hidden sm:block">

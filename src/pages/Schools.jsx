@@ -499,21 +499,21 @@ export default function SchoolsPage() {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-12">
 
-          <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full border border-purple-100 shadow-sm mb-6 relative z-0">
+          <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full border border-purple-100 shadow-sm mb-6 relative z-10">
             <TrendingUp className="w-4 h-4 text-[#FF4D8D]" />
             <span className="text-sm font-medium bg-gradient-to-r from-[#FF4D8D] to-purple-600 bg-clip-text text-transparent">
               Le réseau social des étudiants
             </span>
           </div>
 
-          <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold text-slate-900 mb-4 sm:mb-6 leading-tight relative z-0 cursor-default">
+          <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold text-slate-900 mb-4 sm:mb-6 leading-tight relative z-10 cursor-default">
             <span className="btn-shine-hover inline-block text-6xl sm:text-5xl md:text-7xl lg:text-8xl bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent mb-2">
               L'avis des étudiants
             </span>
             <span className="block text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-slate-900">sur leurs écoles et professeurs</span>
           </h1>
 
-          <p className="text-xs sm:text-sm md:text-base text-slate-600 max-w-3xl mx-auto mb-4 sm:mb-8 relative z-0">Les profs notent, les élèves aussi 😎</p>
+          <p className="text-xs sm:text-sm md:text-base text-slate-600 max-w-3xl mx-auto mb-4 sm:mb-8 relative z-10">Les profs notent, les élèves aussi 😎</p>
         </motion.div>
 
         <motion.div
@@ -677,14 +677,13 @@ export default function SchoolsPage() {
           </div> :
 
         <>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" style={{ position: "relative", zIndex: 100 }}>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {displayedSchools.map((school, index) =>
             <motion.div
               key={school.id}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.05 }}
-              style={{ position: "relative", zIndex: 100 }}>
+              transition={{ delay: index * 0.05 }}>
 
                   <SchoolCard
                 school={school}
