@@ -53,14 +53,8 @@ export default function FloatingDecoration() {
             top: `${el.y}%`,
             fontSize: `${el.size}px`,
             opacity: el.opacity,
-          }}
-          style={{
-            position: "absolute",
-            left: `${el.x}%`,
-            top: `${el.y}%`,
-            fontSize: `${el.size}px`,
-            opacity: el.opacity,
             pointerEvents: "none",
+            userSelect: "none",
           }}
           animate={{
             y: [0, -15, 0, 15, 0],
