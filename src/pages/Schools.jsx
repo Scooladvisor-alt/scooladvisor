@@ -1,4 +1,4 @@
-import React, { useState, useEffect, lazy, Suspense, useMemo } from "react";
+import React, { useState, useEffect } from "react";
 import { base44 } from "@/api/base44Client";
 import { motion } from "framer-motion";
 import { Plus, Search, Filter, TrendingUp, ArrowRight, Globe, Loader2 } from "lucide-react";
@@ -24,9 +24,8 @@ import { useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/utils";
 import SEO from "@/components/shared/SEO";
 
-// Lazy load des composants lourds
-const AddSchoolDialog = lazy(() => import("../components/schools/AddSchoolDialog"));
-const NationalChatWidget = lazy(() => import("../components/shared/NationalChatWidget"));
+import AddSchoolDialog from "../components/schools/AddSchoolDialog";
+import NationalChatWidget from "../components/shared/NationalChatWidget";
 
 export default function SchoolsPage() {
   const navigate = useNavigate();
@@ -721,21 +720,17 @@ export default function SchoolsPage() {
 
             {filteredSchools.length > 6 &&
           <div className="mt-4 mb-0">
-                <Suspense fallback={<div className="h-24 bg-gradient-to-r from-pink-100 to-purple-100 rounded-xl animate-pulse" />}>
-                  <NationalChatWidget isHomePage={true} />
-                </Suspense>
+                <NationalChatWidget isHomePage={true} />
               </div>
           }
           </>
         }
       </div>
 
-      <Suspense fallback={null}>
-        <AddSchoolDialog
-          open={showAddDialog}
-          onOpenChange={setShowAddDialog}
-          onSuccess={loadData} />
-      </Suspense>
+      <AddSchoolDialog
+        open={showAddDialog}
+        onOpenChange={setShowAddDialog}
+        onSuccess={loadData} />
 
 
       <Dialog open={showTeacherRoom} onOpenChange={setShowTeacherRoom}>
