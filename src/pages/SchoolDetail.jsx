@@ -33,23 +33,20 @@ export default function SchoolDetailPage() {
   const [showReportDialog, setShowReportDialog] = useState(false);
 
   useEffect(() => {
-    if (!schoolId) {
-      navigate(createPageUrl("Schools"));
-      return;
-    }
-    
-    loadData();
-    
-    const savedTeacher = localStorage.getItem('pending_teacher_submission_school_' + schoolId);
-    if (savedTeacher) {
-      setShowAddTeacher(true);
-    }
+    if (schoolId) {
+      loadData();
+      
+      const savedTeacher = localStorage.getItem('pending_teacher_submission_school_' + schoolId);
+      if (savedTeacher) {
+        setShowAddTeacher(true);
+      }
 
-    const savedReview = localStorage.getItem('pending_school_review_school_' + schoolId);
-    if (savedReview) {
-      setShowAddReview(true);
+      const savedReview = localStorage.getItem('pending_school_review_school_' + schoolId);
+      if (savedReview) {
+        setShowAddReview(true);
+      }
     }
-  }, []);
+  }, [schoolId]);
 
   const loadData = async () => {
     setLoading(true);
