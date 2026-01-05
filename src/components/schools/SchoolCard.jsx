@@ -34,8 +34,8 @@ export default function SchoolCard({ school, teacherCount }) {
   return (
     <Link 
       to={createPageUrl(`SchoolDetail?id=${school.id}`)} 
-      className="block h-full w-full group cursor-pointer relative"
-      style={{ zIndex: 10, position: "relative", pointerEvents: "auto" }}
+      className="block h-full w-full group cursor-pointer"
+      style={{ position: "relative", zIndex: 100 }}
       onMouseEnter={handleMouseEnter}
     >
       <style>{`
@@ -107,7 +107,7 @@ export default function SchoolCard({ school, teacherCount }) {
         }
       `}</style>
       
-      <div className="bg-white rounded-2xl shadow-md border border-slate-200 p-4 sm:p-6 transition-all duration-300 hover:shadow-xl hover:scale-[1.02] hover:-translate-y-1 h-full flex flex-col relative">
+      <div className="bg-white rounded-2xl shadow-md border border-slate-200 p-4 sm:p-6 transition-all duration-300 hover:shadow-xl h-full flex flex-col" style={{ position: "relative", zIndex: 100 }}>
         <div className="flex-1 flex flex-col">
           <div className="flex items-start justify-between mb-4 gap-3">
             <div className="flex-1 min-w-0">

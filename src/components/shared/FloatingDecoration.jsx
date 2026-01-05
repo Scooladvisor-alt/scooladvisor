@@ -40,8 +40,8 @@ export default function FloatingDecoration() {
 
   return (
     <div 
-      className="fixed inset-0 overflow-hidden"
-      style={{ zIndex: 0, pointerEvents: 'none' }}
+      className="fixed inset-0 overflow-hidden pointer-events-none"
+      style={{ zIndex: -1, pointerEvents: 'none' }}
     >
       {elements.map((el) => (
         <motion.div
