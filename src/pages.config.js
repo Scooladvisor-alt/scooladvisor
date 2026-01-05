@@ -1,3 +1,4 @@
+import About from './pages/About';
 import Contact from './pages/Contact';
 import Home from './pages/Home';
 import Moderation from './pages/Moderation';
@@ -7,11 +8,11 @@ import TeacherDetail from './pages/TeacherDetail';
 import TermsOfService from './pages/TermsOfService';
 import Schools from './pages/Schools';
 import SchoolDetail from './pages/SchoolDetail';
-import About from './pages/About';
 import __Layout from './Layout.jsx';
 
 
 export const PAGES = {
+    "About": About,
     "Contact": Contact,
     "Home": Home,
     "Moderation": Moderation,
@@ -21,7 +22,6 @@ export const PAGES = {
     "TermsOfService": TermsOfService,
     "Schools": Schools,
     "SchoolDetail": SchoolDetail,
-    "About": About,
 }
 
 export const pagesConfig = {
