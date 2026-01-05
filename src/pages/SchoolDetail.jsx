@@ -34,6 +34,9 @@ export default function SchoolDetailPage() {
   const [showReportDialog, setShowReportDialog] = useState(false);
 
   useEffect(() => {
+    console.log("SchoolDetail useEffect - schoolId:", schoolId);
+    console.log("URL search:", location.search);
+    
     if (schoolId) {
       loadData();
       
@@ -46,17 +49,38 @@ export default function SchoolDetailPage() {
       if (savedReview) {
         setShowAddReview(true);
       }
+    } else {
+      console.error("No schoolId in URL");
+      setLoading(false);
     }
-  }, [schoolId]);
+  }, [schoolId, location.search]);
 
   const loadData = async () => {
     setLoading(true);
+    setSchool(null); // Reset school state
 
     try {
-      const schoolsData = await base44.entities.School.filter({ id: schoolId });
-      const foundSchool = schoolsData[0];
-      setSchool(foundSchool);
+      console.log("Loading school with ID:", schoolId);
+      
+      if (!schoolId) {
+        console.error("No school ID provided");
+        setSchool(null);
+        setLoading(false);
+        return;
+      }
 
+      const schoolsData = await base44.entities.School.filter({ id: schoolId });
+      console.log("School data received:", schoolsData);
+      
+      const foundSchool = schoolsData && schoolsData.length > 0 ? schoolsData[0] : null;
+      
+      if (foundSchool) {
+        console.log("School found:", foundSchool.name);
+        setSchool(foundSchool);
+      } else {
+        console.error("School not found with ID:", schoolId);
+        setSchool(null);
+      }
 
       let currentUser = null;
       try {
@@ -69,6 +93,7 @@ export default function SchoolDetailPage() {
       console.error("Error loading school data:", error);
       setSchool(null);
     }
+    
     setLoading(false);
   };
 
