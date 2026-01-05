@@ -89,11 +89,7 @@ export default function SchoolDetailPage() {
 
 
 
-  useEffect(() => {
-    if (!loading && !school) {
-      navigate(createPageUrl("Schools"));
-    }
-  }, [loading, school, navigate]);
+
 
   if (loading) {
     return (
