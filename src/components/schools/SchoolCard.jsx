@@ -1,5 +1,6 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useCallback } from "react";
+import { Link } from "react-router-dom";
+import { prefetchPage } from "@/components/shared/LinkPrefetch";
 import { createPageUrl } from "@/utils";
 import { MapPin, Star, MessageSquare, Users, Globe } from "lucide-react"; 
 import { Badge } from "@/components/ui/badge";
@@ -23,17 +24,18 @@ const typeColors = {
 };
 
 export default function SchoolCard({ school, teacherCount }) {
-  const navigate = useNavigate();
   const hasRating = school.review_count > 0 && school.average_rating > 0;
 
-  const handleClick = () => {
-    navigate(createPageUrl(`SchoolDetail?id=${school.id}`));
-  };
+  // Prefetch au survol
+  const handleMouseEnter = useCallback(() => {
+    prefetchPage('SchoolDetail');
+  }, []);
 
   return (
-    <div 
-      onClick={handleClick}
-      className="block h-full w-full group cursor-pointer"
+    <Link 
+      to={createPageUrl(`SchoolDetail?id=${school.id}`)} 
+      className="block h-full w-full group"
+      onMouseEnter={handleMouseEnter}
     >
       <style>{`
         @keyframes shine {
@@ -159,6 +161,6 @@ export default function SchoolCard({ school, teacherCount }) {
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }
