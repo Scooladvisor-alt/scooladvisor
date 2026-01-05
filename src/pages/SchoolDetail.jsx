@@ -1,12 +1,10 @@
-
 import React, { useState, useEffect, lazy, Suspense } from "react";
 import { base44 } from "@/api/base44Client";
 import { MapPin, Users, Star, Plus, ChevronLeft, Flag, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { createPageUrl } from "@/utils";
-import { useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 
 const TeachersList = lazy(() => import("../components/school/TeachersList"));
