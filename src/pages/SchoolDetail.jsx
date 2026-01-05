@@ -57,28 +57,22 @@ export default function SchoolDetailPage() {
 
   const loadData = async () => {
     setLoading(true);
-    setSchool(null); // Reset school state
+    setSchool(null);
 
     try {
-      console.log("Loading school with ID:", schoolId);
-      
       if (!schoolId) {
-        console.error("No school ID provided");
         setSchool(null);
         setLoading(false);
         return;
       }
 
-      const schoolsData = await base44.entities.School.filter({ id: schoolId });
-      console.log("School data received:", schoolsData);
+      // Fetch ALL schools and find the one with matching ID
+      const allSchools = await base44.entities.School.list();
+      const foundSchool = allSchools.find(s => s.id === schoolId);
       
-      const foundSchool = schoolsData && schoolsData.length > 0 ? schoolsData[0] : null;
-      
-      if (foundSchool) {
-        console.log("School found:", foundSchool.name);
+      if (foundSchool && !foundSchool.is_deleted) {
         setSchool(foundSchool);
       } else {
-        console.error("School not found with ID:", schoolId);
         setSchool(null);
       }
 
