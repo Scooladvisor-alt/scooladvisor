@@ -52,22 +52,13 @@ export default function SchoolDetailPage() {
   }, []);
 
   const loadData = async () => {
-    console.log('🔥 loadData appelé avec schoolId:', schoolId);
     setLoading(true);
 
     try {
-      console.log('🔥 Fetching school data...');
       const schoolsData = await base44.entities.School.filter({ id: schoolId });
-      console.log('🔥 School data reçu:', schoolsData);
       const foundSchool = schoolsData[0];
       setSchool(foundSchool);
 
-      if (!foundSchool) {
-        console.error('❌ École non trouvée!');
-        setLoading(false);
-        navigate(createPageUrl("Schools"));
-        return;
-      }
 
       let currentUser = null;
       try {
@@ -77,11 +68,10 @@ export default function SchoolDetailPage() {
         setUser(null);
       }
     } catch (error) {
-      console.error("❌ Error loading school data:", error);
+      console.error("Error loading school data:", error);
       setSchool(null);
     }
     setLoading(false);
-    console.log('🔥 loadData terminé, loading=false');
   };
 
   const refreshSchoolStats = async () => {
