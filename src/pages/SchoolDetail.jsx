@@ -91,9 +91,9 @@ export default function SchoolDetailPage() {
 
   useEffect(() => {
     if (!loading && !school) {
-      window.location.href = "/";
+      navigate(createPageUrl("Schools"));
     }
-  }, [loading, school]);
+  }, [loading, school, navigate]);
 
   if (loading) {
     return (
