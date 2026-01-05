@@ -34,7 +34,7 @@ export default function SchoolCard({ school, teacherCount }) {
   return (
     <Link 
       to={createPageUrl(`SchoolDetail?id=${school.id}`)} 
-      className="block h-full w-full group"
+      className="block h-full w-full group cursor-pointer relative z-0"
       onMouseEnter={handleMouseEnter}
     >
       <style>{`
@@ -72,6 +72,7 @@ export default function SchoolCard({ school, teacherCount }) {
             transparent 100%
           );
           transition: left 0.5s ease;
+          pointer-events: none;
         }
         
         .stat-widget:hover::before {
