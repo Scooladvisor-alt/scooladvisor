@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, lazy, Suspense } from "react";
 import { base44 } from "@/api/base44Client";
 import { MapPin, Users, Star, Plus, ChevronLeft, Flag, Loader2 } from "lucide-react";
@@ -5,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/utils";
+import { useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 
 const TeachersList = lazy(() => import("../components/school/TeachersList"));
@@ -20,7 +22,8 @@ import GradientSpinner from "@/components/shared/GradientSpinner";
 
 export default function SchoolDetailPage() {
   const navigate = useNavigate();
-  const urlParams = new URLSearchParams(window.location.search);
+  const location = useLocation();
+  const urlParams = new URLSearchParams(location.search);
   const schoolId = urlParams.get('id');
 
   const [school, setSchool] = useState(null);
@@ -89,11 +92,7 @@ export default function SchoolDetailPage() {
 
 
 
-  useEffect(() => {
-    if (!loading && !school) {
-      window.location.href = "/";
-    }
-  }, [loading, school]);
+  // Removed automatic redirect to prevent immediate exit on load issues
 
   if (loading) {
     return (
@@ -103,7 +102,18 @@ export default function SchoolDetailPage() {
 
   }
 
-  if (!school) return null;
+  if (!school) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 p-8 flex flex-col items-center justify-center text-center">
+        <h1 className="text-2xl font-bold text-slate-900 mb-4">Établissement introuvable</h1>
+        <p className="text-slate-600 mb-6">L'établissement que vous cherchez n'existe pas ou a été supprimé.</p>
+        <Button onClick={() => navigate(createPageUrl("Schools"))}>
+          <ChevronLeft className="w-4 h-4 mr-2" />
+          Retour à l'accueil
+        </Button>
+      </div>
+    );
+  }
 
   const typeLabels = {
     college: "Collège",
@@ -310,7 +320,7 @@ export default function SchoolDetailPage() {
                       <span className="text-lg font-bold text-amber-900">{school.average_rating.toFixed(1)}</span>
                       <span className="text-sm text-amber-700">/ 20</span>
                       <span className="text-xs text-amber-600 ml-1">basé sur :</span>
-                      <span className="text-sm font-semibold text-amber-800">{school.review_count} avis</span>
+                      <span className="text-sm font-semibold text-amber-800">{school.review_count} avis}</span>
                     </div>
                     
                     <div className="relative z-10 hidden sm:block">
