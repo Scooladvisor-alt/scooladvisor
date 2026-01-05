@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, lazy, Suspense } from "react";
 import { base44 } from "@/api/base44Client";
 import { MapPin, Users, Star, Plus, ChevronLeft, Flag, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -7,12 +7,12 @@ import { useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/utils";
 import { motion, AnimatePresence } from "framer-motion";
 
-import TeachersList from "../components/school/TeachersList";
-import SchoolReviews from "../components/school/SchoolReviews";
-import AddTeacherDialog from "../components/school/AddTeacherDialog";
-import AddSchoolReviewDialog from "../components/school/AddSchoolReviewDialog";
-import ReportSchoolDialog from "../components/school/ReportSchoolDialog";
-import SchoolChat from "../components/school/SchoolChat";
+const TeachersList = lazy(() => import("../components/school/TeachersList"));
+const SchoolReviews = lazy(() => import("../components/school/SchoolReviews"));
+const AddTeacherDialog = lazy(() => import("../components/school/AddTeacherDialog"));
+const AddSchoolReviewDialog = lazy(() => import("../components/school/AddSchoolReviewDialog"));
+const ReportSchoolDialog = lazy(() => import("../components/school/ReportSchoolDialog"));
+const SchoolChat = lazy(() => import("../components/school/SchoolChat"));
 import SchoolAdminMenu from "../components/admin/SchoolAdminMenu";
 import { toast } from "sonner";
 import SEO from "@/components/shared/SEO";
@@ -368,53 +368,67 @@ export default function SchoolDetailPage() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 items-stretch justify-items-center">
           <div className="w-full max-h-[600px] lg:h-[500px] flex flex-col">
-            <TeachersList
-              schoolId={schoolId}
-              onAddTeacher={() => setShowAddTeacher(true)} />
+            <Suspense fallback={<div className="p-4 bg-white rounded-lg shadow-md flex justify-center items-center h-full"><Loader2 className="w-8 h-8 animate-spin text-slate-400" /></div>}>
+              <TeachersList
+                schoolId={schoolId}
+                onAddTeacher={() => setShowAddTeacher(true)} />
+
+            </Suspense>
           </div>
 
           <div className="w-full max-h-[600px] lg:h-[500px] flex flex-col">
-            <SchoolReviews
-              schoolId={schoolId}
-              user={user}
-              onReload={() => {
-                refreshSchoolStats();
-                loadData();
-              }}
-              onEditReview={handleEditReview}
-              canModerate={canModerate}
-              onAddReview={() => setShowAddReview(true)} />
+             <Suspense fallback={<div className="p-4 bg-white rounded-lg shadow-md flex justify-center items-center h-full"><Loader2 className="w-8 h-8 animate-spin text-slate-400" /></div>}>
+              <SchoolReviews
+                schoolId={schoolId}
+                user={user}
+                onReload={() => {
+                  refreshSchoolStats();
+                  loadData();
+                }}
+                onEditReview={handleEditReview}
+                canModerate={canModerate}
+                onAddReview={() => setShowAddReview(true)} />
+
+
+            </Suspense>
           </div>
         </div>
 
-        <div className="mt-6">
-          <SchoolChat schoolId={schoolId} isHomePage={false} />
-        </div>
+        <Suspense fallback={null}>
+          <div className="mt-6">
+            <SchoolChat schoolId={schoolId} isHomePage={false} />
+          </div>
+        </Suspense>
       </div>
 
-      <AddTeacherDialog
-        open={showAddTeacher}
-        onOpenChange={setShowAddTeacher}
-        schoolId={schoolId}
-        onSuccess={loadData} />
+      <Suspense>
+        <AddTeacherDialog
+          open={showAddTeacher}
+          onOpenChange={setShowAddTeacher}
+          schoolId={schoolId}
+          onSuccess={loadData} />
 
-      <AddSchoolReviewDialog
-        open={showAddReview}
-        onOpenChange={(open) => {
-          setShowAddReview(open);
-          if (!open) setEditingReview(null);
-        }}
-        schoolId={schoolId}
-        existingReview={editingReview}
-        onSuccess={() => {
-          refreshSchoolStats();
-          loadData();
-        }} />
 
-      <ReportSchoolDialog
-        open={showReportDialog}
-        onOpenChange={setShowReportDialog}
-        schoolId={schoolId} />
+        <AddSchoolReviewDialog
+          open={showAddReview}
+          onOpenChange={(open) => {
+            setShowAddReview(open);
+            if (!open) setEditingReview(null);
+          }}
+          schoolId={schoolId}
+          existingReview={editingReview}
+          onSuccess={() => {
+            refreshSchoolStats();
+            loadData();
+          }} />
+
+
+        <ReportSchoolDialog
+          open={showReportDialog}
+          onOpenChange={setShowReportDialog}
+          schoolId={schoolId} />
+
+      </Suspense>
     </div>);
 
 }
