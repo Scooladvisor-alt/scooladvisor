@@ -461,7 +461,7 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
                 }
               }}
               required
-              placeholder={hasLockedPrefix(formData.type) ? `${getSchoolPrefix(formData.type)}Victor Hugo` : "École de Commerce de Paris"}
+              placeholder={hasLockedPrefix(formData.type) ? `${getSchoolPrefix(formData.type)}Victor Hugo` : "École de management..."}
               className="h-9 sm:h-10 text-xs sm:text-sm" />
 
           </div>
