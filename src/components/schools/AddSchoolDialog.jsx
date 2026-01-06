@@ -195,6 +195,24 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
         return;
       }
 
+      // Vérifier que le nom contient plus que juste le préfixe du type
+      if (hasLockedPrefix(formData.type)) {
+        const prefix = getSchoolPrefix(formData.type);
+        const nameWithoutPrefix = cleanName.substring(prefix.length).trim();
+        if (!nameWithoutPrefix || nameWithoutPrefix.length === 0) {
+          setError(`Veuillez entrer un nom complet pour l'établissement (pas seulement "${prefix.trim()}").`);
+          setLoading(false);
+          return;
+        }
+      } else {
+        // Pour les autres types sans préfixe verrouillé
+        if (cleanName.trim().length === 0) {
+          setError("Veuillez entrer un nom pour l'établissement.");
+          setLoading(false);
+          return;
+        }
+      }
+
       // SECURITY: Improved duplicate check (Server-side filter first) with robust normalization
       // Normalisation stricte pour éviter les doublons (ex: "Roissy-en-Brie" vs "Roissy en Brie")
       const normalizeString = (str) => {
