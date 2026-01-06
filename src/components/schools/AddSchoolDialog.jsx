@@ -193,11 +193,12 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
   const handleNameChange = (value) => {
     if (hasLockedPrefix(formData.type)) {
       const prefix = getSchoolPrefix(formData.type);
-      if (!value.startsWith(prefix)) {
-        value = prefix + value.replace(/^(Lycée |Collège |Université )/i, '');
-      }
-      if (value.length < prefix.length) {
-        value = prefix;
+      
+      // Si la valeur est plus courte que le préfixe ou ne commence pas par le préfixe
+      if (value.length < prefix.length || !value.startsWith(prefix)) {
+        // Extraire uniquement ce que l'utilisateur a tapé (sans les anciens préfixes)
+        const userInput = value.replace(/^(Lycée |Collège |Université |Lycée|Collège|Université)/i, '').trim();
+        value = prefix + userInput;
       }
     }
     setFormData({ ...formData, name: value });
@@ -440,7 +441,13 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
                 if (hasLockedPrefix(formData.type)) {
                   const prefix = getSchoolPrefix(formData.type);
                   const cursorPosition = e.target.selectionStart;
-                  if (cursorPosition < prefix.length && (e.key === 'Backspace' || e.key === 'Delete' || e.key === 'ArrowLeft')) {
+
+                  // Pour Backspace: empêcher si curseur <= longueur du préfixe
+                  if (e.key === 'Backspace' && cursorPosition <= prefix.length) {
+                    e.preventDefault();
+                  }
+                  // Pour Delete et ArrowLeft: empêcher si curseur < longueur du préfixe
+                  if ((e.key === 'Delete' || e.key === 'ArrowLeft') && cursorPosition < prefix.length) {
                     e.preventDefault();
                   }
                 }
