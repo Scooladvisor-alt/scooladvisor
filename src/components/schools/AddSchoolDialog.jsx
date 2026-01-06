@@ -61,6 +61,31 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
     setAddressLoading(false);
   };
 
+  const searchSchoolAddress = async (schoolName) => {
+    if (!schoolName || schoolName.trim().length < 5) return;
+
+    try {
+      const response = await fetch(
+        `https://api-adresse.data.gouv.fr/search/?q=${encodeURIComponent(schoolName)}&limit=3`
+      );
+      const data = await response.json();
+      
+      if (data.features && data.features.length > 0) {
+        const firstResult = data.features[0].properties;
+        // Pré-remplir seulement si les champs sont vides
+        if (!formData.address.trim() && !formData.city.trim()) {
+          setFormData(prev => ({
+            ...prev,
+            address: firstResult.name || firstResult.label,
+            city: firstResult.city || ''
+          }));
+        }
+      }
+    } catch (error) {
+      console.error("Error searching school address:", error);
+    }
+  };
+
   useEffect(() => {
     const savedData = localStorage.getItem('pending_school_submission');
     if (savedData && open) {
@@ -384,6 +409,12 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
               ref={nameInputRef}
               value={formData.name}
               onChange={(e) => handleNameChange(e.target.value)}
+              onBlur={(e) => {
+                const schoolName = e.target.value.trim();
+                if (schoolName) {
+                  searchSchoolAddress(schoolName);
+                }
+              }}
               onKeyDown={(e) => {
                 if (hasLockedPrefix(formData.type)) {
                   const prefix = getSchoolPrefix(formData.type);
