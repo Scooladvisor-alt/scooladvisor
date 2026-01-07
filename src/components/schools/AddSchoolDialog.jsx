@@ -66,38 +66,19 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
 
     setAddressLoading(true);
     try {
-      // Utiliser Nominatim (OpenStreetMap) pour chercher des établissements réels
+      // Chercher l'établissement avec l'API adresse du gouvernement français d'abord
       const response = await fetch(
-        `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(schoolName)}&format=json&addressdetails=1&limit=1&countrycodes=fr`,
-        {
-          headers: {
-            'User-Agent': 'ScoolAdvisor/1.0'
-          }
-        }
+        `https://api-adresse.data.gouv.fr/search/?q=${encodeURIComponent(schoolName)}&limit=1`
       );
       const data = await response.json();
       
-      if (data && data.length > 0) {
-        const result = data[0];
-        const address = result.address;
-        
-        // Construire l'adresse complète
-        let streetAddress = '';
-        if (address.road) {
-          streetAddress = address.house_number ? `${address.house_number} ${address.road}` : address.road;
-        } else if (address.pedestrian) {
-          streetAddress = address.house_number ? `${address.house_number} ${address.pedestrian}` : address.pedestrian;
-        } else {
-          streetAddress = result.display_name.split(',')[0];
-        }
-        
-        const city = address.city || address.town || address.village || address.municipality || '';
-        
-        // Pré-remplir l'adresse et la ville
+      if (data.features && data.features.length > 0) {
+        const firstResult = data.features[0].properties;
+        // L'API retourne l'adresse complète avec le numéro
         setFormData(prev => ({
           ...prev,
-          address: streetAddress,
-          city: city
+          address: firstResult.name || firstResult.label.split(',')[0],
+          city: firstResult.city || ''
         }));
       }
     } catch (error) {
