@@ -314,9 +314,9 @@ export default function ProfilePage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}>
 
-          <Card className="bg-white/80 backdrop-blur-sm shadow-xl border-slate-200 mb-8 relative z-10">
+          <Card className="bg-white/80 backdrop-blur-sm shadow-xl border-slate-200 relative z-10">
             <CardHeader className="border-b border-slate-100">
-              <CardTitle className="tracking-tight text-3xl sm:text-4xl font-bold bg-gradient-to-r from-blue-500 via-purple-500 to-[#FF4D8D] bg-clip-text text-transparent">Mon Profil
+              <CardTitle className="tracking-tight text-3xl sm:text-4xl font-bold bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">Mon Profil
 
               </CardTitle>
             </CardHeader>
@@ -380,15 +380,14 @@ export default function ProfilePage() {
                 </div>
               </div>
             </CardContent>
-          </Card>
-
-          <Card className="bg-white/80 backdrop-blur-sm shadow-xl border-slate-200 relative z-10">
-            <CardHeader className="border-b border-slate-100">
-              <CardTitle className="flex items-center gap-2 text-2xl">
+          
+            <CardContent className="p-6 border-t border-slate-100">
+              <div className="flex items-center gap-2 mb-6">
                 <TrendingUp className="w-6 h-6 text-[#FF4D8D]" />
-                Mes avis ({totalReviews})
-              </CardTitle>
-            </CardHeader>
+                <h2 className="text-2xl font-bold bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
+                  Mes avis ({totalReviews})
+                </h2>
+              </div>
             
             <CardContent className="p-6">
               {reviewsLoading ?
@@ -408,10 +407,10 @@ export default function ProfilePage() {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
                   {/* Colonne gauche : Avis professeurs */}
                   <div className="flex flex-col">
-                    <h3 className="text-base sm:text-lg font-semibold text-slate-900 mb-3 sm:mb-4 flex items-center justify-between gap-2 bg-white/90 backdrop-blur-sm py-2 sticky top-0 z-10 border-b border-slate-100">
+                    <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4 flex items-center justify-between gap-2 bg-white/90 backdrop-blur-sm py-2 sticky top-0 z-10 border-b border-slate-100">
                       <div className="flex items-center gap-2">
-                        <Users className="w-4 h-4 sm:w-5 sm:h-5 text-[#FF4D8D]" />
-                        <span className="text-sm sm:text-base">Mes professeurs ({teacherReviews.length})</span>
+                        <Users className="w-4 h-4 sm:w-5 sm:h-5 bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent" />
+                        <span className="text-sm sm:text-base bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent font-bold">Mes professeurs ({teacherReviews.length})</span>
                       </div>
                     </h3>
                     <div className={`space-y-3 overflow-y-auto pr-2 reviews-scroll ${teacherReviews.length > 0 ? 'h-[400px] sm:h-[500px]' : 'h-auto'}`}>
@@ -541,9 +540,9 @@ export default function ProfilePage() {
 
                   {/* Colonne droite : Avis établissements */}
                   <div className="flex flex-col">
-                    <h3 className="text-base sm:text-lg font-semibold text-slate-900 mb-3 sm:mb-4 flex items-center gap-2 bg-white/90 backdrop-blur-sm py-2 sticky top-0 z-10 border-b border-slate-100">
-                      <SchoolIcon className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600" />
-                      <span className="text-sm sm:text-base">Mes établissements ({schoolReviews.length})</span>
+                    <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4 flex items-center gap-2 bg-white/90 backdrop-blur-sm py-2 sticky top-0 z-10 border-b border-slate-100">
+                      <SchoolIcon className="w-4 h-4 sm:w-5 sm:h-5 bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent" />
+                      <span className="text-sm sm:text-base bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent font-bold">Mes établissements ({schoolReviews.length})</span>
                     </h3>
                     <div className={`space-y-3 overflow-y-auto pr-2 reviews-scroll ${schoolReviews.length > 0 ? 'h-[400px] sm:h-[500px]' : 'h-auto'}`}>
                       {schoolReviews.length > 0 ?
