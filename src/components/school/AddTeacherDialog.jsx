@@ -32,6 +32,7 @@ const predefinedSubjects = [
 "Droit",
 "Droit-économie",
 "Management",
+"Marketing"
 "Sciences de gestion et numérique"];
 
 
