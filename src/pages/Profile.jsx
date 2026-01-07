@@ -388,8 +388,6 @@ export default function ProfilePage() {
                   Mes avis ({totalReviews})
                 </h2>
               </div>
-            
-            <CardContent className="p-6">
               {reviewsLoading ?
               <div className="flex justify-center py-12">
                   <div className="w-8 h-8 border-4 border-[#FF4D8D] border-t-transparent rounded-full animate-spin" />

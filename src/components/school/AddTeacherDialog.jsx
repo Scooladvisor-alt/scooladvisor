@@ -18,7 +18,7 @@ const predefinedSubjects = [
 "Anglais",
 "Espagnol",
 "Allemand",
-"Chinois"
+"Chinois",
 "Sciences de la Vie et de la Terre (SVT)",
 "Physique-Chimie",
 "Technologie",
