@@ -300,25 +300,24 @@ export default function ProfilePage() {
         }
       `}</style>
       
-      <div className="max-w-7xl mx-auto px-4 py-8">
-        <Button
-          variant="ghost"
-          onClick={() => navigate(createPageUrl("Schools"))}
-          className="mb-6">
-
-          <ChevronLeft className="w-4 h-4 mr-2" />
-          Retour
-        </Button>
-
+      <div className="min-h-screen px-4 py-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}>
 
           <Card className="bg-white/80 backdrop-blur-sm shadow-xl border-slate-200 relative z-10">
             <CardHeader className="border-b border-slate-100">
-              <CardTitle className="tracking-tight text-3xl sm:text-4xl font-bold bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">Mon Profil
-
-              </CardTitle>
+              <div className="flex items-center justify-between">
+                <CardTitle className="tracking-tight text-3xl sm:text-4xl font-bold bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">Mon Profil
+                </CardTitle>
+                <Button
+                  variant="ghost"
+                  onClick={() => navigate(createPageUrl("Schools"))}
+                  className="flex items-center gap-2">
+                  <ChevronLeft className="w-4 h-4" />
+                  Retour
+                </Button>
+              </div>
             </CardHeader>
             
             <CardContent className="p-6 sm:p-8">
