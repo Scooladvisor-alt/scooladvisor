@@ -422,8 +422,8 @@ export default function ProfilePage() {
                         >
                           <div className="flex flex-col gap-2 sm:gap-3">
                             {/* Header Info */}
-                            <div className="flex flex-col sm:flex-row justify-between items-start gap-2 sm:gap-0">
-                              <div className="flex flex-col gap-1 sm:gap-1.5 flex-1 min-w-0 w-full">
+                            <div className="flex flex-col gap-2">
+                              <div className="flex flex-col gap-1 sm:gap-1.5">
                                 {/* School Link */}
                                 <div 
                                   onClick={(e) => {
@@ -448,8 +448,10 @@ export default function ProfilePage() {
                                 >
                                   {review.teacher?.name}
                                 </h4>
+                              </div>
 
-                                {/* Subject Badge */}
+                              {/* Subject Badge + Rating Widget on same line */}
+                              <div className="flex items-center justify-between gap-2">
                                 <Badge 
                                   variant="secondary" 
                                   className="w-fit text-[10px] sm:text-xs font-medium bg-purple-50 text-purple-700 border-purple-100"
@@ -457,15 +459,15 @@ export default function ProfilePage() {
                                   <BookOpen className="w-3 h-3 mr-1" />
                                   {review.teacher?.subject || "Matière non renseignée"}
                                 </Badge>
-                              </div>
 
-                              {/* Rating Widget */}
-                              <div className="flex-shrink-0 bg-gradient-to-br from-amber-50 to-amber-100 px-2 sm:px-2.5 py-1 sm:py-1.5 rounded-lg border border-amber-200 flex items-center gap-0.5 sm:gap-1 shadow-sm self-start sm:self-auto">
-                                <Star className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-600 fill-amber-600" />
-                                <span className="text-sm sm:text-base font-bold text-amber-900">
-                                  {review.total_rating?.toFixed(1)}
-                                </span>
-                                <span className="text-[9px] sm:text-[10px] text-amber-700 font-medium">/20</span>
+                                {/* Rating Widget */}
+                                <div className="flex-shrink-0 bg-gradient-to-br from-amber-50 to-amber-100 px-2 sm:px-2.5 py-1 sm:py-1.5 rounded-lg border border-amber-200 flex items-center gap-0.5 sm:gap-1 shadow-sm">
+                                  <Star className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-600 fill-amber-600" />
+                                  <span className="text-sm sm:text-base font-bold text-amber-900">
+                                    {review.total_rating?.toFixed(1)}
+                                  </span>
+                                  <span className="text-[9px] sm:text-[10px] text-amber-700 font-medium">/20</span>
+                                </div>
                               </div>
                             </div>
 
@@ -552,34 +554,34 @@ export default function ProfilePage() {
                           className="border-2 border-slate-200 rounded-xl p-3 sm:p-4 hover:border-blue-300 hover:shadow-lg transition-all bg-white group"
                         >
                           <div className="flex flex-col gap-2 sm:gap-3">
-                            <div className="flex flex-col sm:flex-row justify-between items-start gap-2 sm:gap-0">
-                              <div className="flex-1 min-w-0 w-full">
-                                {/* School Link */}
-                                <h4 
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    navigate(createPageUrl(`SchoolDetail?id=${review.school?.id}`));
-                                  }}
-                                  className="text-base sm:text-lg font-bold text-slate-900 hover:text-blue-600 transition-colors cursor-pointer truncate w-fit mb-1"
-                                >
-                                  {review.school?.name}
-                                </h4>
-                                
-                                {/* School Type Badge if available */}
+                            <div className="flex flex-col gap-2">
+                              {/* School Link */}
+                              <h4 
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  navigate(createPageUrl(`SchoolDetail?id=${review.school?.id}`));
+                                }}
+                                className="text-base sm:text-lg font-bold text-slate-900 hover:text-blue-600 transition-colors cursor-pointer truncate w-fit"
+                              >
+                                {review.school?.name}
+                              </h4>
+                              
+                              {/* School Type Badge + Rating Widget on same line */}
+                              <div className="flex items-center justify-between gap-2">
                                 {review.school?.type && (
                                   <Badge variant="outline" className="text-[9px] sm:text-[10px] bg-blue-50 text-blue-700 border-blue-100 capitalize">
                                     {review.school.type.replace('_', ' ')}
                                   </Badge>
                                 )}
-                              </div>
-                              
-                              {/* Rating Widget */}
-                              <div className="flex-shrink-0 bg-gradient-to-br from-amber-50 to-amber-100 px-2 sm:px-2.5 py-1 sm:py-1.5 rounded-lg border border-amber-200 flex items-center gap-0.5 sm:gap-1 shadow-sm self-start sm:self-auto">
-                                <Star className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-600 fill-amber-600" />
-                                <span className="text-sm sm:text-base font-bold text-amber-900">
-                                  {review.rating?.toFixed(1)}
-                                </span>
-                                <span className="text-[9px] sm:text-[10px] text-amber-700 font-medium">/20</span>
+                                
+                                {/* Rating Widget */}
+                                <div className="flex-shrink-0 bg-gradient-to-br from-amber-50 to-amber-100 px-2 sm:px-2.5 py-1 sm:py-1.5 rounded-lg border border-amber-200 flex items-center gap-0.5 sm:gap-1 shadow-sm">
+                                  <Star className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-600 fill-amber-600" />
+                                  <span className="text-sm sm:text-base font-bold text-amber-900">
+                                    {review.rating?.toFixed(1)}
+                                  </span>
+                                  <span className="text-[9px] sm:text-[10px] text-amber-700 font-medium">/20</span>
+                                </div>
                               </div>
                             </div>
 
