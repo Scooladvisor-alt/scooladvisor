@@ -28,6 +28,7 @@ const predefinedSubjects = [
 "Sciences économiques et sociales (SES)",
 "Numérique et sciences informatiques",
 "Droit",
+"Droit-économie",
 "Management",
 "Sciences de gestion et numérique"];
 
