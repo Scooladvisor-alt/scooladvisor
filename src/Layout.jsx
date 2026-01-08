@@ -381,20 +381,20 @@ export default function Layout({ children }) {
                 // Extraire le nom de la page pour le prefetch
                 const pageName = item.url.split('/').pop()?.split('?')[0] || '';
                 return (
-                <Link
-                  key={item.title}
-                  to={item.url}
-                  onMouseEnter={() => prefetchPage(pageName)}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-200 ${
-                  location.pathname === item.url ?
-                  'bg-gradient-to-r from-[#FF4D8D]/10 via-purple-500/10 to-blue-500/10 text-slate-900 font-medium' :
-                  'text-slate-600 hover:bg-slate-50 hover:text-slate-900'}`
-                  }>
+                  <Link
+                    key={item.title}
+                    to={item.url}
+                    onMouseEnter={() => prefetchPage(pageName)}
+                    className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-200 ${
+                    location.pathname === item.url ?
+                    'bg-gradient-to-r from-[#FF4D8D]/10 via-purple-500/10 to-blue-500/10 text-slate-900 font-medium' :
+                    'text-slate-600 hover:bg-slate-50 hover:text-slate-900'}`
+                    }>
 
                     <item.icon className="w-4 h-4" />
                     <span className="text-sm">{item.title}</span>
-                  </Link>
-                );
+                  </Link>);
+
               })}
 
               {user && (user.role === 'moderator' || user.role === 'admin') &&
@@ -413,9 +413,9 @@ export default function Layout({ children }) {
             </nav>
 
             <div className="flex items-center gap-1 sm:gap-3 pr-0 min-w-[100px] sm:min-w-[140px] justify-end">
-              {loading ? (
-                <div className="w-[100px] sm:w-[140px] h-8 bg-slate-200 rounded-lg animate-pulse" />
-              ) : user ? (
+              {loading ?
+              <div className="w-[100px] sm:w-[140px] h-8 bg-slate-200 rounded-lg animate-pulse" /> :
+              user ?
               <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <Button variant="ghost" className="flex items-center gap-2 hover:bg-slate-50 px-2 sm:px-4">
@@ -446,8 +446,8 @@ export default function Layout({ children }) {
                         Se déconnecter
                       </DropdownMenuItem>
                     </DropdownMenuContent>
-                  </DropdownMenu>
-              ) : (
+                  </DropdownMenu> :
+
               <Button
                 onClick={handleLogin} className="inline-flex items-center justify-center gap-2 whitespace-nowrap ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-primary hover:bg-primary/90 rounded-md bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-white shadow-md h-7 sm:h-8 px-2 sm:px-3 text-[10px] sm:text-xs font-semibold">
 
@@ -456,7 +456,7 @@ export default function Layout({ children }) {
                     <span className="hidden sm:inline">Connexion</span>
                     <span className="sm:hidden">Login</span>
                   </Button>
-              )}
+              }
 
               <Button
                 variant="ghost"
@@ -475,52 +475,52 @@ export default function Layout({ children }) {
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.2 }}
-              className="md:hidden absolute top-16 right-4 w-56 bg-white/95 backdrop-blur-md rounded-xl shadow-xl border border-slate-200 py-2 z-50">
+              transition={{ duration: 0.2 }} className="bg-white/95 mt-2 mb-1 ml-1 pr-2 pb-2 rounded-xl md:hidden absolute top-16 right-4 w-56 backdrop-blur-md shadow-xl border border-slate-200 z-50">
+
               {navigationItems.map((item) =>
-                <Link
-                  key={item.title}
-                  to={item.url}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className={`flex items-center gap-2 px-4 py-2.5 mx-2 rounded-lg transition-all ${
-                  location.pathname === item.url ?
-                  'bg-gradient-to-r from-[#FF4D8D]/10 via-purple-500/10 to-blue-500/10 text-slate-900 font-medium' :
-                  'text-slate-600 hover:bg-slate-50'}`
-                  }>
+              <Link
+                key={item.title}
+                to={item.url}
+                onClick={() => setMobileMenuOpen(false)}
+                className={`flex items-center gap-2 px-4 py-2.5 mx-2 rounded-lg transition-all ${
+                location.pathname === item.url ?
+                'bg-gradient-to-r from-[#FF4D8D]/10 via-purple-500/10 to-blue-500/10 text-slate-900 font-medium' :
+                'text-slate-600 hover:bg-slate-50'}`
+                }>
                     <item.icon className="w-5 h-5" />
                     <span className="text-sm">{item.title}</span>
                   </Link>
               )}
 
               {user && (user.role === 'moderator' || user.role === 'admin') &&
-                <Link
-                  to={createPageUrl("Moderation")}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className={`flex items-center gap-2 px-4 py-2.5 mx-2 rounded-lg transition-all ${
-                  location.pathname === createPageUrl("Moderation") ?
-                  'bg-amber-50 text-amber-700 font-medium' :
-                  'text-slate-600 hover:bg-slate-50'}`
-                  }>
+              <Link
+                to={createPageUrl("Moderation")}
+                onClick={() => setMobileMenuOpen(false)}
+                className={`flex items-center gap-2 px-4 py-2.5 mx-2 rounded-lg transition-all ${
+                location.pathname === createPageUrl("Moderation") ?
+                'bg-amber-50 text-amber-700 font-medium' :
+                'text-slate-600 hover:bg-slate-50'}`
+                }>
                     <ShieldCheck className="w-5 h-5" />
                     <span className="text-sm">Modération</span>
                   </Link>
               }
               
               {user &&
-                <Link
-                  to={createPageUrl("Profile")}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className={`flex items-center gap-2 px-4 py-2.5 mx-2 rounded-lg transition-all ${
-                  location.pathname === createPageUrl("Profile") ?
-                  'bg-gradient-to-r from-[#FF4D8D]/10 via-purple-500/10 to-blue-500/10 text-slate-900 font-medium' :
-                  'text-slate-600 hover:bg-slate-50'}`
-                  }>
+              <Link
+                to={createPageUrl("Profile")}
+                onClick={() => setMobileMenuOpen(false)}
+                className={`flex items-center gap-2 px-4 py-2.5 mx-2 rounded-lg transition-all ${
+                location.pathname === createPageUrl("Profile") ?
+                'bg-gradient-to-r from-[#FF4D8D]/10 via-purple-500/10 to-blue-500/10 text-slate-900 font-medium' :
+                'text-slate-600 hover:bg-slate-50'}`
+                }>
                     <UserIcon className="w-5 h-5" />
                     <span className="text-sm">Mon profil</span>
                   </Link>
               }
             </motion.div>
-          }
+            }
         </AnimatePresence>
         </div>
       </header>
