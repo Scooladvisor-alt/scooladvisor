@@ -66,7 +66,7 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
 
     setAddressLoading(true);
     try {
-      // Chercher l'établissement avec l'API adresse du gouvernement français d'abord
+      // Chercher l'établissement avec l'API adresse du gouvernement français
       const response = await fetch(
         `https://api-adresse.data.gouv.fr/search/?q=${encodeURIComponent(schoolName)}&limit=1`
       );
@@ -74,10 +74,11 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
       
       if (data.features && data.features.length > 0) {
         const firstResult = data.features[0].properties;
-        // L'API retourne l'adresse complète avec le numéro
+        // Prendre l'adresse complète avec le numéro de rue
+        const fullAddress = firstResult.label.split(',')[0]; // Prend tout avant la première virgule (numéro + rue)
         setFormData(prev => ({
           ...prev,
-          address: firstResult.name || firstResult.label.split(',')[0],
+          address: fullAddress,
           city: firstResult.city || ''
         }));
       }
@@ -227,15 +228,18 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
       if (hasLockedPrefix(formData.type)) {
         const prefix = getSchoolPrefix(formData.type);
         const nameWithoutPrefix = cleanName.substring(prefix.length).trim();
-        if (!nameWithoutPrefix || nameWithoutPrefix.length === 0) {
-          setError(`Veuillez entrer un nom complet pour l'établissement (pas seulement "${prefix.trim()}").`);
+        
+        // Vérifier que le nom n'est pas vide, ne contient pas que des espaces, et a au moins 2 caractères
+        if (!nameWithoutPrefix || nameWithoutPrefix.length < 2 || /^\s+$/.test(nameWithoutPrefix)) {
+          setError(`Veuillez entrer un nom complet et valide pour l'établissement (minimum 2 caractères après "${prefix.trim()}").`);
           setLoading(false);
           return;
         }
       } else {
         // Pour les autres types sans préfixe verrouillé
-        if (cleanName.trim().length === 0) {
-          setError("Veuillez entrer un nom pour l'établissement.");
+        const trimmedName = cleanName.trim();
+        if (trimmedName.length < 3 || /^\s+$/.test(trimmedName)) {
+          setError("Veuillez entrer un nom valide pour l'établissement (minimum 3 caractères).");
           setLoading(false);
           return;
         }
