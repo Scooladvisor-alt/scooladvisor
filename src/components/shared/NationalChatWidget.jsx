@@ -454,33 +454,36 @@ const NationalMessageBubble = ({ message, user, onEdit, onSave, onCancelEdit, on
     <div className="w-full mb-1.5">
       <div className="group relative bg-white p-2.5 rounded-xl border border-slate-100 shadow-sm hover:shadow-md transition-all duration-300">
         <div className="flex items-center justify-between gap-2 mb-1">
-          <div className="flex items-baseline gap-2">
-            <p className="font-bold text-xs bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
-              {message.is_anonymous ? "Anonyme" : message.author_name}
-            </p>
-            <p className="text-[10px] text-slate-400">
-              {formatDistanceWithTimezone(message.created_date)}
-              {message.is_edited && " (modifié)"}
-            </p>
+          <div className="flex items-center gap-2">
+            <div className="flex items-baseline gap-2">
+              <p className="font-bold text-xs bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
+                {message.is_anonymous ? "Anonyme" : message.author_name}
+              </p>
+              <p className="text-[10px] text-slate-400">
+                {formatDistanceWithTimezone(message.created_date)}
+                {message.is_edited && " (modifié)"}
+              </p>
+            </div>
+            
+            {isAuthor && (
+              <div className="flex items-center gap-0.5">
+                {canEdit && (
+                  <Button variant="ghost" size="icon" className="h-5 w-5 text-slate-400 hover:text-blue-500" onClick={() => onEdit(message)}>
+                    <Edit className="w-3 h-3" />
+                  </Button>
+                )}
+                <Button variant="ghost" size="icon" className="h-5 w-5 text-slate-400 hover:text-red-500" onClick={() => onDelete(message.id)}>
+                  <Trash2 className="w-3 h-3" />
+                </Button>
+              </div>
+            )}
           </div>
           
-          <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-            {isAuthor && canEdit && (
-              <Button variant="ghost" size="icon" className="h-5 w-5 text-slate-400 hover:text-blue-500" onClick={() => onEdit(message)}>
-                <Edit className="w-3 h-3" />
-              </Button>
-            )}
-            {isAuthor && (
-              <Button variant="ghost" size="icon" className="h-5 w-5 text-slate-400 hover:text-red-500" onClick={() => onDelete(message.id)}>
-                <Trash2 className="w-3 h-3" />
-              </Button>
-            )}
-            {!isAuthor && user && (
-              <Button variant="ghost" size="icon" className="h-5 w-5 text-slate-300 hover:text-orange-500" onClick={() => onReport(message)}>
-                <Flag className="w-3 h-3" />
-              </Button>
-            )}
-          </div>
+          {!isAuthor && user && (
+            <Button variant="ghost" size="icon" className="h-5 w-5 text-slate-300 hover:text-orange-500" onClick={() => onReport(message)}>
+              <Flag className="w-3 h-3" />
+            </Button>
+          )}
         </div>
 
         {isEditing ? (
