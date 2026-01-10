@@ -62,33 +62,7 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
     setAddressLoading(false);
   };
 
-  const searchSchoolAddress = async (schoolName) => {
-    if (!schoolName || schoolName.trim().length < 5) return;
 
-    setAddressLoading(true);
-    try {
-      // Chercher l'établissement avec l'API adresse du gouvernement français
-      const response = await fetch(
-        `https://api-adresse.data.gouv.fr/search/?q=${encodeURIComponent(schoolName)}&limit=1`
-      );
-      const data = await response.json();
-      
-      if (data.features && data.features.length > 0) {
-        const firstResult = data.features[0].properties;
-        // Prendre l'adresse complète avec le numéro de rue
-        const fullAddress = firstResult.label.split(',')[0]; // Prend tout avant la première virgule (numéro + rue)
-        setFormData(prev => ({
-          ...prev,
-          address: fullAddress,
-          city: firstResult.city || ''
-        }));
-      }
-    } catch (error) {
-      console.error("Error searching school address:", error);
-    } finally {
-      setAddressLoading(false);
-    }
-  };
 
   useEffect(() => {
     const savedData = localStorage.getItem('pending_school_submission');
@@ -353,12 +327,12 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
       }
     }}>
       <DialogContent className="max-w-[95vw] sm:max-w-3xl max-h-[85vh] overflow-y-auto rounded-2xl">
-        <DialogHeader className="text-center">
-          <DialogTitle className="text-lg sm:text-2xl font-bold text-center">
+        <DialogHeader className="pb-4 border-b border-slate-100">
+          <DialogTitle className="text-xl sm:text-2xl font-bold text-left">
             <span className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
               Ton établissement est absent ?
             </span>
-            <p className="text-sm sm:text-base font-normal text-slate-600 mt-2">Sois celui qui le fait débarquer ! 🚀</p>
+            <p className="text-sm sm:text-base font-normal text-slate-600 mt-1.5">Sois celui qui le fait débarquer ! 🚀</p>
           </DialogTitle>
         </DialogHeader>
 
@@ -378,9 +352,9 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
           </Alert>
         }
 
-        <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
-          <div className="space-y-1 sm:space-y-2">
-            <Label htmlFor="type" className="text-xs sm:text-sm">Type d'établissement *</Label>
+        <form onSubmit={handleSubmit} className="space-y-5 pt-4">
+          <div className="space-y-2">
+            <Label htmlFor="type" className="text-sm font-medium text-slate-700">Type d'établissement *</Label>
             <Select
               value={formData.type}
               onValueChange={(value) => {
@@ -399,7 +373,7 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
                 setFormData({ ...formData, type: value, name: newName });
               }}>
 
-              <SelectTrigger id="type" className="h-9 sm:h-10 text-xs sm:text-sm">
+              <SelectTrigger id="type" className="h-11 text-sm">
                 <SelectValue placeholder="Sélectionnez un type" />
               </SelectTrigger>
               <SelectContent>
@@ -413,19 +387,13 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
             </Select>
           </div>
 
-          <div className="space-y-1 sm:space-y-2">
-            <Label htmlFor="name" className="text-xs sm:text-sm">Nom de l'établissement *</Label>
+          <div className="space-y-2">
+            <Label htmlFor="name" className="text-sm font-medium text-slate-700">Nom de l'établissement *</Label>
             <Input
               id="name"
               ref={nameInputRef}
               value={formData.name}
               onChange={(e) => handleNameChange(e.target.value)}
-              onBlur={(e) => {
-                const schoolName = e.target.value.trim();
-                if (schoolName) {
-                  searchSchoolAddress(schoolName);
-                }
-              }}
               onKeyDown={(e) => {
                 if (hasLockedPrefix(formData.type)) {
                   const prefix = getSchoolPrefix(formData.type);
@@ -451,7 +419,7 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
               }}
               required
               placeholder={hasLockedPrefix(formData.type) ? `${getSchoolPrefix(formData.type)}Victor Hugo` : "École de management..."}
-              className={`h-9 sm:h-10 text-xs sm:text-sm ${nameError ? 'border-red-500 focus-visible:ring-red-500' : ''}`} />
+              className={`h-11 text-sm ${nameError ? 'border-red-500 focus-visible:ring-red-500' : ''}`} />
             
             {nameError && (
               <div className="flex items-center gap-1.5 text-red-600 bg-red-50 px-2 py-1.5 rounded-lg border border-red-200">
@@ -461,8 +429,8 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
             )}
           </div>
 
-          <div className="space-y-1 sm:space-y-2 relative" ref={addressInputRef}>
-            <Label htmlFor="address" className="text-xs sm:text-sm">Adresse *</Label>
+          <div className="space-y-2 relative" ref={addressInputRef}>
+            <Label htmlFor="address" className="text-sm font-medium text-slate-700">Adresse *</Label>
             <Input
               id="address"
               value={formData.address}
@@ -472,7 +440,7 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
               }}
               required
               placeholder="10 rue de la République"
-              className="h-9 sm:h-10 text-xs sm:text-sm" />
+              className="h-11 text-sm" />
 
             {addressLoading &&
             <div className="absolute right-3 top-9">
@@ -504,8 +472,8 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
             }
           </div>
 
-          <div className="space-y-1 sm:space-y-2">
-            <Label htmlFor="city" className="text-xs sm:text-sm">Ville *</Label>
+          <div className="space-y-2">
+            <Label htmlFor="city" className="text-sm font-medium text-slate-700">Ville *</Label>
             <div className="flex gap-2 sm:gap-3">
               <Input
                 id="city"
@@ -514,9 +482,9 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
                 onChange={(e) => setFormData({ ...formData, city: e.target.value })}
                 required
                 placeholder="Paris"
-                className="h-9 sm:h-10 text-xs sm:text-sm flex-1" />
+                className="h-11 text-sm flex-1" />
 
-              <div className="flex items-center space-x-2 px-3 bg-gradient-to-r from-pink-100 to-blue-100 rounded-lg border border-blue-200 whitespace-nowrap">
+              <div className="flex items-center space-x-2 px-3.5 h-11 bg-gradient-to-r from-pink-100 to-blue-100 rounded-lg border border-blue-200 whitespace-nowrap">
                 <Checkbox
                   id="isInternational"
                   checked={formData.isInternational}
@@ -524,7 +492,7 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
 
                 <label
                   htmlFor="isInternational"
-                  className="text-xs sm:text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer text-slate-700">
+                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer text-slate-700">
 
                   Hors France
                 </label>
@@ -532,19 +500,19 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
             </div>
           </div>
           
-          <DialogFooter className="flex flex-col sm:flex-row sm:justify-end sm:items-center gap-2 mt-4 sm:mt-6">
+          <DialogFooter className="flex flex-col sm:flex-row sm:justify-end sm:items-center gap-3 mt-6 pt-4 border-t border-slate-100">
             <Button
               type="button"
               variant="outline"
               onClick={() => onOpenChange(false)}
-              className="text-xs sm:text-sm h-8 sm:h-10">
+              className="text-sm h-11 w-full sm:w-auto">
 
               Annuler
             </Button>
             <Button
               type="submit"
               disabled={loading}
-              className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-white text-xs sm:text-sm h-8 sm:h-10 font-semibold shadow-md">
+              className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-white text-sm h-11 font-semibold shadow-md w-full sm:w-auto">
 
               {loading ?
               <>
