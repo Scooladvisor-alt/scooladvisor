@@ -30,6 +30,7 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
   const addressInputRef = useRef(null);
   const nameInputRef = useRef(null);
   const [isAddressManuallyChanged, setIsAddressManuallyChanged] = useState(false);
+  const [nameError, setNameError] = useState("");
 
   const searchAddress = async (query) => {
     if (query.length < 3) {
@@ -173,6 +174,8 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
   }, [formData.type]);
 
   const handleNameChange = (value) => {
+    setNameError(""); // Réinitialiser l'erreur à chaque changement
+    
     if (hasLockedPrefix(formData.type)) {
       const prefix = getSchoolPrefix(formData.type);
       
@@ -231,7 +234,7 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
         
         // Vérifier que le nom n'est pas vide, ne contient pas que des espaces, et a au moins 2 caractères
         if (!nameWithoutPrefix || nameWithoutPrefix.length < 2 || /^\s+$/.test(nameWithoutPrefix)) {
-          setError(`Veuillez entrer un nom complet et valide pour l'établissement (minimum 2 caractères après "${prefix.trim()}").`);
+          setNameError("Nom invalide");
           setLoading(false);
           return;
         }
@@ -239,7 +242,7 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
         // Pour les autres types sans préfixe verrouillé
         const trimmedName = cleanName.trim();
         if (trimmedName.length < 3 || /^\s+$/.test(trimmedName)) {
-          setError("Veuillez entrer un nom valide pour l'établissement (minimum 3 caractères).");
+          setNameError("Nom invalide");
           setLoading(false);
           return;
         }
@@ -346,6 +349,7 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
         setError(null);
         setSuccess(false);
         setIsAddressManuallyChanged(false);
+        setNameError("");
       }
     }}>
       <DialogContent className="max-w-[95vw] sm:max-w-3xl max-h-[85vh] overflow-y-auto rounded-2xl">
@@ -447,8 +451,14 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
               }}
               required
               placeholder={hasLockedPrefix(formData.type) ? `${getSchoolPrefix(formData.type)}Victor Hugo` : "École de management..."}
-              className="h-9 sm:h-10 text-xs sm:text-sm" />
-
+              className={`h-9 sm:h-10 text-xs sm:text-sm ${nameError ? 'border-red-500 focus-visible:ring-red-500' : ''}`} />
+            
+            {nameError && (
+              <div className="flex items-center gap-1.5 text-red-600 bg-red-50 px-2 py-1.5 rounded-lg border border-red-200">
+                <AlertCircle className="w-3.5 h-3.5 flex-shrink-0" />
+                <span className="text-xs font-medium">{nameError}</span>
+              </div>
+            )}
           </div>
 
           <div className="space-y-1 sm:space-y-2 relative" ref={addressInputRef}>
