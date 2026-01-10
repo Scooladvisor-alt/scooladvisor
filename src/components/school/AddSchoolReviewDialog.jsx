@@ -466,9 +466,6 @@ rejected → si le message enfreint les règles ci-dessus"
               {existingReview ? "Modifier mon avis" : "Noter l'établissement"}
             </span>
           </DialogTitle>
-          <p className="text-xs sm:text-sm text-slate-600 text-center mt-1">
-            Évaluez votre expérience selon {showStudentLifeBonus ? '5' : '4'} critères
-          </p>
         </DialogHeader>
 
 
@@ -616,73 +613,69 @@ rejected → si le message enfreint les règles ci-dessus"
                 }}
                 placeholder="Décris ton expérience dans cet établissement (ambiance, locaux, staff...)"
                 rows={4}
-                className="text-sm sm:text-base pb-10"
+                className="text-sm sm:text-base"
                 disabled={!canEdit} />
               
-              <div className="absolute bottom-2 left-3 right-3 flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <label 
-                    htmlFor="is_anonymous_inline"
-                    className="flex items-center gap-1.5 cursor-pointer group"
-                  >
-                    <Checkbox
-                      id="is_anonymous_inline"
-                      checked={formData.is_anonymous}
-                      onCheckedChange={(checked) => setFormData({ ...formData, is_anonymous: checked })}
-                      className="h-3.5 w-3.5"
-                      disabled={!canEdit} />
-                    <span className="text-[10px] sm:text-xs font-bold bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
-                      Anonyme {formData.is_anonymous && <span className="text-blue-500">✓</span>}
-                    </span>
-                  </label>
-
-                  <label 
-                    htmlFor="is_former_student_inline"
-                    className="flex items-center gap-1.5 cursor-pointer group"
-                  >
-                    <Checkbox
-                      id="is_former_student_inline"
-                      checked={formData.is_former_student}
-                      onCheckedChange={(checked) => setFormData({ ...formData, is_former_student: checked })}
-                      className="h-3.5 w-3.5"
-                      disabled={!canEdit} />
-                    <span className="text-[10px] sm:text-xs font-bold bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
-                      Je suis un ancien élève {formData.is_former_student && <span className="text-blue-500">✓</span>}
-                    </span>
-                  </label>
-                </div>
-
-                <span className={`text-[10px] ${formData.comment.length >= MAX_COMMENT_LENGTH ? 'text-red-500 font-medium' : 'text-slate-400'}`}>
+              <div className="absolute bottom-2 right-3 text-[10px] text-slate-400">
+                <span className={formData.comment.length >= MAX_COMMENT_LENGTH ? 'text-red-500 font-medium' : ''}>
                   {formData.comment.length}/{MAX_COMMENT_LENGTH}
                 </span>
               </div>
             </div>
+            
+            <div className="flex items-center gap-3 p-2 bg-white rounded-lg border border-slate-200">
+              <label 
+                htmlFor="is_anonymous_inline"
+                className="flex items-center gap-1.5 cursor-pointer"
+              >
+                <Checkbox
+                  id="is_anonymous_inline"
+                  checked={formData.is_anonymous}
+                  onCheckedChange={(checked) => setFormData({ ...formData, is_anonymous: checked })}
+                  className="h-3.5 w-3.5"
+                  disabled={!canEdit} />
+                <span className="text-[10px] sm:text-xs font-medium text-slate-700">
+                  Anonyme
+                </span>
+              </label>
+
+              <label 
+                htmlFor="is_former_student_inline"
+                className="flex items-center gap-1.5 cursor-pointer"
+              >
+                <Checkbox
+                  id="is_former_student_inline"
+                  checked={formData.is_former_student}
+                  onCheckedChange={(checked) => setFormData({ ...formData, is_former_student: checked })}
+                  className="h-3.5 w-3.5"
+                  disabled={!canEdit} />
+                <span className="text-[10px] sm:text-xs font-medium text-slate-700">
+                  Ancien élève
+                </span>
+              </label>
+            </div>
           </div>
           
-          <div className="flex items-start space-x-3 p-3 sm:p-4 bg-green-50 rounded-lg border-2 border-green-300">
+          <div className="flex items-center space-x-2 p-2.5 bg-green-50 rounded-lg border border-green-300">
             <Checkbox
               id="certification"
               checked={formData.certification}
               onCheckedChange={(checked) => setFormData({ ...formData, certification: checked })}
-              className="mt-0.5"
+              className="h-3.5 w-3.5"
               disabled={!canEdit} />
 
-            <div className="grid gap-1.5 leading-none">
-               <label
-                htmlFor="certification"
-                className="text-xs sm:text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-green-900">
-
-                Je certifie que cet avis est constructif et bienveillant.
-              </label>
-            </div>
+            <label
+              htmlFor="certification"
+              className="text-[10px] sm:text-xs font-medium cursor-pointer text-green-900">
+              Je certifie que cet avis est constructif et bienveillant
+            </label>
           </div>
 
-           <Alert className="bg-red-50 border-red-300">
-            <AlertCircle className="h-4 w-4 text-red-600" />
-            <AlertDescription className="text-red-900 text-[10px] sm:text-sm font-medium">
-              <strong>Avertissement légal :</strong> Chaque utilisateur est seul responsable de ses propos. Tout contenu diffamatoire, injurieux ou discriminatoire est interdit.
-            </AlertDescription>
-          </Alert>
+           <div className="p-2 bg-red-50 rounded-lg border border-red-200">
+            <p className="text-[9px] sm:text-[10px] text-red-800">
+              <strong>Avertissement :</strong> Tu es responsable de tes propos. Tout contenu diffamatoire ou injurieux est interdit.
+            </p>
+          </div>
 
           {success &&
           <Alert className="bg-green-50 border-green-200">
