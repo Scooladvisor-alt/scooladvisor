@@ -466,22 +466,22 @@ const NationalMessageBubble = ({ message, user, onEdit, onSave, onCancelEdit, on
             </div>
             
             {isAuthor && (
-              <div className="flex items-center gap-0.5">
+              <div className="flex items-center gap-1 ml-2">
                 {canEdit && (
-                  <Button variant="ghost" size="icon" className="h-5 w-5 text-slate-400 hover:text-blue-500" onClick={() => onEdit(message)}>
-                    <Edit className="w-3 h-3" />
+                  <Button variant="ghost" size="icon" className="h-6 w-6 text-blue-500 hover:bg-blue-50" onClick={() => onEdit(message)}>
+                    <Edit className="w-3.5 h-3.5" />
                   </Button>
                 )}
-                <Button variant="ghost" size="icon" className="h-5 w-5 text-slate-400 hover:text-red-500" onClick={() => onDelete(message.id)}>
-                  <Trash2 className="w-3 h-3" />
+                <Button variant="ghost" size="icon" className="h-6 w-6 text-red-500 hover:bg-red-50" onClick={() => onDelete(message.id)}>
+                  <Trash2 className="w-3.5 h-3.5" />
                 </Button>
               </div>
             )}
           </div>
           
           {!isAuthor && user && (
-            <Button variant="ghost" size="icon" className="h-5 w-5 text-slate-300 hover:text-orange-500" onClick={() => onReport(message)}>
-              <Flag className="w-3 h-3" />
+            <Button variant="ghost" size="icon" className="h-6 w-6 text-orange-500 hover:bg-orange-50" onClick={() => onReport(message)}>
+              <Flag className="w-3.5 h-3.5" />
             </Button>
           )}
         </div>
