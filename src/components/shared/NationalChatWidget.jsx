@@ -453,37 +453,51 @@ const NationalMessageBubble = ({ message, user, onEdit, onSave, onCancelEdit, on
   return (
     <div className="w-full mb-1.5">
       <div className="group relative bg-white p-2.5 rounded-xl border border-slate-100 shadow-sm hover:shadow-md transition-all duration-300">
-        <div className="flex items-center justify-between gap-2 mb-1">
-          <div className="flex items-center gap-2">
-            <div className="flex items-baseline gap-2">
-              <p className="font-bold text-xs bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
-                {message.is_anonymous ? "Anonyme" : message.author_name}
-              </p>
-              <p className="text-[10px] text-slate-400">
-                {formatDistanceWithTimezone(message.created_date)}
-                {message.is_edited && " (modifié)"}
-              </p>
-            </div>
-            
-            {isAuthor && (
-              <div className="flex items-center gap-1 ml-2">
-                {canEdit && (
-                  <Button variant="ghost" size="icon" className="h-6 w-6 text-blue-500 hover:bg-blue-50" onClick={() => onEdit(message)}>
-                    <Edit className="w-3.5 h-3.5" />
-                  </Button>
-                )}
-                <Button variant="ghost" size="icon" className="h-6 w-6 text-red-500 hover:bg-red-50" onClick={() => onDelete(message.id)}>
-                  <Trash2 className="w-3.5 h-3.5" />
-                </Button>
-              </div>
-            )}
+        <div className="flex items-center justify-between gap-2 mb-2">
+          <div className="flex items-baseline gap-2 flex-1">
+            <p className="font-bold text-xs bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
+              {message.is_anonymous ? "Anonyme" : message.author_name}
+            </p>
+            <p className="text-[10px] text-slate-400">
+              {formatDistanceWithTimezone(message.created_date)}
+              {message.is_edited && " (modifié)"}
+            </p>
           </div>
           
-          {!isAuthor && user && (
-            <Button variant="ghost" size="icon" className="h-6 w-6 text-orange-500 hover:bg-orange-50" onClick={() => onReport(message)}>
-              <Flag className="w-3.5 h-3.5" />
-            </Button>
-          )}
+          <div className="flex items-center gap-1.5">
+            {isAuthor && canEdit && (
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="h-7 px-2 bg-blue-50 border-blue-200 text-blue-600 hover:bg-blue-100" 
+                onClick={() => onEdit(message)}
+              >
+                <Edit className="w-3.5 h-3.5 mr-1" />
+                <span className="text-[10px] font-medium">Modifier</span>
+              </Button>
+            )}
+            {isAuthor && (
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="h-7 px-2 bg-red-50 border-red-200 text-red-600 hover:bg-red-100" 
+                onClick={() => onDelete(message.id)}
+              >
+                <Trash2 className="w-3.5 h-3.5 mr-1" />
+                <span className="text-[10px] font-medium">Supprimer</span>
+              </Button>
+            )}
+            {!isAuthor && user && (
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                className="h-7 w-7 text-orange-500 hover:bg-orange-50" 
+                onClick={() => onReport(message)}
+              >
+                <Flag className="w-3.5 h-3.5" />
+              </Button>
+            )}
+          </div>
         </div>
 
         {isEditing ? (
