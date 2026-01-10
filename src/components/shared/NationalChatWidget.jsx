@@ -479,7 +479,7 @@ const NationalMessageBubble = ({ message, user, onEdit, onSave, onCancelEdit, on
               <Button 
                 variant="outline" 
                 size="sm" 
-                className="h-7 px-2 bg-red-50 border-red-200 text-red-600 hover:bg-red-100" 
+                className="h-7 px-2 bg-blue-50 border-blue-200 text-blue-600 hover:bg-blue-100" 
                 onClick={() => onDelete(message.id)}
               >
                 <Trash2 className="w-3.5 h-3.5 mr-1" />
