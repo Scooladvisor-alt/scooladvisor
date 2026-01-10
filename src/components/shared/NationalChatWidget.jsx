@@ -213,8 +213,7 @@ Si la décision est "approved", "reason" peut être vide ou null.`,
 
       setNewMessage("");
       setIsAnonymous(false);
-      setShowDialog(false);
-      loadMessages();
+      await loadMessages();
       toast.success("✅ Message publié !");
     } catch (error) {
       toast.error("❌ Erreur technique. Réessayez.");
