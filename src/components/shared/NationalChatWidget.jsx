@@ -464,6 +464,27 @@ const NationalMessageBubble = ({ message, user, onEdit, onSave, onCancelEdit, on
           </div>
           
           <div className="flex items-center gap-1.5">
+            {!isAuthor && user && (
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                className="h-7 w-7 text-red-500 hover:bg-red-50" 
+                onClick={() => onReport(message)}
+              >
+                <Flag className="w-3.5 h-3.5" />
+              </Button>
+            )}
+            {isAuthor && (
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="h-7 px-2 bg-blue-50 border-blue-200 text-blue-600 hover:bg-blue-100 font-semibold" 
+                onClick={() => onDelete(message.id)}
+              >
+                <Trash2 className="w-3.5 h-3.5 mr-1" />
+                <span className="text-[10px] font-medium">Supprimer</span>
+              </Button>
+            )}
             {isAuthor && canEdit && (
               <Button 
                 variant="outline" 
@@ -473,27 +494,6 @@ const NationalMessageBubble = ({ message, user, onEdit, onSave, onCancelEdit, on
               >
                 <Edit className="w-3.5 h-3.5 mr-1" />
                 <span className="text-[10px] font-medium">Modifier</span>
-              </Button>
-            )}
-            {isAuthor && (
-              <Button 
-                variant="outline" 
-                size="sm" 
-                className="h-7 px-2 bg-blue-50 border-blue-200 text-blue-600 hover:bg-blue-100" 
-                onClick={() => onDelete(message.id)}
-              >
-                <Trash2 className="w-3.5 h-3.5 mr-1" />
-                <span className="text-[10px] font-medium">Supprimer</span>
-              </Button>
-            )}
-            {!isAuthor && user && (
-              <Button 
-                variant="ghost" 
-                size="icon" 
-                className="h-7 w-7 text-orange-500 hover:bg-orange-50" 
-                onClick={() => onReport(message)}
-              >
-                <Flag className="w-3.5 h-3.5" />
               </Button>
             )}
           </div>
