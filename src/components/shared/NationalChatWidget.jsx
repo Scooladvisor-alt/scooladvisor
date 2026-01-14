@@ -445,7 +445,7 @@ Si la décision est "approved", "reason" peut être vide ou null.`,
 }
 
 const NationalMessageBubble = ({ message, user, onEdit, onSave, onCancelEdit, onDelete, onReport, editingMessageId, setEditedContent, editedContent, index }) => {
-  const isAuthor = user && message.author_email === user.email;
+  const isAuthor = user && message.created_by === user.email;
   const isEditing = editingMessageId === message.id;
   const canEdit = isAuthor && (message.edit_count || 0) < 3;
 
@@ -474,27 +474,29 @@ const NationalMessageBubble = ({ message, user, onEdit, onSave, onCancelEdit, on
                 <Flag className="w-3.5 h-3.5" />
               </Button>
             )}
-            {isAuthor && (
-              <Button 
-                variant="outline" 
-                size="sm" 
-                className="h-7 px-2 bg-blue-50 border-blue-200 text-blue-600 hover:bg-blue-100 font-semibold" 
-                onClick={() => onDelete(message.id)}
-              >
-                <Trash2 className="w-3.5 h-3.5 mr-1" />
-                <span className="text-[10px] font-medium">Supprimer</span>
-              </Button>
-            )}
-            {isAuthor && canEdit && (
-              <Button 
-                variant="outline" 
-                size="sm" 
-                className="h-7 px-2 bg-blue-50 border-blue-200 text-blue-600 hover:bg-blue-100" 
-                onClick={() => onEdit(message)}
-              >
-                <Edit className="w-3.5 h-3.5 mr-1" />
-                <span className="text-[10px] font-medium">Modifier</span>
-              </Button>
+            {user && isAuthor && (
+              <>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="h-7 px-2 bg-red-50 border-red-200 text-red-600 hover:bg-red-100 font-semibold shadow-sm" 
+                  onClick={() => onDelete(message.id)}
+                >
+                  <Trash2 className="w-3.5 h-3.5 mr-1" />
+                  <span className="text-[10px] font-medium">Supprimer</span>
+                </Button>
+                {canEdit && (
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    className="h-7 px-2 bg-blue-50 border-blue-200 text-blue-600 hover:bg-blue-100" 
+                    onClick={() => onEdit(message)}
+                  >
+                    <Edit className="w-3.5 h-3.5 mr-1" />
+                    <span className="text-[10px] font-medium">Modifier</span>
+                  </Button>
+                )}
+              </>
             )}
           </div>
         </div>
