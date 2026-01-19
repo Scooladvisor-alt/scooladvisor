@@ -44,7 +44,7 @@ export default function JoinFamilyDialog({ open, onOpenChange, actionDescription
 
           {/* Message */}
           <p className="text-center text-slate-600 text-sm sm:text-base mb-6">
-            Pour <strong>{actionDescription}</strong>, connecte-toi et deviens membre de la communauté Scooladvisor ! 🎓
+            Pour <strong>{actionDescription}</strong>, connecte-toi et deviens membre de la communauté Scooladvisor !
           </p>
 
           {/* Avantages */}
