@@ -10,6 +10,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AlertCircle, CheckCircle2, Loader2 } from "lucide-react";
+import JoinFamilyDialog from "@/components/shared/JoinFamilyDialog";
+import { useJoinFamily } from "@/components/shared/useJoinFamily";
 
 export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
   const [loading, setLoading] = useState(false);
@@ -22,6 +24,7 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
     city: "",
     isInternational: false
   });
+  const { showJoinDialog, actionDescription, requireAuth, closeDialog } = useJoinFamily();
 
   const [addressSuggestions, setAddressSuggestions] = useState([]);
   const [showAddressSuggestions, setShowAddressSuggestions] = useState(false);
@@ -181,9 +184,8 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
         user = null;
       }
 
-      if (!user) {
+      if (!requireAuth(user, "ajouter cet établissement")) {
         localStorage.setItem('pending_school_submission', JSON.stringify(formData));
-        await base44.auth.redirectToLogin(window.location.href);
         return;
       }
 
@@ -516,6 +518,12 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
           </DialogFooter>
         </form>
       </DialogContent>
+      
+      <JoinFamilyDialog
+        open={showJoinDialog}
+        onOpenChange={closeDialog}
+        actionDescription={actionDescription}
+      />
     </Dialog>);
 
 }
