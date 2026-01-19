@@ -12,6 +12,8 @@ import { toast } from "sonner";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import ReportDialog from "@/components/shared/ReportDialog";
+import JoinFamilyDialog from "@/components/shared/JoinFamilyDialog";
+import { useJoinFamily } from "@/components/shared/useJoinFamily";
 
 // Helper function pour corriger le fuseau horaire
 const formatDateWithTimezone = (dateString, formatStr) => {
@@ -38,6 +40,7 @@ export default function NationalChatWidget() {
   const [editedContent, setEditedContent] = useState("");
   const [reportingMessage, setReportingMessage] = useState(null);
   const [showReportDialog, setShowReportDialog] = useState(false);
+  const { showJoinDialog, actionDescription, requireAuth, closeDialog } = useJoinFamily();
 
   const MAX_MESSAGE_LENGTH = 300;
 
@@ -139,8 +142,7 @@ Si la décision est "approved", "reason" peut être vide ou null.`,
   };
 
   const handlePublish = async () => {
-    if (!user) {
-      toast.error("Vous devez être connecté pour publier un message.");
+    if (!requireAuth(user, "publier un message")) {
       return;
     }
     if (!newMessage.trim()) {
@@ -294,8 +296,7 @@ Si la décision est "approved", "reason" peut être vide ou null.`,
   };
 
   const handleReportClick = (message) => {
-    if (!user) {
-      toast.error("Vous devez être connecté pour signaler.");
+    if (!requireAuth(user, "signaler un message")) {
       return;
     }
     setReportingMessage(message);
@@ -440,6 +441,12 @@ Si la décision est "approved", "reason" peut être vide ou null.`,
           onSuccess={() => setReportingMessage(null)}
         />
       )}
+
+      <JoinFamilyDialog
+        open={showJoinDialog}
+        onOpenChange={closeDialog}
+        actionDescription={actionDescription}
+      />
     </>);
 
 }
