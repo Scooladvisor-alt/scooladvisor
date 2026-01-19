@@ -59,7 +59,7 @@ export default function JoinFamilyDialog({ open, onOpenChange, actionDescription
             </div>
             <div className="flex items-center gap-2 text-xs sm:text-sm text-slate-700">
               <span className="text-green-500">✓</span>
-              <span>Participe au chat national</span>
+              <span>Participe aux chats</span>
             </div>
           </div>
 
