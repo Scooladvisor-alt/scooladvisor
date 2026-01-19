@@ -509,60 +509,58 @@ Réponds UNIQUEMENT par "approved" ou "rejected".`,
             <Label htmlFor="comment" className="text-sm sm:text-base">
               Appréciation générale *
             </Label>
-            <div className="relative">
-              <Textarea
-                id="comment"
-                value={formData.comment}
-                onChange={(e) => {
-                  const text = e.target.value;
-                  if (text.length <= MAX_COMMENT_LENGTH) {
-                    setFormData({ ...formData, comment: text });
-                  }
-                }}
-                placeholder="Décris ton expérience avec ce prof (cours, ambiance, méthodes...)"
-                rows={4}
-                className="text-sm sm:text-base pb-10"
-                disabled={!canEdit}
-              />
-              
-              <div className="absolute bottom-2 left-3 right-3 flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <label 
-                    htmlFor="is_anonymous_inline"
-                    className="flex items-center gap-1.5 cursor-pointer group"
-                  >
-                    <Checkbox
-                      id="is_anonymous_inline"
-                      checked={formData.is_anonymous}
-                      onCheckedChange={(checked) => setFormData({ ...formData, is_anonymous: checked })}
-                      className="h-3.5 w-3.5"
-                      disabled={!canEdit}
-                    />
-                    <span className="text-[10px] sm:text-xs font-bold bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
-                      Anonyme {formData.is_anonymous && <span className="text-blue-500">✓</span>}
-                    </span>
-                  </label>
+            <Textarea
+              id="comment"
+              value={formData.comment}
+              onChange={(e) => {
+                const text = e.target.value;
+                if (text.length <= MAX_COMMENT_LENGTH) {
+                  setFormData({ ...formData, comment: text });
+                }
+              }}
+              placeholder="Décris ton expérience avec ce prof (cours, ambiance, méthodes...)"
+              rows={4}
+              className="text-sm sm:text-base"
+              disabled={!canEdit}
+            />
+            
+            <div className="flex items-center justify-between gap-3 p-2 bg-white rounded-lg border border-slate-200">
+              <div className="flex items-center gap-3">
+                <label 
+                  htmlFor="is_anonymous_inline"
+                  className="flex items-center gap-1.5 cursor-pointer"
+                >
+                  <Checkbox
+                    id="is_anonymous_inline"
+                    checked={formData.is_anonymous}
+                    onCheckedChange={(checked) => setFormData({ ...formData, is_anonymous: checked })}
+                    className="h-3.5 w-3.5"
+                    disabled={!canEdit}
+                  />
+                  <span className="text-[10px] sm:text-xs font-medium text-slate-700">
+                    Anonyme
+                  </span>
+                </label>
 
-                  <label 
-                    htmlFor="is_former_student_inline"
-                    className="flex items-center gap-1.5 cursor-pointer group"
-                  >
-                    <Checkbox
-                      id="is_former_student_inline"
-                      checked={formData.is_former_student}
-                      onCheckedChange={(checked) => setFormData({ ...formData, is_former_student: checked })}
-                      className="h-3.5 w-3.5"
-                      disabled={!canEdit} />
-                    <span className="text-[10px] sm:text-xs font-bold bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
-                      Je suis un ancien élève {formData.is_former_student && <span className="text-blue-500">✓</span>}
-                    </span>
-                  </label>
-                </div>
-
-                <span className={`text-[10px] ${formData.comment.length >= MAX_COMMENT_LENGTH ? 'text-red-500 font-medium' : 'text-slate-400'}`}>
-                  {formData.comment.length}/{MAX_COMMENT_LENGTH}
-                </span>
+                <label 
+                  htmlFor="is_former_student_inline"
+                  className="flex items-center gap-1.5 cursor-pointer"
+                >
+                  <Checkbox
+                    id="is_former_student_inline"
+                    checked={formData.is_former_student}
+                    onCheckedChange={(checked) => setFormData({ ...formData, is_former_student: checked })}
+                    className="h-3.5 w-3.5"
+                    disabled={!canEdit} />
+                  <span className="text-[10px] sm:text-xs font-medium text-slate-700">
+                    Ancien élève
+                  </span>
+                </label>
               </div>
+              
+              <span className={`text-[10px] whitespace-nowrap ${formData.comment.length >= MAX_COMMENT_LENGTH ? 'text-red-500 font-medium' : 'text-slate-400'}`}>
+                {formData.comment.length}/{MAX_COMMENT_LENGTH}
+              </span>
             </div>
           </div>
 
