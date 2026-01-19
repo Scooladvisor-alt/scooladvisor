@@ -14,6 +14,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import ReportDialog from "../shared/ReportDialog";
 import { toast } from "sonner";
 import GradientSpinner from "@/components/shared/GradientSpinner";
+import JoinFamilyDialog from "@/components/shared/JoinFamilyDialog";
+import { useJoinFamily } from "@/components/shared/useJoinFamily";
 
 // Helper function pour formater les dates correctement
 const formatDateWithTimezone = (dateString, formatStr) => {
@@ -59,6 +61,7 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
   const [reviewUsers, setReviewUsers] = useState({});
   const [expandedReviews, setExpandedReviews] = useState(new Set());
   const [hasMoreReviews, setHasMoreReviews] = useState(true);
+  const { showJoinDialog, actionDescription, requireAuth, closeDialog } = useJoinFamily();
 
   useEffect(() => {
     loadReviews(true);
@@ -213,8 +216,7 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
   };
 
   const handleLike = async (review) => {
-    if (!user) {
-      await base44.auth.redirectToLogin(window.location.href);
+    if (!requireAuth(user, "liker cet avis")) {
       return;
     }
 
@@ -531,6 +533,12 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
         }} />
 
       }
+      
+      <JoinFamilyDialog
+        open={showJoinDialog}
+        onOpenChange={closeDialog}
+        actionDescription={actionDescription}
+      />
     </>);
 
 }

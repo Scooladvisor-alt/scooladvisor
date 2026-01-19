@@ -9,6 +9,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AlertCircle, CheckCircle, Plus, ChevronDown } from "lucide-react";
 import { moderateContent } from "@/functions/moderateContent";
+import JoinFamilyDialog from "@/components/shared/JoinFamilyDialog";
+import { useJoinFamily } from "@/components/shared/useJoinFamily";
 
 const predefinedSubjects = [
 "Français",
@@ -137,6 +139,7 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
     photo_url: teacherAvatars.length > 0 ? teacherAvatars[0].url : "",
     is_former: false
   });
+  const { showJoinDialog, actionDescription, requireAuth, closeDialog } = useJoinFamily();
 
   const checkTeacherLimits = async () => {
     const user = await base44.auth.me();
@@ -226,9 +229,8 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
       user = null;
     }
 
-    if (!user) {
+    if (!requireAuth(user, "ajouter un professeur")) {
       localStorage.setItem('pending_teacher_submission_school_' + schoolId, JSON.stringify(formData));
-      await base44.auth.redirectToLogin(window.location.href);
       return;
     }
 
@@ -482,6 +484,12 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
           </DialogFooter>
         </form>
       </DialogContent>
+      
+      <JoinFamilyDialog
+        open={showJoinDialog}
+        onOpenChange={closeDialog}
+        actionDescription={actionDescription}
+      />
     </Dialog>);
 
 }
