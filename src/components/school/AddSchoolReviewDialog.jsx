@@ -13,6 +13,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AlertCircle, CheckCircle, Star, Heart, Users, Building2, Utensils } from "lucide-react";
 import { moderateContent } from "@/functions/moderateContent";
+import JoinFamilyDialog from "@/components/shared/JoinFamilyDialog";
+import { useJoinFamily } from "@/components/shared/useJoinFamily";
 
 export default function AddSchoolReviewDialog({ open, onOpenChange, schoolId, existingReview, onSuccess }) {
   const [loading, setLoading] = useState(false);
@@ -33,6 +35,7 @@ export default function AddSchoolReviewDialog({ open, onOpenChange, schoolId, ex
     is_former_student: false,
     certification: false
   });
+  const { showJoinDialog, actionDescription, requireAuth, closeDialog } = useJoinFamily();
 
   const MAX_COMMENT_LENGTH = 300;
 
@@ -284,9 +287,8 @@ rejected → si le message enfreint les règles ci-dessus"
         user = null;
       }
 
-      if (!user) {
+      if (!requireAuth(user, "publier cet avis")) {
         localStorage.setItem('pending_school_review_school_' + schoolId, JSON.stringify(formData));
-        await base44.auth.redirectToLogin(window.location.href);
         return;
       }
 
@@ -698,6 +700,12 @@ rejected → si le message enfreint les règles ci-dessus"
           </DialogFooter>
         </form>
       </DialogContent>
+      
+      <JoinFamilyDialog
+        open={showJoinDialog}
+        onOpenChange={closeDialog}
+        actionDescription={actionDescription}
+      />
     </Dialog>);
 
 }

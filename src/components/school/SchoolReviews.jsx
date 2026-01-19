@@ -10,6 +10,8 @@ import ReportDialog from "../shared/ReportDialog";
 import { toast } from 'sonner';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import GradientSpinner from "@/components/shared/GradientSpinner";
+import JoinFamilyDialog from "@/components/shared/JoinFamilyDialog";
+import { useJoinFamily } from "@/components/shared/useJoinFamily";
 
 const criteriaIcons = {
   ambiance: { icon: Heart, label: "Ambiance", color: "text-pink-600" },
@@ -48,6 +50,7 @@ export default function SchoolReviews({ schoolId, user, onReload, onEditReview, 
   const [antoninSummary, setAntoninSummary] = useState("");
   const [loadingAntonin, setLoadingAntonin] = useState(false);
   const [expandedReviews, setExpandedReviews] = useState(new Set());
+  const { showJoinDialog, actionDescription, requireAuth, closeDialog } = useJoinFamily();
 
   useEffect(() => {
     const loadReviews = async () => {
@@ -139,8 +142,7 @@ export default function SchoolReviews({ schoolId, user, onReload, onEditReview, 
   };
 
   const handleLike = async (review) => {
-    if (!user) {
-      await base44.auth.redirectToLogin(window.location.href);
+    if (!requireAuth(user, "liker cet avis")) {
       return;
     }
 
@@ -580,6 +582,12 @@ Rédige maintenant ton résumé façon "L'avis de Satoshi" en 3 phrases max.`;
           </div>
         </DialogContent>
       </Dialog>
+
+      <JoinFamilyDialog
+        open={showJoinDialog}
+        onOpenChange={closeDialog}
+        actionDescription={actionDescription}
+      />
     </>);
 
 }

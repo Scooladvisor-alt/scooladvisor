@@ -14,6 +14,8 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AlertCircle, CheckCircle, Star, Heart, Brain, FileText, BookOpen } from "lucide-react";
 import { toast } from "sonner";
 import { moderateContent } from "@/functions/moderateContent";
+import JoinFamilyDialog from "@/components/shared/JoinFamilyDialog";
+import { useJoinFamily } from "@/components/shared/useJoinFamily";
 
 export default function AddTeacherReviewDialog({ open, onOpenChange, teacherId, existingReview, setExistingReview, onSuccess }) {
   const [loading, setLoading] = useState(false);
@@ -29,6 +31,7 @@ export default function AddTeacherReviewDialog({ open, onOpenChange, teacherId, 
     is_former_student: false,
     certification: false // Added certification field
   });
+  const { showJoinDialog, actionDescription, requireAuth, closeDialog } = useJoinFamily();
 
   const MAX_COMMENT_LENGTH = 300;
 
@@ -267,9 +270,8 @@ Réponds UNIQUEMENT par "approved" ou "rejected".`,
         user = null;
       }
 
-      if (!user) {
+      if (!requireAuth(user, "publier cet avis")) {
         localStorage.setItem('pending_teacher_review_teacher_' + teacherId, JSON.stringify(formData));
-        await base44.auth.redirectToLogin(window.location.href);
         return;
       }
       
@@ -616,6 +618,12 @@ Réponds UNIQUEMENT par "approved" ou "rejected".`,
           </DialogFooter>
         </form>
       </DialogContent>
+      
+      <JoinFamilyDialog
+        open={showJoinDialog}
+        onOpenChange={closeDialog}
+        actionDescription={actionDescription}
+      />
     </Dialog>);
 
 }
