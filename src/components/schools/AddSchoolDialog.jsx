@@ -119,6 +119,7 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
     const handleClickOutside = (event) => {
       if (addressInputRef.current && !addressInputRef.current.contains(event.target)) {
         setShowAddressSuggestions(false);
+        // Garde le texte entré par l'utilisateur, ne le réinitialise pas
       }
     };
 
