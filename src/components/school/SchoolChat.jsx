@@ -558,7 +558,7 @@ Si la décision est "approved", la "reason" doit être null.`,
           <div className="border-t bg-white p-2">
             <div className="relative">
               <Textarea
-                placeholder={user ? "Partage un souvenir, une anecdote... 💬" : "Connecte-toi pour écrire"}
+                placeholder={user ? "Partage un souvenir, une anecdote..." : "Connecte-toi pour écrire"}
                 value={newMessage}
                 onChange={(e) => {
                   const text = e.target.value;
