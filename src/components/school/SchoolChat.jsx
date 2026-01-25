@@ -555,83 +555,60 @@ Si la décision est "approved", la "reason" doit être null.`,
             }
           </div>
 
-          <div className="border-t bg-white p-3 sm:p-4">
-            <div className="bg-gradient-to-br from-slate-50 to-blue-50/30 rounded-2xl border-2 border-slate-200 shadow-sm overflow-hidden">
-              <div className="relative">
-                <Textarea
-                  placeholder={user ? "Partage un souvenir, une anecdote... 💬" : "Connecte-toi pour écrire"}
-                  value={newMessage}
-                  onChange={(e) => {
-                    const text = e.target.value;
-                    if (text.length <= MAX_MESSAGE_LENGTH) {
-                      setNewMessage(text);
-                    }
-                  }}
-                  className="min-h-[80px] sm:min-h-[100px] text-sm sm:text-base border-0 bg-transparent resize-none focus-visible:ring-0 focus-visible:ring-offset-0"
-                  disabled={!user} />
-              </div>
+          <div className="border-t bg-white p-2">
+            <div className="relative">
+              <Textarea
+                placeholder={user ? "Partage un souvenir, une anecdote... 💬" : "Connecte-toi pour écrire"}
+                value={newMessage}
+                onChange={(e) => {
+                  const text = e.target.value;
+                  if (text.length <= MAX_MESSAGE_LENGTH) {
+                    setNewMessage(text);
+                  }
+                }}
+                className="min-h-[60px] text-xs pr-20 pb-8 resize-none rounded-2xl"
+                disabled={!user} 
+              />
               
-              <div className="bg-white/80 backdrop-blur-sm border-t border-slate-200 px-3 py-2 flex items-center justify-between gap-3">
-                <div className="flex items-center gap-3 flex-1">
-                  {user && (
-                    <div className="flex items-center gap-2 bg-gradient-to-r from-purple-50 to-blue-50 px-3 py-1.5 rounded-full border border-purple-200/50">
-                      <Checkbox
-                        id="anonymous_chat"
-                        checked={isAnonymous}
-                        onCheckedChange={setIsAnonymous}
-                        className="w-4 h-4" />
-                      <Label htmlFor="anonymous_chat" className="text-xs sm:text-sm cursor-pointer font-medium text-slate-700">
-                        Anonyme
-                      </Label>
-                    </div>
-                  )}
-                  
-                  <div className="text-[10px] sm:text-xs text-slate-500 font-medium">
-                    <span className={newMessage.length >= MAX_MESSAGE_LENGTH ? "text-red-600" : ""}>
-                      {newMessage.length}/{MAX_MESSAGE_LENGTH}
-                    </span>
-                    {newMessage.length < MIN_MESSAGE_LENGTH && newMessage.length > 0 && (
-                      <span className="ml-1 text-orange-600">(min {MIN_MESSAGE_LENGTH})</span>
-                    )}
+              <div className="absolute bottom-2 left-2 flex items-center gap-2">
+                {user && (
+                  <div className="flex items-center space-x-1 bg-slate-50 px-1.5 py-0.5 rounded-md border border-slate-100">
+                    <Checkbox
+                      id="anonymous_chat"
+                      checked={isAnonymous}
+                      onCheckedChange={setIsAnonymous} 
+                      className="h-3.5 w-3.5"
+                    />
+                    <Label htmlFor="anonymous_chat" className="text-[10px] cursor-pointer font-bold bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
+                      Anonyme
+                    </Label>
                   </div>
-                </div>
+                )}
+              </div>
 
-                <div className="flex gap-2">
-                  <Button 
-                    variant="ghost" 
-                    onClick={() => setShowDialog(false)} 
-                    size="sm" 
-                    className="text-xs sm:text-sm h-8 sm:h-9 px-3 sm:px-4 rounded-full hover:bg-slate-100">
-                    Annuler
-                  </Button>
-                  {user ? (
-                    <Button
-                      onClick={handlePublish}
-                      disabled={!newMessage.trim() || postLoading || newMessage.length > MAX_MESSAGE_LENGTH || newMessage.length < MIN_MESSAGE_LENGTH}
-                      className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 text-white hover:opacity-90 disabled:opacity-50 text-xs sm:text-sm h-8 sm:h-9 px-4 sm:px-6 rounded-full shadow-md hover:shadow-lg transition-all"
-                      size="sm">
-                      {postLoading ? (
-                        <>
-                          <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                          <span className="hidden sm:inline">Envoi...</span>
-                        </>
-                      ) : (
-                        <>
-                          <Send className="w-4 h-4 mr-2" />
-                          Publier
-                        </>
-                      )}
-                    </Button>
-                  ) : (
-                    <Button
-                      onClick={() => base44.auth.redirectToLogin(window.location.href)}
-                      className="bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:opacity-90 text-xs sm:text-sm h-8 sm:h-9 px-4 sm:px-6 rounded-full shadow-md"
-                      size="sm">
-                      <Send className="w-4 h-4 mr-2" />
-                      Connexion
-                    </Button>
-                  )}
-                </div>
+              <div className="absolute bottom-2 right-2 flex items-center gap-2">
+                 <span className={`text-[9px] mr-1 ${newMessage.length >= MAX_MESSAGE_LENGTH ? 'text-red-500' : 'text-slate-400'}`}>
+                    {newMessage.length}/{MAX_MESSAGE_LENGTH}
+                 </span>
+                 
+                 {user ? (
+                   <Button
+                    onClick={handlePublish}
+                    disabled={!newMessage.trim() || postLoading || newMessage.length > MAX_MESSAGE_LENGTH || newMessage.length < MIN_MESSAGE_LENGTH}
+                    className="h-6 px-2.5 bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 text-white text-[10px] rounded-lg"
+                    size="sm"
+                   >
+                     {postLoading ? <Loader2 className="w-2.5 h-2.5 animate-spin" /> : <Send className="w-2.5 h-2.5" />}
+                   </Button>
+                 ) : (
+                   <Button
+                    onClick={() => base44.auth.redirectToLogin(window.location.href)}
+                    className="h-6 px-2.5 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-[10px] rounded-lg"
+                    size="sm"
+                   >
+                     Connexion
+                   </Button>
+                 )}
               </div>
             </div>
           </div>
