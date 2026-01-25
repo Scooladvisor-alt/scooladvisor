@@ -453,11 +453,11 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
                         : 'p-[2px] bg-slate-200 hover:bg-gradient-to-r hover:from-[#FF4D8D]/50 hover:via-purple-500/50 hover:to-blue-500/50'
                     }`}
                   >
-                    <div className="rounded-md w-full h-full flex items-center justify-center bg-white p-1">
+                    <div className="rounded-md w-full aspect-square flex items-center justify-center bg-white overflow-hidden">
                       <img
                         src={avatar.url}
                         alt={avatar.name}
-                        className="w-full h-10 sm:h-16 md:h-20 object-contain rounded-md" 
+                        className="w-full h-full object-cover scale-110 sm:scale-100 sm:object-contain" 
                       />
                     </div>
                   </button>
