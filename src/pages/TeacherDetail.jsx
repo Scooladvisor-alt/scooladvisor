@@ -190,7 +190,7 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
 
   const canModerate = user && (user.role === 'admin' || user.role === 'moderator');
 
-  const hasRating = teacher.average_rating !== undefined && teacher.average_rating !== null && teacher.average_rating > 0;
+  const hasRating = teacher.review_count > 0 && teacher.average_rating !== undefined && teacher.average_rating !== null && teacher.average_rating > 0;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-pink-50/30 to-blue-50">
