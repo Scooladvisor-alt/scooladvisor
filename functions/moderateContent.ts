@@ -14,10 +14,12 @@ Deno.serve(async (req) => {
 📝 Contenu à analyser : "${text}"
 Type: Avis sur un professeur
 
-🎯 Mission : Analyser ce contenu et décider s'il respecte la charte.
+🎯 Mission : Analyser ce contenu et décider s'il respecte la charte de ScoolAdvisor avec FLEXIBILITÉ MAXIMALE.
 RÈGLES :
-✅ Accepter : Ton direct/familier, critique (même sévère), opinion personnelle, termes comme "incompétent/gauchiste" (si pas haineux).
-❌ Rejeter : Insultes violentes, attaques personnelles dégradantes, discrimination, haine, données personnelles, accusations graves sans preuve.
+✅ Accepter LARGEMENT : Ton direct/familier/sévère, critique MÊME TRÈS SÉVÈRE, opinions/ressentis personnels, termes descriptifs comme "incompétent", "sévère", "dur", "strict", "note sévèrement", "notation difficile", "exigeant", "gauchiste" (si pas haineux), descriptions comportementales négatives ("crie", "stresse", "fait des différences").
+❌ Rejeter UNIQUEMENT : Insultes violentes/déshumanisantes ("merde humaine", "rat", "déchet"), attaques personnelles visant à détruire la personne, discrimination (origine/religion/genre/handicap), appel à la haine/violence, données personnelles privées, accusations criminelles graves sans preuve (viol, harcèlement sexuel).
+
+EN CAS DE DOUTE → APPROUVE. La modération doit filtrer seulement ce qui est CLAIREMENT haineux/violent/illégal.
 
 Réponds UNIQUEMENT par JSON : { "decision": "approved" | "rejected", "reason": "motif si rejeté" }
 `;

@@ -29,7 +29,7 @@ export default function AddTeacherReviewDialog({ open, onOpenChange, teacherId, 
     comment: "",
     is_anonymous: false,
     is_former_student: false,
-    certification: false // Added certification field
+    certification: false
   });
   const { showJoinDialog, actionDescription, requireAuth, closeDialog } = useJoinFamily();
 
@@ -54,7 +54,7 @@ export default function AddTeacherReviewDialog({ open, onOpenChange, teacherId, 
       comment: "",
       is_anonymous: false,
       is_former_student: false,
-      certification: false // Reset certification
+      certification: false
     });
     setError(null);
     setSuccess(false);
@@ -75,22 +75,20 @@ export default function AddTeacherReviewDialog({ open, onOpenChange, teacherId, 
           comment: existingReview.comment,
           is_anonymous: existingReview.is_anonymous,
           is_former_student: existingReview.is_former_student || false,
-          certification: false // User must re-certify on edit
+          certification: false
         });
       } else {
         resetForm();
         
-        // Restore from local storage
         const savedData = localStorage.getItem('pending_teacher_review_teacher_' + teacherId);
         if (savedData) {
           try {
             const parsed = JSON.parse(savedData);
-            // Fusionner avec les valeurs par défaut pour éviter les valeurs undefined
             setFormData(prev => ({ ...prev, ...parsed }));
             localStorage.removeItem('pending_teacher_review_teacher_' + teacherId);
           } catch (e) {
             console.error("Failed to parse saved teacher review", e);
-            localStorage.removeItem('pending_teacher_review_teacher_' + teacherId); // Nettoyage préventif
+            localStorage.removeItem('pending_teacher_review_teacher_' + teacherId);
           }
         }
 
@@ -118,7 +116,6 @@ export default function AddTeacherReviewDialog({ open, onOpenChange, teacherId, 
 
   const calculateTotalRating = (data) => {
     const { workload, friendliness, teaching_method, grading_severity } = data;
-    // Each criterion goes from 0-5. Total max is 20.
     return workload + friendliness + teaching_method + grading_severity;
   };
 
@@ -156,84 +153,17 @@ export default function AddTeacherReviewDialog({ open, onOpenChange, teacherId, 
     });
   };
 
-  const sendToModerationWebhook = async (reviewData, isEdit = false) => {
-    const user = await base44.auth.me();
-    if (user && user.email === 'antownin@gmail.com') return 'approved';
-
-    try {
-      const moderationResult = await base44.integrations.Core.InvokeLLM({
-        prompt: `Tu es Modérator, l'agent d'intelligence artificielle officiel de ScoolAdvisor.
-
-📝 Contenu à analyser :
-"${reviewData.comment}"
-
-Type: ${isEdit ? 'Modification d\'avis' : 'Nouvel avis'} sur un professeur
-
-🎯 Mission : Analyser ce contenu et décider s'il respecte la charte de ScoolAdvisor.
-
-🧭 Contexte :
-ScoolAdvisor permet à chacun (élève, étudiant, parent) de donner son avis de manière libre, directe, familière ou engagée, tant que cela respecte un cadre légal, non haineux et non menaçant.
-La modération doit être flexible : l’objectif n’est pas de censurer, mais de filtrer uniquement ce qui est clairement problématique (violence, haine, données perso…).
-
-📚 RÈGLES GÉNÉRALES À APPLIQUER
-✅ Accepter si :
-Le ton est direct, cash ou familier, sans être insultant ou menaçant.
-Le message critique un comportement, une méthode ou une ambiance, même sévèrement.
-Le contenu exprime une opinion ou un ressenti personnel, même de manière maladroite ou non académique.
-Le message utilise des termes comme “incompétent”, “gauchiste”, “écolo”, “wokiste”, s’ils ne sont pas associés à des insultes ou à de la haine.
-Le message contient des généralisations idéologiques ou sociales, tant qu’elles ne sont pas discriminatoires ni violentes.
-Le contenu n’identifie personne de manière privée (pas de noms d’élèves, adresses, numéros, etc.).
-Le message ne contient pas de fausse accusation grave sans preuve (ex : harcèlement, vol, violence…).
-
-❌ Rejeter si :
-Le message contient des insultes violentes, déshumanisantes ou humiliantes (ex : “c’est une merde”, “rat”, “animal”, etc.).
-Il contient une attaque personnelle dégradante sur une personne identifiée ou identifiable.
-Il tient des propos discriminatoires liés à l’origine, la religion, le genre, l’orientation sexuelle, le handicap, etc.
-Il appelle à la haine, à la violence ou à l’exclusion (“ils méritent de crever”, “faut les virer tous”, etc.).
-Il divulgue des données personnelles (noms complets, adresse, téléphone, etc.).
-Il contient des accusations graves non prouvées (ex : “il vole”, “elle harcèle”, etc.).
-Il tourne à la moquerie ciblée, au harcèlement ou à la stigmatisation.
-
-🧠 CONSEILS POUR INTERPRÉTATION
-Tolère un langage imparfait, spontané, jeune, ironique ou provocateur.
-Sois souple sur le vocabulaire politique, tant qu’il ne sert pas à rabaisser ou à haïr.
-Cherche l’intention : est-ce un ressenti exprimé franchement ? ou une volonté de nuire ?
-Accepte le fond, même si la forme est un peu brute.
-En cas de doute sur une formulation maladroite mais non agressive → accepte.
-En cas de doute sur une attaque masquée ou une violence implicite → rejette.
-
-📊 Décision requise :
-Réponds UNIQUEMENT par "approved" ou "rejected".`,
-        response_json_schema: {
-          type: "object",
-          properties: {
-            decision: { type: "string", enum: ["approved", "rejected"] }
-          }
-        }
-      });
-
-      return moderationResult.decision === 'rejected' ? 'rejected' : 'approved';
-    } catch (error) {
-      console.error("Error in moderation:", error);
-      return 'approved';
-    }
-  };
-
   const checkSchoolLimit = async (user, currentTeacherId) => {
-    // Récupérer le professeur actuel pour obtenir son school_id
     const [currentTeacher] = await base44.entities.Teacher.filter({ id: currentTeacherId });
     if (!currentTeacher || !currentTeacher.school_id) return 0;
 
-    // Récupérer tous les avis de l'utilisateur
     const [userSchoolReviews, userTeacherReviews] = await Promise.all([
     base44.entities.SchoolReview.filter({ created_by: user.email }),
     base44.entities.TeacherReview.filter({ created_by: user.email })]
     );
 
-    // Obtenir les school_id uniques des avis école
     const schoolIds = new Set(userSchoolReviews.map((r) => r.school_id));
 
-    // Pour les avis professeurs, récupérer les profs pour obtenir leurs school_id
     if (userTeacherReviews.length > 0) {
       const teacherIds = [...new Set(userTeacherReviews.map((r) => r.teacher_id))];
       const teachers = await base44.entities.Teacher.filter({ id__in: teacherIds });
@@ -275,7 +205,6 @@ Réponds UNIQUEMENT par "approved" ou "rejected".`,
         return;
       }
       
-      // SECURITY: Check Ban Status
       if (user.is_banned) {
         const banDate = new Date(user.banned_until);
         if (banDate > new Date()) {
@@ -285,14 +214,12 @@ Réponds UNIQUEMENT par "approved" ou "rejected".`,
         }
       }
 
-      // SECURITY: Check Permissions
       if (!security.canPost(user) && user.email !== 'antownin@gmail.com') {
         setError("Votre compte est restreint.");
         setLoading(false);
         return;
       }
 
-      // SECURITY: Sanitize
       const cleanComment = security.sanitize(formData.comment);
       if (cleanComment.length < 10) {
          setError("Commentaire invalide.");
@@ -302,11 +229,9 @@ Réponds UNIQUEMENT par "approved" ou "rejected".`,
 
       const totalRating = calculateTotalRating(formData);
 
-      // Vérifier la limite de 7 établissements (sauf pour les modifications)
       if (!existingReview && user.email !== 'antownin@gmail.com') {
         const { schoolCount, currentSchoolId, reviewedSchools } = await checkSchoolLimit(user, teacherId);
 
-        // Si l'utilisateur a déjà 7 établissements ET que celui du prof actuel n'est pas dans la liste
         if (schoolCount >= 7 && !reviewedSchools.has(currentSchoolId)) {
           setError("Vous avez atteint la limite de 7 établissements différents. Vous ne pouvez pas publier d'avis sur un professeur d'un nouvel établissement.");
           setLoading(false);
@@ -321,7 +246,6 @@ Réponds UNIQUEMENT par "approved" ou "rejected".`,
           return;
         }
 
-        // Update immediately
         const updatedReview = await base44.entities.TeacherReview.update(existingReview.id, {
           workload: formData.workload,
           friendliness: formData.friendliness,
@@ -334,14 +258,13 @@ Réponds UNIQUEMENT par "approved" ou "rejected".`,
           edit_count: (existingReview.edit_count || 0) + 1,
           author_name: user.full_name,
           author_avatar: user.profile_avatar,
-          status: 'published' // Reset status to published on edit until moderation checks it
+          status: 'published'
         });
 
         if (setExistingReview) {
           setExistingReview(updatedReview);
         }
 
-        // Background moderation
         moderateContent({
           type: 'teacher_review',
           id: existingReview.id,
@@ -363,7 +286,6 @@ Réponds UNIQUEMENT par "approved" ou "rejected".`,
           return;
         }
 
-        // Create immediately with status published
         const newReview = await base44.entities.TeacherReview.create({
           teacher_id: teacherId,
           workload: formData.workload,
@@ -382,7 +304,6 @@ Réponds UNIQUEMENT par "approved" ou "rejected".`,
           author_avatar: user.profile_avatar
         });
 
-        // Background Moderation
         moderateContent({
           type: 'teacher_review',
           id: newReview.id,
@@ -414,7 +335,7 @@ Réponds UNIQUEMENT par "approved" ou "rejected".`,
   };
 
   const canEdit = existingReview ? (existingReview.edit_count || 0) < 3 : true;
-  const submitButtonDisabled = loading || !canEdit || !formData.certification || error && error.includes("atteint la limite"); // Added !formData.certification
+  const submitButtonDisabled = loading || !canEdit || !formData.certification || error && error.includes("atteint la limite");
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
