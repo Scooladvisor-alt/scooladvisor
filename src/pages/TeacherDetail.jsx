@@ -84,6 +84,19 @@ export default function TeacherDetailPage() {
     setLoading(false);
   };
 
+  useEffect(() => {
+    if (!teacherId) return;
+
+    // S'abonner aux changements du professeur en temps réel
+    const unsubscribe = base44.entities.Teacher.subscribe((event) => {
+      if (event.id === teacherId && event.type === 'update') {
+        setTeacher(event.data);
+      }
+    });
+
+    return () => unsubscribe();
+  }, [teacherId]);
+
   const updateTeacherStats = async (tId) => {
     try {
       const reviews = await base44.entities.TeacherReview.filter({ teacher_id: tId, status: "published" });

@@ -3,13 +3,22 @@ import { createClientFromRequest } from 'npm:@base44/sdk@0.8.6';
 Deno.serve(async (req) => {
   try {
     const base44 = createClientFromRequest(req);
-    const user = await base44.auth.me();
-
-    if (!user) {
-      return Response.json({ error: 'Unauthorized' }, { status: 401 });
+    
+    const body = await req.json();
+    
+    // Gérer les deux cas : appel direct ou automation
+    let teacher_id;
+    
+    if (body.teacher_id) {
+      // Appel direct
+      teacher_id = body.teacher_id;
+    } else if (body.event && body.data) {
+      // Appel depuis automation (entity change)
+      teacher_id = body.data.teacher_id;
+    } else if (body.event && body.old_data) {
+      // En cas de suppression, utiliser old_data
+      teacher_id = body.old_data.teacher_id;
     }
-
-    const { teacher_id } = await req.json();
 
     if (!teacher_id) {
       return Response.json({ error: 'teacher_id is required' }, { status: 400 });
