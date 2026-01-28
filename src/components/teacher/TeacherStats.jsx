@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { base44 } from "@/api/base44Client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { BookOpen, Heart, Brain, FileText, TrendingUp } from "lucide-react";
@@ -10,7 +11,35 @@ const criteriaConfig = {
   grading_avg: { label: "Notation", icon: FileText, color: "bg-orange-500" }
 };
 
-export default function TeacherStats({ teacher, embedded = false }) {
+export default function TeacherStats({ teacher: initialTeacher, embedded = false }) {
+  const [teacher, setTeacher] = useState(initialTeacher);
+
+  useEffect(() => {
+    if (!initialTeacher?.id) return;
+
+    // Charger les données initiales
+    const loadTeacher = async () => {
+      try {
+        const teachers = await base44.entities.Teacher.filter({ id: initialTeacher.id });
+        if (teachers[0]) {
+          setTeacher(teachers[0]);
+        }
+      } catch (error) {
+        console.error("Error loading teacher:", error);
+      }
+    };
+
+    loadTeacher();
+
+    // S'abonner aux changements en temps réel
+    const unsubscribe = base44.entities.Teacher.subscribe((event) => {
+      if (event.id === initialTeacher.id && event.type === 'update') {
+        setTeacher(event.data);
+      }
+    });
+
+    return () => unsubscribe();
+  }, [initialTeacher?.id]);
   const Content = () => (
     <div className={embedded ? "h-full" : ""}>
       <div className="border-b border-slate-100 bg-gradient-to-r from-amber-500/10 via-orange-500/10 to-red-500/10 p-4 mb-2">
