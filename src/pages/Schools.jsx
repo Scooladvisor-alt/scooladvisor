@@ -836,7 +836,16 @@ export default function SchoolsPage() {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: index * 0.05, duration: 0.3 }}
                       onClick={() => handleTeacherClick(teacher)}
-                      className="teacher-card-shimmer group p-2 sm:p-3 text-left bg-white rounded-lg sm:rounded-xl border border-slate-200 hover:border-pink-200 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 h-full flex flex-col">
+                      className="teacher-card-shimmer group p-2 sm:p-3 text-left bg-white rounded-lg sm:rounded-xl border border-slate-200 hover:border-pink-200 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 h-full flex flex-col relative">
+
+                        {teacher.average_rating > 0 &&
+                          <div className="absolute top-1 right-1 flex items-center gap-0.5 bg-gradient-to-br from-amber-300 to-amber-400 px-1 sm:px-1.5 py-0.5 rounded-full border border-white shadow-sm z-10">
+                            <span className="text-[10px] sm:text-xs font-bold text-white">
+                              {teacher.average_rating.toFixed(1)}
+                            </span>
+                            <span className="text-[8px] sm:text-[10px] text-white/90">⭐️</span>
+                          </div>
+                        }
 
                         <div className="flex flex-col items-center text-center gap-1.5 sm:gap-2 flex-1">
                           {/* Photo de profil */}
@@ -845,15 +854,6 @@ export default function SchoolsPage() {
                             src={teacher.photo_url}
                             alt={teacher.name}
                             className="w-12 h-12 sm:w-14 sm:h-14 rounded-full object-cover border-2 sm:border-3 border-white shadow-sm group-hover:border-pink-100 transition-all" />
-
-                            {teacher.average_rating > 0 &&
-                          <div className="absolute -top-0.5 -right-0.5 flex items-center gap-0.5 bg-gradient-to-br from-amber-300 to-amber-400 px-1 sm:px-1.5 py-0.5 rounded-full border border-white shadow-sm">
-                                <span className="text-[10px] sm:text-xs font-bold text-white">
-                                  {teacher.average_rating.toFixed(1)}
-                                </span>
-                                <span className="text-[8px] sm:text-[10px] text-white/90">⭐️</span>
-                              </div>
-                          }
                           </div>
 
                           {/* Infos prof */}
