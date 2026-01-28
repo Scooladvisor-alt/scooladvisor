@@ -826,7 +826,7 @@ export default function SchoolsPage() {
                 <p className="text-sm text-slate-500 mt-1">Essaie une autre recherche</p>
               </div> :
               teacherSearchTerm && teacherSuggestions.length > 0 ?
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 max-w-7xl mx-auto">
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2 sm:gap-3 max-w-7xl mx-auto">
                   {teacherSuggestions.map((teacher, index) => {
                   const school = schools.find((s) => s.id === teacher.school_id);
                   return (
@@ -836,47 +836,47 @@ export default function SchoolsPage() {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: index * 0.05, duration: 0.3 }}
                       onClick={() => handleTeacherClick(teacher)}
-                      className="teacher-card-shimmer group p-4 text-left bg-white rounded-xl border border-slate-200 hover:border-pink-200 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 h-full flex flex-col">
+                      className="teacher-card-shimmer group p-2 sm:p-3 text-left bg-white rounded-lg sm:rounded-xl border border-slate-200 hover:border-pink-200 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 h-full flex flex-col">
 
-                        <div className="flex flex-col items-center text-center gap-3 flex-1">
+                        <div className="flex flex-col items-center text-center gap-1.5 sm:gap-2 flex-1">
                           {/* Photo de profil */}
                           <div className="relative shrink-0">
                             <img
                             src={teacher.photo_url}
                             alt={teacher.name}
-                            className="w-20 h-20 rounded-full object-cover border-4 border-white shadow-sm group-hover:border-pink-100 transition-all" />
+                            className="w-12 h-12 sm:w-14 sm:h-14 rounded-full object-cover border-2 sm:border-3 border-white shadow-sm group-hover:border-pink-100 transition-all" />
 
                             {teacher.average_rating > 0 &&
-                          <div className="absolute -top-1 -right-1 flex items-center gap-0.5 bg-gradient-to-br from-amber-300 to-amber-400 px-2 py-0.5 rounded-full border-2 border-white shadow-sm">
-                                <span className="text-xs font-bold text-white">
+                          <div className="absolute -top-0.5 -right-0.5 flex items-center gap-0.5 bg-gradient-to-br from-amber-300 to-amber-400 px-1 sm:px-1.5 py-0.5 rounded-full border border-white shadow-sm">
+                                <span className="text-[10px] sm:text-xs font-bold text-white">
                                   {teacher.average_rating.toFixed(1)}
                                 </span>
-                                <span className="text-[10px] text-white/90">⭐️</span>
+                                <span className="text-[8px] sm:text-[10px] text-white/90">⭐️</span>
                               </div>
                           }
                           </div>
 
                           {/* Infos prof */}
                           <div className="w-full flex-1 flex flex-col items-center">
-                            <h3 className="font-bold text-slate-900 text-base mb-1 truncate w-full">
+                            <h3 className="font-bold text-slate-900 text-xs sm:text-sm mb-0.5 sm:mb-1 truncate w-full">
                               {teacher.name}
                             </h3>
                             
-                            <div className="inline-flex items-center gap-1.5 bg-gradient-to-r from-pink-50 to-blue-50 px-2.5 py-0.5 rounded-full mb-2 border border-slate-100">
-                              <span className="text-xs font-semibold bg-gradient-to-r from-[#FF4D8D] to-[#4DA6FF] bg-clip-text text-transparent">
+                            <div className="inline-flex items-center gap-1 bg-gradient-to-r from-pink-50 to-blue-50 px-1.5 sm:px-2 py-0.5 rounded-full mb-1 sm:mb-1.5 border border-slate-100">
+                              <span className="text-[10px] sm:text-xs font-semibold bg-gradient-to-r from-[#FF4D8D] to-[#4DA6FF] bg-clip-text text-transparent">
                                 {teacher.subject}
                               </span>
                             </div>
                             
-                            <p className="text-xs text-slate-500 line-clamp-2 min-h-[2.5em] leading-tight">
+                            <p className="text-[10px] sm:text-xs text-slate-500 line-clamp-2 min-h-[2em] sm:min-h-[2.5em] leading-tight">
                               📍 {school?.name || "Établissement inconnu"}
                             </p>
                           </div>
 
                           {/* Bouton voir profil */}
-                          <div className="w-full mt-auto pt-3 border-t border-slate-100">
-                            <div className="text-xs font-semibold text-center text-slate-400 group-hover:text-pink-500 transition-colors flex items-center justify-center gap-1">
-                              Voir le profil <ArrowRight className="w-3 h-3" />
+                          <div className="w-full mt-auto pt-1.5 sm:pt-2 border-t border-slate-100">
+                            <div className="text-[10px] sm:text-xs font-semibold text-center text-slate-400 group-hover:text-pink-500 transition-colors flex items-center justify-center gap-0.5 sm:gap-1">
+                              Voir profil <ArrowRight className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
                             </div>
                           </div>
                         </div>
