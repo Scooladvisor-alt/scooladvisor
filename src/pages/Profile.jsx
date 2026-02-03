@@ -430,7 +430,8 @@ export default function ProfilePage() {
                           key={review.id}
                           initial={{ opacity: 0, y: 10 }}
                           animate={{ opacity: 1, y: 0 }}
-                          className="border-2 border-slate-200 rounded-xl p-3 sm:p-4 hover:border-pink-300 hover:shadow-lg transition-all bg-white relative group"
+                          onClick={() => navigate(createPageUrl(`TeacherDetail?id=${review.teacher?.id}`))}
+                          className="border-2 border-slate-200 rounded-xl p-3 sm:p-4 hover:border-pink-300 hover:shadow-lg transition-all bg-white relative group cursor-pointer"
                         >
                           <div className="flex flex-col gap-2 sm:gap-3">
                             {/* Header Info */}
@@ -563,7 +564,8 @@ export default function ProfilePage() {
                           key={review.id}
                           initial={{ opacity: 0, y: 10 }}
                           animate={{ opacity: 1, y: 0 }}
-                          className="border-2 border-slate-200 rounded-xl p-3 sm:p-4 hover:border-blue-300 hover:shadow-lg transition-all bg-white group"
+                          onClick={() => navigate(createPageUrl(`SchoolDetail?id=${review.school?.id}`))}
+                          className="border-2 border-slate-200 rounded-xl p-3 sm:p-4 hover:border-blue-300 hover:shadow-lg transition-all bg-white group cursor-pointer"
                         >
                           <div className="flex flex-col gap-2 sm:gap-3">
                             <div className="flex flex-col gap-2">
