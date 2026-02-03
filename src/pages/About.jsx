@@ -215,24 +215,24 @@ export default function AboutPage() {
                   initial={{ opacity: 0, x: 50 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
-                  className="relative w-full h-full">
+                  className="relative w-full">
 
-                 <div className="relative w-full h-full min-h-[300px]">
+                 <div className="relative w-full">
                     <div className="absolute inset-0 bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 rounded-[2rem] transform rotate-2 blur-xl opacity-20" />
 
-                    <div className="bg-white/60 mx-10 pt-20 pr-8 pb-10 pl-4 text-center rounded-[2rem] relative backdrop-blur-xl border border-white/50 sm:p-6 flex flex-col items-center justify-center overflow-hidden h-full transform -rotate-1 hover:rotate-0 transition-all duration-500 shadow-xl hover:shadow-2xl hover:border-purple-200">
-                      <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-pink-50 to-blue-50 rounded-2xl flex items-center justify-center mb-4 shadow-sm border border-white">
-                        <span className="text-2xl sm:text-3xl animate-bounce">🎓</span>
+                    <div className="bg-white/60 mx-10 pt-12 pr-6 pb-8 pl-4 text-center rounded-[2rem] relative backdrop-blur-xl border border-white/50 sm:p-6 flex flex-col items-center justify-center overflow-hidden transform -rotate-1 hover:rotate-0 transition-all duration-500 shadow-xl hover:shadow-2xl hover:border-purple-200">
+                      <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-pink-50 to-blue-50 rounded-2xl flex items-center justify-center mb-3 shadow-sm border border-white">
+                        <span className="text-xl sm:text-2xl animate-bounce">🎓</span>
                       </div>
-                      <h3 className="text-lg sm:text-2xl font-black text-slate-800 mb-2 uppercase italic tracking-tight">
+                      <h3 className="text-base sm:text-xl font-black text-slate-800 mb-2 uppercase italic tracking-tight">
                         Rejoignez le<br />
                         <span className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">Mouvement</span>
                       </h3>
-                      <p className="text-sm sm:text-base text-slate-600 font-medium mb-4 max-w-xs">Déjà des milliers d'avis partagés.</p>
+                      <p className="text-xs sm:text-sm text-slate-600 font-medium mb-3 max-w-xs">Déjà des milliers d'avis partagés.</p>
                       <Link to={createPageUrl("Schools")} className="w-full sm:w-auto">
-                        <Button className="w-full sm:w-auto bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-white shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all rounded-xl px-6 py-3 sm:px-6 sm:py-3 text-sm sm:text-base font-bold uppercase tracking-wide border border-white/20">
+                        <Button className="w-full sm:w-auto bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-white shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all rounded-xl px-5 py-2 sm:px-5 sm:py-2 text-xs sm:text-sm font-bold uppercase tracking-wide border border-white/20">
                           Voir les écoles
-                          <ArrowRight className="ml-2 w-4 h-4" />
+                          <ArrowRight className="ml-2 w-3 h-3" />
                         </Button>
                       </Link>
                     </div>

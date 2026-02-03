@@ -53,10 +53,10 @@ import Home from './pages/Home';
 import Moderation from './pages/Moderation';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import Profile from './pages/Profile';
-import SchoolDetail from './pages/SchoolDetail';
 import Schools from './pages/Schools';
 import TeacherDetail from './pages/TeacherDetail';
 import TermsOfService from './pages/TermsOfService';
+import SchoolDetail from './pages/SchoolDetail';
 import __Layout from './Layout.jsx';
 
 
@@ -67,10 +67,10 @@ export const PAGES = {
     "Moderation": Moderation,
     "PrivacyPolicy": PrivacyPolicy,
     "Profile": Profile,
-    "SchoolDetail": SchoolDetail,
     "Schools": Schools,
     "TeacherDetail": TeacherDetail,
     "TermsOfService": TermsOfService,
+    "SchoolDetail": SchoolDetail,
 }
 
 export const pagesConfig = {
