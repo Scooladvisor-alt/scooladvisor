@@ -127,7 +127,7 @@ export default function SchoolDetailPage() {
   const canModerate = user && (user.role === 'admin' || user.role === 'moderator');
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-50">
+    <div className="min-h-screen bg-white">
       {school &&
       <SEO
         title={`${school.name} (${school.city}) - Avis et Classement | ScoolAdvisor`}
@@ -230,7 +230,7 @@ export default function SchoolDetailPage() {
         }
       `}</style>
       
-      <div className="max-w-6xl mx-auto px-4 py-8">
+      <div className="max-w-7xl mx-auto px-4 py-8">
         <Button
           variant="ghost"
           onClick={() => navigate(createPageUrl("Schools"))}
@@ -243,162 +243,157 @@ export default function SchoolDetailPage() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-slate-200 overflow-hidden mb-8">
+          className="space-y-8">
 
-          <div className="relative p-4 sm:p-6 md:p-8">
-            
-            <div className="relative">
-              <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-3 md:gap-6 mb-4 md:mb-6">
-                <div className="flex-1 w-full">
-                  <div className="flex items-center justify-between mb-2">
-                    <Badge className={`border-2 text-xs font-semibold shadow-md type-badge ${typeColors[school.type]}`}>
-                      {typeLabels[school.type]}
-                    </Badge>
-                    {user &&
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setShowReportDialog(true);
-                      }}
-                      className="md:hidden text-red-500 hover:text-red-700 transition-colors"
-                      title="Signaler cet établissement">
+          {/* En-tête de l'établissement */}
+          <div className="relative">
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-3 md:gap-6 mb-6">
+              <div className="flex-1 w-full">
+                <div className="flex items-center justify-between mb-2">
+                  <Badge className={`border-2 text-xs font-semibold shadow-md type-badge ${typeColors[school.type]}`}>
+                    {typeLabels[school.type]}
+                  </Badge>
+                  {user &&
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setShowReportDialog(true);
+                    }}
+                    className="md:hidden text-red-500 hover:text-red-700 transition-colors"
+                    title="Signaler cet établissement">
 
-                        <Flag className="w-4 h-4" />
-                      </button>
+                      <Flag className="w-4 h-4" />
+                    </button>
+                  }
+                </div>
+                {school.status === 'banned' &&
+                    <Badge className="mb-2 bg-red-100 text-red-800 border-red-200 text-xs">
+                        Établissement Banni
+                      </Badge>
                     }
-                  </div>
-                  {school.status === 'banned' &&
-                      <Badge className="mb-2 bg-red-100 text-red-800 border-red-200 text-xs">
-                          Établissement Banni
-                        </Badge>
-                      }
-                  <div className="flex items-center gap-2 mb-1 md:mb-2">
-                    <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-slate-900 break-words">{school.name}</h1>
-                    {user && user.role === 'admin' && (
-                      <SchoolAdminMenu school={school} user={user} onUpdate={loadData} />
-                    )}
-                  </div>
-                  <div className="flex items-center gap-2 text-slate-600 text-xs sm:text-sm">
-                    <MapPin className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" />
-                    <span className="break-words">{school.address}, {school.city}</span>
-                    {user &&
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setShowReportDialog(true);
-                      }}
-                      className="hidden md:flex ml-2 text-red-500 hover:text-red-700 transition-colors"
-                      title="Signaler cet établissement">
+                <div className="flex items-center gap-2 mb-1 md:mb-2">
+                  <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-slate-900 break-words">{school.name}</h1>
+                  {user && user.role === 'admin' && (
+                    <SchoolAdminMenu school={school} user={user} onUpdate={loadData} />
+                  )}
+                </div>
+                <div className="flex items-center gap-2 text-slate-600 text-xs sm:text-sm">
+                  <MapPin className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" />
+                  <span className="break-words">{school.address}, {school.city}</span>
+                  {user &&
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setShowReportDialog(true);
+                    }}
+                    className="hidden md:flex ml-2 text-red-500 hover:text-red-700 transition-colors"
+                    title="Signaler cet établissement">
 
-                        <Flag className="w-3.5 h-3.5" />
-                      </button>
-                    }
+                      <Flag className="w-3.5 h-3.5" />
+                    </button>
+                  }
+                </div>
+              </div>
+
+              {hasRating ?
+              <motion.div
+                key={school.average_rating}
+                initial={{ scale: 1 }}
+                animate={{ scale: [1, 1.05, 1] }}
+                transition={{ duration: 0.3 }}
+                className="relative bg-gradient-to-br from-amber-50 to-amber-100 rounded-lg border border-amber-200 text-center w-full sm:w-auto note-widget px-3 py-2 sm:px-4 sm:py-4 sm:min-w-[120px]">
+
+                  
+                  <div className="relative z-10 flex sm:hidden items-center justify-center gap-1 whitespace-nowrap">
+                    <Star className="w-4 h-4 text-amber-600 fill-amber-600" />
+                    <span className="text-lg font-bold text-amber-900">{school.average_rating.toFixed(1)}</span>
+                    <span className="text-sm text-amber-700">/ 20</span>
+                    <span className="text-xs text-amber-600 ml-1">basé sur :</span>
+                    <span className="text-sm font-semibold text-amber-800">{school.review_count} avis</span>
+                  </div>
+                  
+                  <div className="relative z-10 hidden sm:block">
+                    <div className="flex items-center justify-center gap-1.5 mb-1">
+                      <Star className="w-5 h-5 text-amber-600 fill-amber-600" />
+                      <span className="text-3xl font-bold text-amber-900" style={{ textShadow: '0 0 8px rgba(168,85,247,0.3)' }}>
+                        {school.average_rating.toFixed(1)}
+                      </span>
+                    </div>
+                    <p className="text-xs font-medium text-amber-700">sur 20</p>
+                    <p className="text-xs text-amber-600 mt-0.5">{school.review_count} avis</p>
+                  </div>
+                </motion.div> :
+
+              <div className="bg-slate-50 rounded-lg border border-slate-200 text-center w-full sm:w-auto px-3 py-2 sm:px-4 sm:py-4 sm:min-w-[120px]">
+                  <div className="flex sm:hidden items-center justify-center gap-2 whitespace-nowrap">
+                    <Star className="w-4 h-4 text-slate-400" />
+                    <span className="text-sm text-slate-600">Pas encore noté</span>
+                  </div>
+                  
+                  <div className="hidden sm:block">
+                    <Star className="w-6 h-6 text-slate-400 mx-auto mb-1" />
+                    <p className="text-xs text-slate-600">Pas encore noté</p>
                   </div>
                 </div>
-
-                {hasRating ?
-                <motion.div
-                  key={school.average_rating}
-                  initial={{ scale: 1 }}
-                  animate={{ scale: [1, 1.05, 1] }}
-                  transition={{ duration: 0.3 }}
-                  className="relative bg-gradient-to-br from-amber-50 to-amber-100 rounded-lg border border-amber-200 text-center w-full sm:w-auto note-widget px-3 py-2 sm:px-4 sm:py-4 sm:min-w-[120px]">
-
-                    
-                    <div className="relative z-10 flex sm:hidden items-center justify-center gap-1 whitespace-nowrap">
-                      <Star className="w-4 h-4 text-amber-600 fill-amber-600" />
-                      <span className="text-lg font-bold text-amber-900">{school.average_rating.toFixed(1)}</span>
-                      <span className="text-sm text-amber-700">/ 20</span>
-                      <span className="text-xs text-amber-600 ml-1">basé sur :</span>
-                      <span className="text-sm font-semibold text-amber-800">{school.review_count} avis</span>
-                    </div>
-                    
-                    <div className="relative z-10 hidden sm:block">
-                      <div className="flex items-center justify-center gap-1.5 mb-1">
-                        <Star className="w-5 h-5 text-amber-600 fill-amber-600" />
-                        <span className="text-3xl font-bold text-amber-900" style={{ textShadow: '0 0 8px rgba(168,85,247,0.3)' }}>
-                          {school.average_rating.toFixed(1)}
-                        </span>
-                      </div>
-                      <p className="text-xs font-medium text-amber-700">sur 20</p>
-                      <p className="text-xs text-amber-600 mt-0.5">{school.review_count} avis</p>
-                    </div>
-                  </motion.div> :
-
-                <div className="bg-slate-50 rounded-lg border border-slate-200 text-center w-full sm:w-auto px-3 py-2 sm:px-4 sm:py-4 sm:min-w-[120px]">
-                    <div className="flex sm:hidden items-center justify-center gap-2 whitespace-nowrap">
-                      <Star className="w-4 h-4 text-slate-400" />
-                      <span className="text-sm text-slate-600">Pas encore noté</span>
-                    </div>
-                    
-                    <div className="hidden sm:block">
-                      <Star className="w-6 h-6 text-slate-400 mx-auto mb-1" />
-                      <p className="text-xs text-slate-600">Pas encore noté</p>
-                    </div>
-                  </div>
-                }
-              </div>
-
-
-
-              <div className="flex flex-col sm:flex-row gap-3">
-                <Button
-                  onClick={() => setShowAddTeacher(true)}
-                  className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-white shadow-lg w-full sm:flex-1 h-11">
-                  <Plus className="w-4 h-4 mr-2 text-white" />
-                  Ajouter un professeur
-                </Button>
-
-                <Button
-                  onClick={() => setShowAddReview(true)}
-                  className="bg-gradient-to-r from-yellow-400 via-yellow-500 to-amber-500 hover:from-yellow-500 hover:via-yellow-600 hover:to-amber-600 text-white shadow-lg w-full sm:flex-1 h-11">
-                  <Star className="w-4 h-4 mr-2" />
-                  Noter l'établissement
-                </Button>
-              </div>
-              
-              {!user &&
-              <p className="text-sm text-slate-600 mt-3 text-center">
-                  📌 Connecte-toi pour noter et ajouter tes profs.
-                </p>
               }
             </div>
+
+            <div className="flex flex-col sm:flex-row gap-3">
+              <Button
+                onClick={() => setShowAddTeacher(true)}
+                className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-white shadow-lg w-full sm:flex-1 h-11">
+                <Plus className="w-4 h-4 mr-2 text-white" />
+                Ajouter un professeur
+              </Button>
+
+              <Button
+                onClick={() => setShowAddReview(true)}
+                className="bg-gradient-to-r from-yellow-400 via-yellow-500 to-amber-500 hover:from-yellow-500 hover:via-yellow-600 hover:to-amber-600 text-white shadow-lg w-full sm:flex-1 h-11">
+                <Star className="w-4 h-4 mr-2" />
+                Noter l'établissement
+              </Button>
+            </div>
+            
+            {!user &&
+            <p className="text-sm text-slate-600 mt-3 text-center">
+                📌 Connecte-toi pour noter et ajouter tes profs.
+              </p>
+            }
           </div>
+
+          {/* Section Professeurs et Avis - Sans widgets séparés */}
+          <div className="space-y-8">
+            <div className="w-full">
+              <Suspense fallback={<div className="p-4 flex justify-center items-center"><Loader2 className="w-8 h-8 animate-spin text-slate-400" /></div>}>
+                <TeachersList
+                  schoolId={schoolId}
+                  onAddTeacher={() => setShowAddTeacher(true)} />
+              </Suspense>
+            </div>
+
+            <div className="w-full">
+              <Suspense fallback={<div className="p-4 flex justify-center items-center"><Loader2 className="w-8 h-8 animate-spin text-slate-400" /></div>}>
+                <SchoolReviews
+                  schoolId={schoolId}
+                  user={user}
+                  onReload={() => {
+                    refreshSchoolStats();
+                    loadData();
+                  }}
+                  onEditReview={handleEditReview}
+                  canModerate={canModerate}
+                  onAddReview={() => setShowAddReview(true)} />
+              </Suspense>
+            </div>
+          </div>
+
+          {/* Section Chat */}
+          <Suspense fallback={null}>
+            <div>
+              <SchoolChat schoolId={schoolId} isHomePage={false} />
+            </div>
+          </Suspense>
         </motion.div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 items-stretch justify-items-center">
-          <div className="w-full max-h-[600px] lg:h-[500px] flex flex-col">
-            <Suspense fallback={<div className="p-4 bg-white rounded-lg shadow-md flex justify-center items-center h-full"><Loader2 className="w-8 h-8 animate-spin text-slate-400" /></div>}>
-              <TeachersList
-                schoolId={schoolId}
-                onAddTeacher={() => setShowAddTeacher(true)} />
-
-            </Suspense>
-          </div>
-
-          <div className="w-full max-h-[600px] lg:h-[500px] flex flex-col">
-             <Suspense fallback={<div className="p-4 bg-white rounded-lg shadow-md flex justify-center items-center h-full"><Loader2 className="w-8 h-8 animate-spin text-slate-400" /></div>}>
-              <SchoolReviews
-                schoolId={schoolId}
-                user={user}
-                onReload={() => {
-                  refreshSchoolStats();
-                  loadData();
-                }}
-                onEditReview={handleEditReview}
-                canModerate={canModerate}
-                onAddReview={() => setShowAddReview(true)} />
-
-
-            </Suspense>
-          </div>
-        </div>
-
-        <Suspense fallback={null}>
-          <div className="mt-6">
-            <SchoolChat schoolId={schoolId} isHomePage={false} />
-          </div>
-        </Suspense>
       </div>
 
       <Suspense>
