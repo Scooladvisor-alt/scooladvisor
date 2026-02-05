@@ -20,26 +20,21 @@ export default function JoinFamilyDialog({ open, onOpenChange, actionDescription
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-[90vw] sm:max-w-md rounded-3xl p-0 overflow-hidden border-0">
-        {/* Background gradient animé */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[#FF4D8D] via-purple-500 to-blue-500 opacity-10 animate-pulse" />
+        {/* Background gradient fixe */}
+        <div className="absolute inset-0 bg-gradient-to-br from-pink-50 via-purple-50 to-blue-50" />
         
         <div className="relative p-6 sm:p-8">
-          {/* Icône centrale avec animation */}
+          {/* Icône centrale */}
           <div className="flex justify-center mb-4">
-            <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 rounded-full blur-xl opacity-60 animate-pulse" />
-              <div className="relative bg-white rounded-full p-4 shadow-lg">
-                <Heart className="w-8 h-8 sm:w-10 sm:h-10 text-[#FF4D8D] fill-[#FF4D8D] animate-bounce" />
-              </div>
+            <div className="bg-gradient-to-br from-pink-100 to-purple-100 rounded-full p-4 shadow-md">
+              <Heart className="w-8 h-8 sm:w-10 sm:h-10 text-pink-600 fill-pink-600" />
             </div>
           </div>
 
           {/* Titre */}
-          <h2 className="text-xl sm:text-2xl font-bold text-center mb-2">
-            <span className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
-              Rejoins la famille ! 
-            </span>
-            <Sparkles className="inline-block w-5 h-5 ml-1 text-yellow-500 fill-yellow-500" />
+          <h2 className="text-xl sm:text-2xl font-bold text-center mb-2 text-slate-800">
+            Rejoins la famille ! 
+            <Sparkles className="inline-block w-5 h-5 ml-1 text-purple-500 fill-purple-500" />
           </h2>
 
           {/* Message */}
@@ -67,7 +62,7 @@ export default function JoinFamilyDialog({ open, onOpenChange, actionDescription
           <div className="flex flex-col gap-3">
             <Button
               onClick={handleJoin}
-              className="w-full bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-white font-semibold py-5 sm:py-6 text-sm sm:text-base rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02]"
+              className="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-5 sm:py-6 text-sm sm:text-base rounded-xl shadow-md transition-colors"
             >
               Oui, je rejoins ! 🚀
             </Button>
