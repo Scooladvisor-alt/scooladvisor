@@ -513,7 +513,7 @@ export default function SchoolsPage() {
             <span className="block text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-slate-900">sur leurs écoles et professeurs</span>
           </h1>
 
-          <p className="text-xs sm:text-sm md:text-base text-slate-600 max-w-3xl mx-auto mb-4 sm:mb-8 relative z-10">Les profs notent, les élèves aussi 😎</p>
+          <p className="hidden sm:block text-xs sm:text-sm md:text-base text-slate-600 max-w-3xl mx-auto mb-4 sm:mb-8 relative z-10">Les profs notent, les élèves aussi 😎</p>
         </motion.div>
 
         <motion.div
