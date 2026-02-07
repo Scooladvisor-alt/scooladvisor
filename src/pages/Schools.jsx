@@ -826,7 +826,7 @@ export default function SchoolsPage() {
                 <p className="text-sm text-slate-500 mt-1">Essaie une autre recherche</p>
               </div> :
               teacherSearchTerm && teacherSuggestions.length > 0 ?
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2 sm:gap-3 max-w-7xl mx-auto">
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-2 sm:gap-3 max-w-7xl mx-auto">
                   {teacherSuggestions.map((teacher, index) => {
                   const school = schools.find((s) => s.id === teacher.school_id);
                   return (
