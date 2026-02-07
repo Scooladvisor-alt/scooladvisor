@@ -10,6 +10,8 @@ import { toast } from "sonner";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 import { motion, AnimatePresence } from "framer-motion";
+import JoinFamilyDialog from "@/components/shared/JoinFamilyDialog";
+import { useJoinFamily } from "@/components/shared/useJoinFamily";
 
 export default function TeacherLoveNotes({ teacherId, user }) {
   const [notes, setNotes] = useState([]);
@@ -18,6 +20,7 @@ export default function TeacherLoveNotes({ teacherId, user }) {
   const [loading, setLoading] = useState(true);
   const [sending, setSending] = useState(false);
   const [showForm, setShowForm] = useState(false);
+  const { showJoinDialog, actionDescription, requireAuth, closeDialog } = useJoinFamily();
 
   useEffect(() => {
     if (teacherId) {
@@ -54,9 +57,8 @@ export default function TeacherLoveNotes({ teacherId, user }) {
   };
 
   const handleSend = async () => {
-    if (!user) {
+    if (!requireAuth(user, "écrire un petit mot")) {
       localStorage.setItem('pending_love_note_teacher_' + teacherId, JSON.stringify({ message: newMessage, isAnonymous }));
-      base44.auth.redirectToLogin(window.location.href);
       return;
     }
 
@@ -250,6 +252,12 @@ Réponds par JSON : { "decision": "approved" | "rejected", "reason": "raison cou
           </div>
         }
       </CardContent>
+      
+      <JoinFamilyDialog
+        open={showJoinDialog}
+        onOpenChange={closeDialog}
+        actionDescription={actionDescription}
+      />
     </Card>);
 
 }
