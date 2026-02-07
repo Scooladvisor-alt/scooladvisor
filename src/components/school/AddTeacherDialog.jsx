@@ -366,7 +366,7 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
                   id="is_former"
                   checked={formData.is_former}
                   onChange={(e) => setFormData({ ...formData, is_former: e.target.checked })}
-                  className="w-3.5 h-3.5 text-orange-600 rounded focus:ring-orange-500" />
+                  className="w-3.5 h-3.5 rounded accent-orange-500 cursor-pointer" />
                 <label htmlFor="is_former" className="text-[10px] sm:text-xs font-medium text-orange-800 whitespace-nowrap cursor-pointer">
                   Ancien
                 </label>
