@@ -839,11 +839,11 @@ export default function SchoolsPage() {
                       className="teacher-card-shimmer group p-2 sm:p-3 text-left bg-white rounded-lg sm:rounded-xl border border-slate-200 hover:border-pink-200 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 h-full flex flex-col relative">
 
                         {teacher.average_rating > 0 &&
-                          <div className="absolute top-1 right-1 flex items-center gap-0.5 bg-gradient-to-br from-amber-300 to-amber-400 px-1 sm:px-1.5 py-0.5 rounded-full border border-white shadow-sm z-10">
-                            <span className="text-[10px] sm:text-xs font-bold text-slate-900">
+                          <div className="absolute top-1 right-1 flex items-center gap-0.5 bg-gradient-to-br from-amber-50 to-amber-100 px-1 sm:px-1.5 py-0.5 rounded-lg border border-amber-200 shadow-sm z-10">
+                            <Star className="w-2.5 h-2.5 sm:w-3 sm:h-3 fill-amber-600 text-amber-600" />
+                            <span className="text-[10px] sm:text-xs font-bold text-amber-900">
                               {teacher.average_rating.toFixed(1)}
                             </span>
-                            <Star className="w-2.5 h-2.5 sm:w-3 sm:h-3 fill-slate-900 text-slate-900" />
                           </div>
                         }
 
