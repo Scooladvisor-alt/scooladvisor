@@ -522,8 +522,8 @@ export default function AddTeacherReviewDialog({ open, onOpenChange, teacherId, 
           }
 
           {error && error === "Tu as déjà publié un avis pour ce professeur." ? (
-            <div className="fixed top-4 left-4 z-50 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 shadow-lg">
-              <p className="text-xs text-amber-800 font-medium">ℹ️ {error}</p>
+            <div className="fixed top-20 left-4 z-50 bg-red-50 border border-red-300 rounded-md px-2 py-1 shadow-sm max-w-[200px]">
+              <p className="text-[10px] text-red-700 leading-tight">{error}</p>
             </div>
           ) : error ? (
           <Alert variant="destructive" className="text-destructive pt-4 pr-4 pb-4 pl-5 text-sm rounded-lg [&>svg]:top-4 relative w-full border [&>svg+div]:translate-y-[-1px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-1\\n2 [&>svg~*]:pl-7 border-destructive/50 dark:border-destructive [&>svg]:text-destructive">
