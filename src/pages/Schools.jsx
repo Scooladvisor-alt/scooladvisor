@@ -1,7 +1,7 @@
 import React, { useState, useEffect, lazy, Suspense, useMemo } from "react";
 import { base44 } from "@/api/base44Client";
 import { motion } from "framer-motion";
-import { Plus, Search, Filter, TrendingUp, ArrowRight, Globe, Loader2 } from "lucide-react";
+import { Plus, Search, Filter, TrendingUp, ArrowRight, Globe, Loader2, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -840,10 +840,10 @@ export default function SchoolsPage() {
 
                         {teacher.average_rating > 0 &&
                           <div className="absolute top-1 right-1 flex items-center gap-0.5 bg-gradient-to-br from-amber-300 to-amber-400 px-1 sm:px-1.5 py-0.5 rounded-full border border-white shadow-sm z-10">
-                            <span className="text-[10px] sm:text-xs font-bold text-white">
+                            <span className="text-[10px] sm:text-xs font-bold text-slate-900">
                               {teacher.average_rating.toFixed(1)}
                             </span>
-                            <span className="text-[8px] sm:text-[10px] text-white/90">⭐️</span>
+                            <Star className="w-2.5 h-2.5 sm:w-3 sm:h-3 fill-slate-900 text-slate-900" />
                           </div>
                         }
 
