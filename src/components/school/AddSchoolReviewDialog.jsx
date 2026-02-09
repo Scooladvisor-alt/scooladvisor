@@ -614,7 +614,7 @@ rejected → si le message enfreint les règles ci-dessus"
                   }
                 }}
                 placeholder="Ton avis..."
-                rows={3}
+                rows={2}
                 className="text-sm sm:text-base pb-8"
                 disabled={!canEdit} />
               
@@ -669,6 +669,12 @@ rejected → si le message enfreint les règles ci-dessus"
             </p>
           </div>
 
+          {error && error === "Vous avez déjà publié un avis pour cet établissement." && (
+            <div className="bg-red-50 border border-red-300 rounded-md px-2 py-1.5">
+              <p className="text-[10px] text-red-700 leading-tight">Avis déjà publié pour cet établissement</p>
+            </div>
+          )}
+
           {success &&
           <Alert className="bg-green-50 border-green-200">
             <CheckCircle className="h-4 w-4 text-green-600" />
@@ -678,16 +684,12 @@ rejected → si le message enfreint les règles ci-dessus"
           </Alert>
           }
 
-          {error && error === "Vous avez déjà publié un avis pour cet établissement." ? (
-            <div className="fixed top-20 left-4 z-50 bg-red-50 border border-red-300 rounded-md px-2 py-1 shadow-sm max-w-[220px]">
-              <p className="text-[10px] text-red-700 leading-tight">Avis déjà publié pour cet établissement</p>
-            </div>
-          ) : error ? (
+          {error && error !== "Vous avez déjà publié un avis pour cet établissement." && (
           <Alert variant="destructive" className="text-destructive pt-4 pr-4 pb-4 pl-5 text-sm rounded-lg [&>svg]:top-4 relative w-full border [&>svg+div]:translate-y-[-1px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-1\\n2 [&>svg~*]:pl-7 border-destructive/50 dark:border-destructive [&>svg]:text-destructive">
             <AlertCircle className="h-4 w-4" />
             <AlertDescription className="text-xs sm:text-sm">{error}</AlertDescription>
           </Alert>
-          ) : null}
+          )}
 
           <DialogFooter>
             <Button type="submit" disabled={submitButtonDisabled} className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 text-primary-foreground px-4 py-2 w-full bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 disabled:bg-slate-300 text-white text-xs sm:text-base h-9 sm:h-10 shadow-md">
