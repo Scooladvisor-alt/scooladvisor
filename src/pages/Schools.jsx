@@ -862,8 +862,8 @@ export default function SchoolsPage() {
                               {teacher.name}
                             </h3>
                             
-                            <div className="inline-flex items-center gap-1 bg-gradient-to-r from-pink-50 to-blue-50 px-1.5 sm:px-2 py-0.5 rounded-full mb-1 sm:mb-1.5 border border-slate-100">
-                              <span className="text-[10px] sm:text-xs font-semibold bg-gradient-to-r from-[#FF4D8D] to-[#4DA6FF] bg-clip-text text-transparent">
+                            <div className="inline-flex items-center gap-1 bg-gradient-to-r from-pink-50 to-blue-50 px-1.5 sm:px-2 py-0.5 rounded-full mb-1 sm:mb-1.5 border border-slate-100 max-w-full">
+                              <span className="text-[10px] sm:text-xs font-semibold bg-gradient-to-r from-[#FF4D8D] to-[#4DA6FF] bg-clip-text text-transparent line-clamp-2 text-center break-words" style={{ fontSize: teacher.subject.length > 20 ? '9px' : teacher.subject.length > 15 ? '10px' : '' }}>
                                 {teacher.subject}
                               </span>
                             </div>
