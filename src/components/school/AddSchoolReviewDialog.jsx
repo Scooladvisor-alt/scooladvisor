@@ -586,15 +586,15 @@ rejected → si le message enfreint les règles ci-dessus"
             }
           </div>
 
-          <div className="bg-gradient-to-r from-amber-50 to-amber-100 rounded-xl p-3 sm:p-4 border-2 border-amber-200">
+          <div className="bg-gradient-to-r from-amber-50 to-amber-100 rounded-lg p-2 sm:p-2.5 border border-amber-200">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <Star className="w-5 h-5 sm:w-6 sm:h-6 text-amber-600 fill-amber-600" />
-                <span className="font-semibold text-sm sm:text-base text-amber-900">Note finale</span>
+              <div className="flex items-center gap-1.5">
+                <Star className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-600 fill-amber-600" />
+                <span className="font-semibold text-xs sm:text-sm text-amber-900">Note finale</span>
               </div>
-              <div className="flex items-center gap-1 sm:gap-2">
-                <span className="text-2xl sm:text-3xl font-bold text-amber-900">{calculateTotalRating(formData).toFixed(2).replace(/[.,]00$/, "")}</span>
-                <span className="text-sm sm:text-lg text-amber-700">/ 20</span>
+              <div className="flex items-center gap-1">
+                <span className="text-lg sm:text-xl font-bold text-amber-900">{calculateTotalRating(formData).toFixed(2).replace(/[.,]00$/, "")}</span>
+                <span className="text-xs sm:text-sm text-amber-700">/{getMaxRating()}</span>
               </div>
             </div>
           </div>
@@ -612,8 +612,8 @@ rejected → si le message enfreint les règles ci-dessus"
                   setFormData({ ...formData, comment: text });
                 }
               }}
-              placeholder="Décris ton expérience dans cet établissement (ambiance, locaux, staff...)"
-              rows={4}
+              placeholder="Ton avis..."
+              rows={3}
               className="text-sm sm:text-base"
               disabled={!canEdit} />
             
@@ -686,12 +686,16 @@ rejected → si le message enfreint les règles ci-dessus"
           </Alert>
           }
 
-          {error &&
+          {error && error === "Vous avez déjà publié un avis pour cet établissement." ? (
+            <div className="fixed top-20 left-4 z-50 bg-red-50 border border-red-300 rounded-md px-2 py-1 shadow-sm max-w-[220px]">
+              <p className="text-[10px] text-red-700 leading-tight">Avis déjà publié pour cet établissement</p>
+            </div>
+          ) : error ? (
           <Alert variant="destructive" className="text-destructive pt-4 pr-4 pb-4 pl-5 text-sm rounded-lg [&>svg]:top-4 relative w-full border [&>svg+div]:translate-y-[-1px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-1\\n2 [&>svg~*]:pl-7 border-destructive/50 dark:border-destructive [&>svg]:text-destructive">
             <AlertCircle className="h-4 w-4" />
             <AlertDescription className="text-xs sm:text-sm">{error}</AlertDescription>
           </Alert>
-          }
+          ) : null}
 
           <DialogFooter>
             <Button type="submit" disabled={submitButtonDisabled} className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 text-primary-foreground px-4 py-2 w-full bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 disabled:bg-slate-300 text-white text-xs sm:text-base h-9 sm:h-10 shadow-md">
