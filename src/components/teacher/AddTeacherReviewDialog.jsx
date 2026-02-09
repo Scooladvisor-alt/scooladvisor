@@ -368,8 +368,8 @@ export default function AddTeacherReviewDialog({ open, onOpenChange, teacherId, 
           }
         `}</style>
 
-        <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
-          <div className="space-y-3 sm:space-y-5">
+        <form onSubmit={handleSubmit} className="space-y-2 sm:space-y-3">
+          <div className="space-y-2">
             {criteria.map(({ key, label, icon: Icon, color, description, gradient, sliderClass }) => {
               const isMax = formData[key] === 5;
               const isFlashing = flashingWidgets[key];
@@ -377,24 +377,23 @@ export default function AddTeacherReviewDialog({ open, onOpenChange, teacherId, 
               return (
                 <div
                   key={key}
-                  className={`rounded-lg p-2 sm:p-3 border border-slate-200 transition-all duration-500 relative overflow-hidden ${
+                  className={`rounded-lg p-1.5 sm:p-2 border border-slate-200 transition-all duration-500 relative overflow-hidden ${
                     isMax ? gradient : 'bg-slate-50'
                   } ${isFlashing ? 'animate-widget-shine ring-2 ring-offset-2 ring-offset-white ring-yellow-400' : ''}`}
                 >
-                  <div className="flex items-center justify-between gap-2 relative z-10">
-                    <div className="flex items-center gap-2 flex-1 min-w-0">
-                      <Icon className={`w-4 h-4 flex-shrink-0 ${color}`} />
+                  <div className="flex items-center justify-between gap-1 relative z-10">
+                    <div className="flex items-center gap-1.5 flex-1 min-w-0">
+                      <Icon className={`w-3 h-3 sm:w-3.5 sm:h-3.5 flex-shrink-0 ${color}`} />
                       <div className="min-w-0">
-                        <Label className="font-semibold text-xs sm:text-sm block">{label}</Label>
-                        <p className="text-[9px] sm:text-[10px] text-slate-500 truncate">{description}</p>
+                        <Label className="font-semibold text-[10px] sm:text-xs block leading-tight">{label}</Label>
                       </div>
                     </div>
-                    <div className={`flex items-center gap-0.5 px-2 py-1 rounded-md border min-w-[45px] justify-center transition-colors duration-300 ${isMax ? 'bg-white/80 border-transparent shadow-sm' : 'bg-white border-slate-200'}`}>
-                      <span className={`text-sm sm:text-base font-bold ${isMax ? 'text-slate-900' : 'text-slate-900'}`}>{formData[key].toFixed(2).replace(/[.,]00$/, "")}</span>
-                      <span className="text-[9px] sm:text-xs text-slate-500">/5</span>
+                    <div className={`flex items-center gap-0.5 px-1.5 py-0.5 rounded-md transition-colors duration-300 ${isMax ? 'bg-white/80 shadow-sm' : 'bg-white'}`}>
+                      <span className={`text-xs sm:text-sm font-bold ${isMax ? 'text-slate-900' : 'text-slate-900'}`}>{formData[key].toFixed(2).replace(/[.,]00$/, "")}</span>
+                      <span className="text-[9px] text-slate-500">/5</span>
                     </div>
                   </div>
-                  <div className={sliderClass + " mt-2 relative z-10"}>
+                  <div className={sliderClass + " mt-1.5 relative z-10"}>
                     <Slider
                       value={[formData[key]]}
                       onValueChange={([value]) => {
@@ -415,94 +414,75 @@ export default function AddTeacherReviewDialog({ open, onOpenChange, teacherId, 
             })}
           </div>
 
-          <div className="bg-gradient-to-r from-amber-50 to-amber-100 rounded-xl p-3 sm:p-4 border-2 border-amber-200">
+          <div className="bg-gradient-to-r from-amber-50 to-amber-100 rounded-xl p-2 sm:p-2.5 border-2 border-amber-200">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <Star className="w-5 h-5 sm:w-6 sm:h-6 text-amber-600 fill-amber-600" />
-                <span className="font-semibold text-sm sm:text-base text-amber-900">Note finale</span>
+              <div className="flex items-center gap-1.5">
+                <Star className="w-4 h-4 sm:w-5 sm:h-5 text-amber-600 fill-amber-600" />
+                <span className="font-semibold text-xs sm:text-sm text-amber-900">Note finale</span>
               </div>
-              <div className="flex items-center gap-1 sm:gap-2">
-                <span className="text-2xl sm:text-3xl font-bold text-amber-900">{calculateTotalRating(formData).toFixed(1)}</span>
-                <span className="text-sm sm:text-lg text-amber-700">/20</span>
+              <div className="flex items-center gap-1">
+                <span className="text-xl sm:text-2xl font-bold text-amber-900">{calculateTotalRating(formData).toFixed(1)}</span>
+                <span className="text-xs sm:text-base text-amber-700">/20</span>
               </div>
             </div>
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="comment" className="text-sm sm:text-base">
-              Appréciation générale *
-            </Label>
-            <Textarea
-              id="comment"
-              value={formData.comment}
-              onChange={(e) => {
-                const text = e.target.value;
-                if (text.length <= MAX_COMMENT_LENGTH) {
-                  setFormData({ ...formData, comment: text });
-                }
-              }}
-              placeholder="Décris ton expérience avec ce prof (cours, ambiance, méthodes...)"
-              rows={4}
-              className="text-sm sm:text-base"
-              disabled={!canEdit}
-            />
-            
-            <div className="flex items-center justify-between gap-3 p-2 bg-white rounded-lg border border-slate-200">
-              <div className="flex items-center gap-3">
-                <label 
-                  htmlFor="is_anonymous_inline"
-                  className="flex items-center gap-1.5 cursor-pointer"
-                >
-                  <Checkbox
-                    id="is_anonymous_inline"
-                    checked={formData.is_anonymous}
-                    onCheckedChange={(checked) => setFormData({ ...formData, is_anonymous: checked })}
-                    className="h-3.5 w-3.5"
-                    disabled={!canEdit}
-                  />
-                  <span className="text-[10px] sm:text-xs font-medium text-slate-700">
-                    Anonyme
-                  </span>
-                </label>
+          <div className="space-y-1">
+            <div className="relative">
+              <Textarea
+                id="comment"
+                value={formData.comment}
+                onChange={(e) => {
+                  const text = e.target.value;
+                  if (text.length <= MAX_COMMENT_LENGTH) {
+                    setFormData({ ...formData, comment: text });
+                  }
+                }}
+                placeholder="APPRÉCIATION GÉNÉRALE *"
+                rows={3}
+                className="text-sm sm:text-base"
+                disabled={!canEdit}
+              />
+              <div className="flex items-center justify-between gap-2 mt-1">
+                <div className="flex items-center gap-2">
+                  <label htmlFor="is_anonymous_inline" className="flex items-center gap-1 cursor-pointer">
+                    <Checkbox
+                      id="is_anonymous_inline"
+                      checked={formData.is_anonymous}
+                      onCheckedChange={(checked) => setFormData({ ...formData, is_anonymous: checked })}
+                      className="h-3 w-3 data-[state=checked]:bg-gradient-to-r data-[state=checked]:from-[#FF4D8D] data-[state=checked]:via-purple-500 data-[state=checked]:to-blue-500 data-[state=checked]:border-transparent"
+                      disabled={!canEdit} />
+                    <span className="text-[9px] sm:text-[10px] font-medium text-slate-600">Anonyme</span>
+                  </label>
 
-                <label 
-                  htmlFor="is_former_student_inline"
-                  className="flex items-center gap-1.5 cursor-pointer"
-                >
-                  <Checkbox
-                    id="is_former_student_inline"
-                    checked={formData.is_former_student}
-                    onCheckedChange={(checked) => setFormData({ ...formData, is_former_student: checked })}
-                    className="h-3.5 w-3.5"
-                    disabled={!canEdit} />
-                  <span className="text-[10px] sm:text-xs font-medium text-slate-700">
-                    Ancien élève
-                  </span>
-                </label>
+                  <label htmlFor="is_former_student_inline" className="flex items-center gap-1 cursor-pointer">
+                    <Checkbox
+                      id="is_former_student_inline"
+                      checked={formData.is_former_student}
+                      onCheckedChange={(checked) => setFormData({ ...formData, is_former_student: checked })}
+                      className="h-3 w-3 data-[state=checked]:bg-gradient-to-r data-[state=checked]:from-[#FF4D8D] data-[state=checked]:via-purple-500 data-[state=checked]:to-blue-500 data-[state=checked]:border-transparent"
+                      disabled={!canEdit} />
+                    <span className="text-[9px] sm:text-[10px] font-medium text-slate-600">Ancien</span>
+                  </label>
+                </div>
+                
+                <span className={`text-[9px] whitespace-nowrap ${formData.comment.length >= MAX_COMMENT_LENGTH ? 'text-red-500 font-medium' : 'text-slate-400'}`}>
+                  {formData.comment.length}/{MAX_COMMENT_LENGTH}
+                </span>
               </div>
-              
-              <span className={`text-[10px] whitespace-nowrap ${formData.comment.length >= MAX_COMMENT_LENGTH ? 'text-red-500 font-medium' : 'text-slate-400'}`}>
-                {formData.comment.length}/{MAX_COMMENT_LENGTH}
-              </span>
             </div>
           </div>
 
-          <div className="flex items-start space-x-3 p-3 sm:p-4 bg-green-50 rounded-lg border-2 border-green-300">
+          <div className="flex items-center gap-2 p-2 bg-slate-50 rounded-lg border border-slate-200">
             <Checkbox
               id="certification"
               checked={formData.certification}
               onCheckedChange={(checked) => setFormData({ ...formData, certification: checked })}
-              className="mt-0.5"
-              disabled={!canEdit}
-            />
-            <div className="grid gap-1.5 leading-none">
-              <label
-                htmlFor="certification"
-                className="text-xs sm:text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-green-900"
-              >
-                Je certifie que cet avis est bienveillant.
-              </label>
-            </div>
+              className="h-3 w-3 data-[state=checked]:bg-gradient-to-r data-[state=checked]:from-[#FF4D8D] data-[state=checked]:via-purple-500 data-[state=checked]:to-blue-500 data-[state=checked]:border-transparent"
+              disabled={!canEdit} />
+            <label htmlFor="certification" className="text-[9px] sm:text-[10px] font-medium text-slate-700 cursor-pointer">
+              Je certifie que cet avis est constructif et bienveillant
+            </label>
           </div>
 
           <Alert className="bg-red-50 border-red-300">
