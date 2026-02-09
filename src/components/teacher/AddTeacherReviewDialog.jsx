@@ -346,9 +346,6 @@ export default function AddTeacherReviewDialog({ open, onOpenChange, teacherId, 
               {existingReview ? "Modifier mon avis" : "Noter ce professeur"}
             </span>
           </DialogTitle>
-          <p className="text-xs sm:text-sm text-slate-600 text-center mt-1">
-            Évaluez votre expérience selon 4 critères
-          </p>
         </DialogHeader>
 
 
@@ -368,8 +365,8 @@ export default function AddTeacherReviewDialog({ open, onOpenChange, teacherId, 
           }
         `}</style>
 
-        <form onSubmit={handleSubmit} className="space-y-2 sm:space-y-3">
-          <div className="space-y-2">
+        <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
+          <div className="space-y-2 sm:space-y-3">
             {criteria.map(({ key, label, icon: Icon, color, description, gradient, sliderClass }) => {
               const isMax = formData[key] === 5;
               const isFlashing = flashingWidgets[key];
@@ -378,19 +375,20 @@ export default function AddTeacherReviewDialog({ open, onOpenChange, teacherId, 
                 <div
                   key={key}
                   className={`rounded-lg p-1.5 sm:p-2 border border-slate-200 transition-all duration-500 relative overflow-hidden ${
-                    isMax ? gradient : 'bg-slate-50'
-                  } ${isFlashing ? 'animate-widget-shine ring-2 ring-offset-2 ring-offset-white ring-yellow-400' : ''}`}
-                >
-                  <div className="flex items-center justify-between gap-1 relative z-10">
+                  isMax ? gradient : 'bg-slate-50'} ${
+                  isFlashing ? 'animate-widget-shine ring-2 ring-offset-2 ring-offset-white ring-yellow-400' : ''}`}>
+
+                  <div className="flex items-center justify-between gap-2 relative z-10">
                     <div className="flex items-center gap-1.5 flex-1 min-w-0">
-                      <Icon className={`w-3 h-3 sm:w-3.5 sm:h-3.5 flex-shrink-0 ${color}`} />
+                      <Icon className={`w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0 ${color}`} />
                       <div className="min-w-0">
-                        <Label className="font-semibold text-[10px] sm:text-xs block leading-tight">{label}</Label>
+                        <Label className="font-semibold text-[11px] sm:text-xs block">{label}</Label>
+                        <p className="text-[8px] sm:text-[9px] text-slate-500 truncate">{description}</p>
                       </div>
                     </div>
-                    <div className={`flex items-center gap-0.5 px-1.5 py-0.5 rounded-md transition-colors duration-300 ${isMax ? 'bg-white/80 shadow-sm' : 'bg-white'}`}>
-                      <span className={`text-xs sm:text-sm font-bold ${isMax ? 'text-slate-900' : 'text-slate-900'}`}>{formData[key].toFixed(2).replace(/[.,]00$/, "")}</span>
-                      <span className="text-[9px] text-slate-500">/5</span>
+                    <div className="flex items-center gap-0.5">
+                      <span className="text-sm sm:text-base font-bold text-slate-900">{formData[key].toFixed(2).replace(/[.,]00$/, "")}</span>
+                      <span className="text-xs text-slate-500">/5</span>
                     </div>
                   </div>
                   <div className={sliderClass + " mt-1.5 relative z-10"}>
@@ -406,23 +404,22 @@ export default function AddTeacherReviewDialog({ open, onOpenChange, teacherId, 
                       min={0}
                       max={5}
                       step={0.25}
-                      disabled={!canEdit}
-                    />
+                      disabled={!canEdit} />
                   </div>
-                </div>
-              );
+                </div>);
+
             })}
           </div>
 
-          <div className="bg-gradient-to-r from-amber-50 to-amber-100 rounded-xl p-2 sm:p-2.5 border-2 border-amber-200">
+          <div className="bg-gradient-to-r from-amber-50 to-amber-100 rounded-lg p-2 sm:p-2.5 border border-amber-200">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-1.5">
-                <Star className="w-4 h-4 sm:w-5 sm:h-5 text-amber-600 fill-amber-600" />
+                <Star className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-600 fill-amber-600" />
                 <span className="font-semibold text-xs sm:text-sm text-amber-900">Note finale</span>
               </div>
               <div className="flex items-center gap-1">
-                <span className="text-xl sm:text-2xl font-bold text-amber-900">{calculateTotalRating(formData).toFixed(1)}</span>
-                <span className="text-xs sm:text-base text-amber-700">/20</span>
+                <span className="text-lg sm:text-xl font-bold text-amber-900">{calculateTotalRating(formData).toFixed(2).replace(/[.,]00$/, "")}</span>
+                <span className="text-xs sm:text-sm text-amber-700">/20</span>
               </div>
             </div>
           </div>
@@ -439,11 +436,11 @@ export default function AddTeacherReviewDialog({ open, onOpenChange, teacherId, 
                   }
                 }}
                 placeholder="APPRÉCIATION GÉNÉRALE *"
-                rows={3}
-                className="text-sm sm:text-base"
-                disabled={!canEdit}
-              />
-              <div className="flex items-center justify-between gap-2 mt-1">
+                rows={2}
+                className="text-sm sm:text-base pb-8"
+                disabled={!canEdit} />
+              
+              <div className="absolute bottom-1.5 left-2 right-2 flex items-center justify-between gap-2 bg-white/95 rounded px-1.5 py-1">
                 <div className="flex items-center gap-2">
                   <label htmlFor="is_anonymous_inline" className="flex items-center gap-1 cursor-pointer">
                     <Checkbox
@@ -480,17 +477,18 @@ export default function AddTeacherReviewDialog({ open, onOpenChange, teacherId, 
               onCheckedChange={(checked) => setFormData({ ...formData, certification: checked })}
               className="h-3 w-3 data-[state=checked]:bg-gradient-to-r data-[state=checked]:from-[#FF4D8D] data-[state=checked]:via-purple-500 data-[state=checked]:to-blue-500 data-[state=checked]:border-transparent"
               disabled={!canEdit} />
-            <label htmlFor="certification" className="text-[9px] sm:text-[10px] font-medium text-slate-700 cursor-pointer">
-              Je certifie que cet avis est constructif et bienveillant
+            <label
+              htmlFor="certification"
+              className="text-[10px] font-medium cursor-pointer text-slate-700 leading-tight">
+              Je certifie être responsable de mon avis
             </label>
           </div>
 
-          <Alert className="bg-red-50 border-red-300">
-            <AlertCircle className="h-4 w-4 text-red-600" />
-            <AlertDescription className="text-red-900 text-[10px] sm:text-sm font-medium">
-              <strong>Avertissement légal :</strong> Chaque utilisateur est seul responsable de ses propos. Tout contenu diffamatoire, injurieux ou discriminatoire est interdit.
-            </AlertDescription>
-          </Alert>
+          {error && error === "Tu as déjà publié un avis pour ce professeur." && (
+            <div className="bg-red-50 border border-red-300 rounded-md px-2 py-1.5">
+              <p className="text-[10px] text-red-700 leading-tight">Avis déjà publié pour ce professeur</p>
+            </div>
+          )}
 
           {success &&
           <Alert className="bg-green-50 border-green-200">
@@ -501,16 +499,12 @@ export default function AddTeacherReviewDialog({ open, onOpenChange, teacherId, 
           </Alert>
           }
 
-          {error && error === "Tu as déjà publié un avis pour ce professeur." ? (
-            <div className="fixed top-20 left-4 z-50 bg-red-50 border border-red-300 rounded-md px-2 py-1 shadow-sm max-w-[200px]">
-              <p className="text-[10px] text-red-700 leading-tight">{error}</p>
-            </div>
-          ) : error ? (
+          {error && error !== "Tu as déjà publié un avis pour ce professeur." && (
           <Alert variant="destructive" className="text-destructive pt-4 pr-4 pb-4 pl-5 text-sm rounded-lg [&>svg]:top-4 relative w-full border [&>svg+div]:translate-y-[-1px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-1\\n2 [&>svg~*]:pl-7 border-destructive/50 dark:border-destructive [&>svg]:text-destructive">
             <AlertCircle className="h-4 w-4" />
             <AlertDescription className="text-xs sm:text-sm">{error}</AlertDescription>
           </Alert>
-          ) : null}
+          )}
 
           <DialogFooter>
             <Button
