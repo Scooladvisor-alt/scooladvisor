@@ -622,7 +622,7 @@ rejected → si le message enfreint les règles ci-dessus"
                       id="is_anonymous_inline"
                       checked={formData.is_anonymous}
                       onCheckedChange={(checked) => setFormData({ ...formData, is_anonymous: checked })}
-                      className="h-3 w-3"
+                      className="h-3 w-3 data-[state=checked]:bg-gradient-to-r data-[state=checked]:from-[#FF4D8D] data-[state=checked]:via-purple-500 data-[state=checked]:to-blue-500 data-[state=checked]:border-transparent"
                       disabled={!canEdit} />
                     <span className="text-[9px] sm:text-[10px] font-medium text-slate-600">Anonyme</span>
                   </label>
@@ -632,7 +632,7 @@ rejected → si le message enfreint les règles ci-dessus"
                       id="is_former_student_inline"
                       checked={formData.is_former_student}
                       onCheckedChange={(checked) => setFormData({ ...formData, is_former_student: checked })}
-                      className="h-3 w-3"
+                      className="h-3 w-3 data-[state=checked]:bg-gradient-to-r data-[state=checked]:from-[#FF4D8D] data-[state=checked]:via-purple-500 data-[state=checked]:to-blue-500 data-[state=checked]:border-transparent"
                       disabled={!canEdit} />
                     <span className="text-[9px] sm:text-[10px] font-medium text-slate-600">Ancien</span>
                   </label>
@@ -650,7 +650,7 @@ rejected → si le message enfreint les règles ci-dessus"
               id="certification"
               checked={formData.certification}
               onCheckedChange={(checked) => setFormData({ ...formData, certification: checked })}
-              className="h-3 w-3"
+              className="h-3 w-3 data-[state=checked]:bg-gradient-to-r data-[state=checked]:from-[#FF4D8D] data-[state=checked]:via-purple-500 data-[state=checked]:to-blue-500 data-[state=checked]:border-transparent"
               disabled={!canEdit} />
             <label
               htmlFor="certification"
