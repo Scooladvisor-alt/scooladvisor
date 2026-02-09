@@ -613,7 +613,7 @@ rejected → si le message enfreint les règles ci-dessus"
                     setFormData({ ...formData, comment: text });
                   }
                 }}
-                placeholder="Ton avis..."
+                placeholder="Ton expérience..."
                 rows={2}
                 className="text-sm sm:text-base pb-8"
                 disabled={!canEdit} />
@@ -648,25 +648,18 @@ rejected → si le message enfreint les règles ci-dessus"
             </div>
           </div>
           
-          <div className="space-y-2 p-2.5 bg-gradient-to-r from-green-50 to-red-50 rounded-lg border border-slate-200">
-            <div className="flex items-center space-x-2">
-              <Checkbox
-                id="certification"
-                checked={formData.certification}
-                onCheckedChange={(checked) => setFormData({ ...formData, certification: checked })}
-                className="h-3.5 w-3.5"
-                disabled={!canEdit} />
-
-              <label
-                htmlFor="certification"
-                className="text-[10px] sm:text-xs font-medium cursor-pointer text-green-900">
-                Je certifie que cet avis est constructif et bienveillant
-              </label>
-            </div>
-            
-            <p className="text-[9px] text-red-800 pl-5">
-              <strong>Avertissement :</strong> Tu es responsable de tes propos.
-            </p>
+          <div className="flex items-center gap-2 p-2 bg-slate-50 rounded-lg border border-slate-200">
+            <Checkbox
+              id="certification"
+              checked={formData.certification}
+              onCheckedChange={(checked) => setFormData({ ...formData, certification: checked })}
+              className="h-3 w-3"
+              disabled={!canEdit} />
+            <label
+              htmlFor="certification"
+              className="text-[10px] font-medium cursor-pointer text-slate-700 leading-tight">
+              Je certifie être responsable de mon avis
+            </label>
           </div>
 
           {error && error === "Vous avez déjà publié un avis pour cet établissement." && (
