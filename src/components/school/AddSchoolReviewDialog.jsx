@@ -600,9 +600,6 @@ rejected → si le message enfreint les règles ci-dessus"
           </div>
 
           <div className="space-y-1">
-            <Label htmlFor="comment" className="text-sm sm:text-base">
-              Appréciation générale *
-            </Label>
             <div className="relative">
               <Textarea
                 id="comment"
@@ -613,7 +610,7 @@ rejected → si le message enfreint les règles ci-dessus"
                     setFormData({ ...formData, comment: text });
                   }
                 }}
-                placeholder="Ton expérience..."
+                placeholder="APPRÉCIATION GÉNÉRALE *"
                 rows={2}
                 className="text-sm sm:text-base pb-8"
                 disabled={!canEdit} />
