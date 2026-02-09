@@ -487,7 +487,7 @@ rejected → si le message enfreint les règles ci-dessus"
           }
         `}</style>
         <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
-          <div className="space-y-3 sm:space-y-5">
+          <div className="space-y-2 sm:space-y-3">
             {criteria.map(({ key, label, icon: Icon, color, description, gradient, sliderClass }) => {
               const isMax = formData[key] === 5;
               const isFlashing = flashingWidgets[key];
@@ -495,16 +495,16 @@ rejected → si le message enfreint les règles ci-dessus"
               return (
                 <div
                   key={key}
-                  className={`rounded-lg p-2 sm:p-3 border border-slate-200 transition-all duration-500 relative overflow-hidden ${
+                  className={`rounded-lg p-1.5 sm:p-2 border border-slate-200 transition-all duration-500 relative overflow-hidden ${
                   isMax ? gradient : 'bg-slate-50'} ${
                   isFlashing ? 'animate-widget-shine ring-2 ring-offset-2 ring-offset-white ring-yellow-400' : ''}`}>
 
                   <div className="flex items-center justify-between gap-2 relative z-10">
-                    <div className="flex items-center gap-2 flex-1 min-w-0">
-                      <Icon className={`w-4 h-4 flex-shrink-0 ${color}`} />
+                    <div className="flex items-center gap-1.5 flex-1 min-w-0">
+                      <Icon className={`w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0 ${color}`} />
                       <div className="min-w-0">
-                        <Label className="font-semibold text-xs sm:text-sm block">{label}</Label>
-                        <p className="text-[9px] sm:text-[10px] text-slate-500 truncate">{description}</p>
+                        <Label className="font-semibold text-[11px] sm:text-xs block">{label}</Label>
+                        <p className="text-[8px] sm:text-[9px] text-slate-500 truncate">{description}</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-0.5">
@@ -512,7 +512,7 @@ rejected → si le message enfreint les règles ci-dessus"
                       <span className="text-xs text-slate-500">/5</span>
                     </div>
                   </div>
-                  <div className={sliderClass + " mt-2 relative z-10"}>
+                  <div className={sliderClass + " mt-1.5 relative z-10"}>
                     <Slider
                       value={[formData[key]]}
                       onValueChange={([value]) => {
