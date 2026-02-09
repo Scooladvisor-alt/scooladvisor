@@ -507,9 +507,9 @@ rejected → si le message enfreint les règles ci-dessus"
                         <p className="text-[9px] sm:text-[10px] text-slate-500 truncate">{description}</p>
                       </div>
                     </div>
-                    <div className={`flex items-center gap-0.5 px-2 py-1 rounded-md border min-w-[45px] justify-center transition-colors duration-300 ${isMax ? 'bg-white/80 border-transparent shadow-sm' : 'bg-white border-slate-200'}`}>
-                      <span className={`text-sm sm:text-base font-bold ${isMax ? 'text-slate-900' : 'text-slate-900'}`}>{formData[key].toFixed(2).replace(/[.,]00$/, "")}</span>
-                      <span className="text-[9px] sm:text-xs text-slate-500">/5</span>
+                    <div className="flex items-center gap-0.5">
+                      <span className="text-sm sm:text-base font-bold text-slate-900">{formData[key].toFixed(2).replace(/[.,]00$/, "")}</span>
+                      <span className="text-xs text-slate-500">/5</span>
                     </div>
                   </div>
                   <div className={sliderClass + " mt-2 relative z-10"}>
