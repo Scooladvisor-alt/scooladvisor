@@ -363,6 +363,9 @@ export default function AddTeacherReviewDialog({ open, onOpenChange, teacherId, 
           .animate-widget-shine {
             animation: widget-shine 0.5s ease-out;
           }
+          .checkbox-gradient-only [data-state=checked] > span {
+            display: none;
+          }
         `}</style>
 
         <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
@@ -440,14 +443,14 @@ export default function AddTeacherReviewDialog({ open, onOpenChange, teacherId, 
                 className="text-sm sm:text-base pb-8"
                 disabled={!canEdit} />
               
-              <div className="absolute bottom-1.5 left-2 right-2 flex items-center justify-between gap-2 bg-white/95 rounded px-1.5 py-1">
+              <div className="absolute bottom-1.5 left-2 right-2 flex items-center justify-between gap-2 bg-white/95 rounded px-1.5 py-1 checkbox-gradient-only">
                 <div className="flex items-center gap-2">
                   <label htmlFor="is_anonymous_inline" className="flex items-center gap-1 cursor-pointer">
                     <Checkbox
                       id="is_anonymous_inline"
                       checked={formData.is_anonymous}
                       onCheckedChange={(checked) => setFormData({ ...formData, is_anonymous: checked })}
-                      className="h-3 w-3 data-[state=checked]:bg-gradient-to-r data-[state=checked]:from-[#FF4D8D] data-[state=checked]:via-purple-500 data-[state=checked]:to-blue-500 data-[state=checked]:border-transparent"
+                      className="h-3 w-3 data-[state=checked]:bg-gradient-to-r data-[state=checked]:from-[#FF4D8D] data-[state=checked]:to-blue-500 data-[state=checked]:border-transparent"
                       disabled={!canEdit} />
                     <span className="text-[9px] sm:text-[10px] font-medium text-slate-600">Anonyme</span>
                   </label>
@@ -457,7 +460,7 @@ export default function AddTeacherReviewDialog({ open, onOpenChange, teacherId, 
                       id="is_former_student_inline"
                       checked={formData.is_former_student}
                       onCheckedChange={(checked) => setFormData({ ...formData, is_former_student: checked })}
-                      className="h-3 w-3 data-[state=checked]:bg-gradient-to-r data-[state=checked]:from-[#FF4D8D] data-[state=checked]:via-purple-500 data-[state=checked]:to-blue-500 data-[state=checked]:border-transparent"
+                      className="h-3 w-3 data-[state=checked]:bg-gradient-to-r data-[state=checked]:from-[#FF4D8D] data-[state=checked]:to-blue-500 data-[state=checked]:border-transparent"
                       disabled={!canEdit} />
                     <span className="text-[9px] sm:text-[10px] font-medium text-slate-600">Ancien</span>
                   </label>
@@ -470,12 +473,12 @@ export default function AddTeacherReviewDialog({ open, onOpenChange, teacherId, 
             </div>
           </div>
 
-          <div className="flex items-center gap-2 p-2 bg-slate-50 rounded-lg border border-slate-200">
+          <div className="flex items-center gap-2 p-2 bg-slate-50 rounded-lg border border-slate-200 checkbox-gradient-only">
             <Checkbox
               id="certification"
               checked={formData.certification}
               onCheckedChange={(checked) => setFormData({ ...formData, certification: checked })}
-              className="h-3 w-3 data-[state=checked]:bg-gradient-to-r data-[state=checked]:from-[#FF4D8D] data-[state=checked]:via-purple-500 data-[state=checked]:to-blue-500 data-[state=checked]:border-transparent"
+              className="h-3 w-3 data-[state=checked]:bg-gradient-to-r data-[state=checked]:from-[#FF4D8D] data-[state=checked]:to-blue-500 data-[state=checked]:border-transparent"
               disabled={!canEdit} />
             <label
               htmlFor="certification"
