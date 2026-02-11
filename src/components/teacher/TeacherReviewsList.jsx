@@ -235,7 +235,7 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
 
     setLocalLikes((prev) => ({
       ...prev,
-      [reviewId]: (localLikes[reviewId] ?? review.like_count ?? 0) + (isCurrentlyLiked ? -1 : 1)
+      [reviewId]: Math.max(0, (localLikes[reviewId] ?? review.like_count ?? 0) + (isCurrentlyLiked ? -1 : 1))
     }));
 
     try {
@@ -286,7 +286,7 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
       });
       setLocalLikes((prev) => ({
         ...prev,
-        [reviewId]: (localLikes[reviewId] ?? review.like_count ?? 0) - (isCurrentlyLiked ? -1 : 1)
+        [reviewId]: Math.max(0, (localLikes[reviewId] ?? review.like_count ?? 0) - (isCurrentlyLiked ? -1 : 1))
       }));
       toast.error("Erreur lors de l'action J'aime.");
     }
