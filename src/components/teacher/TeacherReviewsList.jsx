@@ -396,12 +396,12 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
                           </AvatarFallback>
                       </Avatar>
                       <div>
-                        <div className="flex items-center gap-2">
-                           <h4 className="font-bold text-slate-900 text-sm">
-                              {review.is_anonymous ? "Anonyme" : review.author_name || "Étudiant"}
-                              {review.is_former_student && <span className="text-slate-500 text-xs ml-1 font-normal">(ancien élève)</span>}
-                           </h4>
-                        </div>
+                        <h4 className="font-bold text-slate-900 text-sm">
+                          {review.is_anonymous ? "Anonyme" : review.author_name || "Étudiant"}
+                        </h4>
+                        {review.is_former_student && (
+                          <p className="text-[10px] text-slate-500 font-medium -mt-0.5">Ancien élève</p>
+                        )}
                         <p className="text-xs text-slate-500 font-medium mt-0.5">
                           {formatDateWithTimezone(review.created_date, "d MMM yyyy")}
                         </p>
