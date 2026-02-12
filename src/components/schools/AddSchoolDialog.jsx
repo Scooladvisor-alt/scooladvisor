@@ -9,9 +9,10 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { AlertCircle, CheckCircle2, Loader2 } from "lucide-react";
+import { AlertCircle, CheckCircle2, Loader2, MapPin } from "lucide-react";
 import JoinFamilyDialog from "@/components/shared/JoinFamilyDialog";
 import { useJoinFamily } from "@/components/shared/useJoinFamily";
+import GoogleMapsPlacePicker from "./GoogleMapsPlacePicker";
 
 export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
   const [loading, setLoading] = useState(false);
@@ -33,6 +34,7 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
   const addressInputRef = useRef(null);
   const nameInputRef = useRef(null);
   const [isAddressManuallyChanged, setIsAddressManuallyChanged] = useState(false);
+  const [showMapsPicker, setShowMapsPicker] = useState(false);
 
   const searchAddress = async (query) => {
     if (query.length < 3) {
@@ -424,16 +426,28 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
 
           <div className="space-y-1 sm:space-y-2 relative" ref={addressInputRef}>
             <Label htmlFor="address" className="text-xs sm:text-sm">Adresse *</Label>
-            <Input
-              id="address"
-              value={formData.address}
-              onChange={(e) => {
-                setIsAddressManuallyChanged(true);
-                setFormData({ ...formData, address: e.target.value });
-              }}
-              required
-              placeholder="10 rue de la République"
-              className="h-9 sm:h-10 text-xs sm:text-sm" />
+            <div className="flex gap-2">
+              <Input
+                id="address"
+                value={formData.address}
+                onChange={(e) => {
+                  setIsAddressManuallyChanged(true);
+                  setFormData({ ...formData, address: e.target.value });
+                }}
+                required
+                placeholder="10 rue de la République"
+                className="h-9 sm:h-10 text-xs sm:text-sm flex-1" />
+              <Button
+                type="button"
+                onClick={() => setShowMapsPicker(true)}
+                variant="outline"
+                className="h-9 sm:h-10 px-3 gap-2 whitespace-nowrap border-blue-200 hover:bg-blue-50 hover:border-blue-300"
+                title="Rechercher sur Google Maps"
+              >
+                <MapPin className="w-4 h-4 text-blue-600" />
+                <span className="hidden sm:inline text-xs">Maps</span>
+              </Button>
+            </div>
 
             {addressLoading &&
             <div className="absolute right-3 top-9">
@@ -524,6 +538,20 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
         open={showJoinDialog}
         onOpenChange={closeDialog}
         actionDescription={actionDescription}
+      />
+      
+      <GoogleMapsPlacePicker
+        open={showMapsPicker}
+        onOpenChange={setShowMapsPicker}
+        onPlaceSelected={(place) => {
+          setIsAddressManuallyChanged(false);
+          setFormData({
+            ...formData,
+            address: place.address,
+            city: place.city
+          });
+          setShowMapsPicker(false);
+        }}
       />
     </Dialog>);
 
