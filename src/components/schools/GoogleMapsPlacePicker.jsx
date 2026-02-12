@@ -219,13 +219,16 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
           </div>
 
           {/* Carte */}
-          <div className="relative w-full h-[400px] sm:h-[500px] rounded-xl overflow-hidden border border-slate-200">
+          <div className="relative w-full h-[400px] sm:h-[500px] rounded-xl overflow-hidden border border-slate-200 bg-slate-100">
             {loading && (
-              <div className="absolute inset-0 flex items-center justify-center bg-slate-50 z-10">
-                <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
+              <div className="absolute inset-0 flex items-center justify-center bg-slate-100/90 backdrop-blur-sm z-10">
+                <div className="text-center">
+                  <Loader2 className="w-8 h-8 animate-spin text-blue-600 mx-auto mb-2" />
+                  <p className="text-sm text-slate-600">Chargement de la carte...</p>
+                </div>
               </div>
             )}
-            <div ref={mapRef} className="w-full h-full" />
+            <div ref={mapRef} className="w-full h-full bg-slate-100" />
           </div>
 
           {/* Adresse sélectionnée */}
