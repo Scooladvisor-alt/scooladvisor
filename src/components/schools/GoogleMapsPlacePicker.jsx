@@ -2,29 +2,60 @@ import React, { useState, useEffect, useRef } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Loader2, MapPin, Search } from "lucide-react";
+import { Loader2, MapPin, Search, AlertCircle } from "lucide-react";
 import { Loader } from "@googlemaps/js-api-loader";
+import { base44 } from "@/api/base44Client";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelected }) {
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [map, setMap] = useState(null);
   const [marker, setMarker] = useState(null);
   const [selectedPlace, setSelectedPlace] = useState(null);
+  const [apiKey, setApiKey] = useState(null);
   const mapRef = useRef(null);
   const searchBoxRef = useRef(null);
+  const mapInitialized = useRef(false);
 
   useEffect(() => {
-    if (open && mapRef.current) {
-      initializeMap();
+    if (open && !mapInitialized.current) {
+      loadApiKey();
     }
   }, [open]);
 
+  useEffect(() => {
+    if (apiKey && mapRef.current && !mapInitialized.current) {
+      initializeMap();
+      mapInitialized.current = true;
+    }
+  }, [apiKey]);
+
+  const loadApiKey = async () => {
+    try {
+      const response = await base44.functions.invoke('getGoogleMapsApiKey');
+      if (response.data?.apiKey) {
+        setApiKey(response.data.apiKey);
+      } else {
+        setError("Clé API Google Maps non disponible");
+        setLoading(false);
+      }
+    } catch (err) {
+      console.error("Error loading API key:", err);
+      setError("Impossible de charger Google Maps");
+      setLoading(false);
+    }
+  };
+
   const initializeMap = async () => {
+    if (!apiKey) return;
+    
     setLoading(true);
+    setError(null);
     try {
       const loader = new Loader({
-        apiKey: "GOOGLE_MAPS_API_KEY",
+        apiKey: apiKey,
         version: "weekly",
         libraries: ["places"]
       });
@@ -74,8 +105,9 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
         });
       });
 
-    } catch (error) {
-      console.error("Error loading Google Maps:", error);
+    } catch (err) {
+      console.error("Error loading Google Maps:", err);
+      setError("Erreur lors du chargement de Google Maps");
       setLoading(false);
     }
   };
@@ -128,11 +160,27 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
     if (selectedPlace) {
       onPlaceSelected(selectedPlace);
       onOpenChange(false);
+      // Reset state on close
+      setTimeout(() => {
+        setSelectedPlace(null);
+        setSearchQuery("");
+        mapInitialized.current = false;
+      }, 300);
     }
   };
 
+  const handleClose = () => {
+    onOpenChange(false);
+    setTimeout(() => {
+      setSelectedPlace(null);
+      setSearchQuery("");
+      setError(null);
+      mapInitialized.current = false;
+    }, 300);
+  };
+
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={handleClose}>
       <DialogContent className="max-w-[95vw] sm:max-w-4xl max-h-[85vh] overflow-hidden rounded-2xl p-0">
         <DialogHeader className="p-4 sm:p-6 border-b">
           <DialogTitle className="text-lg sm:text-xl font-bold flex items-center gap-2">
@@ -144,6 +192,13 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
         </DialogHeader>
 
         <div className="p-4 sm:p-6 space-y-4">
+          {error && (
+            <Alert variant="destructive">
+              <AlertCircle className="h-4 w-4" />
+              <AlertDescription>{error}</AlertDescription>
+            </Alert>
+          )}
+
           {/* Barre de recherche */}
           <div className="flex gap-2">
             <div className="relative flex-1">
@@ -183,7 +238,7 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
 
           {/* Boutons d'action */}
           <div className="flex justify-end gap-2 pt-2">
-            <Button variant="outline" onClick={() => onOpenChange(false)}>
+            <Button variant="outline" onClick={handleClose}>
               Annuler
             </Button>
             <Button
