@@ -158,7 +158,12 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
 
   const handleConfirm = () => {
     if (selectedPlace) {
-      onPlaceSelected(selectedPlace);
+      onPlaceSelected({
+        name: selectedPlace.name,
+        fullAddress: selectedPlace.fullAddress,
+        streetAddress: selectedPlace.streetAddress,
+        city: selectedPlace.city
+      });
       onOpenChange(false);
       // Reset state on close
       setTimeout(() => {
@@ -231,11 +236,22 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
             <div ref={mapRef} className="w-full h-full bg-slate-100" />
           </div>
 
-          {/* Adresse sélectionnée */}
+          {/* Établissement sélectionné */}
           {selectedPlace &&
-          <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
-              <p className="text-sm font-semibold text-slate-900 mb-1">Adresse sélectionnée :</p>
-              <p className="text-sm text-slate-700">{selectedPlace.fullAddress}</p>
+          <div className="p-4 bg-gradient-to-br from-purple-50 to-blue-50 border-2 border-purple-200 rounded-xl shadow-sm">
+              <div className="flex items-start gap-3">
+                <div className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 p-2 rounded-lg">
+                  <MapPin className="w-5 h-5 text-white" />
+                </div>
+                <div className="flex-1">
+                  <p className="text-sm font-semibold text-slate-900 mb-1">📍 Établissement sélectionné</p>
+                  {selectedPlace.name && (
+                    <p className="text-base font-bold text-purple-700 mb-2">{selectedPlace.name}</p>
+                  )}
+                  <p className="text-sm text-slate-700">{selectedPlace.fullAddress}</p>
+                  <p className="text-xs text-slate-500 mt-1">Ville : {selectedPlace.city}</p>
+                </div>
+              </div>
             </div>
           }
 
