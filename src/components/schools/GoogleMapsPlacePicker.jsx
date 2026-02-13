@@ -21,14 +21,25 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
 
   useEffect(() => {
     if (open) {
+      // Reset d'abord au cas où on réouvre
+      mapInitialized.current = false;
+      setLoading(true);
+      setSelectedPlace(null);
+      setSearchQuery("");
+      setError(null);
+      
       if (!apiKey) {
         loadApiKey();
-      } else if (mapRef.current && !map) {
-        // Charger la carte immédiatement sans attendre
-        setTimeout(() => initializeMap(), 0);
+      } else {
+        // Attendre que le DOM soit prêt puis charger la carte
+        setTimeout(() => {
+          if (mapRef.current && !mapInitialized.current) {
+            initializeMap();
+          }
+        }, 100);
       }
     } else {
-      // Reset tout quand on ferme
+      // Reset complet quand on ferme
       setMap(null);
       setMarker(null);
       setSelectedPlace(null);
@@ -37,7 +48,14 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
       setLoading(true);
       mapInitialized.current = false;
     }
-  }, [open, apiKey, map]);
+  }, [open]);
+
+  // Charger la carte quand l'API key est disponible
+  useEffect(() => {
+    if (open && apiKey && mapRef.current && !mapInitialized.current) {
+      initializeMap();
+    }
+  }, [apiKey, open]);
 
   const loadApiKey = async () => {
     try {
