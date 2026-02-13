@@ -187,7 +187,7 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
 
   return (
     <Dialog open={open} onOpenChange={handleClose}>
-      <DialogContent className="max-w-[95vw] sm:max-w-4xl max-h-[85vh] overflow-hidden rounded-2xl p-0">
+      <DialogContent className="max-w-[98vw] sm:max-w-6xl max-h-[92vh] overflow-y-auto rounded-2xl p-0">
         <DialogHeader className="p-4 sm:p-6 border-b">
           <DialogTitle className="text-lg sm:text-xl font-bold flex items-center gap-2">
             <MapPin className="w-5 h-5 text-[#FF4D8D]" />
