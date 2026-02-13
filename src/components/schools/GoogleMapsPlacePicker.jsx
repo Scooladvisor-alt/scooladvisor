@@ -239,34 +239,35 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
 
           {/* Établissement sélectionné */}
           {selectedPlace &&
-          <div className="p-4 bg-gradient-to-br from-purple-50 to-blue-50 border-2 border-purple-300 rounded-xl shadow-lg animate-in fade-in slide-in-from-bottom-4 duration-300">
+          <div className="p-4 bg-gradient-to-br from-purple-50 to-blue-50 border-2 border-purple-200 rounded-xl shadow-sm">
               <div className="flex items-start gap-3">
-                <div className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 p-2 rounded-lg shadow-md">
+                <div className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 p-2 rounded-lg">
                   <MapPin className="w-5 h-5 text-white" />
                 </div>
                 <div className="flex-1">
-                  <p className="text-sm font-semibold text-slate-900 mb-2">✅ Établissement trouvé !</p>
+                  <p className="text-sm font-semibold text-slate-900 mb-1">📍 Établissement sélectionné</p>
                   {selectedPlace.name && (
-                    <p className="text-lg font-bold text-purple-700 mb-2">{selectedPlace.name}</p>
+                    <p className="text-base font-bold text-purple-700 mb-2">{selectedPlace.name}</p>
                   )}
-                  <p className="text-sm text-slate-700 mb-1">📍 {selectedPlace.fullAddress}</p>
-                  <p className="text-xs text-slate-500">🏙️ Ville : {selectedPlace.city}</p>
-                  
-                  <Button
-                    onClick={handleConfirm}
-                    className="mt-4 w-full bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-white font-bold py-3 text-base shadow-lg hover:shadow-xl transition-all"
-                  >
-                    🚀 Utiliser cette école
-                  </Button>
+                  <p className="text-sm text-slate-700">{selectedPlace.fullAddress}</p>
+                  <p className="text-xs text-slate-500 mt-1">Ville : {selectedPlace.city}</p>
                 </div>
               </div>
             </div>
           }
 
-          {/* Bouton d'annulation en bas */}
-          <div className="flex justify-center pt-2">
-            <Button variant="ghost" onClick={handleClose} className="text-slate-500 hover:text-slate-700">
+          {/* Boutons d'action */}
+          <div className="flex justify-end gap-2 pt-2">
+            <Button variant="outline" onClick={handleClose}>
               Annuler
+            </Button>
+            <Button
+              onClick={handleConfirm}
+              disabled={!selectedPlace}
+              className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-white">
+
+              <MapPin className="w-4 h-4 mr-2" />
+              Confirmer cette adresse
             </Button>
           </div>
         </div>
