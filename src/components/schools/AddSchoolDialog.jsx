@@ -327,7 +327,7 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
         setIsAddressManuallyChanged(false);
       }
     }}>
-      <DialogContent className="max-w-[95vw] sm:max-w-5xl max-h-[90vh] overflow-y-auto rounded-2xl">
+      <DialogContent className="max-w-[90vw] sm:max-w-3xl max-h-[90vh] overflow-y-auto rounded-2xl">
         <DialogHeader className="text-center">
           <DialogTitle className="text-lg sm:text-2xl font-bold text-center">
             <span className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
@@ -354,6 +354,27 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
         }
 
         <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
+          <Button
+            type="button"
+            onClick={() => setShowMapsPicker(true)}
+            className="w-full h-12 bg-gradient-to-r from-[#FF4D8D]/10 via-purple-500/10 to-blue-500/10 hover:from-[#FF4D8D]/25 hover:via-purple-500/25 hover:to-blue-500/25 border-2 border-transparent hover:border-purple-400 transition-all duration-300 shadow-sm hover:shadow-lg group relative overflow-hidden"
+          >
+            <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/40 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
+            <span className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent group-hover:scale-110 transition-transform duration-200 inline-block mr-2 relative z-10">
+              <MapPin className="w-5 h-5" style={{ stroke: 'url(#gradient)' }} />
+            </span>
+            <span className="font-semibold text-slate-700 group-hover:text-slate-900 relative z-10">Trouver mon école sur Google Maps</span>
+            <svg width="0" height="0">
+              <defs>
+                <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="#FF4D8D" />
+                  <stop offset="50%" stopColor="#a855f7" />
+                  <stop offset="100%" stopColor="#3b82f6" />
+                </linearGradient>
+              </defs>
+            </svg>
+          </Button>
+
           <div className="space-y-1 sm:space-y-2">
             <Label htmlFor="type" className="text-xs sm:text-sm">Type d'établissement *</Label>
             <Select
@@ -387,26 +408,6 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
               </SelectContent>
             </Select>
           </div>
-
-          <Button
-            type="button"
-            onClick={() => setShowMapsPicker(true)}
-            className="w-full h-12 bg-gradient-to-r from-[#FF4D8D]/10 via-purple-500/10 to-blue-500/10 hover:from-[#FF4D8D]/20 hover:via-purple-500/20 hover:to-blue-500/20 border-2 border-transparent hover:border-purple-400 transition-all duration-300 shadow-sm hover:shadow-md group"
-          >
-            <span className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent group-hover:scale-110 transition-transform duration-200 inline-block mr-2">
-              <MapPin className="w-5 h-5" style={{ stroke: 'url(#gradient)' }} />
-            </span>
-            <span className="font-semibold text-slate-700 group-hover:text-slate-900">Trouver mon école sur Google Maps</span>
-            <svg width="0" height="0">
-              <defs>
-                <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stopColor="#FF4D8D" />
-                  <stop offset="50%" stopColor="#a855f7" />
-                  <stop offset="100%" stopColor="#3b82f6" />
-                </linearGradient>
-              </defs>
-            </svg>
-          </Button>
 
           <div className="space-y-1 sm:space-y-2">
             <Label htmlFor="name" className="text-xs sm:text-sm">Nom de l'établissement *</Label>
