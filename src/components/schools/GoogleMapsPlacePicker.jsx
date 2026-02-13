@@ -50,7 +50,7 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
 
   const initializeMap = async () => {
     if (!apiKey) return;
-    
+
     setLoading(true);
     setError(null);
     try {
@@ -116,7 +116,7 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
     if (!searchQuery.trim() || !map) return;
 
     const service = new google.maps.places.PlacesService(map);
-    
+
     service.textSearch(
       {
         query: searchQuery,
@@ -145,15 +145,15 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
 
   const extractStreetAddress = (place) => {
     const components = place.address_components || [];
-    const streetNumber = components.find(c => c.types.includes("street_number"))?.long_name || "";
-    const route = components.find(c => c.types.includes("route"))?.long_name || "";
+    const streetNumber = components.find((c) => c.types.includes("street_number"))?.long_name || "";
+    const route = components.find((c) => c.types.includes("route"))?.long_name || "";
     return `${streetNumber} ${route}`.trim() || place.formatted_address.split(",")[0];
   };
 
   const extractCity = (place) => {
     const components = place.address_components || [];
-    return components.find(c => c.types.includes("locality"))?.long_name || 
-           components.find(c => c.types.includes("administrative_area_level_2"))?.long_name || "";
+    return components.find((c) => c.types.includes("locality"))?.long_name ||
+    components.find((c) => c.types.includes("administrative_area_level_2"))?.long_name || "";
   };
 
   const handleConfirm = () => {
@@ -192,12 +192,12 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
         </DialogHeader>
 
         <div className="p-4 sm:p-6 space-y-4">
-          {error && (
-            <Alert variant="destructive">
+          {error &&
+          <Alert variant="destructive">
               <AlertCircle className="h-4 w-4" />
               <AlertDescription>{error}</AlertDescription>
             </Alert>
-          )}
+          }
 
           {/* Barre de recherche */}
           <div className="flex gap-2">
@@ -209,10 +209,10 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && handleSearch()}
                 placeholder="Rechercher un établissement, une adresse..."
-                className="pl-9 h-10"
-              />
+                className="pl-9 h-10" />
+
             </div>
-            <Button onClick={handleSearch} className="bg-blue-600 hover:bg-blue-700">
+            <Button onClick={handleSearch} className="className=\"inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 text-primary-foreground shadow h-9 px-4 py-2 bg-pink-500 hover:bg-pink-600\"">
               <Search className="w-4 h-4 mr-2" />
               Rechercher
             </Button>
@@ -220,24 +220,24 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
 
           {/* Carte */}
           <div className="relative w-full h-[400px] sm:h-[500px] rounded-xl overflow-hidden border border-slate-200 bg-slate-100">
-            {loading && (
-              <div className="absolute inset-0 flex items-center justify-center bg-slate-100/90 backdrop-blur-sm z-10">
+            {loading &&
+            <div className="absolute inset-0 flex items-center justify-center bg-slate-100/90 backdrop-blur-sm z-10">
                 <div className="text-center">
                   <Loader2 className="w-8 h-8 animate-spin text-blue-600 mx-auto mb-2" />
                   <p className="text-sm text-slate-600">Chargement de la carte...</p>
                 </div>
               </div>
-            )}
+            }
             <div ref={mapRef} className="w-full h-full bg-slate-100" />
           </div>
 
           {/* Adresse sélectionnée */}
-          {selectedPlace && (
-            <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
+          {selectedPlace &&
+          <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
               <p className="text-sm font-semibold text-slate-900 mb-1">Adresse sélectionnée :</p>
               <p className="text-sm text-slate-700">{selectedPlace.fullAddress}</p>
             </div>
-          )}
+          }
 
           {/* Boutons d'action */}
           <div className="flex justify-end gap-2 pt-2">
@@ -247,14 +247,14 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
             <Button
               onClick={handleConfirm}
               disabled={!selectedPlace}
-              className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-white"
-            >
+              className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-white">
+
               <MapPin className="w-4 h-4 mr-2" />
               Confirmer cette adresse
             </Button>
           </div>
         </div>
       </DialogContent>
-    </Dialog>
-  );
+    </Dialog>);
+
 }
