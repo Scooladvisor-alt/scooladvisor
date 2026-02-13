@@ -16,6 +16,7 @@ import { toast } from "sonner";
 import { moderateContent } from "@/functions/moderateContent";
 import JoinFamilyDialog from "@/components/shared/JoinFamilyDialog";
 import { useJoinFamily } from "@/components/shared/useJoinFamily";
+import confetti from "canvas-confetti";
 
 export default function AddTeacherReviewDialog({ open, onOpenChange, teacherId, existingReview, setExistingReview, onSuccess }) {
   const [loading, setLoading] = useState(false);
@@ -314,12 +315,35 @@ export default function AddTeacherReviewDialog({ open, onOpenChange, teacherId, 
       }
 
       await updateTeacherStats(teacherId);
-      setSuccess(true);
-      toast.success("✅ Avis publié !");
-      setTimeout(() => {
-        onSuccess();
-        onOpenChange(false);
-      }, 1500);
+      
+      // Animation confettis
+      const duration = 2000;
+      const animationEnd = Date.now() + duration;
+      const colors = ['#FF4D8D', '#3B82F6'];
+      
+      const randomInRange = (min, max) => Math.random() * (max - min) + min;
+      
+      const interval = setInterval(() => {
+        const timeLeft = animationEnd - Date.now();
+        if (timeLeft <= 0) {
+          clearInterval(interval);
+          onSuccess();
+          onOpenChange(false);
+          return;
+        }
+        
+        confetti({
+          particleCount: 3,
+          angle: randomInRange(55, 125),
+          spread: randomInRange(50, 70),
+          origin: { x: randomInRange(0.1, 0.9), y: Math.random() - 0.2 },
+          colors: colors,
+          ticks: 200,
+          gravity: 1,
+          decay: 0.94,
+          startVelocity: 30
+        });
+      }, 50);
 
     } catch (err) {
       console.error("Error during review submission:", err);
@@ -493,14 +517,7 @@ export default function AddTeacherReviewDialog({ open, onOpenChange, teacherId, 
             </div>
           )}
 
-          {success &&
-          <Alert className="bg-green-50 border-green-200">
-            <CheckCircle className="h-4 w-4 text-green-600" />
-            <AlertDescription className="text-green-800 text-xs sm:text-sm">
-              ✅ Avis publié avec succès !
-            </AlertDescription>
-          </Alert>
-          }
+
 
           {error && error !== "Tu as déjà publié un avis pour ce professeur." && (
           <Alert variant="destructive" className="text-destructive pt-4 pr-4 pb-4 pl-5 text-sm rounded-lg [&>svg]:top-4 relative w-full border [&>svg+div]:translate-y-[-1px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-1\\n2 [&>svg~*]:pl-7 border-destructive/50 dark:border-destructive [&>svg]:text-destructive">
