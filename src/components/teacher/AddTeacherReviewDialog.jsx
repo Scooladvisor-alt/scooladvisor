@@ -511,14 +511,6 @@ export default function AddTeacherReviewDialog({ open, onOpenChange, teacherId, 
             </label>
           </div>
 
-          {error && error === "Tu as déjà publié un avis pour ce professeur." && (
-            <div className="bg-red-50 border border-red-300 rounded-md px-2 py-1.5">
-              <p className="text-[10px] text-red-700 leading-tight">Avis déjà publié pour ce professeur</p>
-            </div>
-          )}
-
-
-
           {error && error !== "Tu as déjà publié un avis pour ce professeur." && (
           <Alert variant="destructive" className="text-destructive pt-4 pr-4 pb-4 pl-5 text-sm rounded-lg [&>svg]:top-4 relative w-full border [&>svg+div]:translate-y-[-1px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-1\\n2 [&>svg~*]:pl-7 border-destructive/50 dark:border-destructive [&>svg]:text-destructive">
             <AlertCircle className="h-4 w-4" />
@@ -527,13 +519,19 @@ export default function AddTeacherReviewDialog({ open, onOpenChange, teacherId, 
           )}
 
           <DialogFooter>
-            <Button
-              type="submit"
-              disabled={submitButtonDisabled}
-              className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 text-primary-foreground px-4 py-2 w-full bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 disabled:bg-slate-300 text-white text-xs sm:text-base h-9 sm:h-10 shadow-md"
-            >
-              {loading ? "Publication..." : existingReview ? "Modifier l'avis" : "Publier l'avis"}
-            </Button>
+            {error === "Tu as déjà publié un avis pour ce professeur." ? (
+              <div className="w-full bg-red-50 border-2 border-red-300 rounded-md px-4 py-3 text-center">
+                <p className="text-sm font-semibold text-red-700">Avis déjà publié pour ce professeur</p>
+              </div>
+            ) : (
+              <Button
+                type="submit"
+                disabled={submitButtonDisabled}
+                className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 text-primary-foreground px-4 py-2 w-full bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 disabled:bg-slate-300 text-white text-xs sm:text-base h-9 sm:h-10 shadow-md"
+              >
+                {loading ? "Publication..." : existingReview ? "Modifier l'avis" : "Publier l'avis"}
+              </Button>
+            )}
           </DialogFooter>
         </form>
       </DialogContent>
