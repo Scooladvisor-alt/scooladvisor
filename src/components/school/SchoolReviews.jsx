@@ -401,7 +401,7 @@ Rédige maintenant ton résumé façon "L'avis de Satoshi" en 3 phrases max.`;
                 <div key={review.id} className={`p-2 rounded-lg border space-y-1.5 ${isRejected ? 'bg-slate-100 border-slate-300 opacity-70' : 'bg-white border-slate-200'}`}>
                     {isRejected && (
                         <div className="text-[10px] text-red-600 bg-red-50 px-2 py-1 rounded border border-red-100 mb-1 flex items-center gap-1">
-                            <AlertCircle className="w-3 h-3" /> Visible uniquement par vous (refusé)
+                            <AlertCircle className="w-3 h-3" /> Visible uniquement par vous (refusé par la modération)
                         </div>
                     )}
                     <div className="flex items-start justify-between">
