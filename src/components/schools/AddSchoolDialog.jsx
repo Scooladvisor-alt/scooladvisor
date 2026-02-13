@@ -327,7 +327,7 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
         setIsAddressManuallyChanged(false);
       }
     }}>
-      <DialogContent className="max-w-[85vw] sm:max-w-md max-h-[85vh] overflow-y-auto rounded-2xl">
+      <DialogContent className="max-w-[90vw] sm:max-w-xl max-h-[85vh] overflow-y-auto rounded-2xl">
         <DialogHeader className="text-center">
           <DialogTitle className="text-lg sm:text-2xl font-bold text-center">
             <span className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
