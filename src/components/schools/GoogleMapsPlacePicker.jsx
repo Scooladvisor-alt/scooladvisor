@@ -79,7 +79,8 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
         mapTypeControl: false,
         streetViewControl: false,
         fullscreenControl: false,
-        zoomControl: true
+        zoomControl: true,
+        clickableIcons: false // Désactive les popups natives Google Maps
       });
 
       const markerInstance = new google.maps.Marker({
@@ -106,13 +107,36 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
         geocoder.geocode({ location }, (results, status) => {
           if (status === "OK" && results[0]) {
             const place = results[0];
-            setSelectedPlace({
-              name: place.name || "",
-              address: extractStreetAddress(place),
-              city: extractCity(place),
-              fullAddress: place.formatted_address,
-              location: { lat: location.lat(), lng: location.lng() }
-            });
+            
+            // Chercher un établissement proche si possible
+            const placesService = new google.maps.places.PlacesService(mapInstance);
+            placesService.nearbySearch(
+              {
+                location: location,
+                radius: 50,
+                type: 'school'
+              },
+              (nearbyResults, nearbyStatus) => {
+                if (nearbyStatus === google.maps.places.PlacesServiceStatus.OK && nearbyResults[0]) {
+                  const nearbyPlace = nearbyResults[0];
+                  setSelectedPlace({
+                    name: nearbyPlace.name || "",
+                    address: extractStreetAddress(place),
+                    city: extractCity(place),
+                    fullAddress: place.formatted_address,
+                    location: { lat: location.lat(), lng: location.lng() }
+                  });
+                } else {
+                  setSelectedPlace({
+                    name: "",
+                    address: extractStreetAddress(place),
+                    city: extractCity(place),
+                    fullAddress: place.formatted_address,
+                    location: { lat: location.lat(), lng: location.lng() }
+                  });
+                }
+              }
+            );
           }
         });
       });
@@ -127,6 +151,7 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
   const handleSearch = async () => {
     if (!searchQuery.trim() || !map) return;
 
+    setLoading(true);
     const service = new google.maps.places.PlacesService(map);
 
     service.textSearch(
@@ -135,6 +160,7 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
         region: "fr"
       },
       (results, status) => {
+        setLoading(false);
         if (status === google.maps.places.PlacesServiceStatus.OK && results[0]) {
           const place = results[0];
           const location = place.geometry.location;
@@ -144,13 +170,32 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
           marker.setPosition(location);
           marker.setVisible(true);
 
-          setSelectedPlace({
-            name: place.name || "",
-            address: extractStreetAddress(place),
-            city: extractCity(place),
-            fullAddress: place.formatted_address,
-            location: { lat: location.lat(), lng: location.lng() }
-          });
+          // Récupérer les détails complets du lieu
+          service.getDetails(
+            {
+              placeId: place.place_id,
+              fields: ['name', 'formatted_address', 'address_components', 'geometry']
+            },
+            (placeDetails, detailsStatus) => {
+              if (detailsStatus === google.maps.places.PlacesServiceStatus.OK) {
+                setSelectedPlace({
+                  name: placeDetails.name || place.name || "",
+                  address: extractStreetAddress(placeDetails),
+                  city: extractCity(placeDetails),
+                  fullAddress: placeDetails.formatted_address || place.formatted_address,
+                  location: { lat: location.lat(), lng: location.lng() }
+                });
+              } else {
+                setSelectedPlace({
+                  name: place.name || "",
+                  address: extractStreetAddress(place),
+                  city: extractCity(place),
+                  fullAddress: place.formatted_address,
+                  location: { lat: location.lat(), lng: location.lng() }
+                });
+              }
+            }
+          );
         }
       }
     );
