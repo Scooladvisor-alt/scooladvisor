@@ -283,22 +283,38 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
           </div>
 
           {/* Établissement sélectionné */}
-          {selectedPlace &&
-          <div className="p-2 bg-gradient-to-br from-purple-50 to-blue-50 border-2 border-purple-200 rounded-lg">
-              <div className="flex items-start gap-2">
-                <div className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 p-1 rounded-lg">
-                  <MapPin className="w-3 h-3 text-white" />
-                </div>
-                <div className="flex-1">
-                  <p className="text-xs font-semibold text-slate-900 mb-0.5">📍 Établissement sélectionné</p>
-                  {selectedPlace.name && (
-                    <p className="text-sm font-bold text-purple-700 mb-0.5">{selectedPlace.name}</p>
-                  )}
-                  <p className="text-xs text-slate-700">{selectedPlace.fullAddress}</p>
-                </div>
+          <div className={`p-2 rounded-lg border-2 transition-all ${
+            selectedPlace 
+              ? 'bg-gradient-to-br from-purple-50 to-blue-50 border-purple-200' 
+              : 'bg-slate-50 border-slate-200'
+          }`}>
+            <div className="flex items-start gap-2">
+              <div className={`p-1 rounded-lg ${
+                selectedPlace 
+                  ? 'bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500' 
+                  : 'bg-slate-300'
+              }`}>
+                <MapPin className="w-3 h-3 text-white" />
+              </div>
+              <div className="flex-1">
+                <p className={`text-xs font-semibold mb-0.5 ${
+                  selectedPlace ? 'text-slate-900' : 'text-slate-400'
+                }`}>
+                  📍 Établissement sélectionné
+                </p>
+                {selectedPlace ? (
+                  <>
+                    {selectedPlace.name && (
+                      <p className="text-sm font-bold text-purple-700 mb-0.5">{selectedPlace.name}</p>
+                    )}
+                    <p className="text-xs text-slate-700">{selectedPlace.fullAddress}</p>
+                  </>
+                ) : (
+                  <p className="text-xs text-slate-400 italic">Recherchez ou cliquez sur la carte pour sélectionner un établissement</p>
+                )}
               </div>
             </div>
-          }
+          </div>
 
           {/* Boutons d'action */}
           <div className="flex justify-end gap-2">
