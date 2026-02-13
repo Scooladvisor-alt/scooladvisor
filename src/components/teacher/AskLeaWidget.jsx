@@ -113,7 +113,7 @@ Fais ton résumé maintenant en 3 phrases max.`;
 
   return (
     <Dialog open={showLeaDialog} onOpenChange={setShowLeaDialog}>
-      <DialogContent className="max-w-[95vw] sm:max-w-2xl max-h-[80vh] overflow-y-auto rounded-2xl">
+      <DialogContent className="max-w-[95vw] sm:max-w-5xl max-h-[90vh] overflow-y-auto rounded-2xl">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2 text-lg sm:text-2xl">
             <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-purple-600" />

@@ -514,7 +514,7 @@ Si la décision est "approved", la "reason" doit être null.`,
       </div>
 
       <Dialog open={showDialog} onOpenChange={setShowDialog}>
-        <DialogContent className="max-w-[95vw] sm:max-w-4xl h-[85vh] flex flex-col p-0 rounded-2xl">
+        <DialogContent className="max-w-[95vw] sm:max-w-5xl max-h-[90vh] flex flex-col p-0 rounded-2xl">
           <DialogHeader className="p-4 sm:p-6 pb-3 sm:pb-4 border-b">
             <DialogTitle className="text-xl sm:text-2xl font-bold flex items-center gap-2">
               <MessageSquare className="w-5 h-5 sm:w-6 sm:h-6" style={{ stroke: "url(#chat-gradient)" }} />
