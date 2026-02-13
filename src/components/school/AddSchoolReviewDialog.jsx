@@ -629,11 +629,6 @@ rejected → si le message enfreint les règles ci-dessus"
 
           <div className="space-y-1">
             <div className="relative">
-              {error === "Vous avez déjà publié un avis pour cet établissement." && (
-                <div className="absolute inset-0 bg-red-50/95 backdrop-blur-sm rounded-lg border-2 border-red-300 flex items-center justify-center z-20">
-                  <p className="text-xs sm:text-sm font-medium text-red-700">Avis déjà publié pour cet établissement</p>
-                </div>
-              )}
               <Textarea
                 id="comment"
                 value={formData.comment}
