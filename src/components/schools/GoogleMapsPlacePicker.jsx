@@ -190,7 +190,7 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
       <DialogContent className="max-w-[95vw] sm:max-w-4xl max-h-[85vh] overflow-hidden rounded-2xl p-0">
         <DialogHeader className="p-4 sm:p-6 border-b">
           <DialogTitle className="text-lg sm:text-xl font-bold flex items-center gap-2">
-            <MapPin className="w-5 h-5 text-blue-600" />
+            <MapPin className="w-5 h-5 text-[#FF4D8D]" />
             <span className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
               Rechercher sur Google Maps
             </span>
