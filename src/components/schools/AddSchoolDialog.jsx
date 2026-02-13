@@ -391,9 +391,9 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
           <Button
             type="button"
             onClick={() => setShowMapsPicker(true)}
-            className="w-full h-10 bg-gradient-to-r from-pink-500/20 via-purple-500/20 to-blue-500/20 hover:from-pink-500/30 hover:via-purple-500/30 hover:to-blue-500/30 text-slate-700 border-2 border-transparent hover:border-purple-300 transition-all duration-200"
+            className="w-full h-10 bg-gradient-to-r from-pink-500/20 via-purple-500/20 to-blue-500/20 text-slate-700 border-2 border-transparent shadow-lg shadow-purple-300/50 transition-shadow duration-200"
           >
-            <MapPin className="w-4 h-4 mr-2 text-purple-600" />
+            <MapPin className="w-4 h-4 mr-2 bg-gradient-to-r from-pink-500 to-blue-500 bg-clip-text text-transparent" />
             <span className="font-medium">Trouver mon école sur Google Maps</span>
           </Button>
 
