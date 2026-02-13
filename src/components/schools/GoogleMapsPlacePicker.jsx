@@ -96,6 +96,7 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
           if (status === "OK" && results[0]) {
             const place = results[0];
             setSelectedPlace({
+              name: place.name || "",
               address: extractStreetAddress(place),
               city: extractCity(place),
               fullAddress: place.formatted_address,
@@ -133,6 +134,7 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
           marker.setVisible(true);
 
           setSelectedPlace({
+            name: place.name || "",
             address: extractStreetAddress(place),
             city: extractCity(place),
             fullAddress: place.formatted_address,
@@ -160,8 +162,7 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
     if (selectedPlace) {
       onPlaceSelected({
         name: selectedPlace.name,
-        fullAddress: selectedPlace.fullAddress,
-        streetAddress: selectedPlace.streetAddress,
+        address: selectedPlace.address,
         city: selectedPlace.city
       });
       onOpenChange(false);
