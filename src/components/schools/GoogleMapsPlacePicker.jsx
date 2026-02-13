@@ -184,13 +184,17 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
 
   const extractCity = (place) => {
     const components = place.address_components || [];
+    // Essayer plusieurs types pour maximiser les chances de trouver la ville
     return components.find((c) => c.types.includes("locality"))?.long_name ||
-    components.find((c) => c.types.includes("administrative_area_level_2"))?.long_name || "";
+    components.find((c) => c.types.includes("postal_town"))?.long_name ||
+    components.find((c) => c.types.includes("administrative_area_level_2"))?.long_name ||
+    components.find((c) => c.types.includes("administrative_area_level_1"))?.long_name || "";
   };
 
   const handleConfirm = () => {
     if (selectedPlace) {
       console.log("📍 Place confirmed:", selectedPlace);
+      console.log("🏙️ City extracted:", selectedPlace.city);
       onPlaceSelected({
         name: selectedPlace.name,
         address: selectedPlace.address,
