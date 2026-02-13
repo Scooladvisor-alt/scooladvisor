@@ -207,16 +207,16 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
   return (
     <Dialog open={open} onOpenChange={handleClose}>
       <DialogContent className="max-w-[95vw] sm:max-w-5xl max-h-[90vh] overflow-hidden rounded-2xl p-0">
-        <DialogHeader className="p-3 sm:p-4 border-b">
-          <DialogTitle className="text-base sm:text-lg font-bold flex items-center gap-2">
-            <MapPin className="w-4 h-4 sm:w-5 sm:h-5 text-[#FF4D8D]" />
+        <DialogHeader className="p-2 sm:p-3 border-b">
+          <DialogTitle className="text-sm sm:text-base font-bold flex items-center gap-2">
+            <MapPin className="w-4 h-4 text-[#FF4D8D]" />
             <span className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
               Rechercher sur Google Maps
             </span>
           </DialogTitle>
         </DialogHeader>
 
-        <div className="p-3 sm:p-4 space-y-2 overflow-y-auto max-h-[calc(90vh-70px)]">
+        <div className="p-2 sm:p-3 space-y-2 overflow-y-auto max-h-[calc(90vh-60px)]">
           {error &&
           <Alert variant="destructive">
               <AlertCircle className="h-4 w-4" />
@@ -260,34 +260,33 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
 
           {/* Établissement sélectionné */}
           {selectedPlace &&
-          <div className="p-3 bg-gradient-to-br from-purple-50 to-blue-50 border-2 border-purple-200 rounded-xl">
+          <div className="p-2 bg-gradient-to-br from-purple-50 to-blue-50 border-2 border-purple-200 rounded-lg">
               <div className="flex items-start gap-2">
-                <div className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 p-1.5 rounded-lg">
-                  <MapPin className="w-4 h-4 text-white" />
+                <div className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 p-1 rounded-lg">
+                  <MapPin className="w-3 h-3 text-white" />
                 </div>
                 <div className="flex-1">
                   <p className="text-xs font-semibold text-slate-900 mb-0.5">📍 Établissement sélectionné</p>
                   {selectedPlace.name && (
-                    <p className="text-sm font-bold text-purple-700 mb-1">{selectedPlace.name}</p>
+                    <p className="text-sm font-bold text-purple-700 mb-0.5">{selectedPlace.name}</p>
                   )}
                   <p className="text-xs text-slate-700">{selectedPlace.fullAddress}</p>
-                  <p className="text-xs text-slate-500 mt-0.5">Ville : {selectedPlace.city}</p>
                 </div>
               </div>
             </div>
           }
 
           {/* Boutons d'action */}
-          <div className="flex justify-end gap-2 pt-1">
-            <Button variant="outline" onClick={handleClose} className="h-9 text-sm">
+          <div className="flex justify-end gap-2">
+            <Button variant="outline" onClick={handleClose} className="h-8 text-xs">
               Annuler
             </Button>
             <Button
               onClick={handleConfirm}
               disabled={!selectedPlace}
-              className="h-9 text-sm bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-white">
+              className="h-8 text-xs bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-white">
 
-              <MapPin className="w-4 h-4 mr-2" />
+              <MapPin className="w-3 h-3 mr-1" />
               Confirmer cette adresse
             </Button>
           </div>
