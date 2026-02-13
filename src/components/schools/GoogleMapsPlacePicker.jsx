@@ -24,7 +24,8 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
       if (!apiKey) {
         loadApiKey();
       } else if (mapRef.current && !map) {
-        initializeMap();
+        // Charger la carte immédiatement sans attendre
+        setTimeout(() => initializeMap(), 0);
       }
     } else {
       // Reset tout quand on ferme
@@ -187,17 +188,17 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
 
   return (
     <Dialog open={open} onOpenChange={handleClose}>
-      <DialogContent className="max-w-[98vw] sm:max-w-6xl max-h-[92vh] overflow-y-auto rounded-2xl p-0">
-        <DialogHeader className="p-4 sm:p-6 border-b">
-          <DialogTitle className="text-lg sm:text-xl font-bold flex items-center gap-2">
-            <MapPin className="w-5 h-5 text-[#FF4D8D]" />
+      <DialogContent className="max-w-[98vw] sm:max-w-6xl max-h-[95vh] overflow-hidden rounded-2xl p-0">
+        <DialogHeader className="p-3 sm:p-4 border-b">
+          <DialogTitle className="text-base sm:text-lg font-bold flex items-center gap-2">
+            <MapPin className="w-4 h-4 sm:w-5 sm:h-5 text-[#FF4D8D]" />
             <span className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
               Rechercher sur Google Maps
             </span>
           </DialogTitle>
         </DialogHeader>
 
-        <div className="p-4 sm:p-6 space-y-4">
+        <div className="p-3 sm:p-4 space-y-2 overflow-y-auto max-h-[calc(95vh-80px)]">
           {error &&
           <Alert variant="destructive">
               <AlertCircle className="h-4 w-4" />
@@ -215,22 +216,24 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && handleSearch()}
                 placeholder="Rechercher un établissement, une adresse..."
-                className="pl-9 h-10" />
+                className="pl-9 h-9" />
 
             </div>
-            <Button onClick={handleSearch} className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-white">
-              <Search className="w-4 h-4 mr-2" />
-              Rechercher
+            <Button 
+              onClick={handleSearch} 
+              size="icon"
+              className="h-9 w-9 bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-white">
+              <Search className="w-4 h-4" />
             </Button>
           </div>
 
           {/* Carte */}
-          <div className="relative w-full h-[400px] sm:h-[500px] rounded-xl overflow-hidden border border-slate-200 bg-slate-100">
+          <div className="relative w-full h-[45vh] rounded-xl overflow-hidden border border-slate-200 bg-slate-100">
             {loading &&
             <div className="absolute inset-0 flex items-center justify-center bg-slate-100/90 backdrop-blur-sm z-10">
                 <div className="text-center">
-                  <Loader2 className="w-8 h-8 animate-spin text-blue-600 mx-auto mb-2" />
-                  <p className="text-sm text-slate-600">Chargement de la carte...</p>
+                  <Loader2 className="w-6 h-6 animate-spin text-blue-600 mx-auto mb-1" />
+                  <p className="text-xs text-slate-600">Chargement...</p>
                 </div>
               </div>
             }
@@ -239,32 +242,32 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
 
           {/* Établissement sélectionné */}
           {selectedPlace &&
-          <div className="p-4 bg-gradient-to-br from-purple-50 to-blue-50 border-2 border-purple-200 rounded-xl shadow-sm">
-              <div className="flex items-start gap-3">
-                <div className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 p-2 rounded-lg">
-                  <MapPin className="w-5 h-5 text-white" />
+          <div className="p-3 bg-gradient-to-br from-purple-50 to-blue-50 border-2 border-purple-200 rounded-xl">
+              <div className="flex items-start gap-2">
+                <div className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 p-1.5 rounded-lg">
+                  <MapPin className="w-4 h-4 text-white" />
                 </div>
                 <div className="flex-1">
-                  <p className="text-sm font-semibold text-slate-900 mb-1">📍 Établissement sélectionné</p>
+                  <p className="text-xs font-semibold text-slate-900 mb-0.5">📍 Établissement sélectionné</p>
                   {selectedPlace.name && (
-                    <p className="text-base font-bold text-purple-700 mb-2">{selectedPlace.name}</p>
+                    <p className="text-sm font-bold text-purple-700 mb-1">{selectedPlace.name}</p>
                   )}
-                  <p className="text-sm text-slate-700">{selectedPlace.fullAddress}</p>
-                  <p className="text-xs text-slate-500 mt-1">Ville : {selectedPlace.city}</p>
+                  <p className="text-xs text-slate-700">{selectedPlace.fullAddress}</p>
+                  <p className="text-xs text-slate-500 mt-0.5">Ville : {selectedPlace.city}</p>
                 </div>
               </div>
             </div>
           }
 
           {/* Boutons d'action */}
-          <div className="flex justify-end gap-2 pt-2">
-            <Button variant="outline" onClick={handleClose}>
+          <div className="flex justify-end gap-2 pt-1">
+            <Button variant="outline" onClick={handleClose} className="h-9 text-sm">
               Annuler
             </Button>
             <Button
               onClick={handleConfirm}
               disabled={!selectedPlace}
-              className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-white">
+              className="h-9 text-sm bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-white">
 
               <MapPin className="w-4 h-4 mr-2" />
               Confirmer cette adresse
