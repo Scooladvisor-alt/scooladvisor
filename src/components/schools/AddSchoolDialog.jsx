@@ -544,11 +544,14 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
         open={showMapsPicker}
         onOpenChange={setShowMapsPicker}
         onPlaceSelected={(place) => {
+          console.log("🎯 Place reçu dans AddSchoolDialog:", place);
           setIsAddressManuallyChanged(false);
           
           // Capitaliser correctement le nom de l'école et la ville
           const schoolName = place.name ? capitalizeWords(place.name) : formData.name;
-          const capitalizedCity = place.city ? capitalizeWords(place.city) : formData.city;
+          const capitalizedCity = place.city ? capitalizeWords(place.city) : "";
+          
+          console.log("📝 Mise à jour du formulaire avec ville:", capitalizedCity);
           
           setFormData({
             ...formData,
