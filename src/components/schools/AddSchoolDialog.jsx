@@ -327,7 +327,7 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
         setIsAddressManuallyChanged(false);
       }
     }}>
-      <DialogContent className="max-w-[95vw] sm:max-w-3xl max-h-[85vh] overflow-y-auto rounded-2xl">
+      <DialogContent className="max-w-[98vw] sm:max-w-5xl max-h-[90vh] overflow-y-auto rounded-2xl">
         <DialogHeader className="text-center">
           <DialogTitle className="text-lg sm:text-2xl font-bold text-center">
             <span className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
@@ -388,6 +388,15 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
             </Select>
           </div>
 
+          <Button
+            type="button"
+            onClick={() => setShowMapsPicker(true)}
+            className="w-full h-10 bg-gradient-to-r from-pink-500/20 via-purple-500/20 to-blue-500/20 hover:from-pink-500/30 hover:via-purple-500/30 hover:to-blue-500/30 text-slate-700 border-2 border-transparent hover:border-purple-300 transition-all duration-200"
+          >
+            <MapPin className="w-4 h-4 mr-2 text-purple-600" />
+            <span className="font-medium">Trouver mon école sur Google Maps</span>
+          </Button>
+
           <div className="space-y-1 sm:space-y-2">
             <Label htmlFor="name" className="text-xs sm:text-sm">Nom de l'établissement *</Label>
             <Input
@@ -426,28 +435,16 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
 
           <div className="space-y-1 sm:space-y-2 relative" ref={addressInputRef}>
             <Label htmlFor="address" className="text-xs sm:text-sm">Adresse *</Label>
-            <div className="flex gap-2">
-              <Input
-                id="address"
-                value={formData.address}
-                onChange={(e) => {
-                  setIsAddressManuallyChanged(true);
-                  setFormData({ ...formData, address: e.target.value });
-                }}
-                required
-                placeholder="10 rue de la République"
-                className="h-9 sm:h-10 text-xs sm:text-sm flex-1" />
-              <Button
-                type="button"
-                onClick={() => setShowMapsPicker(true)}
-                variant="outline"
-                className="h-9 sm:h-10 px-3 gap-2 whitespace-nowrap border-purple-200 hover:bg-purple-50 hover:border-purple-300"
-                title="Rechercher sur Google Maps"
-              >
-                <MapPin className="w-4 h-4 text-purple-600" />
-                <span className="hidden sm:inline text-xs">Maps</span>
-              </Button>
-            </div>
+            <Input
+              id="address"
+              value={formData.address}
+              onChange={(e) => {
+                setIsAddressManuallyChanged(true);
+                setFormData({ ...formData, address: e.target.value });
+              }}
+              required
+              placeholder="10 rue de la République"
+              className="h-9 sm:h-10 text-xs sm:text-sm" />
 
             {addressLoading &&
             <div className="absolute right-3 top-9">
@@ -507,23 +504,15 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
             </div>
           </div>
           
-          <DialogFooter className="flex flex-col sm:flex-row sm:justify-end sm:items-center gap-2 mt-4 sm:mt-6">
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => onOpenChange(false)}
-              className="text-xs sm:text-sm h-8 sm:h-10">
-
-              Annuler
-            </Button>
+          <DialogFooter className="flex flex-col sm:flex-row sm:justify-center sm:items-center gap-2 mt-4 sm:mt-6">
             <Button
               type="submit"
               disabled={loading}
-              className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-white text-xs sm:text-sm h-8 sm:h-10 font-semibold shadow-md">
+              className="w-full bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-white text-xs sm:text-sm h-10 sm:h-11 font-semibold shadow-md">
 
               {loading ?
               <>
-                  <Loader2 className="w-3 h-3 sm:w-4 sm:h-4 mr-2 animate-spin" />
+                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
                   Ajout en cours...
                 </> :
 
