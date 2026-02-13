@@ -194,17 +194,20 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
     
     // Si toujours vide, essayer d'extraire depuis formatted_address
     if (!city && place.formatted_address) {
-      // Format: "Adresse, Code Postal Ville, Pays"
+      // Format typique: "Adresse, 77680 Roissy-en-Brie, France"
       const parts = place.formatted_address.split(',').map(p => p.trim());
-      if (parts.length >= 2) {
-        // Prendre la partie avant-dernière (généralement "Code Postal Ville")
-        const cityPart = parts[parts.length - 2];
-        // Enlever le code postal (chiffres au début)
-        city = cityPart.replace(/^\d+\s+/, '').trim();
+      
+      // Chercher la partie qui contient le code postal (5 chiffres)
+      for (let part of parts) {
+        const match = part.match(/^\d{5}\s+(.+)$/);
+        if (match) {
+          city = match[1].trim();
+          break;
+        }
       }
     }
     
-    console.log("🏙️ Ville extraite:", city, "depuis", place);
+    console.log("🏙️ Ville extraite:", city, "depuis formatted_address:", place.formatted_address);
     return city;
   };
 
