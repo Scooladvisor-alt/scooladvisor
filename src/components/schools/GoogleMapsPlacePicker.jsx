@@ -19,9 +19,15 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
   const searchBoxRef = useRef(null);
   const mapInitialized = useRef(false);
 
-  // Reset map when dialog closes
   useEffect(() => {
-    if (!open) {
+    if (open) {
+      if (!apiKey) {
+        loadApiKey();
+      } else if (mapRef.current && !map) {
+        initializeMap();
+      }
+    } else {
+      // Reset tout quand on ferme
       setMap(null);
       setMarker(null);
       setSelectedPlace(null);
@@ -30,19 +36,7 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
       setLoading(true);
       mapInitialized.current = false;
     }
-  }, [open]);
-
-  useEffect(() => {
-    if (open && !apiKey && !mapInitialized.current) {
-      loadApiKey();
-    }
-  }, [open, apiKey]);
-
-  useEffect(() => {
-    if (apiKey && mapRef.current && !mapInitialized.current && !map) {
-      initializeMap();
-    }
-  }, [apiKey, map]);
+  }, [open, apiKey, map]);
 
   const loadApiKey = async () => {
     try {
@@ -61,8 +55,9 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
   };
 
   const initializeMap = async () => {
-    if (!apiKey || !mapRef.current) return;
+    if (!apiKey || !mapRef.current || mapInitialized.current) return;
 
+    console.log("🗺️ Initializing Google Maps...");
     setLoading(true);
     setError(null);
     
@@ -70,7 +65,7 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
       const loader = new Loader({
         apiKey: apiKey,
         version: "weekly",
-        libraries: ["places", "geocoding"]
+        libraries: ["places", "geocoding", "marker"]
       });
 
       await loader.load();
@@ -83,14 +78,18 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
         zoom: 6,
         mapTypeControl: false,
         streetViewControl: false,
-        fullscreenControl: false
+        fullscreenControl: false,
+        zoomControl: true
       });
 
       const markerInstance = new google.maps.Marker({
         map: mapInstance,
-        visible: false
+        visible: false,
+        draggable: false
       });
 
+      console.log("✅ Google Maps initialized successfully");
+      
       setMap(mapInstance);
       setMarker(markerInstance);
       mapInitialized.current = true;
@@ -172,18 +171,13 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
 
   const handleConfirm = () => {
     if (selectedPlace) {
+      console.log("📍 Place confirmed:", selectedPlace);
       onPlaceSelected({
         name: selectedPlace.name,
         address: selectedPlace.address,
         city: selectedPlace.city
       });
       onOpenChange(false);
-      // Reset state on close
-      setTimeout(() => {
-        setSelectedPlace(null);
-        setSearchQuery("");
-        mapInitialized.current = false;
-      }, 300);
     }
   };
 
