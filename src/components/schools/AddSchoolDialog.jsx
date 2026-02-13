@@ -391,10 +391,21 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
           <Button
             type="button"
             onClick={() => setShowMapsPicker(true)}
-            className="w-full h-10 bg-gradient-to-r from-pink-500/20 via-purple-500/20 to-blue-500/20 hover:from-pink-500/30 hover:via-purple-500/30 hover:to-blue-500/30 text-slate-700 border-2 border-transparent hover:border-purple-300 transition-all duration-200"
+            className="w-full h-12 bg-gradient-to-r from-[#FF4D8D]/10 via-purple-500/10 to-blue-500/10 hover:from-[#FF4D8D]/20 hover:via-purple-500/20 hover:to-blue-500/20 border-2 border-transparent hover:border-purple-400 transition-all duration-300 shadow-sm hover:shadow-md group"
           >
-            <MapPin className="w-4 h-4 mr-2 text-purple-600" />
-            <span className="font-medium">Trouver mon école sur Google Maps</span>
+            <span className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent group-hover:scale-110 transition-transform duration-200 inline-block mr-2">
+              <MapPin className="w-5 h-5" style={{ stroke: 'url(#gradient)' }} />
+            </span>
+            <span className="font-semibold text-slate-700 group-hover:text-slate-900">Trouver mon école sur Google Maps</span>
+            <svg width="0" height="0">
+              <defs>
+                <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="#FF4D8D" />
+                  <stop offset="50%" stopColor="#a855f7" />
+                  <stop offset="100%" stopColor="#3b82f6" />
+                </linearGradient>
+              </defs>
+            </svg>
           </Button>
 
           <div className="space-y-1 sm:space-y-2">
