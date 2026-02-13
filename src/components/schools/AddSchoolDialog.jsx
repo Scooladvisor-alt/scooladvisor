@@ -441,7 +441,7 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
                 type="button"
                 onClick={() => setShowMapsPicker(true)}
                 variant="outline"
-                className="h-9 sm:h-10 px-3 gap-2 whitespace-nowrap border-blue-200 hover:bg-blue-50 hover:border-blue-300"
+                className="h-9 sm:h-10 px-3 gap-2 whitespace-nowrap border-pink-200 hover:bg-pink-50 hover:border-pink-300"
                 title="Rechercher sur Google Maps"
               >
                 <MapPin className="w-4 h-4 text-blue-600" />
