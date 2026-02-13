@@ -15,12 +15,9 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
   const [marker, setMarker] = useState(null);
   const [selectedPlace, setSelectedPlace] = useState(null);
   const [apiKey, setApiKey] = useState(null);
-  const [nearbySchools, setNearbySchools] = useState([]);
-  const [schoolMarkers, setSchoolMarkers] = useState([]);
   const mapRef = useRef(null);
   const searchBoxRef = useRef(null);
   const mapInitialized = useRef(false);
-  const infoWindow = useRef(null);
 
   useEffect(() => {
     if (open) {
@@ -98,6 +95,63 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
       mapInitialized.current = true;
       setLoading(false);
 
+      // Intercepter les clics sur les POI (écoles, etc.)
+      const service = new google.maps.places.PlacesService(mapInstance);
+      
+      mapInstance.addListener("click", async (e) => {
+        // Si on clique sur un POI (école)
+        if (e.placeId) {
+          e.stop(); // Empêcher l'ouverture de la fenêtre native
+          
+          console.log("🏫 POI clicked:", e.placeId);
+          
+          // Récupérer les détails du lieu
+          service.getDetails(
+            {
+              placeId: e.placeId,
+              fields: ['name', 'formatted_address', 'address_components', 'geometry']
+            },
+            (placeDetails, status) => {
+              if (status === google.maps.places.PlacesServiceStatus.OK) {
+                const location = placeDetails.geometry.location;
+                
+                markerInstance.setPosition(location);
+                markerInstance.setVisible(true);
+                mapInstance.setCenter(location);
+                mapInstance.setZoom(17);
+                
+                setSelectedPlace({
+                  name: placeDetails.name || "",
+                  address: extractStreetAddress(placeDetails),
+                  city: extractCity(placeDetails),
+                  fullAddress: placeDetails.formatted_address,
+                  location: { lat: location.lat(), lng: location.lng() }
+                });
+              }
+            }
+          );
+        } else {
+          // Clic normal sur la carte
+          const location = e.latLng;
+          markerInstance.setPosition(location);
+          markerInstance.setVisible(true);
+
+          const geocoder = new google.maps.Geocoder();
+          geocoder.geocode({ location }, (results, status) => {
+            if (status === "OK" && results[0]) {
+              const place = results[0];
+              setSelectedPlace({
+                name: "",
+                address: extractStreetAddress(place),
+                city: extractCity(place),
+                fullAddress: place.formatted_address,
+                location: { lat: location.lat(), lng: location.lng() }
+              });
+            }
+          });
+        }
+      });
+
     } catch (err) {
       console.error("Error loading Google Maps:", err);
       setError("Erreur lors du chargement de Google Maps");
@@ -109,12 +163,6 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
     if (!searchQuery.trim() || !map) return;
 
     setLoading(true);
-    setNearbySchools([]);
-    
-    // Nettoyer les anciens markers
-    schoolMarkers.forEach(m => m.setMap(null));
-    setSchoolMarkers([]);
-    
     const service = new google.maps.places.PlacesService(map);
 
     service.textSearch(
@@ -124,76 +172,44 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
       },
       (results, status) => {
         setLoading(false);
-        if (status === google.maps.places.PlacesServiceStatus.OK && results?.length > 0) {
-          const location = results[0].geometry.location;
-          
+        if (status === google.maps.places.PlacesServiceStatus.OK && results[0]) {
+          const place = results[0];
+          const location = place.geometry.location;
+
           map.setCenter(location);
-          map.setZoom(15);
-          
-          // Chercher toutes les écoles à proximité
-          service.nearbySearch(
+          map.setZoom(17);
+          marker.setPosition(location);
+          marker.setVisible(true);
+
+          // Récupérer les détails complets du lieu
+          service.getDetails(
             {
-              location: location,
-              radius: 2000,
-              type: 'school'
+              placeId: place.place_id,
+              fields: ['name', 'formatted_address', 'address_components', 'geometry']
             },
-            (nearbyResults, nearbyStatus) => {
-              if (nearbyStatus === google.maps.places.PlacesServiceStatus.OK && nearbyResults?.length > 0) {
-                setNearbySchools(nearbyResults);
-                displaySchoolMarkers(nearbyResults, map, service);
+            (placeDetails, detailsStatus) => {
+              if (detailsStatus === google.maps.places.PlacesServiceStatus.OK) {
+                setSelectedPlace({
+                  name: placeDetails.name || place.name || "",
+                  address: extractStreetAddress(placeDetails),
+                  city: extractCity(placeDetails),
+                  fullAddress: placeDetails.formatted_address || place.formatted_address,
+                  location: { lat: location.lat(), lng: location.lng() }
+                });
+              } else {
+                setSelectedPlace({
+                  name: place.name || "",
+                  address: extractStreetAddress(place),
+                  city: extractCity(place),
+                  fullAddress: place.formatted_address,
+                  location: { lat: location.lat(), lng: location.lng() }
+                });
               }
             }
           );
         }
       }
     );
-  };
-  
-  const displaySchoolMarkers = (schools, mapInstance, service) => {
-    // Nettoyer les anciens markers
-    schoolMarkers.forEach(m => m.setMap(null));
-    
-    const newMarkers = schools.map(school => {
-      const schoolMarker = new google.maps.Marker({
-        map: mapInstance,
-        position: school.geometry.location,
-        title: school.name,
-        icon: {
-          url: 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png'
-        }
-      });
-      
-      schoolMarker.addListener('click', () => {
-        service.getDetails(
-          {
-            placeId: school.place_id,
-            fields: ['name', 'formatted_address', 'address_components', 'geometry']
-          },
-          (details, detailsStatus) => {
-            if (detailsStatus === google.maps.places.PlacesServiceStatus.OK) {
-              marker.setPosition(details.geometry.location);
-              marker.setVisible(true);
-              mapInstance.setCenter(details.geometry.location);
-              
-              setSelectedPlace({
-                name: details.name || "",
-                address: extractStreetAddress(details),
-                city: extractCity(details),
-                fullAddress: details.formatted_address,
-                location: { 
-                  lat: details.geometry.location.lat(), 
-                  lng: details.geometry.location.lng() 
-                }
-              });
-            }
-          }
-        );
-      });
-      
-      return schoolMarker;
-    });
-    
-    setSchoolMarkers(newMarkers);
   };
 
   const extractStreetAddress = (place) => {
@@ -263,16 +279,6 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
               Rechercher
             </Button>
           </div>
-
-          {/* Info : écoles trouvées */}
-          {nearbySchools.length > 0 && !selectedPlace && (
-            <div className="p-3 bg-blue-50 border border-blue-200 rounded-lg">
-              <p className="text-sm text-blue-700">
-                🏫 <strong>{nearbySchools.length}</strong> école(s) trouvée(s) à proximité. 
-                <span className="font-semibold"> Clique sur un marqueur bleu</span> pour sélectionner une école.
-              </p>
-            </div>
-          )}
 
           {/* Carte */}
           <div className="relative w-full h-[400px] sm:h-[500px] rounded-xl overflow-hidden border border-slate-200 bg-slate-100">
