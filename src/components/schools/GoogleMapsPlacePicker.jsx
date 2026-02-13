@@ -19,18 +19,30 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
   const searchBoxRef = useRef(null);
   const mapInitialized = useRef(false);
 
+  // Reset map when dialog closes
   useEffect(() => {
-    if (open && !mapInitialized.current) {
-      loadApiKey();
+    if (!open) {
+      setMap(null);
+      setMarker(null);
+      setSelectedPlace(null);
+      setSearchQuery("");
+      setError(null);
+      setLoading(true);
+      mapInitialized.current = false;
     }
   }, [open]);
 
   useEffect(() => {
-    if (apiKey && mapRef.current && !mapInitialized.current) {
-      initializeMap();
-      mapInitialized.current = true;
+    if (open && !apiKey && !mapInitialized.current) {
+      loadApiKey();
     }
-  }, [apiKey]);
+  }, [open, apiKey]);
+
+  useEffect(() => {
+    if (apiKey && mapRef.current && !mapInitialized.current && !map) {
+      initializeMap();
+    }
+  }, [apiKey, map]);
 
   const loadApiKey = async () => {
     try {
@@ -49,25 +61,24 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
   };
 
   const initializeMap = async () => {
-    if (!apiKey) return;
+    if (!apiKey || !mapRef.current) return;
 
     setLoading(true);
     setError(null);
+    
     try {
       const loader = new Loader({
         apiKey: apiKey,
         version: "weekly",
-        libraries: ["places"]
+        libraries: ["places", "geocoding"]
       });
 
-      const { Map } = await loader.importLibrary("maps");
-      const { Marker } = await loader.importLibrary("marker");
-      const { PlacesService } = await loader.importLibrary("places");
-
+      await loader.load();
+      
       // Centre par défaut sur la France
       const defaultCenter = { lat: 46.603354, lng: 1.888334 };
 
-      const mapInstance = new Map(mapRef.current, {
+      const mapInstance = new google.maps.Map(mapRef.current, {
         center: defaultCenter,
         zoom: 6,
         mapTypeControl: false,
@@ -75,13 +86,14 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
         fullscreenControl: false
       });
 
-      const markerInstance = new Marker({
+      const markerInstance = new google.maps.Marker({
         map: mapInstance,
         visible: false
       });
 
       setMap(mapInstance);
       setMarker(markerInstance);
+      mapInitialized.current = true;
       setLoading(false);
 
       // Click sur la carte pour placer un marqueur et récupérer l'adresse
@@ -177,12 +189,6 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
 
   const handleClose = () => {
     onOpenChange(false);
-    setTimeout(() => {
-      setSelectedPlace(null);
-      setSearchQuery("");
-      setError(null);
-      mapInitialized.current = false;
-    }, 300);
   };
 
   return (
