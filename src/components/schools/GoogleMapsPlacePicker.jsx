@@ -206,7 +206,7 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
 
   return (
     <Dialog open={open} onOpenChange={handleClose}>
-      <DialogContent className="max-w-none w-screen h-screen max-h-screen overflow-hidden rounded-none p-0 m-0">
+      <DialogContent className="max-w-[95vw] sm:max-w-5xl max-h-[90vh] overflow-hidden rounded-2xl p-0">
         <DialogHeader className="p-3 sm:p-4 border-b">
           <DialogTitle className="text-base sm:text-lg font-bold flex items-center gap-2">
             <MapPin className="w-4 h-4 sm:w-5 sm:h-5 text-[#FF4D8D]" />
@@ -216,7 +216,7 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
           </DialogTitle>
         </DialogHeader>
 
-        <div className="p-3 sm:p-4 space-y-2 overflow-y-auto h-[calc(100vh-60px)]">
+        <div className="p-3 sm:p-4 space-y-2 overflow-y-auto max-h-[calc(90vh-70px)]">
           {error &&
           <Alert variant="destructive">
               <AlertCircle className="h-4 w-4" />
@@ -246,7 +246,7 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
           </div>
 
           {/* Carte */}
-          <div className="relative w-full h-[calc(100vh-280px)] rounded-xl overflow-hidden border border-slate-200 bg-slate-100">
+          <div className="relative w-full h-[50vh] rounded-xl overflow-hidden border border-slate-200 bg-slate-100">
             {loading &&
             <div className="absolute inset-0 flex items-center justify-center bg-slate-100/90 backdrop-blur-sm z-10">
                 <div className="text-center">
