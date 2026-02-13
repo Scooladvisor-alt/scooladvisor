@@ -184,11 +184,28 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
 
   const extractCity = (place) => {
     const components = place.address_components || [];
+    
     // Essayer plusieurs types pour maximiser les chances de trouver la ville
-    return components.find((c) => c.types.includes("locality"))?.long_name ||
+    let city = components.find((c) => c.types.includes("locality"))?.long_name ||
     components.find((c) => c.types.includes("postal_town"))?.long_name ||
     components.find((c) => c.types.includes("administrative_area_level_2"))?.long_name ||
-    components.find((c) => c.types.includes("administrative_area_level_1"))?.long_name || "";
+    components.find((c) => c.types.includes("sublocality"))?.long_name ||
+    components.find((c) => c.types.includes("sublocality_level_1"))?.long_name || "";
+    
+    // Si toujours vide, essayer d'extraire depuis formatted_address
+    if (!city && place.formatted_address) {
+      // Format: "Adresse, Code Postal Ville, Pays"
+      const parts = place.formatted_address.split(',').map(p => p.trim());
+      if (parts.length >= 2) {
+        // Prendre la partie avant-dernière (généralement "Code Postal Ville")
+        const cityPart = parts[parts.length - 2];
+        // Enlever le code postal (chiffres au début)
+        city = cityPart.replace(/^\d+\s+/, '').trim();
+      }
+    }
+    
+    console.log("🏙️ Ville extraite:", city, "depuis", place);
+    return city;
   };
 
   const handleConfirm = () => {
