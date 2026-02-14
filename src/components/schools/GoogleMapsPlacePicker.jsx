@@ -294,12 +294,12 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
           </div>
 
           {/* Établissement sélectionné - MAINTENANT AU DESSUS */}
-          <div className={`p-2 rounded-lg border-2 transition-all ${
+          <div className={`p-1.5 rounded-lg border-2 transition-all ${
             selectedPlace 
               ? 'bg-gradient-to-br from-purple-50 to-blue-50 border-purple-200' 
               : 'bg-slate-50 border-slate-200'
           }`}>
-            <div className="flex items-start gap-2">
+            <div className="flex items-center gap-2">
               <div className={`p-1 rounded-lg ${
                 selectedPlace 
                   ? 'bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500' 
@@ -308,20 +308,15 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
                 <MapPin className="w-3 h-3 text-white" />
               </div>
               <div className="flex-1">
-                <p className={`text-xs font-semibold mb-0.5 ${
-                  selectedPlace ? 'text-slate-900' : 'text-slate-400'
-                }`}>
-                  📍 Établissement sélectionné
-                </p>
                 {selectedPlace ? (
                   <>
                     {selectedPlace.name && (
-                      <p className="text-sm font-bold text-purple-700 mb-0.5">{selectedPlace.name}</p>
+                      <p className="text-sm font-bold bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent mb-0.5">{selectedPlace.name}</p>
                     )}
-                    <p className="text-xs text-slate-700">{selectedPlace.fullAddress}</p>
+                    <p className="text-xs bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">{selectedPlace.fullAddress}</p>
                   </>
                 ) : (
-                  <p className="text-xs text-slate-400 italic">Recherchez ou cliquez sur la carte pour sélectionner un établissement</p>
+                  <p className="text-xs bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent italic">📍 Recherchez ou cliquez sur la carte</p>
                 )}
               </div>
             </div>
