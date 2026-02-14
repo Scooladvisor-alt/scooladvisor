@@ -299,14 +299,27 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
         userEmail: user.email
       }).catch(console.error);
 
-      // Confetti rose et bleu
+      // Confetti rose et bleu éparpillés
       const colors = ['#FF4D8D', '#A855F7', '#3B82F6'];
-      confetti({
-        particleCount: 100,
-        spread: 70,
-        origin: { y: 0.6 },
+      const count = 200;
+      const defaults = {
+        origin: { y: 0.7 },
         colors: colors
-      });
+      };
+      
+      function fire(particleRatio, opts) {
+        confetti({
+          ...defaults,
+          ...opts,
+          particleCount: Math.floor(count * particleRatio)
+        });
+      }
+      
+      fire(0.25, { spread: 26, startVelocity: 55 });
+      fire(0.2, { spread: 60 });
+      fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
+      fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
+      fire(0.1, { spread: 120, startVelocity: 45 });
 
       setTimeout(() => {
         onSuccess();
@@ -331,7 +344,7 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
 
 
 
-        <DialogHeader className="pb-2 flex-shrink-0">
+        <DialogHeader className="pb-2 flex-shrink-0 text-center">
           <DialogTitle className="text-base sm:text-xl font-bold">
             <span className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
               Ajouter un professeur
