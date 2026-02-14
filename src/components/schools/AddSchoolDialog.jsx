@@ -268,7 +268,7 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
       });
 
       if (duplicate) {
-        setError(`Cet établissement existe déjà (ID: ${duplicate.id}) : ${duplicate.name} à ${duplicate.city}`);
+        setError(`Cet établissement existe déjà : ${duplicate.name} à ${duplicate.city}`);
         setLoading(false);
         return;
       }
