@@ -523,7 +523,7 @@ rejected → si le message enfreint les règles ci-dessus"
               return (
                 <div
                   key={key}
-                  className={`rounded-lg p-1.5 sm:p-2 border border-slate-200 transition-all duration-500 relative overflow-hidden ${
+                  className={`rounded-lg p-1.5 sm:p-3 border border-slate-200 transition-all duration-500 relative overflow-hidden ${
                   isMax ? gradient : 'bg-slate-50'} ${
                   isFlashing ? 'animate-widget-shine ring-2 ring-offset-2 ring-offset-white ring-yellow-400' : ''}`}>
 
@@ -536,8 +536,8 @@ rejected → si le message enfreint les règles ci-dessus"
                       </div>
                     </div>
                     <div className="flex items-center gap-0.5">
-                      <span className="text-sm sm:text-base font-bold text-slate-900">{formData[key].toFixed(2).replace(/[.,]00$/, "")}</span>
-                      <span className="text-xs text-slate-500">/5</span>
+                      <span className="text-sm sm:text-base font-bold text-amber-900">{formData[key].toFixed(2).replace(/[.,]00$/, "")}</span>
+                      <span className="text-xs text-amber-700">/5</span>
                     </div>
                   </div>
                   <div className={sliderClass + " mt-1.5 relative z-10"}>
