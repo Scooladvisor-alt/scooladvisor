@@ -30,17 +30,6 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
       setSelectedPlace(null);
       setSearchQuery("");
       setError(null);
-      
-      if (!apiKey) {
-        loadApiKey();
-      } else {
-        // Attendre que le DOM soit prêt puis charger la carte
-        setTimeout(() => {
-          if (mapRef.current && !mapInitialized.current) {
-            initializeMap();
-          }
-        }, 100);
-      }
     } else {
       // Reset complet quand on ferme
       setMap(null);
@@ -64,12 +53,23 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
     }
   };
 
-  // Charger la carte quand l'API key est disponible
+  // Charger l'API key seulement si l'utilisateur est connecté
   useEffect(() => {
-    if (open && apiKey && mapRef.current && !mapInitialized.current) {
-      initializeMap();
+    if (!checkingAuth && user && open && !apiKey) {
+      loadApiKey();
     }
-  }, [apiKey, open]);
+  }, [checkingAuth, user, open, apiKey]);
+
+  // Charger la carte quand l'API key est disponible ET que l'utilisateur est connecté
+  useEffect(() => {
+    if (open && apiKey && mapRef.current && !mapInitialized.current && user && !checkingAuth) {
+      setTimeout(() => {
+        if (mapRef.current && !mapInitialized.current) {
+          initializeMap();
+        }
+      }, 100);
+    }
+  }, [apiKey, open, user, checkingAuth]);
 
   const loadApiKey = async () => {
     try {
