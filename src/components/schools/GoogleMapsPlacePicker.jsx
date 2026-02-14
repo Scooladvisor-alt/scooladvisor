@@ -304,7 +304,7 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
                     {selectedPlace.name && (
                       <p className="text-sm font-bold bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent mb-0.5">{selectedPlace.name}</p>
                     )}
-                    <p className="text-xs bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">{selectedPlace.fullAddress}</p>
+                    <p className="text-[10px] sm:text-xs bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent whitespace-nowrap overflow-hidden text-ellipsis">{selectedPlace.fullAddress}</p>
                   </>
                 ) : (
                   <p className="text-xs bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent italic">📍 Recherchez ou cliquez sur la carte</p>
