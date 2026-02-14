@@ -53,14 +53,7 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
   // Charger la carte quand l'API key est disponible
   useEffect(() => {
     if (open && apiKey && mapRef.current && !mapInitialized.current && !error) {
-      // Attendre que le DOM soit complètement rendu
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          if (mapRef.current && !mapInitialized.current) {
-            initializeMap();
-          }
-        });
-      });
+      initializeMap();
     }
   }, [apiKey, open, error]);
 
