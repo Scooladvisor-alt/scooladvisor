@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Loader2, MapPin, Search, AlertCircle } from "lucide-react";
+import { Loader2, MapPin, Search, AlertCircle, UserIcon } from "lucide-react";
 import { Loader } from "@googlemaps/js-api-loader";
 import { base44 } from "@/api/base44Client";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -15,6 +15,7 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
   const [marker, setMarker] = useState(null);
   const [selectedPlace, setSelectedPlace] = useState(null);
   const [apiKey, setApiKey] = useState(null);
+  const [user, setUser] = useState(null);
   const mapRef = useRef(null);
   const searchBoxRef = useRef(null);
   const mapInitialized = useRef(false);
@@ -27,6 +28,9 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
       setSelectedPlace(null);
       setSearchQuery("");
       setError(null);
+      
+      // Charger l'utilisateur
+      checkUser();
       
       if (!apiKey) {
         loadApiKey();
@@ -49,6 +53,15 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
       mapInitialized.current = false;
     }
   }, [open]);
+
+  const checkUser = async () => {
+    try {
+      const currentUser = await base44.auth.me();
+      setUser(currentUser);
+    } catch (err) {
+      setUser(null);
+    }
+  };
 
   // Charger la carte quand l'API key est disponible
   useEffect(() => {
@@ -228,6 +241,15 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
     onOpenChange(false);
   };
 
+  const handleLogin = async () => {
+    try {
+      const currentUrl = window.location.href;
+      await base44.auth.redirectToLogin(currentUrl);
+    } catch (error) {
+      console.error("Error during login redirect:", error);
+    }
+  };
+
   return (
     <Dialog open={open} onOpenChange={handleClose}>
       <DialogContent className="max-w-[95vw] sm:max-w-5xl max-h-[90vh] overflow-hidden rounded-2xl p-0">
@@ -241,7 +263,7 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
         </DialogHeader>
 
         <div className="p-2 sm:p-3 space-y-2 overflow-y-auto max-h-[calc(90vh-60px)]">
-          {error &&
+          {error && !user &&
           <Alert variant="destructive">
               <AlertCircle className="h-4 w-4" />
               <AlertDescription>{error}</AlertDescription>
@@ -258,31 +280,20 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && handleSearch()}
                 placeholder="Rechercher un établissement, une adresse..."
-                className="pl-9 h-9" />
+                className="pl-9 h-9"
+                disabled={!user} />
 
             </div>
             <Button 
               onClick={handleSearch} 
               size="icon"
+              disabled={!user}
               className="h-9 w-9 bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-white">
               <Search className="w-4 h-4" />
             </Button>
           </div>
 
-          {/* Carte */}
-          <div className="relative w-full h-[50vh] rounded-xl overflow-hidden border border-slate-200 bg-slate-100">
-            {loading &&
-            <div className="absolute inset-0 flex items-center justify-center bg-slate-100/90 backdrop-blur-sm z-10">
-                <div className="text-center">
-                  <Loader2 className="w-6 h-6 animate-spin text-blue-600 mx-auto mb-1" />
-                  <p className="text-xs text-slate-600">Chargement...</p>
-                </div>
-              </div>
-            }
-            <div ref={mapRef} className="w-full h-full bg-slate-100" />
-          </div>
-
-          {/* Établissement sélectionné */}
+          {/* Établissement sélectionné - MAINTENANT AU DESSUS */}
           <div className={`p-2 rounded-lg border-2 transition-all ${
             selectedPlace 
               ? 'bg-gradient-to-br from-purple-50 to-blue-50 border-purple-200' 
@@ -316,6 +327,38 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
             </div>
           </div>
 
+          {/* Carte */}
+          <div className="relative w-full h-[50vh] rounded-xl overflow-hidden border border-slate-200 bg-slate-100">
+            {loading && !user &&
+            <div className="absolute inset-0 flex items-center justify-center bg-slate-100/90 backdrop-blur-sm z-10">
+                <div className="text-center">
+                  <Loader2 className="w-6 h-6 animate-spin text-blue-600 mx-auto mb-1" />
+                  <p className="text-xs text-slate-600">Chargement...</p>
+                </div>
+              </div>
+            }
+            {!user && !loading &&
+            <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-blue-50 to-purple-50 backdrop-blur-sm z-10">
+                <div className="text-center max-w-sm px-4">
+                  <div className="bg-white rounded-2xl shadow-xl p-6">
+                    <UserIcon className="w-12 h-12 mx-auto mb-4 text-purple-600" />
+                    <h3 className="text-lg font-bold text-slate-900 mb-2">Connexion requise</h3>
+                    <p className="text-sm text-slate-600 mb-4">
+                      Pour utiliser Google Maps et ajouter un établissement, veuillez vous connecter.
+                    </p>
+                    <Button
+                      onClick={handleLogin}
+                      className="w-full bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-white font-semibold">
+                      <UserIcon className="w-4 h-4 mr-2" />
+                      Se connecter
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            }
+            <div ref={mapRef} className="w-full h-full bg-slate-100" />
+          </div>
+
           {/* Boutons d'action */}
           <div className="flex justify-end gap-2">
             <Button variant="outline" onClick={handleClose} className="h-8 text-xs">
@@ -323,7 +366,7 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
             </Button>
             <Button
               onClick={handleConfirm}
-              disabled={!selectedPlace}
+              disabled={!selectedPlace || !user}
               className="h-8 text-xs bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-white">
 
               <MapPin className="w-3 h-3 mr-1" />
