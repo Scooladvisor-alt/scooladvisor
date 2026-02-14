@@ -252,8 +252,8 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
 
   return (
     <Dialog open={open} onOpenChange={handleClose}>
-      <DialogContent className="max-w-[95vw] sm:max-w-5xl max-h-[90vh] overflow-hidden rounded-2xl p-0">
-        <div className="p-2 sm:p-3 space-y-2 overflow-y-auto max-h-[90vh]">
+      <DialogContent className="max-w-[95vw] sm:max-w-5xl max-h-[95vh] overflow-hidden rounded-2xl p-0 [&>button]:hidden">
+        <div className="p-2 sm:p-3 space-y-2 overflow-y-auto max-h-[95vh]">
           {error && !user &&
           <Alert variant="destructive">
               <AlertCircle className="h-4 w-4" />
