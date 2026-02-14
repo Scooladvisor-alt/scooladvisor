@@ -432,12 +432,14 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
             </div>
           }
 
-          <div className="space-y-1 flex-1 flex flex-col min-h-0">
-            <Label className="text-xs sm:text-sm flex-shrink-0">Avatar du professeur</Label>
-            <div className="w-full bg-slate-50 rounded-lg p-2 border border-slate-200 flex-1 min-h-0">
+          <div className="space-y-1 flex-shrink-0">
+            <Label className="text-xs sm:text-sm">Avatar du professeur</Label>
+            <div className="w-full bg-slate-50 rounded-lg p-2 border border-slate-200 h-[280px] overflow-y-auto
+                  [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-gray-100 
+                  [&::-webkit-scrollbar-thumb]:bg-gray-400 [&::-webkit-scrollbar-thumb]:rounded-full 
+                  [&::-webkit-scrollbar-thumb]:hover:bg-gray-500">
               {teacherAvatars.length > 0 ? (
-                <div className="grid grid-cols-6 gap-1.5 overflow-y-auto pr-1 h-full"
-                     style={{ gridAutoRows: 'minmax(0, 1fr)' }}>
+                <div className="grid grid-cols-6 gap-1.5">
                   {teacherAvatars.map((avatar) => {
                 const isSelected = formData.photo_url === avatar.url;
                 return (
