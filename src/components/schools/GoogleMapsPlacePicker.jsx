@@ -324,18 +324,19 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
               </div>
             }
             {!user && !loading &&
-            <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-blue-50 to-purple-50 backdrop-blur-sm z-10">
+            <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-pink-50 via-purple-50 to-blue-50 backdrop-blur-sm z-10">
                 <div className="text-center max-w-sm px-4">
-                  <div className="bg-white rounded-2xl shadow-xl p-6">
-                    <UserIcon className="w-12 h-12 mx-auto mb-4 text-purple-600" />
-                    <h3 className="text-lg font-bold text-slate-900 mb-2">Connexion requise</h3>
+                  <div className="bg-white rounded-2xl shadow-xl p-6 border-2 border-purple-100">
+                    <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 flex items-center justify-center">
+                      <UserIcon className="w-8 h-8 text-white" />
+                    </div>
+                    <h3 className="text-lg font-bold bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent mb-2">Connexion requise</h3>
                     <p className="text-sm text-slate-600 mb-4">
                       Pour utiliser Google Maps et ajouter un établissement, veuillez vous connecter.
                     </p>
                     <Button
                       onClick={handleLogin}
                       className="w-full bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-white font-semibold">
-                      <UserIcon className="w-4 h-4 mr-2" />
                       Se connecter
                     </Button>
                   </div>
