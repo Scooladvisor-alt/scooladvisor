@@ -59,14 +59,6 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
 
   const loadApiKey = async () => {
     try {
-      // Vérifier si l'utilisateur est connecté
-      const isAuth = await base44.auth.isAuthenticated();
-      if (!isAuth) {
-        setError("Vous devez être connecté pour utiliser cette fonctionnalité");
-        setLoading(false);
-        return;
-      }
-
       const response = await base44.functions.invoke('getGoogleMapsApiKey');
       if (response.data?.apiKey) {
         setApiKey(response.data.apiKey);
@@ -252,17 +244,7 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
           {error &&
           <Alert variant="destructive">
               <AlertCircle className="h-4 w-4" />
-              <AlertDescription>
-                {error}
-                {error.includes("connecté") && (
-                  <Button
-                    size="sm"
-                    onClick={() => base44.auth.redirectToLogin(window.location.href)}
-                    className="ml-2 h-7 bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-white">
-                    Se connecter
-                  </Button>
-                )}
-              </AlertDescription>
+              <AlertDescription>{error}</AlertDescription>
             </Alert>
           }
 
