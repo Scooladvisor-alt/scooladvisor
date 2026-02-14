@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Loader2, MapPin, Search, AlertCircle, UserPlus } from "lucide-react";
+import { Loader2, MapPin, Search, AlertCircle } from "lucide-react";
 import { Loader } from "@googlemaps/js-api-loader";
 import { base44 } from "@/api/base44Client";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -15,15 +15,12 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
   const [marker, setMarker] = useState(null);
   const [selectedPlace, setSelectedPlace] = useState(null);
   const [apiKey, setApiKey] = useState(null);
-  const [user, setUser] = useState(null);
-  const [checkingAuth, setCheckingAuth] = useState(true);
   const mapRef = useRef(null);
   const searchBoxRef = useRef(null);
   const mapInitialized = useRef(false);
 
   useEffect(() => {
     if (open) {
-      checkAuthentication();
       // Reset d'abord au cas où on réouvre
       mapInitialized.current = false;
       setLoading(true);
@@ -52,17 +49,6 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
       mapInitialized.current = false;
     }
   }, [open]);
-
-  const checkAuthentication = async () => {
-    try {
-      const currentUser = await base44.auth.me();
-      setUser(currentUser);
-    } catch (error) {
-      setUser(null);
-    } finally {
-      setCheckingAuth(false);
-    }
-  };
 
   // Charger la carte quand l'API key est disponible
   useEffect(() => {
@@ -255,28 +241,6 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
         </DialogHeader>
 
         <div className="p-2 sm:p-3 space-y-2 overflow-y-auto max-h-[calc(90vh-60px)]">
-          {!checkingAuth && !user ? (
-            <div className="flex flex-col items-center justify-center py-8 px-4 text-center space-y-4">
-              <div className="p-4 rounded-full bg-gradient-to-br from-purple-100 to-blue-100">
-                <UserPlus className="w-12 h-12 text-purple-600" />
-              </div>
-              <div className="space-y-2">
-                <h3 className="text-lg font-bold text-slate-900">
-                  Fonctionnalité réservée
-                </h3>
-                <p className="text-sm text-slate-600 max-w-md">
-                  La recherche sur Google Maps est disponible uniquement pour les utilisateurs connectés.
-                </p>
-              </div>
-              <Button
-                onClick={() => base44.auth.redirectToLogin()}
-                className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-white">
-                <UserPlus className="w-4 h-4 mr-2" />
-                Se connecter
-              </Button>
-            </div>
-          ) : (
-            <>
           {error &&
           <Alert variant="destructive">
               <AlertCircle className="h-4 w-4" />
@@ -366,8 +330,6 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
               Confirmer cette adresse
             </Button>
           </div>
-          </>
-          )}
         </div>
       </DialogContent>
     </Dialog>);
