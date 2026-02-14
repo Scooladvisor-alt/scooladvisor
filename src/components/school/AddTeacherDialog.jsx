@@ -331,7 +331,7 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
 
 
 
-        <DialogHeader className="pb-2">
+        <DialogHeader className="pb-2 flex-shrink-0">
           <DialogTitle className="text-base sm:text-xl font-bold">
             <span className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
               Ajouter un professeur
@@ -339,16 +339,14 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
           </DialogTitle>
         </DialogHeader>
 
-
-
         {error &&
-        <Alert variant="destructive">
+        <Alert variant="destructive" className="flex-shrink-0">
             <AlertCircle className="h-4 w-4" />
             <AlertDescription className="text-xs sm:text-sm">{error}</AlertDescription>
           </Alert>
         }
 
-        <form onSubmit={handleSubmit} className="space-y-2 sm:space-y-3">
+        <form onSubmit={handleSubmit} className="space-y-2 flex-1 flex flex-col overflow-hidden">
           <div className="space-y-1 flex-shrink-0">
             <Label htmlFor="name" className="text-xs sm:text-sm">Nom du professeur *</Label>
             <div className="flex items-center gap-2">
