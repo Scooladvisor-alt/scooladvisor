@@ -9,10 +9,11 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { AlertCircle, CheckCircle2, Loader2, MapPin } from "lucide-react";
+import { AlertCircle, Loader2, MapPin } from "lucide-react";
 import JoinFamilyDialog from "@/components/shared/JoinFamilyDialog";
 import { useJoinFamily } from "@/components/shared/useJoinFamily";
 import GoogleMapsPlacePicker from "./GoogleMapsPlacePicker";
+import confetti from 'canvas-confetti';
 
 export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
   const [loading, setLoading] = useState(false);
@@ -296,10 +297,30 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
         }
       }
 
-      setSuccess(true);
+      // Confetti rose et bleu éparpillés
+      const colors = ['#FF4D8D', '#A855F7', '#3B82F6'];
+      const count = 200;
+      const defaults = {
+        origin: { y: 0.7 },
+        colors: colors
+      };
+      
+      function fire(particleRatio, opts) {
+        confetti({
+          ...defaults,
+          ...opts,
+          particleCount: Math.floor(count * particleRatio)
+        });
+      }
+      
+      fire(0.25, { spread: 26, startVelocity: 55 });
+      fire(0.2, { spread: 60 });
+      fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
+      fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
+      fire(0.1, { spread: 120, startVelocity: 45 });
+
       setTimeout(() => {
         setFormData({ name: "Lycée ", type: "lycee", address: "", city: "", isInternational: false });
-        setSuccess(false);
         setIsAddressManuallyChanged(false);
         onOpenChange(false);
         if (onSuccess) onSuccess();
@@ -336,15 +357,6 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
             <p className="text-sm sm:text-base font-normal text-slate-600 mt-2">Sois celui qui le fait débarquer ! 🚀</p>
           </DialogTitle>
         </DialogHeader>
-
-        {success &&
-        <Alert className="bg-green-50 border-green-200">
-            <CheckCircle2 className="h-4 w-4 text-green-600" />
-            <AlertDescription className="text-green-800 text-xs sm:text-sm">
-              Établissement ajouté avec succès ! 🎉
-            </AlertDescription>
-          </Alert>
-        }
 
         {error &&
         <Alert variant="destructive">
