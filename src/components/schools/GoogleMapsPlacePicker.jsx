@@ -52,10 +52,10 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
 
   // Charger la carte quand l'API key est disponible
   useEffect(() => {
-    if (open && apiKey && mapRef.current && !mapInitialized.current) {
+    if (open && apiKey && mapRef.current && !mapInitialized.current && !error) {
       initializeMap();
     }
-  }, [apiKey, open]);
+  }, [apiKey, open, error]);
 
   const loadApiKey = async () => {
     try {
@@ -83,6 +83,12 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
 
   const initializeMap = async () => {
     if (!apiKey || !mapRef.current || mapInitialized.current) return;
+    
+    // Vérifier que l'élément DOM existe bien
+    if (!(mapRef.current instanceof Element)) {
+      console.error("mapRef.current is not a valid DOM element");
+      return;
+    }
 
     console.log("🗺️ Initializing Google Maps...");
     setLoading(true);
