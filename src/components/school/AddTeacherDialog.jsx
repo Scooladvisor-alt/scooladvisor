@@ -11,6 +11,7 @@ import { AlertCircle, CheckCircle, Plus, ChevronDown } from "lucide-react";
 import { moderateContent } from "@/functions/moderateContent";
 import JoinFamilyDialog from "@/components/shared/JoinFamilyDialog";
 import { useJoinFamily } from "@/components/shared/useJoinFamily";
+import confetti from "canvas-confetti";
 
 const predefinedSubjects = [
 "Français",
@@ -298,14 +299,22 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
         userEmail: user.email
       }).catch(console.error);
 
-      setSuccess(true);
+      // Confetti rose et bleu
+      const colors = ['#FF4D8D', '#A855F7', '#3B82F6'];
+      confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 },
+        colors: colors
+      });
+
       setTimeout(() => {
         onSuccess();
         onOpenChange(false);
         setFormData({ name: "", subject: "", customSubject: "", photo_url: teacherAvatars.length > 0 ? teacherAvatars[0].url : "", is_former: false });
         setShowCustomSubject(false);
         setSuccess(false);
-      }, 2000);
+      }, 1500);
     } catch (err) {
       console.error("Error creating teacher:", err);
       setError("Erreur lors de l'ajout du professeur: " + (err.message || ""));
@@ -315,7 +324,7 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-[95vw] sm:max-w-5xl max-h-[90vh] overflow-y-auto rounded-2xl
+      <DialogContent className="max-w-[95vw] sm:max-w-[90vw] lg:max-w-7xl max-h-[95vh] overflow-y-auto rounded-2xl
         [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-gray-100 
         [&::-webkit-scrollbar-thumb]:bg-gray-400 [&::-webkit-scrollbar-thumb]:rounded-full 
         [&::-webkit-scrollbar-thumb]:hover:bg-gray-500">
@@ -333,14 +342,7 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
           </DialogTitle>
         </DialogHeader>
 
-        {success &&
-        <Alert className="bg-green-50 border-green-200">
-            <CheckCircle className="h-4 w-4 text-green-600" />
-            <AlertDescription className="text-green-800 text-xs sm:text-sm">
-              ✅ Professeur ajouté avec succès !
-            </AlertDescription>
-          </Alert>
-        }
+
 
         {error &&
         <Alert variant="destructive">
@@ -439,7 +441,7 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
             <Label className="text-xs sm:text-sm">Avatar du professeur</Label>
             <div className="w-full bg-slate-50 rounded-lg p-2 border border-slate-200">
               {teacherAvatars.length > 0 ? (
-                <div className="grid grid-cols-6 gap-1.5 max-h-[220px] overflow-y-auto pr-1">
+                <div className="grid grid-cols-6 sm:grid-cols-8 lg:grid-cols-12 gap-1.5 max-h-[220px] sm:max-h-[400px] overflow-y-auto pr-1">
                   {teacherAvatars.map((avatar) => {
                 const isSelected = formData.photo_url === avatar.url;
                 return (
