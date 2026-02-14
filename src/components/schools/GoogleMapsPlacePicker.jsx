@@ -88,7 +88,7 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
   };
 
   const initializeMap = async () => {
-    if (!apiKey || !mapRef.current || mapInitialized.current) return;
+    if (!apiKey || !mapRef.current || mapInitialized.current || !user) return;
 
     console.log("🗺️ Initializing Google Maps...");
     setLoading(true);
@@ -102,6 +102,13 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
       });
 
       await loader.load();
+      
+      // Vérifier à nouveau que mapRef.current existe après le chargement async
+      if (!mapRef.current) {
+        console.log("⚠️ mapRef.current is null after loader, aborting");
+        setLoading(false);
+        return;
+      }
       
       // Centre par défaut sur la France
       const defaultCenter = { lat: 46.603354, lng: 1.888334 };
