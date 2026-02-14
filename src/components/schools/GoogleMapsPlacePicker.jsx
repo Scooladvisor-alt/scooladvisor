@@ -253,16 +253,7 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
   return (
     <Dialog open={open} onOpenChange={handleClose}>
       <DialogContent className="max-w-[95vw] sm:max-w-5xl max-h-[90vh] overflow-hidden rounded-2xl p-0">
-        <DialogHeader className="p-2 sm:p-3 border-b">
-          <DialogTitle className="text-sm sm:text-base font-bold flex items-center gap-2">
-            <MapPin className="w-4 h-4 text-[#FF4D8D]" />
-            <span className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
-              Rechercher sur Google Maps
-            </span>
-          </DialogTitle>
-        </DialogHeader>
-
-        <div className="p-2 sm:p-3 space-y-2 overflow-y-auto max-h-[calc(90vh-60px)]">
+        <div className="p-2 sm:p-3 space-y-2 overflow-y-auto max-h-[90vh]">
           {error && !user &&
           <Alert variant="destructive">
               <AlertCircle className="h-4 w-4" />
