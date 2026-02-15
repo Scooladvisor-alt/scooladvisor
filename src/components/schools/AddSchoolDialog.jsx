@@ -10,6 +10,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AlertCircle, Loader2, MapPin } from "lucide-react";
+import { toast } from "sonner";
 import JoinFamilyDialog from "@/components/shared/JoinFamilyDialog";
 import { useJoinFamily } from "@/components/shared/useJoinFamily";
 import GoogleMapsPlacePicker from "./GoogleMapsPlacePicker";
@@ -211,7 +212,8 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
         
         // Vérifier que le nom n'est pas vide, ne contient pas que des espaces, et a au moins 2 caractères
         if (!nameWithoutPrefix || nameWithoutPrefix.length < 2 || /^\s+$/.test(nameWithoutPrefix)) {
-          setError(`Veuillez entrer un nom complet et valide pour l'établissement (minimum 2 caractères après "${prefix.trim()}").`);
+          toast.error(`Veuillez entrer un nom complet et valide pour l'établissement (minimum 2 caractères après "${prefix.trim()}").`);
+          nameInputRef.current?.focus();
           setLoading(false);
           return;
         }
@@ -219,7 +221,8 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
         // Pour les autres types sans préfixe verrouillé
         const trimmedName = cleanName.trim();
         if (trimmedName.length < 3 || /^\s+$/.test(trimmedName)) {
-          setError("Veuillez entrer un nom valide pour l'établissement (minimum 3 caractères).");
+          toast.error("Veuillez entrer un nom valide pour l'établissement (minimum 3 caractères).");
+          nameInputRef.current?.focus();
           setLoading(false);
           return;
         }
@@ -358,12 +361,7 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
           </DialogTitle>
         </DialogHeader>
 
-        {error &&
-        <Alert variant="destructive">
-            <AlertCircle className="h-4 w-4" />
-            <AlertDescription className="text-xs sm:text-sm">{error}</AlertDescription>
-          </Alert>
-        }
+
 
         <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
           <div className="space-y-1 sm:space-y-2">
