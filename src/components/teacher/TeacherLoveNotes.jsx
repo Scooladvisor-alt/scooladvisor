@@ -67,41 +67,7 @@ export default function TeacherLoveNotes({ teacherId, user }) {
     setSending(true);
 
     try {
-      const moderationResult = await base44.integrations.Core.InvokeLLM({
-        prompt: `Tu es un modérateur pour une "boîte à mots doux".
-Analyse le message : "${newMessage}"
-
-Mission : Accepter TOUT message positif, encourageant, remerciement ou admiration.
-Accepter : compliments, argot positif (boss, goat, masterclass, légende), humour bienveillant.
-Rejeter : critiques, insultes, sarcasme, messages neutres/froids, harcèlement.
-
-Réponds par JSON : { "decision": "approved" | "rejected", "reason": "raison courte" }`,
-        response_json_schema: {
-          type: "object",
-          properties: {
-            decision: { type: "string", enum: ["approved", "rejected"] },
-            reason: { type: "string", nullable: true }
-          },
-          required: ["decision"]
-        }
-      });
-
-      if (moderationResult.decision === 'rejected') {
-        toast.error(moderationResult.reason || "Message pas assez positif !");
-        const violationCount = (user.violation_count || 0) + 1;
-        await base44.auth.updateMe({ violation_count: violationCount });
-        await base44.entities.Notification.create({
-          user_email: user.email,
-          title: "Message refusé",
-          message: `Ton petit mot a été refusé : ${moderationResult.reason}`,
-          type: "report",
-          is_read: false
-        });
-        setSending(false);
-        return;
-      }
-
-      await base44.entities.TeacherLoveNote.create({
+      const newNote = await base44.entities.TeacherLoveNote.create({
         teacher_id: teacherId,
         message: newMessage,
         author_email: user.email,
@@ -115,6 +81,14 @@ Réponds par JSON : { "decision": "approved" | "rejected", "reason": "raison cou
       setShowForm(false);
       toast.success("Message envoyé ! 💖");
       loadNotes();
+      
+      // Modération asynchrone en arrière-plan
+      base44.functions.invoke('moderateAsync', {
+        entityType: 'TeacherLoveNote',
+        entityId: newNote.id,
+        content: newMessage,
+        context: { teacherId }
+      }).catch(err => console.error('Async moderation error:', err));
     } catch (error) {
       console.error("Error sending note:", error);
       toast.error("Erreur lors de l'envoi.");

@@ -189,22 +189,11 @@ Si la décision est "approved", "reason" peut être vide ou null.`,
       formattedMessage = formattedMessage.charAt(0).toUpperCase() + formattedMessage.slice(1);
     }
 
-    const moderationResponse = await sendToModerationWebhook(formattedMessage);
-
-    if (moderationResponse.decision === 'rejected') {
-      toast.error("❌ Votre message ne respecte pas les règles de la communauté.", { duration: 5000 });
-      setPostLoading(false);
-      const violationCount = (user.violation_count || 0) + 1;
-      await base44.auth.updateMe({ violation_count: violationCount });
-      setNewMessage("");
-      return;
-    }
-
     try {
       const colors = ["pink", "purple", "blue", "green", "orange", "red"];
       const randomColor = colors[Math.floor(Math.random() * colors.length)];
 
-      await base44.entities.NationalMessage.create({
+      const newMsg = await base44.entities.NationalMessage.create({
         message: formattedMessage,
         author_email: user.email,
         author_name: user.full_name,
@@ -217,6 +206,14 @@ Si la décision est "approved", "reason" peut être vide ou null.`,
       setIsAnonymous(false);
       await loadMessages();
       toast.success("✅ Message publié !");
+      
+      // Modération asynchrone en arrière-plan
+      base44.functions.invoke('moderateAsync', {
+        entityType: 'NationalMessage',
+        entityId: newMsg.id,
+        content: formattedMessage,
+        context: {}
+      }).catch(err => console.error('Async moderation error:', err));
     } catch (error) {
       toast.error("❌ Erreur technique. Réessayez.");
       console.error("Error publishing message:", error);
@@ -252,15 +249,6 @@ Si la décision est "approved", "reason" peut être vide ou null.`,
       formattedEditedContent = formattedEditedContent.charAt(0).toUpperCase() + formattedEditedContent.slice(1);
     }
 
-    const moderationResponse = await sendToModerationWebhook(formattedEditedContent);
-    if (moderationResponse.decision === 'rejected') {
-      toast.error("❌ Votre message ne respecte pas les règles de la communauté.");
-      setPostLoading(false);
-      setEditingMessageId(null);
-      setEditedContent("");
-      return;
-    }
-
     try {
       await NationalMessage.update(messageId, {
         message: formattedEditedContent,
@@ -271,6 +259,14 @@ Si la décision est "approved", "reason" peut être vide ou null.`,
       setEditedContent("");
       loadMessages();
       toast.success("✅ Message modifié !");
+      
+      // Modération asynchrone en arrière-plan
+      base44.functions.invoke('moderateAsync', {
+        entityType: 'NationalMessage',
+        entityId: messageId,
+        content: formattedEditedContent,
+        context: {}
+      }).catch(err => console.error('Async moderation error:', err));
     } catch (error) {
       toast.error("❌ Erreur technique. Réessayez.");
     } finally {
