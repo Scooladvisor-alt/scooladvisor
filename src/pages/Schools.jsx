@@ -68,7 +68,7 @@ export default function SchoolsPage() {
       filterSchools();
     }
     updateFilteredTotalCount();
-  }, [schools, searchTerm, typeFilter, internationalOnly]);
+  }, [schools, searchTerm, typeFilter, internationalOnly, teacherCounts]);
 
   const updateFilteredTotalCount = async () => {
     try {
@@ -106,7 +106,7 @@ export default function SchoolsPage() {
     if (allSchoolsLoaded) return;
 
     try {
-      const allSchools = await base44.entities.School.list("-average_rating");
+      const allSchools = await base44.entities.School.list();
       const uniqueSchools = removeDuplicates(allSchools);
       setSchools(uniqueSchools);
       setAllSchoolsLoaded(true);
@@ -185,7 +185,7 @@ export default function SchoolsPage() {
     }
 
     try {
-      const initialSchools = await base44.entities.School.list("-average_rating", 50);
+      const initialSchools = await base44.entities.School.list();
       const uniqueSchools = removeDuplicates(initialSchools);
 
       setSchools(uniqueSchools);
@@ -240,7 +240,7 @@ export default function SchoolsPage() {
 
     setLoadingMore(true);
     try {
-      const allSchools = await base44.entities.School.list("-average_rating");
+      const allSchools = await base44.entities.School.list();
       const uniqueSchools = removeDuplicates(allSchools);
       setSchools(uniqueSchools);
       setAllSchoolsLoaded(true);
@@ -284,13 +284,31 @@ export default function SchoolsPage() {
       });
     } else {
       filtered.sort((a, b) => {
-        const ratingA = a.average_rating || 0;
-        const ratingB = b.average_rating || 0;
+        // Vérifier si l'école a des avis
+        const hasReviewA = (a.review_count || 0) > 0;
+        const hasReviewB = (b.review_count || 0) > 0;
+        
+        // Priorité 1 : Les écoles notées passent toujours en premier
+        if (hasReviewA && !hasReviewB) return -1;
+        if (!hasReviewA && hasReviewB) return 1;
+        
+        // Priorité 2 : Trier par score de popularité
+        const getPopularityScore = (school) => {
+          const schoolReviews = school.review_count || 0;
+          const teacherCount = teacherCounts[school.id] || 0;
+          
+          // Score = (nombre d'avis * 2) + nombre de profs
+          return (schoolReviews * 2) + teacherCount;
+        };
+        
+        const scoreA = getPopularityScore(a);
+        const scoreB = getPopularityScore(b);
 
-        if (ratingB !== ratingA) {
-          return ratingB - ratingA;
+        if (scoreB !== scoreA) {
+          return scoreB - scoreA;
         }
 
+        // En cas d'égalité, trier par date de création
         return new Date(b.created_date).getTime() - new Date(a.created_date).getTime();
       });
     }
