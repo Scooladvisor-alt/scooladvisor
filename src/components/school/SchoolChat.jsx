@@ -348,23 +348,11 @@ Si la décision est "approved", la "reason" doit être null.`,
 
     setPostLoading(true);
 
-    const moderationResult = await sendToModerationWebhook(cleanMessage, null, false);
-    const { decision, reason } = moderationResult;
-
-    if (decision === 'rejected') {
-      toast.error("❌ Votre message ne respecte pas les règles de la communauté.", { duration: 5000 });
-      setPostLoading(false);
-      const currentUser = await base44.auth.me();
-      const violationCount = (currentUser.violation_count || 0) + 1;
-      await base44.auth.updateMe({ violation_count: violationCount });
-      return;
-    }
-
     try {
       const colors = ['#EF4444', '#EC4899', '#8B5CF6', '#3B82F6', '#06B6D4', '#10B981', '#F59E0B'];
       const randomColor = colors[Math.floor(Math.random() * colors.length)];
 
-      await base44.entities.ChatMessage.create({
+      const newMsg = await base44.entities.ChatMessage.create({
         school_id: schoolId,
         message: cleanMessage,
         author_email: user.email,
@@ -380,6 +368,14 @@ Si la décision est "approved", la "reason" doit être null.`,
       setShowDialog(false);
       loadMessages();
       toast.success("✅ Message publié !");
+      
+      // Modération asynchrone en arrière-plan
+      base44.functions.invoke('moderateAsync', {
+        entityType: 'ChatMessage',
+        entityId: newMsg.id,
+        content: cleanMessage,
+        context: { schoolId }
+      }).catch(err => console.error('Async moderation error:', err));
     } catch (error) {
       console.error('Error publishing message:', error);
       toast.error("❌ Erreur technique. Réessayez.");
@@ -405,17 +401,6 @@ Si la décision est "approved", la "reason" doit être null.`,
 
     setPostLoading(true);
 
-    const moderationResult = await sendToModerationWebhook(newContent, messageId, true);
-    const { decision, reason } = moderationResult;
-
-    if (decision === 'rejected') {
-      toast.error("❌ Votre message ne respecte pas les règles de la communauté.");
-      setPostLoading(false);
-      setEditingMessageId(null);
-      setEditedContent("");
-      return;
-    }
-
     try {
       await base44.entities.ChatMessage.update(messageId, {
         message: newContent,
@@ -426,6 +411,14 @@ Si la décision est "approved", la "reason" doit être null.`,
       setEditedContent("");
       loadMessages();
       toast.success("✅ Message modifié !");
+      
+      // Modération asynchrone en arrière-plan
+      base44.functions.invoke('moderateAsync', {
+        entityType: 'ChatMessage',
+        entityId: messageId,
+        content: newContent,
+        context: { schoolId }
+      }).catch(err => console.error('Async moderation error:', err));
     } catch (error) {
       toast.error("❌ Erreur technique. Réessayez.");
     } finally {
