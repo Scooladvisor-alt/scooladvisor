@@ -171,7 +171,7 @@ export default function RecentContent({ onUpdate }) {
                         <h3 className="font-semibold text-slate-900 truncate">{item.display_name}</h3>
                         
                         {item.type === 'school' && (
-                          <Link to={createPageUrl(`SchoolDetail?id=${item.id}`)} target="_blank">
+                          <Link to={createPageUrl(`SchoolDetail?id=${item.id}`)}>
                             <ExternalLink className="w-4 h-4 text-blue-500 hover:text-blue-700" />
                           </Link>
                         )}
@@ -179,8 +179,7 @@ export default function RecentContent({ onUpdate }) {
                       
                       {isReview && item.school_name && (
                         <Link 
-                          to={createPageUrl(`SchoolDetail?id=${item.school_id}`)} 
-                          target="_blank"
+                          to={createPageUrl(`SchoolDetail?id=${item.school_id}`)}
                           className="inline-flex items-center gap-1 text-xs text-blue-600 hover:text-blue-800 hover:underline mb-2"
                         >
                           <SchoolIcon className="w-3 h-3" />
