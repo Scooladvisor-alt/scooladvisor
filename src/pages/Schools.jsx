@@ -68,7 +68,7 @@ export default function SchoolsPage() {
       filterSchools();
     }
     updateFilteredTotalCount();
-  }, [schools, searchTerm, typeFilter, internationalOnly]);
+  }, [schools, searchTerm, typeFilter, internationalOnly, teachers, teacherCounts]);
 
   const updateFilteredTotalCount = async () => {
     try {
