@@ -666,7 +666,7 @@ rejected → si le message enfreint les règles ci-dessus"
                       onCheckedChange={(checked) => setFormData({ ...formData, is_former_student: checked })}
                       className="h-3 w-3 checkbox-gradient-border"
                       disabled={!canEdit} />
-                    <span className="text-[9px] sm:text-[10px] font-medium text-slate-600">Je suis ancien élève</span>
+                    <span className="text-[9px] sm:text-[10px] font-medium text-slate-600">Je suis ancien(ne) élève.</span>
                   </label>
                 </div>
                 
