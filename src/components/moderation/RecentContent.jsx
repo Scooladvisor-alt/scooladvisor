@@ -28,11 +28,19 @@ export default function RecentContent({ onUpdate }) {
   const loadRecentContent = async () => {
     setLoading(true);
     try {
-      const [schools, teacherReviews, schoolReviews] = await Promise.all([
+      const [schools, teachers, teacherReviews, schoolReviews] = await Promise.all([
         base44.entities.School.list("-created_date", 50).catch(() => []),
+        base44.entities.Teacher.list().catch(() => []),
         base44.entities.TeacherReview.list("-created_date", 50).catch(() => []),
         base44.entities.SchoolReview.list("-created_date", 50).catch(() => [])
       ]);
+
+      // Créer des maps pour les données relationnelles
+      const schoolsMap = {};
+      schools.forEach(s => { schoolsMap[s.id] = s; });
+      
+      const teachersMap = {};
+      teachers.forEach(t => { teachersMap[t.id] = t; });
 
       const allItems = [
         ...schools.filter(s => !s.is_deleted).map(item => ({
@@ -42,22 +50,34 @@ export default function RecentContent({ onUpdate }) {
           subtitle: `${item.city || 'Ville inconnue'} - ${item.type || 'Type inconnu'}`,
           date: item.created_date
         })),
-        ...teacherReviews.map(item => ({
-          ...item,
-          type: 'teacher_review',
-          display_name: `Avis professeur`,
-          subtitle: `Par ${item.created_by || 'Utilisateur inconnu'}`,
-          date: item.created_date,
-          comment: item.comment
-        })),
-        ...schoolReviews.map(item => ({
-          ...item,
-          type: 'school_review',
-          display_name: `Avis établissement`,
-          subtitle: `Par ${item.created_by || 'Utilisateur inconnu'}`,
-          date: item.created_date,
-          comment: item.comment
-        }))
+        ...teacherReviews.map(item => {
+          const teacher = teachersMap[item.teacher_id];
+          const school = teacher ? schoolsMap[teacher.school_id] : null;
+          return {
+            ...item,
+            type: 'teacher_review',
+            display_name: `Avis professeur`,
+            subtitle: `Par ${item.created_by || 'Utilisateur inconnu'}`,
+            school_name: school?.name || 'École inconnue',
+            school_id: school?.id,
+            teacher_id: item.teacher_id,
+            date: item.created_date,
+            comment: item.comment
+          };
+        }),
+        ...schoolReviews.map(item => {
+          const school = schoolsMap[item.school_id];
+          return {
+            ...item,
+            type: 'school_review',
+            display_name: `Avis établissement`,
+            subtitle: `Par ${item.created_by || 'Utilisateur inconnu'}`,
+            school_name: school?.name || 'École inconnue',
+            school_id: item.school_id,
+            date: item.created_date,
+            comment: item.comment
+          };
+        })
       ];
 
       allItems.sort((a, b) => new Date(b.date) - new Date(a.date));
@@ -152,10 +172,22 @@ export default function RecentContent({ onUpdate }) {
                         
                         {item.type === 'school' && (
                           <Link to={createPageUrl(`SchoolDetail?id=${item.id}`)} target="_blank">
-                            <ExternalLink className="w-4 h-4 text-blue-500" />
+                            <ExternalLink className="w-4 h-4 text-blue-500 hover:text-blue-700" />
                           </Link>
                         )}
                       </div>
+                      
+                      {isReview && item.school_name && (
+                        <Link 
+                          to={createPageUrl(`SchoolDetail?id=${item.school_id}`)} 
+                          target="_blank"
+                          className="inline-flex items-center gap-1 text-xs text-blue-600 hover:text-blue-800 hover:underline mb-2"
+                        >
+                          <SchoolIcon className="w-3 h-3" />
+                          {item.school_name}
+                          <ExternalLink className="w-3 h-3" />
+                        </Link>
+                      )}
                       
                       <div className="space-y-1">
                         <div className="flex items-center gap-2 text-sm text-slate-600">
