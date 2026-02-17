@@ -284,6 +284,13 @@ export default function SchoolsPage() {
       });
     } else {
       filtered.sort((a, b) => {
+        const hasReviewA = (a.review_count || 0) > 0;
+        const hasReviewB = (b.review_count || 0) > 0;
+        
+        // Les écoles notées passent toujours en premier
+        if (hasReviewA && !hasReviewB) return -1;
+        if (!hasReviewA && hasReviewB) return 1;
+        
         // Calculer le score de popularité pour chaque école
         const getPopularityScore = (school) => {
           const schoolReviews = school.review_count || 0;
