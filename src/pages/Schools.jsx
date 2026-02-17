@@ -185,6 +185,16 @@ export default function SchoolsPage() {
     }
 
     try {
+      // Charger les profs d'abord pour avoir les counts avant le tri
+      const teachersData = await base44.entities.Teacher.filter({ status: "approved" });
+      const counts = {};
+      for (const teacher of teachersData) {
+        counts[teacher.school_id] = (counts[teacher.school_id] || 0) + 1;
+      }
+      setTeacherCounts(counts);
+      setTeachers(teachersData);
+
+      // Puis charger les écoles (le tri aura accès aux teacherCounts)
       const initialSchools = await base44.entities.School.list();
       const uniqueSchools = removeDuplicates(initialSchools);
 
@@ -192,7 +202,6 @@ export default function SchoolsPage() {
       setAllSchoolsLoaded(initialSchools.length < 50);
 
       loadTotalSchoolCount();
-      loadTeacherCounts();
     } catch (error) {
       console.error("Error loading data:", error);
       setSchools([]);
@@ -218,19 +227,7 @@ export default function SchoolsPage() {
     }
   };
 
-  const loadTeacherCounts = async () => {
-    try {
-      const teachersData = await base44.entities.Teacher.filter({ status: "approved" });
-      const counts = {};
-      for (const teacher of teachersData) {
-        counts[teacher.school_id] = (counts[teacher.school_id] || 0) + 1;
-      }
-      setTeacherCounts(counts);
-      setTeachers(teachersData);
-    } catch (error) {
-      console.error("Error loading teacher counts:", error);
-    }
-  };
+
 
   const loadMoreSchools = async () => {
     if (allSchoolsLoaded) {
