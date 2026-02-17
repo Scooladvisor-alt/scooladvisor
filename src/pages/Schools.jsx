@@ -106,7 +106,7 @@ export default function SchoolsPage() {
     if (allSchoolsLoaded) return;
 
     try {
-      const allSchools = await base44.entities.School.list("-average_rating");
+      const allSchools = await base44.entities.School.list();
       const uniqueSchools = removeDuplicates(allSchools);
       setSchools(uniqueSchools);
       setAllSchoolsLoaded(true);
@@ -185,7 +185,7 @@ export default function SchoolsPage() {
     }
 
     try {
-      const initialSchools = await base44.entities.School.list("-average_rating", 50);
+      const initialSchools = await base44.entities.School.list();
       const uniqueSchools = removeDuplicates(initialSchools);
 
       setSchools(uniqueSchools);
@@ -240,7 +240,7 @@ export default function SchoolsPage() {
 
     setLoadingMore(true);
     try {
-      const allSchools = await base44.entities.School.list("-average_rating");
+      const allSchools = await base44.entities.School.list();
       const uniqueSchools = removeDuplicates(allSchools);
       setSchools(uniqueSchools);
       setAllSchoolsLoaded(true);
@@ -284,11 +284,25 @@ export default function SchoolsPage() {
       });
     } else {
       filtered.sort((a, b) => {
-        const ratingA = a.average_rating || 0;
-        const ratingB = b.average_rating || 0;
+        // Calculer le score de popularité pour chaque école
+        const getPopularityScore = (school) => {
+          const schoolReviews = school.review_count || 0;
+          const teacherCount = teacherCounts[school.id] || 0;
+          
+          // Calculer le nombre total d'avis sur les profs de l'école
+          const teacherReviewsCount = teachers
+            .filter(t => t.school_id === school.id)
+            .reduce((sum, teacher) => sum + (teacher.review_count || 0), 0);
+          
+          // Score = avis école + (avis profs * 0.5) + (nombre de profs * 2)
+          return schoolReviews + (teacherReviewsCount * 0.5) + (teacherCount * 2);
+        };
+        
+        const scoreA = getPopularityScore(a);
+        const scoreB = getPopularityScore(b);
 
-        if (ratingB !== ratingA) {
-          return ratingB - ratingA;
+        if (scoreB !== scoreA) {
+          return scoreB - scoreA;
         }
 
         return new Date(b.created_date).getTime() - new Date(a.created_date).getTime();
