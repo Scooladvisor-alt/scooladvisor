@@ -109,7 +109,7 @@ export default function SchoolCard({ school, teacherCount }) {
         <div className="flex-1 flex flex-col min-h-0">
           <div className="flex items-start justify-between mb-1.5 sm:mb-4 gap-1.5 sm:gap-3">
             <div className="flex-1 min-w-0">
-              <Badge className={`mb-1 sm:mb-3 text-[9px] sm:text-xs border sm:border-2 font-semibold shadow-sm sm:shadow-md type-badge px-1.5 py-0.5 sm:px-2.5 sm:py-1 ${typeColors[school.type]}`}>
+              <Badge className={`mb-1 sm:mb-3 text-[9px] sm:text-xs border sm:border-2 font-semibold shadow-sm sm:shadow-md type-badge ${typeColors[school.type]}`}>
                 {typeLabels[school.type]}
               </Badge>
             </div>
@@ -123,14 +123,14 @@ export default function SchoolCard({ school, teacherCount }) {
                 <span className="hidden sm:inline text-xs text-amber-700">/20</span>
               </div>
             ) : (
-              <div className="flex-shrink-0 bg-slate-100 rounded-md border border-slate-200 px-1 py-0.5 sm:px-2 sm:py-1 flex items-center gap-0.5 sm:gap-1">
+              <div className="flex-shrink-0 bg-slate-100 rounded-md sm:rounded-lg border border-slate-200 px-1 py-0.5 sm:px-2 sm:py-1 flex items-center gap-0.5 sm:gap-1">
                 <Star className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-slate-400 flex-shrink-0" />
                 <span className="text-[8px] sm:text-[10px] text-slate-600 font-medium whitespace-nowrap">N/A</span>
               </div>
             )}
           </div>
 
-          <h3 className="font-bold text-slate-900 text-xs sm:text-lg md:text-xl mb-1 sm:mb-3 leading-tight line-clamp-2">
+          <h3 className="font-bold text-slate-900 text-xs sm:text-xl mb-1 sm:mb-3 leading-tight line-clamp-2">
             {school.name}
           </h3>
 
