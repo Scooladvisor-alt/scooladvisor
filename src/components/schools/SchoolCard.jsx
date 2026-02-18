@@ -119,7 +119,8 @@ export default function SchoolCard({ school, teacherCount }) {
           <div className="flex items-center sm:items-start justify-between mb-1.5 sm:mb-4 gap-1.5 sm:gap-3">
             <div className="flex-1 min-w-0">
               <Badge className={`sm:mb-3 text-[9px] sm:text-xs border sm:border-2 font-semibold shadow-sm sm:shadow-md type-badge ${typeColors[school.type]}`}>
-                {typeLabels[school.type]}
+                <span className="sm:hidden">{typeLabelsShort[school.type]}</span>
+                <span className="hidden sm:inline">{typeLabels[school.type]}</span>
               </Badge>
             </div>
 
