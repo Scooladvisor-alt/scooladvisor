@@ -527,7 +527,7 @@ rejected → si le message enfreint les règles ci-dessus"
               return (
                 <div
                   key={key}
-                  className={`rounded-lg p-1.5 sm:p-3 border border-slate-200 transition-all duration-500 relative overflow-hidden ${
+                  className={`rounded-lg p-1.5 sm:p-3 pb-2.5 sm:pb-4 border border-slate-200 transition-all duration-500 relative overflow-hidden ${
                   isMax ? gradient : 'bg-slate-50'} ${
                   isFlashing ? 'animate-widget-shine ring-2 ring-offset-2 ring-offset-white ring-yellow-400' : ''}`}>
 
