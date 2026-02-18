@@ -549,7 +549,7 @@ export default function SchoolsPage() {
               </div>
 
               <Select value={typeFilter} onValueChange={setTypeFilter}>
-                <SelectTrigger className="h-auto min-h-[44px] sm:min-h-[52px] py-2 text-xs sm:text-base w-full sm:w-[200px] border-slate-200">
+                <SelectTrigger className="h-auto min-h-[56px] py-3 text-xs sm:text-base w-full sm:w-[220px] border-slate-200 overflow-visible">
                   <SelectValue placeholder="Type">
                     {typeFilter === "all" ? (
                       <span className="text-slate-600 font-medium text-xs sm:text-sm">Tous les types</span>
