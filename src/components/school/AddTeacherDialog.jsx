@@ -363,8 +363,8 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 required
                 placeholder="M. Dupont"
-                className="h-8 text-xs sm:text-sm flex-1" />
-              <div className="flex items-center gap-1.5 bg-gradient-to-r from-pink-50 to-blue-50 px-2 rounded-lg border border-pink-200 h-8">
+                className="h-7 text-xs sm:text-sm flex-1" />
+              <div className="flex items-center gap-1.5 bg-gradient-to-r from-pink-50 to-blue-50 px-2 py-1.5 rounded-lg border border-pink-200">
                 <input
                   type="checkbox"
                   id="is_former"
