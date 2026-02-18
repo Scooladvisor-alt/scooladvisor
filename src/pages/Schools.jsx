@@ -549,8 +549,36 @@ export default function SchoolsPage() {
               </div>
 
               <Select value={typeFilter} onValueChange={setTypeFilter}>
-                <SelectTrigger className="h-10 sm:h-14 text-xs sm:text-base w-full sm:w-[220px]">
-                  <SelectValue placeholder="Type" />
+                <SelectTrigger className="h-10 sm:h-14 text-xs sm:text-base w-full sm:w-auto border-0 shadow-none px-0 gap-2">
+                  <SelectValue placeholder="Type">
+                    {typeFilter === "all" ? (
+                      <span className="text-slate-600 font-medium text-xs sm:text-sm">Tous les types</span>
+                    ) : typeFilter === "college" ? (
+                      <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold border-2 shadow-md bg-[#3498DB] text-white border-[#3498DB]">
+                        Collège
+                      </span>
+                    ) : typeFilter === "lycee" ? (
+                      <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold border-2 shadow-md bg-[#1ABC9C] text-white border-[#1ABC9C]">
+                        Lycée
+                      </span>
+                    ) : typeFilter === "universite" ? (
+                      <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold border-2 shadow-md bg-[#27AE60] text-white border-[#27AE60]">
+                        Université
+                      </span>
+                    ) : typeFilter === "ecole_privee" ? (
+                      <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold border-2 shadow-md bg-[#F39C12] text-white border-[#F39C12]">
+                        École privée
+                      </span>
+                    ) : typeFilter === "ecole_commerce" ? (
+                      <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold border-2 shadow-md bg-[#E74C3C] text-white border-[#E74C3C]">
+                        École de commerce
+                      </span>
+                    ) : typeFilter === "ecole_ingenieur" ? (
+                      <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold border-2 shadow-md bg-[#FF6B35] text-white border-[#FF6B35]">
+                        École d'ingénieurs
+                      </span>
+                    ) : null}
+                  </SelectValue>
                 </SelectTrigger>
                 <SelectContent position="popper" side="bottom" sideOffset={4}>
                   <SelectItem value="all">Tous les types</SelectItem>
