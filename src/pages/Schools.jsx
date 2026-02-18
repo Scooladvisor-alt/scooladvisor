@@ -554,12 +554,36 @@ export default function SchoolsPage() {
                 </SelectTrigger>
                 <SelectContent position="popper" side="bottom" sideOffset={4}>
                   <SelectItem value="all">Tous les types</SelectItem>
-                  <SelectItem value="college">Collège</SelectItem>
-                  <SelectItem value="lycee">Lycée</SelectItem>
-                  <SelectItem value="universite">Université</SelectItem>
-                  <SelectItem value="ecole_privee">École privée</SelectItem>
-                  <SelectItem value="ecole_commerce">École de commerce</SelectItem>
-                  <SelectItem value="ecole_ingenieur">École d'ingénieurs</SelectItem>
+                  <SelectItem value="college">
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold border-2 shadow-md bg-gradient-to-r from-blue-50 to-indigo-50 text-blue-700 border-blue-200">
+                      Collège
+                    </span>
+                  </SelectItem>
+                  <SelectItem value="lycee">
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold border-2 shadow-md bg-gradient-to-r from-purple-50 to-pink-50 text-purple-700 border-purple-200">
+                      Lycée
+                    </span>
+                  </SelectItem>
+                  <SelectItem value="universite">
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold border-2 shadow-md bg-gradient-to-r from-amber-50 to-orange-50 text-amber-700 border-amber-200">
+                      Université
+                    </span>
+                  </SelectItem>
+                  <SelectItem value="ecole_privee">
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold border-2 shadow-md bg-gradient-to-r from-emerald-50 to-green-50 text-emerald-700 border-emerald-200">
+                      École privée
+                    </span>
+                  </SelectItem>
+                  <SelectItem value="ecole_commerce">
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold border-2 shadow-md bg-gradient-to-r from-rose-50 to-pink-50 text-rose-700 border-rose-200">
+                      École de commerce
+                    </span>
+                  </SelectItem>
+                  <SelectItem value="ecole_ingenieur">
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold border-2 shadow-md bg-gradient-to-r from-cyan-50 to-blue-50 text-cyan-700 border-cyan-200">
+                      École d'ingénieurs
+                    </span>
+                  </SelectItem>
                 </SelectContent>
               </Select>
 
