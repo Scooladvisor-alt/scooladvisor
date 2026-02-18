@@ -337,7 +337,7 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-[95vw] sm:max-w-3xl max-h-[90vh] overflow-hidden rounded-2xl flex flex-col p-4 sm:p-6">
+      <DialogContent className="max-w-[95vw] sm:max-w-3xl max-h-[90vh] overflow-hidden rounded-2xl flex flex-col px-6 py-4 sm:px-8 sm:py-6">
         <DialogHeader className="pb-2 flex-shrink-0 text-center">
           <DialogTitle className="text-base sm:text-xl font-bold">
             <span className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
