@@ -14,6 +14,15 @@ const typeLabels = {
   ecole_ingenieur: "École d'ingénieurs",
 };
 
+const typeLabelsShort = {
+  college: "Collège",
+  lycee: "Lycée",
+  universite: "Université",
+  ecole_privee: "École privée",
+  ecole_commerce: "Éc. commerce",
+  ecole_ingenieur: "Éc. ingénieurs",
+};
+
 const typeColors = {
   college: "bg-[#3498DB] text-white border-[#3498DB]",
   lycee: "bg-[#1ABC9C] text-white border-[#1ABC9C]",
