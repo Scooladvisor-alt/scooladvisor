@@ -555,32 +555,32 @@ export default function SchoolsPage() {
                 <SelectContent position="popper" side="bottom" sideOffset={4}>
                   <SelectItem value="all">Tous les types</SelectItem>
                   <SelectItem value="college">
-                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold border-2 shadow-md bg-gradient-to-r from-blue-500 to-blue-600 text-white border-blue-400">
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold border-2 shadow-md bg-[#3498DB] text-white border-[#3498DB]">
                       Collège
                     </span>
                   </SelectItem>
                   <SelectItem value="lycee">
-                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold border-2 shadow-md bg-gradient-to-r from-green-500 to-emerald-600 text-white border-green-400">
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold border-2 shadow-md bg-[#1ABC9C] text-white border-[#1ABC9C]">
                       Lycée
                     </span>
                   </SelectItem>
                   <SelectItem value="universite">
-                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold border-2 shadow-md bg-gradient-to-r from-amber-500 to-orange-600 text-white border-amber-400">
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold border-2 shadow-md bg-[#27AE60] text-white border-[#27AE60]">
                       Université
                     </span>
                   </SelectItem>
                   <SelectItem value="ecole_privee">
-                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold border-2 shadow-md bg-gradient-to-r from-orange-500 to-red-600 text-white border-orange-400">
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold border-2 shadow-md bg-[#F39C12] text-white border-[#F39C12]">
                       École privée
                     </span>
                   </SelectItem>
                   <SelectItem value="ecole_commerce">
-                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold border-2 shadow-md bg-gradient-to-r from-rose-500 to-pink-600 text-white border-rose-400">
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold border-2 shadow-md bg-[#E74C3C] text-white border-[#E74C3C]">
                       École de commerce
                     </span>
                   </SelectItem>
                   <SelectItem value="ecole_ingenieur">
-                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold border-2 shadow-md bg-gradient-to-r from-cyan-500 to-blue-600 text-white border-cyan-400">
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold border-2 shadow-md bg-[#FF6B35] text-white border-[#FF6B35]">
                       École d'ingénieurs
                     </span>
                   </SelectItem>
