@@ -230,11 +230,11 @@ export default function SchoolDetailPage() {
         }
       `}</style>
       
-      <div className="max-w-6xl mx-auto px-4 py-8">
+      <div className="max-w-6xl mx-auto px-4 py-4">
         <Button
           variant="ghost"
           onClick={() => navigate(createPageUrl("Schools"))}
-          className="mb-6">
+          className="mb-2">
 
           <ChevronLeft className="w-4 h-4 mr-2" />
           Retour aux établissements
@@ -243,7 +243,7 @@ export default function SchoolDetailPage() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-slate-200 overflow-hidden mb-8">
+          className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-slate-200 overflow-hidden mb-4">
 
           <div className="relative p-4 sm:p-6 md:p-8">
             
