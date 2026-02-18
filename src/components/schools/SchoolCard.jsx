@@ -125,17 +125,17 @@ export default function SchoolCard({ school, teacherCount }) {
             </div>
 
             {hasRating ? (
-              <div className="flex-shrink-0 bg-gradient-to-br from-amber-50 to-amber-100 rounded-md sm:rounded-xl border border-amber-200 px-1.5 py-0.5 sm:px-3 sm:py-2 flex items-center gap-0.5 sm:gap-1.5 note-widget">
-                <Star className="w-2.5 h-2.5 sm:w-4 sm:h-4 text-amber-600 fill-amber-600 flex-shrink-0" />
-                <span className="text-xs sm:text-base font-bold text-amber-900 leading-none">
+              <div className="flex-shrink-0 bg-gradient-to-br from-amber-50 to-amber-100 rounded-md sm:rounded-lg border border-amber-200 px-1.5 py-0.5 sm:px-2 sm:py-1 flex items-center gap-0.5 sm:gap-1 note-widget">
+                <Star className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-amber-600 fill-amber-600 flex-shrink-0" />
+                <span className="text-[9px] sm:text-xs font-bold text-amber-900 leading-none">
                   {school.average_rating.toFixed(1)}
                 </span>
-                <span className="hidden sm:inline text-xs text-amber-700">/20</span>
+                <span className="hidden sm:inline text-[9px] sm:text-[10px] text-amber-700">/20</span>
               </div>
             ) : (
-              <div className="flex-shrink-0 bg-slate-100 rounded-md sm:rounded-lg border border-slate-200 px-1 py-0.5 sm:px-2 sm:py-1 flex items-center gap-0.5 sm:gap-1">
+              <div className="flex-shrink-0 bg-slate-100 rounded-md sm:rounded-lg border border-slate-200 px-1.5 py-0.5 sm:px-2 sm:py-1 flex items-center gap-0.5 sm:gap-1">
                 <Star className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-slate-400 flex-shrink-0" />
-                <span className="text-[8px] sm:text-[10px] text-slate-600 font-medium whitespace-nowrap">N/A</span>
+                <span className="text-[9px] sm:text-[10px] text-slate-600 font-medium whitespace-nowrap">N/A</span>
               </div>
             )}
           </div>
