@@ -140,7 +140,7 @@ export default function SchoolCard({ school, teacherCount }) {
             )}
           </div>
 
-          <h3 className="font-bold text-slate-900 text-xs sm:text-xl mb-1 sm:mb-3 leading-tight truncate sm:line-clamp-2">
+          <h3 className="font-bold text-slate-900 text-xs sm:text-xl mb-1 sm:mb-3 leading-tight line-clamp-2">
             {school.name}
           </h3>
 
