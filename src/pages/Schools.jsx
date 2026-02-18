@@ -549,7 +549,7 @@ export default function SchoolsPage() {
               </div>
 
               <Select value={typeFilter} onValueChange={setTypeFilter}>
-                <SelectTrigger className="h-9 sm:h-12 text-xs sm:text-base w-full sm:w-48">
+                <SelectTrigger className="h-10 sm:h-14 text-xs sm:text-base w-full sm:w-[220px]">
                   <SelectValue placeholder="Type" />
                 </SelectTrigger>
                 <SelectContent position="popper" side="bottom" sideOffset={4}>
