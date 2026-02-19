@@ -36,6 +36,8 @@ import ErrorBoundary from "@/components/shared/ErrorBoundary";
 import SecurityGuard from "@/components/shared/SecurityGuard";
 import FloatingDecoration from "@/components/shared/FloatingDecoration";
 import { prefetchPage } from "@/components/shared/LinkPrefetch";
+import BottomTabBar from "@/components/mobile/BottomTabBar";
+import { initDarkMode } from "@/components/mobile/darkMode";
 
 
 const BanDialog = ({ open, user }) => {
@@ -265,6 +267,7 @@ export default function Layout({ children }) {
 
   useEffect(() => {
     loadUser();
+    initDarkMode();
   }, []);
 
   useEffect(() => {
@@ -314,7 +317,13 @@ export default function Layout({ children }) {
   const showDecoration = location.pathname === createPageUrl("Schools") || location.pathname === "/" || location.pathname === createPageUrl("About");
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-br from-slate-50 to-blue-50 relative">
+    <div 
+      className="min-h-screen flex flex-col bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800 relative"
+      style={{
+        paddingTop: 'env(safe-area-inset-top)',
+        paddingBottom: 'env(safe-area-inset-bottom)',
+      }}
+    >
       {showDecoration && <FloatingDecoration />}
       
       <style>{`
@@ -369,7 +378,12 @@ export default function Layout({ children }) {
 
         `}</style>
       
-      <header className="bg-white/90 backdrop-blur-md border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+      <header 
+        className="bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-700 sticky top-0 z-50 shadow-sm"
+        style={{
+          paddingTop: 'max(0px, calc(env(safe-area-inset-top) - 16px))',
+        }}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="flex items-center justify-between h-16">
             <Link to={createPageUrl("Schools")} className="flex items-center gap-2 hover:opacity-80 transition-opacity">
@@ -543,15 +557,29 @@ export default function Layout({ children }) {
         }
       </AnimatePresence>
 
-      <main className="flex-1">
-        <ErrorBoundary>
-          <SecurityGuard>
-            {children}
-          </SecurityGuard>
-        </ErrorBoundary>
+      <main className="flex-1 pb-20 md:pb-0">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={location.pathname}
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            transition={{ duration: 0.2, ease: "easeInOut" }}
+          >
+            <ErrorBoundary>
+              <SecurityGuard>
+                {children}
+              </SecurityGuard>
+            </ErrorBoundary>
+          </motion.div>
+        </AnimatePresence>
       </main>
 
-      <Footer />
+      <div className="hidden md:block">
+        <Footer />
+      </div>
+      
+      <BottomTabBar />
 
       {user && showBanDialog &&
       <BanDialog open={showBanDialog} user={user} />
