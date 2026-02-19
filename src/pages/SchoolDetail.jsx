@@ -2,6 +2,7 @@ import React, { useState, useEffect, lazy, Suspense } from "react";
 import { base44 } from "@/api/base44Client";
 import { MapPin, Users, Star, Plus, ChevronLeft, Flag, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import MobileHeader from "../components/mobile/MobileHeader";
 import { Badge } from "@/components/ui/badge";
 import { useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/utils";
