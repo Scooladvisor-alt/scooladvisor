@@ -50,6 +50,7 @@ export default function SchoolReviews({ schoolId, user, onReload, onEditReview, 
   const [antoninSummary, setAntoninSummary] = useState("");
   const [loadingAntonin, setLoadingAntonin] = useState(false);
   const [expandedReviews, setExpandedReviews] = useState(new Set());
+  const [expandedComments, setExpandedComments] = useState(new Set());
   const { showJoinDialog, actionDescription, requireAuth, closeDialog } = useJoinFamily();
 
   useEffect(() => {
