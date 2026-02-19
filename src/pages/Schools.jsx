@@ -953,21 +953,7 @@ export default function SchoolsPage() {
 
               <div className="h-full flex flex-col items-center justify-center text-center pb-20">
                 <div className="w-20 h-20 bg-gradient-to-br from-pink-100 to-blue-100 rounded-full flex items-center justify-center mb-6 shadow-sm">
-                  <motion.div
-                  animate={{
-                    rotate: [0, -10, 0, 10, 0],
-                    scale: [1, 1.1, 1],
-                    x: [0, -3, 3, 0],
-                    y: [0, -3, 0]
-                  }}
-                  transition={{
-                    duration: 3,
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                  }}>
-
-                    <Search className="w-10 h-10 text-[#FF4D8D]" />
-                  </motion.div>
+                  <Search className="w-10 h-10 text-slate-400" />
                 </div>
                 <h3 className="text-xl font-bold text-slate-900 mb-2">Commence à chercher un prof</h3>
                 <p className="text-base text-slate-500 max-w-md mx-auto">Tape un nom ou une matière !</p>
