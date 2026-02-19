@@ -2,6 +2,7 @@ import React, { useState, useEffect, lazy, Suspense, useMemo } from "react";
 import { base44 } from "@/api/base44Client";
 import { motion } from "framer-motion";
 import { Plus, Search, Filter, TrendingUp, ArrowRight, Globe, Loader2, Star } from "lucide-react";
+import { usePullToRefresh } from "@/components/mobile/usePullToRefresh";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -52,6 +53,12 @@ export default function SchoolsPage() {
 
   const [teacherSearchTerm, setTeacherSearchTerm] = useState("");
   const [teacherSuggestions, setTeacherSuggestions] = useState([]);
+
+  const handleRefresh = async () => {
+    await loadData();
+  };
+
+  const { isPulling, pullDistance } = usePullToRefresh(handleRefresh);
 
   useEffect(() => {
     loadData();
@@ -341,7 +348,22 @@ export default function SchoolsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-purple-50 to-blue-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-purple-50 to-blue-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
+      {/* Pull to Refresh Indicator */}
+      {isPulling && (
+        <div 
+          className="fixed top-0 left-0 right-0 flex justify-center pt-4 z-50 pointer-events-none"
+          style={{ 
+            transform: `translateY(${Math.min(pullDistance * 0.5, 40)}px)`,
+            opacity: Math.min(pullDistance / 80, 1)
+          }}
+        >
+          <div className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-md rounded-full p-2 shadow-lg">
+            <Loader2 className="w-5 h-5 text-[#FF4D8D] animate-spin" />
+          </div>
+        </div>
+      )}
+      
       <SEO
         title="ScoolAdvisor - L'avis des étudiants sur leurs écoles et professeurs"
         description="Recherchez votre établissement, consultez les avis des étudiants et notez vos professeurs. Le 1er site d'avis scolaires vérifiés."

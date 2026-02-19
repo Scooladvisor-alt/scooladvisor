@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { base44 } from "@/api/base44Client";
 import { useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/utils";
+import { usePullToRefresh } from "@/components/mobile/usePullToRefresh";
+import { Loader2 } from "lucide-react";
 import {
   Mail,
   Shield,
@@ -141,6 +143,12 @@ export default function ProfilePage() {
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [deleteConfirmText, setDeleteConfirmText] = useState("");
   const [deleting, setDeleting] = useState(false);
+
+  const handleRefresh = async () => {
+    await loadProfile();
+  };
+
+  const { isPulling, pullDistance } = usePullToRefresh(handleRefresh);
 
   useEffect(() => {
     loadProfile();
@@ -286,7 +294,22 @@ export default function ProfilePage() {
   const avatarUrl = user.profile_avatar && user.profile_avatar !== 'letter' ? getAvatarUrl(user.profile_avatar) : null;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
+      {/* Pull to Refresh Indicator */}
+      {isPulling && (
+        <div 
+          className="fixed top-0 left-0 right-0 flex justify-center pt-4 z-50 pointer-events-none"
+          style={{ 
+            transform: `translateY(${Math.min(pullDistance * 0.5, 40)}px)`,
+            opacity: Math.min(pullDistance / 80, 1)
+          }}
+        >
+          <div className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-md rounded-full p-2 shadow-lg">
+            <Loader2 className="w-5 h-5 text-[#FF4D8D] animate-spin" />
+          </div>
+        </div>
+      )}
+      
       <style>{`
         @keyframes rotating-shine {
           0% { transform: rotate(0deg); }
