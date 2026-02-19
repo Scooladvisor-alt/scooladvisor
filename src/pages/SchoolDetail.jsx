@@ -129,6 +129,11 @@ export default function SchoolDetailPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-50">
+      <MobileHeader 
+        title={school?.name || 'Établissement'} 
+        subtitle={school?.city}
+        onBack={() => navigate(createPageUrl("Schools"))}
+      />
       {school &&
       <SEO
         title={`${school.name} (${school.city}) - Avis et Classement | ScoolAdvisor`}
