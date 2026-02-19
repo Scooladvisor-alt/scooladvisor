@@ -436,17 +436,27 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
                   </div>
 
                   {/* Comment & Expand Toggle */}
-                  <div className="mt-4 mb-2 flex items-start gap-2">
-                    <p className="text-sm text-slate-700 leading-relaxed flex-1">
-                      {review.comment}
-                    </p>
-                    <button
-                      onClick={() => toggleExpand(review.id)}
-                      className="flex-shrink-0 p-1 text-slate-400 hover:text-purple-600 transition-colors rounded-full hover:bg-slate-50"
-                      title={expandedReviews.has(review.id) ? "Masquer les détails" : "Voir les détails"}
-                    >
-                      <ChevronDown className={`w-5 h-5 transition-transform duration-300 ${expandedReviews.has(review.id) ? 'rotate-180' : ''}`} />
-                    </button>
+                  <div className="mt-4 mb-2">
+                    <div className="flex items-start gap-2">
+                      <p className={`text-sm text-slate-700 leading-relaxed flex-1 ${!expandedComments.has(review.id) && isCommentLong(review.comment) ? 'line-clamp-3' : ''}`}>
+                        {review.comment}
+                      </p>
+                      <button
+                        onClick={() => toggleExpand(review.id)}
+                        className="flex-shrink-0 p-1 text-slate-400 hover:text-purple-600 transition-colors rounded-full hover:bg-slate-50"
+                        title={expandedReviews.has(review.id) ? "Masquer les détails" : "Voir les détails"}
+                      >
+                        <ChevronDown className={`w-5 h-5 transition-transform duration-300 ${expandedReviews.has(review.id) ? 'rotate-180' : ''}`} />
+                      </button>
+                    </div>
+                    {isCommentLong(review.comment) && (
+                      <button
+                        onClick={() => toggleCommentExpand(review.id)}
+                        className="text-xs text-purple-600 hover:text-purple-700 font-medium mt-1"
+                      >
+                        {expandedComments.has(review.id) ? "Voir moins" : "Voir plus"}
+                      </button>
+                    )}
                   </div>
 
                   {/* Criteria Details */}
