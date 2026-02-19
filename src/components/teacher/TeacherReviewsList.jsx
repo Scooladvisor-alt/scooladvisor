@@ -487,7 +487,7 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
                           variant="ghost"
                           size="sm"
                           onClick={() => handleLike(review)}
-                          className={`h-8 px-3 rounded-full border transition-all min-w-[60px] justify-center ${
+                          className={`h-8 px-3 rounded-full border transition-all ${
                             userLikes.has(review.id)
                               ? "bg-white border-transparent shadow-sm ring-1 ring-pink-100"
                               : "bg-white border-slate-200 hover:bg-slate-50"
