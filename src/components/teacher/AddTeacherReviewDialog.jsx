@@ -64,10 +64,6 @@ export default function AddTeacherReviewDialog({ open, onOpenChange, teacherId, 
   useEffect(() => {
     if (open) {
       if (existingReview) {
-        if ((existingReview.edit_count || 0) >= 3) {
-          setError("Vous avez atteint la limite de 3 modifications pour cet avis.");
-          return;
-        }
         setFormData({
           workload: existingReview.workload,
           friendliness: existingReview.friendliness,
@@ -241,12 +237,6 @@ export default function AddTeacherReviewDialog({ open, onOpenChange, teacherId, 
       }
 
       if (existingReview) {
-        if ((existingReview.edit_count || 0) >= 3) {
-          setError("Vous avez atteint la limite de 3 modifications pour cet avis.");
-          setLoading(false);
-          return;
-        }
-
         const updatedReview = await base44.entities.TeacherReview.update(existingReview.id, {
           workload: formData.workload,
           friendliness: formData.friendliness,
@@ -358,8 +348,7 @@ export default function AddTeacherReviewDialog({ open, onOpenChange, teacherId, 
     }
   };
 
-  const canEdit = existingReview ? (existingReview.edit_count || 0) < 3 : true;
-  const submitButtonDisabled = loading || !canEdit || !formData.certification || error && error.includes("atteint la limite");
+  const submitButtonDisabled = loading || !formData.certification || error && error.includes("atteint la limite");
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -435,7 +424,7 @@ export default function AddTeacherReviewDialog({ open, onOpenChange, teacherId, 
                       min={0}
                       max={5}
                       step={0.25}
-                      disabled={!canEdit} />
+                      disabled={false} />
                   </div>
                 </div>);
 
@@ -479,7 +468,7 @@ export default function AddTeacherReviewDialog({ open, onOpenChange, teacherId, 
                       checked={formData.is_anonymous}
                       onCheckedChange={(checked) => setFormData({ ...formData, is_anonymous: checked })}
                       className="h-3 w-3 checkbox-gradient-border"
-                      disabled={!canEdit} />
+                      disabled={false} />
                     <span className="text-[9px] sm:text-[10px] font-medium text-slate-600">Anonyme</span>
                   </label>
 
@@ -489,7 +478,7 @@ export default function AddTeacherReviewDialog({ open, onOpenChange, teacherId, 
                       checked={formData.is_former_student}
                       onCheckedChange={(checked) => setFormData({ ...formData, is_former_student: checked })}
                       className="h-3 w-3 checkbox-gradient-border"
-                      disabled={!canEdit} />
+                      disabled={false} />
                     <span className="text-[9px] sm:text-[10px] font-medium text-slate-600">Ancien</span>
                   </label>
                 </div>

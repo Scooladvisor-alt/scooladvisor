@@ -58,25 +58,19 @@ export default function AddSchoolReviewDialog({ open, onOpenChange, schoolId, ex
   useEffect(() => {
     if (open) {
       if (existingReview) {
-        // Check edit limit
-        if ((existingReview.edit_count || 0) >= 3) {
-          setError("Vous avez atteint la limite de 3 modifications pour cet avis.");
-          setLoading(false);
-        } else {
-          setFormData({
-            ambiance: existingReview.ambiance,
-            staff_quality: existingReview.staff_quality,
-            facilities: existingReview.facilities,
-            cafeteria: existingReview.cafeteria,
-            student_life_bonus: existingReview.student_life_bonus || 0,
-            has_student_life: existingReview.has_student_life || false,
-            has_network: existingReview.has_network || false,
-            comment: existingReview.comment,
-            is_anonymous: existingReview.is_anonymous,
-            is_former_student: existingReview.is_former_student || false,
-            certification: true
-          });
-        }
+        setFormData({
+          ambiance: existingReview.ambiance,
+          staff_quality: existingReview.staff_quality,
+          facilities: existingReview.facilities,
+          cafeteria: existingReview.cafeteria,
+          student_life_bonus: existingReview.student_life_bonus || 0,
+          has_student_life: existingReview.has_student_life || false,
+          has_network: existingReview.has_network || false,
+          comment: existingReview.comment,
+          is_anonymous: existingReview.is_anonymous,
+          is_former_student: existingReview.is_former_student || false,
+          certification: true
+        });
       } else {
         setFormData({
           ambiance: 2.5,
@@ -109,9 +103,6 @@ export default function AddSchoolReviewDialog({ open, onOpenChange, schoolId, ex
         checkExistingReview();
       }
       setError(null);
-      if (existingReview && (existingReview.edit_count || 0) >= 3) {
-        setError("Vous avez atteint la limite de 3 modifications pour cet avis.");
-      }
       setSuccess(false);
       setFlashingWidgets({});
     }
@@ -342,12 +333,6 @@ rejected → si le message enfreint les règles ci-dessus"
       }
 
       if (existingReview) {
-        if ((existingReview.edit_count || 0) >= 3) {
-          setError("Vous avez atteint la limite de 3 modifications pour cet avis.");
-          setLoading(false);
-          return;
-        }
-
         // Update immediately
         await base44.entities.SchoolReview.update(existingReview.id, {
           ambiance: formData.ambiance,
@@ -481,8 +466,7 @@ rejected → si le message enfreint les règles ci-dessus"
 
   const showStudentLifeBonus = school && (school.type === 'ecole_commerce' || school.type === 'universite' || school.type === 'ecole_ingenieur');
 
-  const canEdit = existingReview ? (existingReview.edit_count || 0) < 3 : true;
-  const submitButtonDisabled = loading || !formData.certification || !canEdit || error && error.includes("atteint la limite");
+  const submitButtonDisabled = loading || !formData.certification || error && error.includes("atteint la limite");
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -557,7 +541,7 @@ rejected → si le message enfreint les règles ci-dessus"
                       min={0}
                       max={5}
                       step={0.25}
-                      disabled={!canEdit} />
+                      disabled={false} />
                   </div>
                 </div>);
 
@@ -655,7 +639,7 @@ rejected → si le message enfreint les règles ci-dessus"
                       checked={formData.is_anonymous}
                       onCheckedChange={(checked) => setFormData({ ...formData, is_anonymous: checked })}
                       className="h-3 w-3 checkbox-gradient-border"
-                      disabled={!canEdit} />
+                      disabled={false} />
                     <span className="text-[9px] sm:text-[10px] font-medium text-slate-600">Anonyme</span>
                   </label>
 
@@ -665,7 +649,7 @@ rejected → si le message enfreint les règles ci-dessus"
                       checked={formData.is_former_student}
                       onCheckedChange={(checked) => setFormData({ ...formData, is_former_student: checked })}
                       className="h-3 w-3 checkbox-gradient-border"
-                      disabled={!canEdit} />
+                      disabled={false} />
                     <span className="text-[9px] sm:text-[10px] font-medium text-slate-600">Je suis ancien(ne) élève.</span>
                   </label>
                 </div>
