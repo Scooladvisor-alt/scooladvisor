@@ -109,13 +109,13 @@ const BanDialog = ({ open, user }) => {
         setShowAppeal(isOpen);
         if (!isOpen) setShowMainDialog(true);
       }}>
-        <DialogContent className="max-w-[95vw] sm:max-w-3xl max-h-[85vh] overflow-y-auto rounded-2xl">
+        <DialogContent className="max-w-[95vw] sm:max-w-3xl max-h-[85vh] overflow-y-auto rounded-2xl bg-white dark:bg-slate-800">
           <DialogHeader>
-            <DialogTitle>Contester le bannissement</DialogTitle>
+            <DialogTitle className="dark:text-white">Contester le bannissement</DialogTitle>
           </DialogHeader>
           {appealSent ?
           <div className="py-6 text-center">
-              <p className="text-green-700 font-medium">Votre contestation a été envoyée. Elle sera examinée par un modérateur.</p>
+              <p className="text-green-700 dark:text-green-400 font-medium">Votre contestation a été envoyée. Elle sera examinée par un modérateur.</p>
               <Button onClick={handleLogout} className="mt-4">OK</Button>
             </div> :
 
