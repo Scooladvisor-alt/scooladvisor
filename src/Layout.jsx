@@ -403,7 +403,7 @@ export default function Layout({ children }) {
         `}</style>
       
       <header 
-        className="bg-white/90 backdrop-blur-md border-b border-slate-200 sticky top-0 z-50 shadow-sm"
+        className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-700 sticky top-0 z-50 shadow-sm"
         style={{
           paddingTop: 'max(0px, calc(env(safe-area-inset-top) - 16px))',
         }}
