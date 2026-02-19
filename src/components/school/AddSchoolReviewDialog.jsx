@@ -578,8 +578,7 @@ rejected → si le message enfreint les règles ci-dessus"
                     <Checkbox
                     id="has_student_life"
                     checked={formData.has_student_life}
-                    onCheckedChange={(checked) => setFormData({ ...formData, has_student_life: checked })}
-                    disabled={!canEdit} />
+                    onCheckedChange={(checked) => setFormData({ ...formData, has_student_life: checked })} />
 
                     <Label htmlFor="has_student_life" className="text-xs sm:text-sm cursor-pointer font-medium text-slate-700">
                       Vie associative +1
@@ -590,8 +589,7 @@ rejected → si le message enfreint les règles ci-dessus"
                     <Checkbox
                     id="has_network"
                     checked={formData.has_network}
-                    onCheckedChange={(checked) => setFormData({ ...formData, has_network: checked })}
-                    disabled={!canEdit} />
+                    onCheckedChange={(checked) => setFormData({ ...formData, has_network: checked })} />
 
                     <Label htmlFor="has_network" className="text-xs sm:text-sm cursor-pointer font-medium text-slate-700">
                       Réseaux +1
@@ -628,8 +626,7 @@ rejected → si le message enfreint les règles ci-dessus"
                 }}
                 placeholder="APPRÉCIATION GÉNÉRALE *"
                 rows={2}
-                className="text-sm sm:text-base pb-8"
-                disabled={!canEdit} />
+                className="text-sm sm:text-base pb-8" />
               
               <div className="absolute bottom-1.5 left-2 right-2 flex items-center justify-between gap-2 bg-white/95 rounded px-1.5 py-1 checkbox-gradient-only">
                 <div className="flex items-center gap-2">
@@ -666,8 +663,7 @@ rejected → si le message enfreint les règles ci-dessus"
               id="certification"
               checked={formData.certification}
               onCheckedChange={(checked) => setFormData({ ...formData, certification: checked })}
-              className="h-3 w-3 checkbox-gradient-border"
-              disabled={!canEdit} />
+              className="h-3 w-3 checkbox-gradient-border" />
             <label
               htmlFor="certification"
               className="text-[10px] font-medium cursor-pointer text-slate-700 leading-tight">
