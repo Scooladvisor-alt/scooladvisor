@@ -87,9 +87,9 @@ const BanDialog = ({ open, user }) => {
     <>
       {showMainDialog &&
       <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black bg-opacity-80 p-4">
-          <div className="bg-white rounded-lg p-6 shadow-xl max-w-sm w-full text-center">
+          <div className="bg-white dark:bg-slate-800 rounded-lg p-6 shadow-xl max-w-sm w-full text-center">
             <h2 className="text-2xl font-bold text-red-600 mb-4">Compte banni</h2>
-            <p className="text-gray-700 mb-6">
+            <p className="text-gray-700 dark:text-gray-300 mb-6">
               Votre compte a été suspendu pour non-respect de nos conditions d'utilisation.
             </p>
             
