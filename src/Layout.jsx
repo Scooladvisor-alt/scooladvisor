@@ -500,8 +500,8 @@ export default function Layout({ children }) {
                 onClick={() => setMobileMenuOpen(false)}
                 className={`flex items-center gap-2 px-4 py-2.5 mx-2 rounded-lg transition-all ${
                 location.pathname === item.url ?
-                'bg-gradient-to-r from-[#FF4D8D]/10 via-purple-500/10 to-blue-500/10 text-slate-900 font-medium' :
-                'text-slate-600 hover:bg-slate-50'}`
+                'bg-gradient-to-r from-[#FF4D8D]/10 via-purple-500/10 to-blue-500/10 text-slate-900 dark:text-white font-medium dark:bg-gradient-to-r dark:from-[#FF4D8D]/20 dark:via-purple-500/20 dark:to-blue-500/20' :
+                'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700'}`
                 }>
                     <item.icon className="w-5 h-5" />
                     <span className="text-sm">{item.title}</span>
