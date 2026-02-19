@@ -280,7 +280,7 @@ export default function SchoolDetailPage() {
                   </div>
                   <div className="flex items-center gap-2 text-slate-600 text-xs sm:text-sm">
                     <MapPin className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" />
-                    <span className="break-words">{school.address}, {school.city}</span>
+                    <span className="truncate" style={{ fontSize: 'clamp(10px, 2vw, 14px)' }}>{school.address}, {school.city}</span>
                     {user &&
                     <button
                       onClick={(e) => {
