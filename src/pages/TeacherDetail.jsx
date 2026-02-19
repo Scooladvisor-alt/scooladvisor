@@ -297,7 +297,7 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
         }
       `}</style>
       
-      <div className="max-w-6xl mx-auto px-4 py-4">
+      <div className="max-w-6xl mx-auto px-4 lg:px-4 px-0 py-4 pb-0 lg:pb-4">
         <Button
           variant="ghost"
           onClick={() => {
