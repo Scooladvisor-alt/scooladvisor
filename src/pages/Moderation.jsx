@@ -13,6 +13,7 @@ import {
   Trash2,
   Clock
 } from "lucide-react";
+import MobileHeader from "../components/mobile/MobileHeader";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { motion } from "framer-motion";
