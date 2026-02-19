@@ -473,7 +473,7 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
           </motion.div>
         </div>
 
-        <div className="mt-0 lg:mt-8 -mx-4 lg:mx-0">
+        <div className="mt-8 lg:mt-8 mb-0 lg:mb-0">
             <TeacherLoveNotes teacherId={teacherId} user={user} />
         </div>
       </div>
