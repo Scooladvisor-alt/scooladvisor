@@ -349,6 +349,22 @@ export default function Layout({ children }) {
             height: 0px;
           }
         }
+
+        /* Mobile WebView Optimizations */
+        main {
+          overscroll-behavior: none;
+        }
+
+        button, [role="button"], .lucide-react, svg {
+          user-select: none;
+          -webkit-user-select: none;
+          -webkit-touch-callout: none;
+        }
+
+        p, span, div, a, h1, h2, h3, h4, h5, h6, li, label {
+          user-select: text;
+          -webkit-user-select: text;
+        }
         
         @keyframes subtle-shine {
           0% { background-position: -200% center; }
