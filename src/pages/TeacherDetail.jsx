@@ -473,9 +473,10 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
           </motion.div>
         </div>
 
-        <div className="mt-8 lg:mt-8 mb-0 lg:mb-0">
-            <TeacherLoveNotes teacherId={teacherId} user={user} />
-        </div>
+      </div>
+      
+      <div className="w-full mt-8 lg:mt-8 mb-0 lg:mb-0 lg:max-w-6xl lg:mx-auto lg:px-4">
+        <TeacherLoveNotes teacherId={teacherId} user={user} />
       </div>
 
       <Suspense>
