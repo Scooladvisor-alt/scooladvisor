@@ -602,7 +602,7 @@ export default function SchoolsPage() {
                     ) : null}
                   </SelectValue>
                 </SelectTrigger>
-                <SelectContent position="popper" side="bottom" sideOffset={4}>
+                <SelectContent position="item-aligned">
                   <SelectItem value="all">Tous les types</SelectItem>
                   <SelectItem value="college">
                     <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold border-2 shadow-md bg-[#3498DB] text-white border-[#3498DB]">
