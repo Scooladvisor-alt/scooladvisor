@@ -37,7 +37,6 @@ import SecurityGuard from "@/components/shared/SecurityGuard";
 import FloatingDecoration from "@/components/shared/FloatingDecoration";
 import { prefetchPage } from "@/components/shared/LinkPrefetch";
 import BottomTabBar from "@/components/mobile/BottomTabBar";
-import { initDarkMode } from "@/components/mobile/darkMode";
 
 
 const BanDialog = ({ open, user }) => {
@@ -267,7 +266,6 @@ export default function Layout({ children }) {
 
   useEffect(() => {
     loadUser();
-    initDarkMode();
   }, []);
 
   useEffect(() => {
@@ -318,7 +316,7 @@ export default function Layout({ children }) {
 
   return (
     <div 
-      className="min-h-screen flex flex-col bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800 relative"
+      className="min-h-screen flex flex-col bg-gradient-to-br from-slate-50 to-blue-50 relative"
       style={{
         paddingTop: 'env(safe-area-inset-top)',
         paddingBottom: 'env(safe-area-inset-bottom)',
@@ -385,16 +383,11 @@ export default function Layout({ children }) {
           user-select: text;
           -webkit-user-select: text;
         }
-        
-        /* Dark Mode Transitions */
-        * {
-          transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-        }
 
         `}</style>
       
       <header 
-        className="bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-700 sticky top-0 z-50 shadow-sm"
+        className="bg-white/90 backdrop-blur-md border-b border-slate-200 sticky top-0 z-50 shadow-sm"
         style={{
           paddingTop: 'max(0px, calc(env(safe-area-inset-top) - 16px))',
         }}

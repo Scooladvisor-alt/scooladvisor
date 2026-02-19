@@ -348,7 +348,7 @@ export default function SchoolsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-purple-50 to-blue-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-purple-50 to-blue-50">
       {/* Pull to Refresh Indicator */}
       {isPulling && (
         <div 
@@ -358,7 +358,7 @@ export default function SchoolsPage() {
             opacity: Math.min(pullDistance / 80, 1)
           }}
         >
-          <div className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-md rounded-full p-2 shadow-lg">
+          <div className="bg-white/90 backdrop-blur-md rounded-full p-2 shadow-lg">
             <Loader2 className="w-5 h-5 text-[#FF4D8D] animate-spin" />
           </div>
         </div>
