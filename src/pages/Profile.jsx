@@ -143,6 +143,7 @@ export default function ProfilePage() {
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [deleteConfirmText, setDeleteConfirmText] = useState("");
   const [deleting, setDeleting] = useState(false);
+  const [darkMode, setDarkMode] = useState(false);
 
   const handleRefresh = async () => {
     await loadProfile();
@@ -152,7 +153,16 @@ export default function ProfilePage() {
 
   useEffect(() => {
     loadProfile();
+    // Charger la préférence dark mode
+    const savedDarkMode = localStorage.getItem('darkMode') === 'true';
+    setDarkMode(savedDarkMode);
   }, []);
+
+  const toggleDarkMode = () => {
+    const newMode = !darkMode;
+    setDarkMode(newMode);
+    localStorage.setItem('darkMode', String(newMode));
+  };
 
   const loadProfile = async () => {
     setLoading(true);
@@ -294,7 +304,7 @@ export default function ProfilePage() {
   const avatarUrl = user.profile_avatar && user.profile_avatar !== 'letter' ? getAvatarUrl(user.profile_avatar) : null;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-50">
+    <div className={`min-h-screen ${darkMode ? 'bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900' : 'bg-gradient-to-br from-slate-50 via-blue-50 to-slate-50'}`}>
       {/* Pull to Refresh Indicator */}
       {isPulling && (
         <div 
@@ -304,7 +314,7 @@ export default function ProfilePage() {
             opacity: Math.min(pullDistance / 80, 1)
           }}
         >
-          <div className="bg-white/90 backdrop-blur-md rounded-full p-2 shadow-lg">
+          <div className={`${darkMode ? 'bg-slate-800/90' : 'bg-white/90'} backdrop-blur-md rounded-full p-2 shadow-lg`}>
             <Loader2 className="w-5 h-5 text-[#FF4D8D] animate-spin" />
           </div>
         </div>
