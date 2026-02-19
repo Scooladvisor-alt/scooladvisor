@@ -111,7 +111,7 @@ export default function TeacherLoveNotes({ teacherId, user }) {
   const hasUserPosted = user && notes.some((n) => n.author_email === user.email);
 
   return (
-    <Card className="bg-white/80 backdrop-blur-sm border-pink-200 shadow-lg w-full overflow-hidden relative">
+    <Card className="bg-white/80 backdrop-blur-sm border-pink-200 shadow-lg w-full overflow-hidden relative lg:rounded-2xl rounded-t-2xl rounded-b-none border-x-0 lg:border-x border-b-0 lg:border-b">
       {/* Effet enveloppe décoratif */}
       <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-pink-300 via-red-300 to-pink-300" />
       
