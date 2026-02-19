@@ -381,50 +381,14 @@ export default function Layout({ children }) {
               <span className="text-base sm:text-2xl font-bold bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 text-transparent bg-clip-text">Scooladvisor</span>
             </Link>
 
-            <nav className="hidden md:flex items-center gap-1">
-              {navigationItems.map((item) => {
-                // Extraire le nom de la page pour le prefetch
-                const pageName = item.url.split('/').pop()?.split('?')[0] || '';
-                return (
-                  <Link
-                    key={item.title}
-                    to={item.url}
-                    onMouseEnter={() => prefetchPage(pageName)}
-                    className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-200 ${
-                    location.pathname === item.url ?
-                    'bg-gradient-to-r from-[#FF4D8D]/10 via-purple-500/10 to-blue-500/10 text-slate-900 font-medium' :
-                    'text-slate-600 hover:bg-slate-50 hover:text-slate-900'}`
-                    }>
-
-                    <item.icon className="w-4 h-4" />
-                    <span className="text-sm">{item.title}</span>
-                  </Link>);
-
-              })}
-
-              {user && (user.role === 'moderator' || user.role === 'admin') &&
-              <Link
-                to={createPageUrl("Moderation")}
-                className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-200 ${
-                location.pathname === createPageUrl("Moderation") ?
-                'bg-amber-50 text-amber-700 font-medium' :
-                'text-slate-600 hover:bg-slate-50 hover:text-slate-900'}`
-                }>
-
-                  <ShieldCheck className="w-4 h-4" />
-                  <span className="text-sm">Modération</span>
-                </Link>
-              }
-            </nav>
-
             <div className="flex items-center gap-1 sm:gap-3 pr-0 min-w-[100px] sm:min-w-[140px] justify-end">
               {loading ?
-              <div className="w-[100px] sm:w-[140px] h-8 bg-slate-200 rounded-lg animate-pulse" /> :
+              <div className="w-10 h-10 bg-slate-200 rounded-full animate-pulse" /> :
               user ?
               <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                      <Button variant="ghost" className="flex items-center gap-2 hover:bg-slate-50 px-2 sm:px-4">
-                        <Avatar className="w-8 h-8 border-2 border-blue-100">
+                      <Button variant="ghost" className="p-0 hover:bg-transparent">
+                        <Avatar className="w-10 h-10 border-2 border-blue-100 cursor-pointer hover:border-purple-300 transition-all">
                           {user.profile_avatar && user.profile_avatar !== 'letter' ?
                       <AvatarImage src={getAvatarUrl(user.profile_avatar)} /> :
                       null}
@@ -432,7 +396,6 @@ export default function Layout({ children }) {
                             <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/f5396bc58_a-humanized-black-graduation-cap-with-a-star-shape-3.png" alt="Avatar" className="w-full h-full object-cover" />
                           </AvatarFallback>
                         </Avatar>
-                        <span className="text-sm font-medium text-slate-900 hidden sm:block">{user.full_name?.split(' ')[0]}</span>
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end" className="w-56">
@@ -440,6 +403,25 @@ export default function Layout({ children }) {
                         <p className="text-sm font-medium text-slate-900">{user.full_name}</p>
                         <p className="text-xs text-slate-500 truncate">{user.email}</p>
                       </div>
+                      <DropdownMenuSeparator />
+                      
+                      {navigationItems.map((item) => (
+                        <DropdownMenuItem key={item.title} onClick={() => navigate(item.url)} className="cursor-pointer">
+                          <item.icon className="w-4 h-4 mr-2" />
+                          {item.title}
+                        </DropdownMenuItem>
+                      ))}
+                      
+                      {(user.role === 'moderator' || user.role === 'admin') &&
+                        <>
+                          <DropdownMenuSeparator />
+                          <DropdownMenuItem onClick={() => navigate(createPageUrl("Moderation"))} className="cursor-pointer">
+                            <ShieldCheck className="w-4 h-4 mr-2" />
+                            Modération
+                          </DropdownMenuItem>
+                        </>
+                      }
+                      
                       <DropdownMenuSeparator />
                       <DropdownMenuItem onClick={() => navigate(createPageUrl("Profile"))} className="cursor-pointer">
                         <UserIcon className="w-4 h-4 mr-2" />
