@@ -125,7 +125,7 @@ export default function SchoolCard({ school, teacherCount }) {
             </div>
 
             {hasRating ? (
-              <div className="flex-shrink-0 bg-gradient-to-br from-amber-50 to-amber-100 rounded-md sm:rounded-lg border border-amber-200 px-2 py-1 sm:px-3 sm:py-1.5 flex items-center gap-0.5 sm:gap-1 note-widget -mb-3 sm:-mb-3">
+              <div className="flex-shrink-0 bg-gradient-to-br from-amber-50 to-amber-100 rounded-md sm:rounded-lg border border-amber-200 px-2 py-1 sm:px-3 sm:py-1.5 flex items-center gap-0.5 sm:gap-1 note-widget -mt-3 sm:-mt-4">
                 <Star className="w-3 h-3 sm:w-4 sm:h-4 text-amber-600 fill-amber-600 flex-shrink-0" />
                 <span className="text-[10px] sm:text-sm font-bold text-amber-900 leading-none">
                   {school.average_rating.toFixed(1)}
