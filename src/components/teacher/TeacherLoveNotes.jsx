@@ -145,7 +145,7 @@ export default function TeacherLoveNotes({ teacherId, user }) {
 
               <div className="bg-pink-50 p-3 rounded-lg border border-pink-100">
                 <Textarea
-                placeholder="Merci pour tout, vous êtes le meilleur prof..."
+                placeholder="Merci pour tout, meilleur prof..."
                 value={newMessage}
                 onChange={(e) => setNewMessage(e.target.value)}
                 className="bg-white border-pink-200 focus:border-pink-400 min-h-[60px] mb-2 text-sm" />
