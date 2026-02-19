@@ -307,7 +307,7 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
               navigate(createPageUrl("Schools"));
             }
           }}
-          className="mb-2">
+          className="mb-2 mx-4 lg:mx-0">
 
           <ChevronLeft className="w-4 h-4 mr-2" />
           {school ? `Retour à ${school.name}` : "Retour aux établissements"}
