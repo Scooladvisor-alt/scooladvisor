@@ -316,7 +316,7 @@ export default function Layout({ children }) {
 
   return (
     <div 
-      className="min-h-screen flex flex-col bg-gradient-to-br from-slate-50 to-blue-50 relative"
+      className="min-h-screen flex flex-col bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-950 dark:to-slate-900 relative"
       style={{
         paddingTop: 'env(safe-area-inset-top)',
         paddingBottom: 'env(safe-area-inset-bottom)',
