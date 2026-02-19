@@ -307,6 +307,23 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
     setExpandedReviews(newExpanded);
   };
 
+  const toggleCommentExpand = (reviewId) => {
+    const newExpanded = new Set(expandedComments);
+    if (newExpanded.has(reviewId)) {
+      newExpanded.delete(reviewId);
+    } else {
+      newExpanded.add(reviewId);
+    }
+    setExpandedComments(newExpanded);
+  };
+
+  const isCommentLong = (comment) => {
+    if (!comment) return false;
+    const lines = comment.split('\n').length;
+    const estimatedLines = comment.length / 50; // Approximation
+    return lines > 3 || estimatedLines > 3;
+  };
+
   // On garde l'ordre de chargement (par date) pour le scroll infini
   const displayedReviews = reviews;
 
