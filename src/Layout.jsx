@@ -214,8 +214,8 @@ function AvatarSelectionDialog({ open, onOpenChange, currentAvatar, onAvatarSele
             onClick={() => setSelectedAvatar(avatar.id)}
             className={`relative p-2 sm:p-4 rounded-xl border-2 transition-all hover:scale-105 ${
             selectedAvatar === avatar.id ?
-            'border-purple-600 bg-purple-50 shadow-lg' :
-            'border-slate-200 bg-white hover:border-purple-300'}`
+            'border-purple-600 bg-purple-50 dark:bg-purple-900 shadow-lg' :
+            'border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-700 hover:border-purple-300 dark:hover:border-purple-400'}`
             }>
 
               {avatar.url ?
