@@ -454,24 +454,32 @@ Rédige maintenant ton résumé façon "L'avis de Satoshi" en 3 phrases max.`;
                         </div>
                         </div>
 
-                    {review.comment &&
-                  <div className="relative bg-slate-50 p-2 sm:p-3 rounded-lg mb-2 sm:mb-3">
-                        <p className="text-xs sm:text-sm text-slate-700 leading-relaxed pr-6">
-                          {review.comment}
-                        </p>
-                        <button
-                      onClick={() => toggleExpand(review.id)}
-                      className="absolute top-2 sm:top-3 right-2 sm:right-3 text-slate-400 hover:text-slate-600 transition-colors"
-                      title={expandedReviews.has(review.id) ? "Masquer les détails" : "Voir les détails"}>
-
-                          <ChevronDown
-                        className={`w-3 h-3 sm:w-4 sm:h-4 transition-transform duration-200 ${
-                        expandedReviews.has(review.id) ? 'rotate-180' : ''}`
-                        } />
-
-                        </button>
-                      </div>
-                  }
+                    {review.comment && (() => {
+                      const isLongComment = review.comment.split('\n').length > 3 || review.comment.length > 200;
+                      const isExpanded = expandedComments.has(review.id);
+                      return (
+                        <div className="relative bg-slate-50 p-2 sm:p-3 rounded-lg mb-2 sm:mb-3">
+                          <p className={`text-xs sm:text-sm text-slate-700 leading-relaxed pr-6 ${!isExpanded && isLongComment ? 'line-clamp-3' : ''}`}>
+                            {review.comment}
+                          </p>
+                          {isLongComment && (
+                            <button
+                              onClick={() => toggleCommentExpand(review.id)}
+                              className="text-xs text-blue-600 hover:text-blue-700 font-medium mt-1">
+                              {isExpanded ? "Voir moins" : "Voir plus"}
+                            </button>
+                          )}
+                          <button
+                            onClick={() => toggleExpand(review.id)}
+                            className="absolute top-2 sm:top-3 right-2 sm:right-3 text-slate-400 hover:text-slate-600 transition-colors"
+                            title={expandedReviews.has(review.id) ? "Masquer les détails" : "Voir les détails"}>
+                            <ChevronDown
+                              className={`w-3 h-3 sm:w-4 sm:h-4 transition-transform duration-200 ${
+                              expandedReviews.has(review.id) ? 'rotate-180' : ''}`} />
+                          </button>
+                        </div>
+                      );
+                    })()}
 
                     {expandedReviews.has(review.id) &&
                   <div className="mt-2 pt-2 border-t border-slate-100">
