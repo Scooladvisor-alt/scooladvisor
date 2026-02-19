@@ -208,6 +208,17 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-pink-50/30 to-blue-50">
+      <MobileHeader 
+        title={teacher?.name || 'Professeur'} 
+        subtitle={teacher?.subject}
+        onBack={() => {
+          if (school) {
+            navigate(createPageUrl(`SchoolDetail?id=${school.id}`));
+          } else {
+            navigate(createPageUrl("Schools"));
+          }
+        }}
+      />
       {teacher &&
       <SEO
         title={`${teacher.name} - Avis Professeur ${teacher.subject} | ScoolAdvisor`}
