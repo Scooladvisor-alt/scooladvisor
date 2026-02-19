@@ -850,37 +850,36 @@ export default function SchoolsPage() {
           `}</style>
           
           {/* En-tête redesigné */}
-          <div className="relative px-6 sm:px-8 pt-6 pb-4 text-center border-b border-slate-100 bg-white z-10 shrink-0">
+          <div className="relative px-4 sm:px-8 pt-6 pb-6 bg-gradient-to-br from-pink-50 via-purple-50 to-blue-50 z-10 shrink-0">
             <motion.div
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4 }}>
+              transition={{ duration: 0.4 }}
+              className="max-w-3xl mx-auto">
 
-              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight mb-2">
+              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight mb-2 text-center">
                 <span className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-[#4DA6FF] bg-clip-text text-transparent">
                   Salle des profs
                 </span>
-                <span className="ml-2"></span>
               </h1>
-              <p className="text-sm sm:text-base text-gray-600 max-w-2xl mx-auto">
+              <p className="text-sm sm:text-base text-slate-600 max-w-2xl mx-auto text-center mb-6">
                 Tes profs, parmi toutes les scools 😎
               </p>
+              
+              {/* Barre de recherche intégrée dans le header */}
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-slate-400 z-10" />
+                <Input
+                  placeholder="Chercher un prof ou une matière..."
+                  value={teacherSearchTerm}
+                  onChange={(e) => setTeacherSearchTerm(e.target.value)}
+                  className="pl-11 pr-4 h-12 text-sm sm:text-base border-2 border-slate-200 focus:border-purple-400 focus:ring-2 focus:ring-purple-100 rounded-xl bg-white shadow-md transition-all w-full"
+                  autoFocus />
+              </div>
             </motion.div>
           </div>
 
-          <div className="flex-1 flex flex-col min-h-0 bg-slate-50/50">
-            {/* Barre de recherche - Fixe en haut de la zone de contenu */}
-            <div className="px-6 sm:px-8 py-4 bg-white/50 backdrop-blur-sm border-b border-slate-100 shrink-0">
-              <div className="max-w-3xl mx-auto relative">
-                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-slate-400 z-10" />
-                <Input
-                  placeholder="Nom du professeur ou matière..."
-                  value={teacherSearchTerm}
-                  onChange={(e) => setTeacherSearchTerm(e.target.value)}
-                  className="pl-12 h-12 text-base border border-slate-200 focus:border-pink-300 focus:ring-2 focus:ring-pink-100 rounded-xl bg-white shadow-sm transition-all w-full"
-                  autoFocus />
-              </div>
-            </div>
+          <div className="flex-1 flex flex-col min-h-0 bg-white">
 
             {/* Zone de résultats - Scrollable */}
             <div className="flex-1 overflow-y-auto px-4 sm:px-8 py-6 custom-scrollbar">
