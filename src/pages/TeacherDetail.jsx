@@ -10,6 +10,7 @@ import {
   Sparkles,
   Users } from
 "lucide-react";
+import MobileHeader from "../components/mobile/MobileHeader";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { motion, AnimatePresence } from "framer-motion";
