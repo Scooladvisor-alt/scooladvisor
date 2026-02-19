@@ -116,7 +116,7 @@ export default function SchoolCard({ school, teacherCount }) {
       
       <div className="bg-white rounded-xl sm:rounded-2xl shadow-md border border-slate-200 p-2 sm:p-6 transition-all duration-300 hover:shadow-xl hover:scale-[1.02] hover:-translate-y-1 h-full flex flex-col relative z-10">
         <div className="flex-1 flex flex-col min-h-0">
-          <div className="flex items-end sm:items-start justify-between mb-1.5 sm:mb-4 gap-1.5 sm:gap-3">
+          <div className="flex items-end justify-between mb-1.5 sm:mb-4 gap-1.5 sm:gap-3">
             <div className="flex-1 min-w-0">
               <Badge className={`sm:mb-3 text-[9px] sm:text-xs border sm:border-2 font-semibold shadow-sm sm:shadow-md type-badge ${typeColors[school.type]}`}>
                 <span className="sm:hidden">{typeLabelsShort[school.type]}</span>
