@@ -115,28 +115,21 @@ export default function TeacherLoveNotes({ teacherId, user }) {
       {/* Effet enveloppe décoratif */}
       <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-pink-300 via-red-300 to-pink-300" />
       
-      <CardHeader className="pb-2">
+      <CardHeader className="pb-3 pt-4">
         <div className="flex items-center justify-between gap-2">
-          <CardTitle className="flex items-center gap-2 text-base sm:text-xl text-pink-700 whitespace-nowrap">
-            <Mail className="w-4 h-4 sm:w-5 sm:h-5" />
+          <CardTitle className="flex items-center gap-2 text-lg sm:text-xl text-pink-700">
+            <Mail className="w-5 h-5" />
             <span>Petit mot ❤️</span>
           </CardTitle>
           
-          {!hasUserPosted ?
+          {!hasUserPosted &&
           <Button
             variant="ghost"
             size="sm"
-            className="text-pink-600 hover:text-pink-700 hover:bg-pink-50"
-            onClick={() => {
-              setShowForm(!showForm);
-            }}>
-
-              {showForm ? "Fermer" : "Écrire un mot"}
-            </Button> :
-
-          <span className="text-xs text-pink-600 font-medium bg-pink-50 px-3 py-1 rounded-full">
-              Vous avez déjà posté 💌
-            </span>
+            className="text-pink-600 hover:text-pink-700 hover:bg-pink-50 text-xs sm:text-sm"
+            onClick={() => setShowForm(!showForm)}>
+              {showForm ? "Fermer" : "Écrire"}
+            </Button>
           }
         </div>
       </CardHeader>
