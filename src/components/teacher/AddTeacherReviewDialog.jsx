@@ -457,8 +457,7 @@ export default function AddTeacherReviewDialog({ open, onOpenChange, teacherId, 
                 }}
                 placeholder="APPRÉCIATION GÉNÉRALE *"
                 rows={2}
-                className="text-sm sm:text-base pb-8"
-                disabled={!canEdit} />
+                className="text-sm sm:text-base pb-8" />
               
               <div className="absolute bottom-1.5 left-2 right-2 flex items-center justify-between gap-2 bg-white/95 rounded px-1.5 py-1 checkbox-gradient-only">
                 <div className="flex items-center gap-2">
@@ -495,8 +494,7 @@ export default function AddTeacherReviewDialog({ open, onOpenChange, teacherId, 
               id="certification"
               checked={formData.certification}
               onCheckedChange={(checked) => setFormData({ ...formData, certification: checked })}
-              className="h-3 w-3 checkbox-gradient-border"
-              disabled={!canEdit} />
+              className="h-3 w-3 checkbox-gradient-border" />
             <label
               htmlFor="certification"
               className="text-[10px] font-medium cursor-pointer text-slate-700 leading-tight">
