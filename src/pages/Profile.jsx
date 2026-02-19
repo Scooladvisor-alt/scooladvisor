@@ -15,7 +15,8 @@ import {
   Edit,
   Heart,
   Brain,
-  FileText } from
+  FileText,
+  Trash2 } from
 "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -137,6 +138,9 @@ export default function ProfilePage() {
   const [showAvatarDialog, setShowAvatarDialog] = useState(false);
   const [visibleTeacherReviews, setVisibleTeacherReviews] = useState(5);
   const [visibleSchoolReviews, setVisibleSchoolReviews] = useState(5);
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const [deleteConfirmText, setDeleteConfirmText] = useState("");
+  const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
     loadProfile();
@@ -228,6 +232,38 @@ export default function ProfilePage() {
       toast.success("Avatar mis à jour !");
     } catch (error) {
       toast.error("Erreur lors de la mise à jour de l'avatar.");
+    }
+  };
+
+  const handleDeleteAccount = async () => {
+    if (deleteConfirmText !== "SUPPRIMER") {
+      toast.error("Veuillez taper SUPPRIMER pour confirmer");
+      return;
+    }
+
+    setDeleting(true);
+    try {
+      // Supprimer tous les avis de l'utilisateur
+      const [userTeacherReviews, userSchoolReviews] = await Promise.all([
+        base44.entities.TeacherReview.filter({ created_by: user.email }),
+        base44.entities.SchoolReview.filter({ created_by: user.email })
+      ]);
+
+      for (const review of userTeacherReviews) {
+        await base44.entities.TeacherReview.delete(review.id);
+      }
+      for (const review of userSchoolReviews) {
+        await base44.entities.SchoolReview.delete(review.id);
+      }
+
+      // Déconnexion
+      await base44.auth.logout();
+      toast.success("Compte supprimé avec succès");
+      navigate(createPageUrl("Schools"));
+    } catch (error) {
+      console.error("Erreur lors de la suppression du compte:", error);
+      toast.error("Erreur lors de la suppression du compte");
+      setDeleting(false);
     }
   };
 
@@ -648,6 +684,16 @@ export default function ProfilePage() {
               }
             </CardContent>
           </Card>
+
+          {/* Zone de suppression de compte */}
+          <div className="mt-8 flex justify-center">
+            <button
+              onClick={() => setShowDeleteDialog(true)}
+              className="text-xs text-slate-400 hover:text-red-500 transition-colors flex items-center gap-1">
+              <Trash2 className="w-3 h-3" />
+              Supprimer mon compte
+            </button>
+          </div>
         </motion.div>
       </div>
 
@@ -657,6 +703,52 @@ export default function ProfilePage() {
         currentAvatar={user.profile_avatar}
         onAvatarSelected={handleAvatarSelected}
         userInitial={user.full_name?.charAt(0) || 'U'} />
+
+      {/* Dialog de suppression de compte */}
+      <Dialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle className="text-red-600 flex items-center gap-2">
+              <Trash2 className="w-5 h-5" />
+              Supprimer mon compte
+            </DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4">
+            <p className="text-sm text-slate-600">
+              Cette action est <strong>irréversible</strong>. Tous vos avis seront supprimés.
+            </p>
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-slate-700">
+                Tapez <strong>SUPPRIMER</strong> pour confirmer
+              </label>
+              <input
+                type="text"
+                value={deleteConfirmText}
+                onChange={(e) => setDeleteConfirmText(e.target.value)}
+                className="w-full px-3 py-2 border border-slate-300 rounded-md text-sm"
+                placeholder="SUPPRIMER"
+              />
+            </div>
+          </div>
+          <DialogFooter className="gap-2">
+            <Button
+              variant="outline"
+              onClick={() => {
+                setShowDeleteDialog(false);
+                setDeleteConfirmText("");
+              }}
+              disabled={deleting}>
+              Annuler
+            </Button>
+            <Button
+              onClick={handleDeleteAccount}
+              disabled={deleteConfirmText !== "SUPPRIMER" || deleting}
+              className="bg-red-600 hover:bg-red-700 text-white">
+              {deleting ? "Suppression..." : "Supprimer définitivement"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
 
     </div>);
 
