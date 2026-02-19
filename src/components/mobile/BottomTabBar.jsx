@@ -25,9 +25,21 @@ export default function BottomTabBar() {
 
   const isActive = (path) => location.pathname === path;
 
+  const handleTabClick = (path) => {
+    const active = isActive(path);
+    if (active) {
+      // Reset scroll and navigation when clicking active tab
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      // Dispatch custom event for components to reset state
+      window.dispatchEvent(new CustomEvent('tabReset', { detail: { path } }));
+    } else {
+      navigate(path);
+    }
+  };
+
   return (
     <div 
-      className="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-lg border-t border-slate-200 z-50 md:hidden"
+      className="fixed bottom-0 left-0 right-0 bg-white dark:bg-slate-900/95 backdrop-blur-lg border-t border-slate-200 dark:border-slate-700 z-50 md:hidden"
       style={{
         paddingBottom: 'max(8px, env(safe-area-inset-bottom))',
       }}
@@ -40,7 +52,7 @@ export default function BottomTabBar() {
           return (
             <button
               key={tab.id}
-              onClick={() => navigate(tab.path)}
+              onClick={() => handleTabClick(tab.path)}
               className="flex flex-col items-center justify-center flex-1 h-full relative"
             >
               <div className="relative">
