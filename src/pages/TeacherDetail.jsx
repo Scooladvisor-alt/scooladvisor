@@ -297,7 +297,7 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
         }
       `}</style>
       
-      <div className="max-w-6xl mx-auto px-4 py-8">
+      <div className="max-w-6xl mx-auto px-4 py-4">
         <Button
           variant="ghost"
           onClick={() => {
@@ -307,7 +307,7 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
               navigate(createPageUrl("Schools"));
             }
           }}
-          className="mb-6">
+          className="mb-2">
 
           <ChevronLeft className="w-4 h-4 mr-2" />
           {school ? `Retour à ${school.name}` : "Retour aux établissements"}
