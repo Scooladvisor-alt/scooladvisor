@@ -374,7 +374,22 @@ export default function Layout({ children }) {
             font-size: 16px !important;
           }
         }
-
+        
+        /* iOS Safe Area & Smooth Scrolling */
+        * {
+          -webkit-overflow-scrolling: touch;
+        }
+        
+        body {
+          overscroll-behavior: contain;
+          user-select: text;
+          -webkit-user-select: text;
+        }
+        
+        /* Dark Mode Transitions */
+        * {
+          transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
 
         `}</style>
       
