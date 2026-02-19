@@ -233,6 +233,16 @@ export default function SchoolReviews({ schoolId, user, onReload, onEditReview, 
     setExpandedReviews(newExpanded);
   };
 
+  const toggleCommentExpand = (reviewId) => {
+    const newExpanded = new Set(expandedComments);
+    if (newExpanded.has(reviewId)) {
+      newExpanded.delete(reviewId);
+    } else {
+      newExpanded.add(reviewId);
+    }
+    setExpandedComments(newExpanded);
+  };
+
   const handleAskAntonin = async () => {
     setLoadingAntonin(true);
     setShowAntoninSummary(true);
