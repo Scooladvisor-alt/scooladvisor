@@ -18,7 +18,7 @@ const typeLabelsShort = {
   college: "Collège",
   lycee: "Lycée",
   universite: "Université",
-  ecole_privee: "École privée",
+  ecole_privee: "Éc. privée",
   ecole_commerce: "Éc. commerce",
   ecole_ingenieur: "Éc. ingénieurs",
 };
