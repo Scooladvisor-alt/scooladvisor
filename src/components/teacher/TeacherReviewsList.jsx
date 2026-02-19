@@ -60,6 +60,7 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
   const [userLikes, setUserLikes] = useState(new Set());
   const [reviewUsers, setReviewUsers] = useState({});
   const [expandedReviews, setExpandedReviews] = useState(new Set());
+  const [expandedComments, setExpandedComments] = useState(new Set());
   const [hasMoreReviews, setHasMoreReviews] = useState(true);
   const { showJoinDialog, actionDescription, requireAuth, closeDialog } = useJoinFamily();
 
