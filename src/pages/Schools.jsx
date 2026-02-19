@@ -882,7 +882,7 @@ export default function SchoolsPage() {
           <div className="flex-1 flex flex-col min-h-0 bg-white">
 
             {/* Zone de résultats - Scrollable */}
-            <div className="flex-1 overflow-y-auto px-4 sm:px-8 py-6 custom-scrollbar">
+            <div className="flex-1 overflow-y-auto px-4 sm:px-8 py-6 bg-gradient-to-br from-slate-50 via-purple-50/30 to-blue-50/30">
               {teacherSearchTerm && teacherSuggestions.length === 0 ?
               <div className="h-full flex flex-col items-center justify-center text-center">
                 <div className="w-16 h-16 bg-gradient-to-br from-pink-100 to-blue-100 rounded-full flex items-center justify-center mb-4">
