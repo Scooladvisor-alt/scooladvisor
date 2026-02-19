@@ -452,7 +452,7 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
                     {isCommentLong(review.comment) && (
                       <button
                         onClick={() => toggleCommentExpand(review.id)}
-                        className="text-xs text-purple-600 hover:text-purple-700 font-medium mt-1"
+                        className="text-xs text-blue-600 hover:text-blue-700 font-medium mt-1"
                       >
                         {expandedComments.has(review.id) ? "Voir moins" : "Voir plus"}
                       </button>
