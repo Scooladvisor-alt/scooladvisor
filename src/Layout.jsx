@@ -488,10 +488,10 @@ export default function Layout({ children }) {
           <AnimatePresence>
           {mobileMenuOpen &&
             <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.2 }} className="bg-white/95 mt-2 mb-1 ml-1 pr-2 pb-2 rounded-xl md:hidden absolute top-16 right-4 w-56 backdrop-blur-md shadow-xl border border-slate-200 z-50">
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2 }} className="bg-white/95 dark:bg-slate-800/95 mt-2 mb-1 ml-1 pr-2 pb-2 rounded-xl md:hidden absolute top-16 right-4 w-56 backdrop-blur-md shadow-xl border border-slate-200 dark:border-slate-700 z-50">
 
               {navigationItems.map((item) =>
               <Link
