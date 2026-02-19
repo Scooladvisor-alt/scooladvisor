@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useMediaQuery } from '@/hooks/useMediaQuery';
+import { useMediaQuery } from '@/components/hooks/useMediaQuery';
 import {
   Select,
   SelectContent,
