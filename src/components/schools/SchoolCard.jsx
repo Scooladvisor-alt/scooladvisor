@@ -144,7 +144,8 @@ export default function SchoolCard({ school, teacherCount }) {
 
           <div className="flex items-center gap-1 sm:gap-2 text-[10px] sm:text-sm text-slate-600 mb-1.5 sm:mb-4">
             <MapPin className="w-2.5 h-2.5 sm:w-4 sm:h-4 text-slate-400 flex-shrink-0" />
-            <span className="truncate">{school.city}</span>
+            <span className="truncate sm:hidden">{school.city}</span>
+            <span className="hidden sm:inline truncate">{school.address}</span>
             {school.region && school.region.trim().toLowerCase() === "international" && (
               <Globe className="w-2.5 h-2.5 sm:w-3.5 sm:h-3.5 text-indigo-500 flex-shrink-0" title="International" />
             )}
