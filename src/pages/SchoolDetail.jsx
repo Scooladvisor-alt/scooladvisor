@@ -251,27 +251,22 @@ export default function SchoolDetailPage() {
                           Établissement Banni
                         </Badge>
                       }
-                  <div className="flex items-center justify-between gap-2 mb-1 md:mb-2">
-                    {user && user.role === 'admin' && (
-                      <SchoolAdminMenu school={school} user={user} onUpdate={loadData} />
-                    )}
-                    {user &&
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setShowReportDialog(true);
-                      }}
-                      className="md:hidden text-red-500 hover:text-red-700 transition-colors"
-                      title="Signaler cet établissement">
-
-                        <Flag className="w-4 h-4" />
-                      </button>
-                    }
-                  </div>
-                  <div className="flex items-center justify-between gap-3">
-                    <div className="flex items-center gap-2 text-slate-600 text-sm sm:text-base">
-                      <MapPin className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
-                      <span className="font-medium">{school.city}</span>
+                  <div className="flex items-center justify-between gap-3 mb-1 md:mb-2">
+                    <div className="flex items-center gap-2">
+                      {user && user.role === 'admin' && (
+                        <SchoolAdminMenu school={school} user={user} onUpdate={loadData} />
+                      )}
+                      {user &&
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setShowReportDialog(true);
+                        }}
+                        className="md:hidden text-red-500 hover:text-red-700 transition-colors"
+                        title="Signaler cet établissement">
+                          <Flag className="w-4 h-4" />
+                        </button>
+                      }
                     </div>
                     <Badge className={`border-2 text-xs font-semibold shadow-md type-badge ${typeColors[school.type]}`}>
                       {typeLabels[school.type]}
