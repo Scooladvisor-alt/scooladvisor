@@ -133,6 +133,11 @@ export default function SchoolDetailPage() {
         title={school?.name || 'Établissement'} 
         subtitle={school?.city}
         onBack={() => navigate(createPageUrl("Schools"))}
+        badge={
+          <Badge className={`border-2 text-[9px] font-semibold shadow-md flex-shrink-0 ${typeColors[school.type]}`}>
+            {typeLabels[school.type]}
+          </Badge>
+        }
       />
       {school &&
       <SEO
