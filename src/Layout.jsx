@@ -427,9 +427,7 @@ export default function Layout({ children }) {
                     <DropdownMenuTrigger asChild>
                       <Button variant="ghost" className="p-0 hover:bg-transparent">
                         <Avatar className="w-10 h-10 border-2 border-blue-100 cursor-pointer hover:border-purple-300 transition-all">
-                          {user.profile_avatar && user.profile_avatar !== 'letter' ?
-                      <AvatarImage src={getAvatarUrl(user.profile_avatar)} /> :
-                      null}
+                          <AvatarImage src={getAvatarUrl(user.profile_avatar)} />
                           <AvatarFallback className="bg-transparent">
                             <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/f5396bc58_a-humanized-black-graduation-cap-with-a-star-shape-3.png" alt="Avatar" className="w-full h-full object-cover" />
                           </AvatarFallback>
