@@ -388,22 +388,23 @@ export default function ProfilePage() {
 
           <Card className={`${darkMode ? 'bg-slate-800/80 border-slate-700' : 'bg-white/80 border-slate-200'} backdrop-blur-sm shadow-xl relative z-10`}>
             <CardHeader className={`${darkMode ? 'border-slate-700' : 'border-slate-100'} border-b`}>
-              <div className="flex items-center justify-between">
-                <CardTitle className="tracking-tight text-3xl sm:text-4xl font-bold bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">Mon Profil
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                <CardTitle className="tracking-tight text-2xl sm:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent whitespace-nowrap">
+                  Mon Profil
                 </CardTitle>
-                <div className="flex gap-2">
+                <div className="flex gap-2 w-full sm:w-auto">
                   <Button
                     onClick={toggleDarkMode}
                     variant="outline"
                     size="sm"
-                    className={`${darkMode ? 'border-slate-600 text-slate-300 hover:bg-slate-700' : 'border-slate-300'}`}
+                    className={`${darkMode ? 'border-slate-600 text-slate-300 hover:bg-slate-700' : 'border-slate-300'} flex-1 sm:flex-none`}
                   >
                     {darkMode ? '☀️ Clair' : '🌙 Sombre'}
                   </Button>
                   <Button
                     variant="ghost"
                     onClick={() => navigate(createPageUrl("Schools"))}
-                    className={`flex items-center gap-2 ${darkMode ? 'text-slate-300 hover:bg-slate-700' : ''}`}>
+                    className={`flex items-center gap-2 ${darkMode ? 'text-slate-300 hover:bg-slate-700' : ''} flex-1 sm:flex-none`}>
                     <ChevronLeft className="w-4 h-4" />
                     Retour
                   </Button>
