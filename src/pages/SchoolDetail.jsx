@@ -244,14 +244,15 @@ export default function SchoolDetailPage() {
 
           <div className="relative p-4 sm:p-6 md:p-8">
             <div className="relative">
-              <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-3 md:gap-6 mb-4 md:mb-6">
+              {school.status === 'banned' &&
+                <Badge className="mb-3 bg-red-100 text-red-800 border-red-200 text-xs">
+                  Établissement Banni
+                </Badge>
+              }
+              
+              <div className="flex flex-col md:flex-row justify-between items-start md:items-start gap-4 md:gap-6 mb-6">
                 <div className="flex-1 w-full">
-                  {school.status === 'banned' &&
-                      <Badge className="mb-2 bg-red-100 text-red-800 border-red-200 text-xs">
-                          Établissement Banni
-                        </Badge>
-                      }
-                  <div className="flex items-center justify-between gap-3 mb-1 md:mb-2">
+                  <div className="flex items-start justify-between gap-3 mb-3">
                     <div className="flex items-center gap-2">
                       {user && user.role === 'admin' && (
                         <SchoolAdminMenu school={school} user={user} onUpdate={loadData} />
@@ -262,9 +263,10 @@ export default function SchoolDetailPage() {
                           e.stopPropagation();
                           setShowReportDialog(true);
                         }}
-                        className="md:hidden text-red-500 hover:text-red-700 transition-colors"
+                        className="text-red-500 hover:text-red-700 transition-colors flex items-center gap-1"
                         title="Signaler cet établissement">
                           <Flag className="w-4 h-4" />
+                          <span className="hidden md:inline text-xs">Signaler</span>
                         </button>
                       }
                     </div>
@@ -272,18 +274,6 @@ export default function SchoolDetailPage() {
                       {typeLabels[school.type]}
                     </Badge>
                   </div>
-                  {user &&
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setShowReportDialog(true);
-                    }}
-                    className="hidden md:flex items-center gap-1 text-red-500 hover:text-red-700 transition-colors mt-2 text-xs"
-                    title="Signaler cet établissement">
-                      <Flag className="w-3 h-3" />
-                      <span>Signaler</span>
-                    </button>
-                  }
                 </div>
 
                 {hasRating ?
@@ -292,38 +282,37 @@ export default function SchoolDetailPage() {
                   initial={{ scale: 1 }}
                   animate={{ scale: [1, 1.05, 1] }}
                   transition={{ duration: 0.3 }}
-                  className="relative bg-gradient-to-br from-amber-50 to-amber-100 rounded-lg border border-amber-200 text-center w-full sm:w-auto note-widget px-3 py-2 sm:px-4 sm:py-4 sm:min-w-[120px]">
-
+                  className="relative bg-gradient-to-br from-amber-50 to-amber-100 rounded-xl border border-amber-200 text-center w-full md:w-auto note-widget px-4 py-3 md:px-6 md:py-4 md:min-w-[140px] shadow-sm">
                     
-                    <div className="relative z-10 flex sm:hidden items-center justify-center gap-1 whitespace-nowrap">
-                      <Star className="w-4 h-4 text-amber-600 fill-amber-600" />
-                      <span className="text-lg font-bold text-amber-900">{school.average_rating.toFixed(1)}</span>
+                    <div className="relative z-10 flex md:hidden items-center justify-center gap-1.5 whitespace-nowrap">
+                      <Star className="w-5 h-5 text-amber-600 fill-amber-600" />
+                      <span className="text-xl font-bold text-amber-900">{school.average_rating.toFixed(1)}</span>
                       <span className="text-sm text-amber-700">/ 20</span>
-                      <span className="text-xs text-amber-600 ml-1">basé sur :</span>
+                      <span className="text-xs text-amber-600 ml-2">•</span>
                       <span className="text-sm font-semibold text-amber-800">{school.review_count} avis</span>
                     </div>
                     
-                    <div className="relative z-10 hidden sm:block">
-                      <div className="flex items-center justify-center gap-1.5 mb-1">
-                        <Star className="w-5 h-5 text-amber-600 fill-amber-600" />
-                        <span className="text-3xl font-bold text-amber-900" style={{ textShadow: '0 0 8px rgba(168,85,247,0.3)' }}>
+                    <div className="relative z-10 hidden md:block">
+                      <div className="flex items-center justify-center gap-2 mb-1.5">
+                        <Star className="w-6 h-6 text-amber-600 fill-amber-600" />
+                        <span className="text-4xl font-bold text-amber-900" style={{ textShadow: '0 0 8px rgba(168,85,247,0.3)' }}>
                           {school.average_rating.toFixed(1)}
                         </span>
                       </div>
-                      <p className="text-xs font-medium text-amber-700">sur 20</p>
-                      <p className="text-xs text-amber-600 mt-0.5">{school.review_count} avis</p>
+                      <p className="text-sm font-medium text-amber-700 mb-0.5">sur 20</p>
+                      <p className="text-xs text-amber-600">{school.review_count} avis</p>
                     </div>
                   </motion.div> :
 
-                <div className="bg-slate-50 rounded-lg border border-slate-200 text-center w-full sm:w-auto px-3 py-2 sm:px-4 sm:py-4 sm:min-w-[120px]">
-                    <div className="flex sm:hidden items-center justify-center gap-2 whitespace-nowrap">
-                      <Star className="w-4 h-4 text-slate-400" />
-                      <span className="text-sm text-slate-600">Pas encore noté</span>
+                <div className="bg-slate-50 rounded-xl border border-slate-200 text-center w-full md:w-auto px-4 py-3 md:px-6 md:py-4 md:min-w-[140px] shadow-sm">
+                    <div className="flex md:hidden items-center justify-center gap-2 whitespace-nowrap">
+                      <Star className="w-5 h-5 text-slate-400" />
+                      <span className="text-sm font-medium text-slate-600">Pas encore noté</span>
                     </div>
                     
-                    <div className="hidden sm:block">
-                      <Star className="w-6 h-6 text-slate-400 mx-auto mb-1" />
-                      <p className="text-xs text-slate-600">Pas encore noté</p>
+                    <div className="hidden md:block">
+                      <Star className="w-8 h-8 text-slate-400 mx-auto mb-2" />
+                      <p className="text-sm font-medium text-slate-600">Pas encore noté</p>
                     </div>
                   </div>
                 }
@@ -331,29 +320,29 @@ export default function SchoolDetailPage() {
 
 
 
-              <div className="flex flex-col sm:flex-row gap-3">
+              <div className="flex flex-col sm:flex-row gap-2.5 mb-4">
                 <Button
                   onClick={() => setShowAddTeacher(true)}
-                  className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-white shadow-lg w-full sm:flex-1 h-11">
-                  <Plus className="w-4 h-4 mr-2 text-white" />
+                  className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-white shadow-md hover:shadow-lg transition-all w-full sm:flex-1 h-11 font-semibold">
+                  <Plus className="w-4 h-4 mr-2" />
                   Ajouter un professeur
                 </Button>
 
                 <Button
                   onClick={() => setShowAddReview(true)}
-                  className="bg-gradient-to-r from-yellow-400 via-yellow-500 to-amber-500 hover:from-yellow-500 hover:via-yellow-600 hover:to-amber-600 text-white shadow-lg w-full sm:flex-1 h-11">
+                  className="bg-gradient-to-r from-yellow-400 via-yellow-500 to-amber-500 hover:from-yellow-500 hover:via-yellow-600 hover:to-amber-600 text-white shadow-md hover:shadow-lg transition-all w-full sm:flex-1 h-11 font-semibold">
                   <Star className="w-4 h-4 mr-2" />
                   Noter l'établissement
                 </Button>
               </div>
               
               {!user &&
-              <p className="text-sm text-slate-600 mt-3 text-center">
+              <p className="text-sm text-slate-600 mb-3 text-center bg-blue-50 rounded-lg py-2 px-3 border border-blue-100">
                   📌 Connecte-toi pour noter et ajouter tes profs.
                 </p>
               }
               
-              <p className="text-xs text-slate-400 mt-4 text-center">
+              <p className="text-xs text-slate-500 text-center py-2 px-3 bg-slate-50 rounded-lg border border-slate-100">
                 📍 {school.address}
               </p>
             </div>
