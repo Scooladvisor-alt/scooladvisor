@@ -243,14 +243,6 @@ export default function SchoolDetailPage() {
           className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-slate-200 overflow-hidden mb-4">
 
           <div className="relative p-4 sm:p-6 md:p-8">
-            <Button
-              variant="ghost"
-              onClick={() => navigate(createPageUrl("Schools"))}
-              className="mb-4 -ml-2">
-              <ChevronLeft className="w-4 h-4 mr-2" />
-              Retour aux établissements
-            </Button>
-            
             <div className="relative">
               <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-3 md:gap-6 mb-4 md:mb-6">
                 <div className="flex-1 w-full">
