@@ -256,31 +256,6 @@ export default function SchoolDetailPage() {
               }
               
               <div className="flex flex-col md:flex-row justify-between items-start md:items-start gap-4 md:gap-6 mb-6">
-                <div className="flex-1 w-full">
-                  <div className="flex items-start justify-between gap-3 mb-3">
-                    <div className="flex items-center gap-2">
-                      {user && user.role === 'admin' && (
-                        <SchoolAdminMenu school={school} user={user} onUpdate={loadData} />
-                      )}
-                      {user &&
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setShowReportDialog(true);
-                        }}
-                        className="text-red-500 hover:text-red-700 transition-colors flex items-center gap-1"
-                        title="Signaler cet établissement">
-                          <Flag className="w-4 h-4" />
-                          <span className="hidden md:inline text-xs">Signaler</span>
-                        </button>
-                      }
-                    </div>
-                    <Badge className={`border-2 text-xs font-semibold shadow-md type-badge ${typeColors[school.type]}`}>
-                      {typeLabels[school.type]}
-                    </Badge>
-                  </div>
-                </div>
-
                 {hasRating ?
                 <motion.div
                   key={school.average_rating}
@@ -321,6 +296,26 @@ export default function SchoolDetailPage() {
                     </div>
                   </div>
                 }
+
+                <div className="flex-1 w-full">
+                  <div className="flex items-center gap-2 justify-end">
+                    {user && user.role === 'admin' && (
+                      <SchoolAdminMenu school={school} user={user} onUpdate={loadData} />
+                    )}
+                    {user &&
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setShowReportDialog(true);
+                      }}
+                      className="text-red-500 hover:text-red-700 transition-colors flex items-center gap-1"
+                      title="Signaler cet établissement">
+                        <Flag className="w-4 h-4" />
+                        <span className="hidden md:inline text-xs">Signaler</span>
+                      </button>
+                    }
+                  </div>
+                </div>
               </div>
 
 
