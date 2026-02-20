@@ -256,10 +256,15 @@ export default function SchoolDetailPage() {
             <div className="relative">
               <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-3 md:gap-6 mb-4 md:mb-6">
                 <div className="flex-1 w-full">
-                  <div className="flex items-center justify-between mb-2">
-                    <Badge className={`border-2 text-xs font-semibold shadow-md type-badge ${typeColors[school.type]}`}>
-                      {typeLabels[school.type]}
-                    </Badge>
+                  {school.status === 'banned' &&
+                      <Badge className="mb-2 bg-red-100 text-red-800 border-red-200 text-xs">
+                          Établissement Banni
+                        </Badge>
+                      }
+                  <div className="flex items-center justify-between gap-2 mb-1 md:mb-2">
+                    {user && user.role === 'admin' && (
+                      <SchoolAdminMenu school={school} user={user} onUpdate={loadData} />
+                    )}
                     {user &&
                     <button
                       onClick={(e) => {
@@ -273,32 +278,27 @@ export default function SchoolDetailPage() {
                       </button>
                     }
                   </div>
-                  {school.status === 'banned' &&
-                      <Badge className="mb-2 bg-red-100 text-red-800 border-red-200 text-xs">
-                          Établissement Banni
-                        </Badge>
-                      }
-                  <div className="flex items-center gap-2 mb-1 md:mb-2">
-                    {user && user.role === 'admin' && (
-                      <SchoolAdminMenu school={school} user={user} onUpdate={loadData} />
-                    )}
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="flex items-center gap-2 text-slate-600 text-sm sm:text-base">
+                      <MapPin className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
+                      <span className="font-medium">{school.city}</span>
+                    </div>
+                    <Badge className={`border-2 text-xs font-semibold shadow-md type-badge ${typeColors[school.type]}`}>
+                      {typeLabels[school.type]}
+                    </Badge>
                   </div>
-                  <div className="flex items-center gap-2 text-slate-600 text-sm sm:text-base">
-                    <MapPin className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
-                    <span className="font-medium">{school.city}</span>
-                    {user &&
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setShowReportDialog(true);
-                      }}
-                      className="hidden md:flex ml-2 text-red-500 hover:text-red-700 transition-colors"
-                      title="Signaler cet établissement">
-
-                        <Flag className="w-3.5 h-3.5" />
-                      </button>
-                    }
-                  </div>
+                  {user &&
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setShowReportDialog(true);
+                    }}
+                    className="hidden md:flex items-center gap-1 text-red-500 hover:text-red-700 transition-colors mt-2 text-xs"
+                    title="Signaler cet établissement">
+                      <Flag className="w-3 h-3" />
+                      <span>Signaler</span>
+                    </button>
+                  }
                 </div>
 
                 {hasRating ?
