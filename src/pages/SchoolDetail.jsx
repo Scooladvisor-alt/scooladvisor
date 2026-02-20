@@ -279,14 +279,13 @@ export default function SchoolDetailPage() {
                         </Badge>
                       }
                   <div className="flex items-center gap-2 mb-1 md:mb-2">
-                    <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-slate-900 break-words">{school.name}</h1>
                     {user && user.role === 'admin' && (
                       <SchoolAdminMenu school={school} user={user} onUpdate={loadData} />
                     )}
                   </div>
-                  <div className="flex items-center gap-2 text-slate-600 text-xs sm:text-sm">
-                    <MapPin className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" />
-                    <span className="truncate" style={{ fontSize: 'clamp(10px, 2vw, 14px)' }}>{school.address}, {school.city}</span>
+                  <div className="flex items-center gap-2 text-slate-600 text-sm sm:text-base">
+                    <MapPin className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
+                    <span className="font-medium">{school.city}</span>
                     {user &&
                     <button
                       onClick={(e) => {
@@ -368,6 +367,10 @@ export default function SchoolDetailPage() {
                   📌 Connecte-toi pour noter et ajouter tes profs.
                 </p>
               }
+              
+              <p className="text-xs text-slate-400 mt-4 text-center">
+                📍 {school.address}
+              </p>
             </div>
           </div>
         </motion.div>
