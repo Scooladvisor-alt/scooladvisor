@@ -255,6 +255,21 @@ export default function SchoolDetailPage() {
                 </Badge>
               }
               
+              <div className="hidden md:block mb-6">
+                <div className="flex items-center gap-2 mb-2">
+                  <Badge className={`border-2 text-xs font-semibold shadow-md ${typeColors[school.type]}`}>
+                    {typeLabels[school.type]}
+                  </Badge>
+                </div>
+                <h1 className="text-3xl font-bold text-slate-900 mb-2">
+                  {school.name}
+                </h1>
+                <div className="flex items-center gap-2 text-slate-600">
+                  <MapPin className="w-4 h-4" />
+                  <span>{school.city}</span>
+                </div>
+              </div>
+              
               <div className="flex flex-col md:flex-row justify-between items-start md:items-start gap-4 md:gap-6 mb-6">
                 {hasRating ?
                 <motion.div
