@@ -117,8 +117,9 @@ export default function SchoolCard({ school, teacherCount }) {
       <div className="bg-white rounded-xl sm:rounded-2xl shadow-md border border-slate-200 p-2 sm:p-6 transition-all duration-300 hover:shadow-xl hover:scale-[1.02] hover:-translate-y-1 h-full flex flex-col relative z-10">
         <div className="flex-1 flex flex-col min-h-0">
           <div className="flex items-start justify-between mb-1.5 sm:mb-3">
-            <Badge className={`hidden sm:inline-flex items-center gap-1 text-xs border-2 font-semibold shadow-md type-badge ${typeColors[school.type]}`}>
-              {typeLabels[school.type]}
+            <Badge className={`inline-flex items-center gap-1 text-[9px] sm:text-xs border sm:border-2 font-semibold shadow-sm sm:shadow-md type-badge ${typeColors[school.type]}`}>
+              <span className="sm:hidden">{typeLabelsShort[school.type]}</span>
+              <span className="hidden sm:inline">{typeLabels[school.type]}</span>
             </Badge>
             
             {hasRating ? (
@@ -141,17 +142,12 @@ export default function SchoolCard({ school, teacherCount }) {
             {school.name}
           </h3>
 
-          <div className="flex items-center gap-2 text-[10px] sm:text-sm text-slate-600 mb-1.5 sm:mb-4">
-            <div className="flex items-center gap-1 sm:gap-2 flex-1 min-w-0">
-              <MapPin className="w-2.5 h-2.5 sm:w-4 sm:h-4 text-slate-400 flex-shrink-0" />
-              <span className="truncate">{school.city}</span>
-              {school.region && school.region.trim().toLowerCase() === "international" && (
-                <Globe className="w-2.5 h-2.5 sm:w-3.5 sm:h-3.5 text-indigo-500 flex-shrink-0" title="International" />
-              )}
-            </div>
-            <Badge className={`sm:hidden inline-flex items-center gap-1 text-[9px] border font-semibold shadow-sm type-badge flex-shrink-0 ${typeColors[school.type]}`}>
-              {typeLabelsShort[school.type]}
-            </Badge>
+          <div className="flex items-center gap-1 sm:gap-2 text-[10px] sm:text-sm text-slate-600 mb-1.5 sm:mb-4">
+            <MapPin className="w-2.5 h-2.5 sm:w-4 sm:h-4 text-slate-400 flex-shrink-0" />
+            <span className="truncate">{school.city}</span>
+            {school.region && school.region.trim().toLowerCase() === "international" && (
+              <Globe className="w-2.5 h-2.5 sm:w-3.5 sm:h-3.5 text-indigo-500 flex-shrink-0" title="International" />
+            )}
           </div>
         </div>
 
