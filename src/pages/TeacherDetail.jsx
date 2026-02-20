@@ -310,21 +310,6 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
       `}</style>
       
       <div className="max-w-6xl mx-auto px-0 lg:px-4 py-4 pb-0 lg:pb-4">
-        <Button
-          variant="ghost"
-          onClick={() => {
-            if (school) {
-              navigate(createPageUrl(`SchoolDetail?id=${school.id}`));
-            } else {
-              navigate(createPageUrl("Schools"));
-            }
-          }}
-          className="mb-2 mx-4 lg:mx-0">
-
-          <ChevronLeft className="w-4 h-4 mr-2" />
-          {school ? `Retour à ${school.name}` : "Retour aux établissements"}
-        </Button>
-
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
