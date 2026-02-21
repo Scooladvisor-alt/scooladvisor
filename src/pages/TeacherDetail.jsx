@@ -352,7 +352,7 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
             <div className="hidden sm:block absolute top-0 right-0 w-72 h-72 bg-gradient-to-br from-[#FF4D8D]/10 via-purple-500/10 to-blue-500/5 rounded-bl-full" />
             
             <div className="relative">
-              <div className="flex flex-col md:flex-row gap-4 sm:gap-6 items-start mb-6">
+              <div className="hidden md:flex flex-col md:flex-row gap-4 sm:gap-6 items-start mb-6">
                 <div className="flex gap-3 sm:gap-6 items-start flex-1 w-full">
                   <div className="relative">
                     <Avatar className="w-20 h-20 sm:w-32 sm:h-32 border-4 border-white shadow-lg flex-shrink-0">
@@ -420,13 +420,13 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
                 </div>
               </div>
 
-              <div className="flex flex-col sm:flex-row flex-wrap gap-3 mt-4">
+              <div className="flex flex-col sm:flex-row flex-wrap gap-3 mt-4 md:mt-4 mt-0">
                 <Button
                   onClick={() => {
                     setShowAddReview(true);
                     setEditingReview(null);
                   }} 
-                  className="flex-1 sm:flex-none bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-white shadow-md h-11 px-6 rounded-xl font-medium"
+                  className="w-full sm:flex-1 sm:flex-none bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-white shadow-md h-11 px-6 rounded-xl font-medium"
                   size="default">
                   <Star className="w-5 h-5 mr-2" />
                   Noter ce professeur
