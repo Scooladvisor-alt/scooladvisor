@@ -226,17 +226,19 @@ export default function TermsOfServicePage() {
             </section>
 
             <section>
-              <h2 className="text-2xl font-semibold text-slate-900 mb-4">8. Modifications des Conditions</h2>
+              <h2 className="text-2xl font-semibold text-slate-900 mb-4">12. Modifications des Conditions</h2>
               <p>
-                Scooladvisor se réserve le droit de modifier ces conditions d'utilisation à tout moment. 
-                Les utilisateurs seront informés des modifications importantes par email ou via la plateforme.
+                ScoolAdvisor se réserve le droit de modifier ces conditions d'utilisation à tout moment. 
+                Les utilisateurs seront informés des modifications importantes par email ou notification sur la plateforme. 
+                La poursuite de l'utilisation après modification vaut acceptation des nouvelles conditions.
               </p>
             </section>
 
             <section>
-              <h2 className="text-2xl font-semibold text-slate-900 mb-4">9. Droit Applicable</h2>
+              <h2 className="text-2xl font-semibold text-slate-900 mb-4">13. Droit Applicable et Juridiction</h2>
               <p>
-                Ces conditions sont régies par le droit français. Tout litige sera soumis aux tribunaux compétents français.
+                Les présentes conditions d'utilisation sont régies par le droit français. En cas de litige, 
+                et à défaut de résolution amiable, les tribunaux français seront seuls compétents.
               </p>
             </section>
           </div>
