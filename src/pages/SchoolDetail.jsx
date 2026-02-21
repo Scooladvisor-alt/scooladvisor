@@ -133,6 +133,9 @@ export default function SchoolDetailPage() {
         title={school?.name || 'Établissement'} 
         subtitle={school?.city}
         onBack={() => navigate(createPageUrl("Schools"))}
+        adminMenu={user && user.role === 'admin' ? (
+          <SchoolAdminMenu school={school} user={user} onUpdate={loadData} />
+        ) : null}
         ratingWidget={
           hasRating ? (
             <motion.div
@@ -340,9 +343,6 @@ export default function SchoolDetailPage() {
                 }
 
                 <div className="flex items-center gap-2 justify-end">
-                  {user && user.role === 'admin' && (
-                    <SchoolAdminMenu school={school} user={user} onUpdate={loadData} />
-                  )}
                   {user &&
                   <button
                     onClick={(e) => {
