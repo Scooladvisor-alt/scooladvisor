@@ -133,10 +133,29 @@ export default function SchoolDetailPage() {
         title={school?.name || 'Établissement'} 
         subtitle={school?.city}
         onBack={() => navigate(createPageUrl("Schools"))}
-        badge={
-          <Badge className={`border-2 text-[9px] font-semibold shadow-md flex-shrink-0 ${typeColors[school.type]}`}>
-            {typeLabels[school.type]}
-          </Badge>
+        ratingWidget={
+          hasRating ? (
+            <motion.div
+              key={school.average_rating}
+              initial={{ scale: 1 }}
+              animate={{ scale: [1, 1.05, 1] }}
+              transition={{ duration: 0.3 }}
+              className="relative bg-gradient-to-br from-amber-50 to-amber-100 rounded-lg border border-amber-200 text-center note-widget px-2 py-1.5 shadow-sm"
+            >
+              <div className="relative z-10 flex items-center gap-1 whitespace-nowrap">
+                <Star className="w-3.5 h-3.5 text-amber-600 fill-amber-600" />
+                <span className="text-sm font-bold text-amber-900">{school.average_rating.toFixed(1)}</span>
+                <span className="text-[10px] text-amber-700">/20</span>
+              </div>
+            </motion.div>
+          ) : (
+            <div className="bg-slate-50 rounded-lg border border-slate-200 text-center px-2 py-1.5 shadow-sm">
+              <div className="flex items-center gap-1 whitespace-nowrap">
+                <Star className="w-3.5 h-3.5 text-slate-400" />
+                <span className="text-[10px] font-medium text-slate-600">N/A</span>
+              </div>
+            </div>
+          )
         }
       />
       {school &&
