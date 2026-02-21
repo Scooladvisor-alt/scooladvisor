@@ -297,7 +297,7 @@ export default function SchoolDetailPage() {
                   </h1>
                   <div className="flex items-center gap-2 text-slate-600 dark:text-slate-300">
                     <MapPin className="w-4 h-4" />
-                    <span>{school.city}</span>
+                    <span>{school.city} • {school.address}</span>
                   </div>
                 </div>
                 
@@ -328,11 +328,11 @@ export default function SchoolDetailPage() {
 
 
 
-              <div className="flex items-center gap-2 py-1.5 px-2 bg-slate-50/50 dark:bg-slate-800/50 rounded-lg border border-slate-100 dark:border-slate-700 mb-3 md:justify-center md:py-2 md:px-3 md:bg-slate-50 dark:md:bg-slate-800 md:order-last md:mb-0">
-                <Badge className={`border text-[9px] font-medium shadow-sm flex-shrink-0 md:border-2 md:text-[10px] md:font-semibold md:shadow-md md:order-last ${typeColors[school.type]}`}>
+              <div className="flex items-center gap-2 py-1.5 px-2 bg-slate-50/50 dark:bg-slate-800/50 rounded-lg border border-slate-100 dark:border-slate-700 mb-3 md:hidden">
+                <Badge className={`border text-[9px] font-medium shadow-sm flex-shrink-0 ${typeColors[school.type]}`}>
                   {typeLabels[school.type]}
                 </Badge>
-                <p className="text-[11px] text-slate-500 dark:text-slate-400 truncate flex-1 md:text-xs md:text-center">
+                <p className="text-[11px] text-slate-500 dark:text-slate-400 truncate flex-1">
                   📍 {school.address}
                 </p>
               </div>
