@@ -15,10 +15,10 @@ export default function MobileHeader({ title, onBack, subtitle, badge, ratingWid
 
   return (
     <div className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 md:hidden">
-      <div className="px-4 py-3 flex items-center gap-3">
+      <div className="px-2 py-3 flex items-center gap-1.5">
         <button
           onClick={handleBack}
-          className="flex-shrink-0 p-1.5 hover:bg-slate-100 rounded-lg transition-colors"
+          className="flex-shrink-0 p-1 hover:bg-slate-100 rounded-lg transition-colors"
           aria-label="Go back"
         >
           <ChevronLeft className="w-5 h-5 text-slate-700" />
