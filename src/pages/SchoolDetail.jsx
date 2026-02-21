@@ -328,6 +328,15 @@ export default function SchoolDetailPage() {
 
 
 
+              <div className="flex items-center justify-center gap-2 py-2 px-3 bg-slate-50 rounded-lg border border-slate-100 mb-3 md:order-last md:mb-0">
+                <p className="text-xs text-slate-500 truncate flex-1 text-center">
+                  📍 {school.address}
+                </p>
+                <Badge className={`border-2 text-[10px] font-semibold shadow-md flex-shrink-0 ${typeColors[school.type]}`}>
+                  {typeLabels[school.type]}
+                </Badge>
+              </div>
+
               <div className="flex flex-col gap-2 sm:flex-row sm:gap-2.5 mb-4">
                 <Button
                   onClick={() => setShowAddReview(true)}
@@ -345,19 +354,10 @@ export default function SchoolDetailPage() {
               </div>
               
               {!user &&
-              <p className="text-sm text-slate-600 mb-3 text-center bg-blue-50 rounded-lg py-2 px-3 border border-blue-100">
+              <p className="text-[11px] leading-tight text-slate-600 mb-3 text-center bg-blue-50 rounded-lg py-1.5 px-2 border border-blue-100 md:text-sm md:py-2 md:px-3">
                   📌 Connecte-toi pour noter et ajouter tes profs.
                 </p>
               }
-              
-              <div className="flex items-center justify-center gap-2 py-2 px-3 bg-slate-50 rounded-lg border border-slate-100">
-                <p className="text-xs text-slate-500 truncate flex-1 text-center">
-                  📍 {school.address}
-                </p>
-                <Badge className={`border-2 text-[10px] font-semibold shadow-md flex-shrink-0 ${typeColors[school.type]}`}>
-                  {typeLabels[school.type]}
-                </Badge>
-              </div>
             </div>
           </div>
         </motion.div>
