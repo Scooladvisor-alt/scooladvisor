@@ -219,9 +219,7 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
           }
         }}
         reportButton={
-          user && (
-            <ReportTeacherButton teacher={teacher} onUpdate={loadData} variant="flag" />
-          )
+          <ReportTeacherButton teacher={teacher} onUpdate={loadData} variant="flag" />
         }
         adminMenu={user && user.role === 'admin' ? (
           <TeacherAdminMenu teacher={teacher} user={user} onUpdate={loadData} />
