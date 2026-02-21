@@ -204,11 +204,24 @@ export default function TermsOfServicePage() {
             </section>
 
             <section>
-              <h2 className="text-2xl font-semibold text-slate-900 mb-4">7. Limitation de Responsabilité</h2>
-              <p>
-                Scooladvisor ne peut être tenu responsable des avis publiés par les utilisateurs. La plateforme 
-                agit en tant qu'hébergeur et ne peut contrôler tous les contenus publiés en temps réel. 
-                Les utilisateurs sont seuls responsables de leurs publications.
+              <h2 className="text-2xl font-semibold text-slate-900 mb-4">11. Responsabilité Limitée de la Plateforme</h2>
+              <p className="mb-3">
+                <strong>ScoolAdvisor agit en tant qu'intermédiaire technique et hébergeur de contenus générés par les utilisateurs.</strong> 
+                La plateforme ne peut être tenue responsable des avis, commentaires et messages publiés par les utilisateurs.
+              </p>
+              <p className="mb-3">
+                ScoolAdvisor ne garantit pas :
+              </p>
+              <ul className="list-disc pl-6 space-y-2">
+                <li>L'exactitude, la véracité ou la fiabilité des informations publiées par les utilisateurs</li>
+                <li>La disponibilité permanente et ininterrompue de la plateforme</li>
+                <li>L'absence totale de contenus inappropriés malgré la modération</li>
+                <li>Les résultats ou décisions pris sur la base des informations de la plateforme</li>
+              </ul>
+              <p className="mt-3">
+                <strong>Les utilisateurs sont seuls responsables de leurs publications et de leurs conséquences juridiques.</strong> 
+                Toute personne s'estimant lésée par un contenu publié doit contacter directement son auteur ou exercer ses recours 
+                légaux. ScoolAdvisor coopérera avec les autorités compétentes en cas de procédure judiciaire.
               </p>
             </section>
 
