@@ -269,7 +269,7 @@ export default function SchoolDetailPage() {
           animate={{ opacity: 1, y: 0 }}
           className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-slate-200 overflow-hidden mb-4">
 
-          <div className="relative p-4 sm:p-6 md:p-8">
+          <div className="relative p-3 sm:p-6 md:p-8">
             <div className="relative">
               {school.status === 'banned' &&
                 <Badge className="mb-3 bg-red-100 text-red-800 border-red-200 text-xs">
@@ -320,19 +320,19 @@ export default function SchoolDetailPage() {
 
 
 
-              <div className="flex flex-col sm:flex-row gap-2.5 mb-4">
-                <Button
-                  onClick={() => setShowAddTeacher(true)}
-                  className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-white shadow-md hover:shadow-lg transition-all w-full sm:flex-1 h-11 font-semibold">
-                  <Plus className="w-4 h-4 mr-2" />
-                  Ajouter un professeur
-                </Button>
-
+              <div className="flex flex-col gap-2 sm:flex-row sm:gap-2.5 mb-4">
                 <Button
                   onClick={() => setShowAddReview(true)}
                   className="bg-gradient-to-r from-yellow-400 via-yellow-500 to-amber-500 hover:from-yellow-500 hover:via-yellow-600 hover:to-amber-600 text-white shadow-md hover:shadow-lg transition-all w-full sm:flex-1 h-11 font-semibold">
                   <Star className="w-4 h-4 mr-2" />
                   Noter l'établissement
+                </Button>
+
+                <Button
+                  onClick={() => setShowAddTeacher(true)}
+                  className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-white shadow-md hover:shadow-lg transition-all w-full sm:flex-1 h-11 font-semibold">
+                  <Plus className="w-4 h-4 mr-2" />
+                  Ajouter un professeur
                 </Button>
               </div>
               
