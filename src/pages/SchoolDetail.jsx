@@ -257,11 +257,6 @@ export default function SchoolDetailPage() {
               
               <div className="hidden md:flex justify-between items-start gap-6 mb-6">
                 <div className="flex-1">
-                  <div className="flex items-center gap-2 mb-2">
-                    <Badge className={`border-2 text-xs font-semibold shadow-md ${typeColors[school.type]}`}>
-                      {typeLabels[school.type]}
-                    </Badge>
-                  </div>
                   <h1 className="text-3xl font-bold text-slate-900 mb-2">
                     {school.name}
                   </h1>
@@ -271,29 +266,34 @@ export default function SchoolDetailPage() {
                   </div>
                 </div>
                 
-                {hasRating ?
-                  <motion.div
-                    key={school.average_rating}
-                    initial={{ scale: 1 }}
-                    animate={{ scale: [1, 1.05, 1] }}
-                    transition={{ duration: 0.3 }}
-                    className="relative bg-gradient-to-br from-amber-50 to-amber-100 rounded-xl border border-amber-200 text-center note-widget px-6 py-4 min-w-[140px] shadow-sm flex-shrink-0">
-                    <div className="relative z-10">
-                      <div className="flex items-center justify-center gap-2 mb-1.5">
-                        <Star className="w-6 h-6 text-amber-600 fill-amber-600" />
-                        <span className="text-4xl font-bold text-amber-900" style={{ textShadow: '0 0 8px rgba(168,85,247,0.3)' }}>
-                          {school.average_rating.toFixed(1)}
-                        </span>
+                <div className="flex items-start gap-3 flex-shrink-0">
+                  <Badge className={`border-2 text-xs font-semibold shadow-md ${typeColors[school.type]} self-start`}>
+                    {typeLabels[school.type]}
+                  </Badge>
+                  
+                  {hasRating ?
+                    <motion.div
+                      key={school.average_rating}
+                      initial={{ scale: 1 }}
+                      animate={{ scale: [1, 1.05, 1] }}
+                      transition={{ duration: 0.3 }}
+                      className="relative bg-gradient-to-br from-amber-50 to-amber-100 rounded-xl border border-amber-200 text-center note-widget px-5 py-3 shadow-sm">
+                      <div className="relative z-10">
+                        <div className="flex items-center justify-center gap-2 mb-1">
+                          <Star className="w-6 h-6 text-amber-600 fill-amber-600" />
+                          <span className="text-4xl font-bold text-amber-900" style={{ textShadow: '0 0 8px rgba(168,85,247,0.3)' }}>
+                            {school.average_rating.toFixed(1)}
+                          </span>
+                        </div>
+                        <p className="text-xs text-amber-600">{school.review_count} avis</p>
                       </div>
-                      <p className="text-sm font-medium text-amber-700 mb-0.5">sur 20</p>
-                      <p className="text-xs text-amber-600">{school.review_count} avis</p>
+                    </motion.div> :
+                    <div className="bg-slate-50 rounded-xl border border-slate-200 text-center px-5 py-3 shadow-sm">
+                      <Star className="w-8 h-8 text-slate-400 mx-auto mb-2" />
+                      <p className="text-sm font-medium text-slate-600">Pas encore noté</p>
                     </div>
-                  </motion.div> :
-                  <div className="bg-slate-50 rounded-xl border border-slate-200 text-center px-6 py-4 min-w-[140px] shadow-sm flex-shrink-0">
-                    <Star className="w-8 h-8 text-slate-400 mx-auto mb-2" />
-                    <p className="text-sm font-medium text-slate-600">Pas encore noté</p>
-                  </div>
-                }
+                  }
+                </div>
               </div>
               
               <div className="flex md:hidden flex-col gap-4 mb-6">
