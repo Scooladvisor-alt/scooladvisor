@@ -383,9 +383,21 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
                           </div>
                         )}
                       </div>
-                    <div className="flex items-center gap-2 text-sm sm:text-base text-slate-600 dark:text-slate-300">
+                    <div className="flex items-center gap-2 text-sm sm:text-base text-slate-600 dark:text-slate-300 mb-3">
                       <BookOpen className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
                       <span className="break-words">{teacher.subject}</span>
+                    </div>
+                    <div className="hidden md:block">
+                      <Button
+                        onClick={handleAskAntonin}
+                        variant="outline"
+                        size="sm"
+                        className="border-2 border-pink-100 hover:bg-pink-50 hover:border-pink-200 text-slate-700 h-9 px-3 rounded-lg font-medium bg-white/50">
+                        <Sparkles className="w-3.5 h-3.5 mr-2 text-[#FF4D8D]" />
+                        <span className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent font-bold text-sm">
+                          Demander à Satoshi
+                        </span>
+                      </Button>
                     </div>
                   </div>
                 </div>
@@ -435,7 +447,7 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
                 <Button
                   onClick={handleAskAntonin}
                   variant="outline"
-                  className="flex-1 sm:flex-none border-2 border-pink-100 hover:bg-pink-50 hover:border-pink-200 text-slate-700 h-11 px-4 rounded-xl font-medium bg-white/50">
+                  className="flex-1 sm:flex-none md:hidden border-2 border-pink-100 hover:bg-pink-50 hover:border-pink-200 text-slate-700 h-11 px-4 rounded-xl font-medium bg-white/50">
                   <Sparkles className="w-4 h-4 mr-2 text-[#FF4D8D]" />
                   <span className="hidden sm:inline bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent font-bold">
                     Demander à Satoshi ce qu'il en pense
