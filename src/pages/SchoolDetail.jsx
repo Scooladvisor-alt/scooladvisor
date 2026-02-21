@@ -271,13 +271,13 @@ export default function SchoolDetailPage() {
         }
       `}</style>
       
-      <div className="max-w-6xl mx-auto px-4 py-4">
+      <div className="md:max-w-6xl md:mx-auto md:px-4 md:py-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-slate-200 overflow-hidden mb-4">
+          className="md:bg-white/80 md:backdrop-blur-sm md:rounded-2xl md:shadow-xl md:border md:border-slate-200 overflow-hidden md:mb-4">
 
-          <div className="relative p-3 sm:p-6 md:p-8">
+          <div className="relative p-3 md:p-6 md:p-8">
             <div className="relative">
               {school.status === 'banned' &&
                 <Badge className="mb-3 bg-red-100 text-red-800 border-red-200 text-xs">
