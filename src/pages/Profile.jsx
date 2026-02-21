@@ -667,10 +667,10 @@ export default function ProfilePage() {
                             </div>
 
                             {/* Footer Date */}
-                            <div className={`flex flex-col sm:flex-row items-start sm:items-center justify-between text-[10px] sm:text-xs ${darkMode ? 'text-slate-500 border-slate-700' : 'text-slate-400 border-slate-100'} pt-1.5 sm:pt-2 border-t mt-1 gap-1 sm:gap-0`}>
+                            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between text-[10px] sm:text-xs text-slate-400 dark:text-slate-500 border-slate-100 dark:border-slate-700 pt-1.5 sm:pt-2 border-t mt-1 gap-1 sm:gap-0">
                               <span>Publié le {format(new Date(review.created_date), "d MMM yyyy", { locale: fr })}</span>
                               {review.edit_count > 0 && (
-                                <span className={`${darkMode ? 'bg-slate-700' : 'bg-slate-100'} px-1.5 py-0.5 rounded text-[9px] sm:text-[10px]`}>
+                                <span className="bg-slate-100 dark:bg-slate-700 px-1.5 py-0.5 rounded text-[9px] sm:text-[10px]">
                                   Modifié {review.edit_count} fois
                                 </span>
                               )}
