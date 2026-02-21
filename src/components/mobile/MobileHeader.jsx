@@ -25,14 +25,12 @@ export default function MobileHeader({ title, onBack, subtitle, badge, ratingWid
         </button>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2">
-            <h1 className="text-base font-semibold text-slate-900 truncate flex-1">{title}</h1>
+            <h1 className="text-sm font-semibold text-slate-900 truncate flex-1 leading-tight">{title}</h1>
             {adminMenu && <div className="flex-shrink-0">{adminMenu}</div>}
+            {ratingWidget && <div className="flex-shrink-0">{ratingWidget}</div>}
           </div>
           {subtitle && (
-            <div className="flex items-center gap-2">
-              <p className="text-xs text-slate-500 truncate flex-1">{subtitle}</p>
-              {ratingWidget && <div className="flex-shrink-0">{ratingWidget}</div>}
-            </div>
+            <p className="text-xs text-slate-500 truncate">{subtitle}</p>
           )}
         </div>
       </div>
