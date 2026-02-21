@@ -78,17 +78,23 @@ export default function TermsOfServicePage() {
             </section>
 
             <section>
-              <h2 className="text-2xl font-semibold text-slate-900 mb-4">3. Publication d'Avis et Messages</h2>
-              <p className="mb-3">Les avis et messages (chats) publiés sur Scooladvisor doivent :</p>
+              <h2 className="text-2xl font-semibold text-slate-900 mb-4">3. Responsabilité de l'Utilisateur</h2>
+              <p className="mb-3">
+                L'utilisateur s'engage à publier des avis objectifs, honnêtes et respectueux, basés sur une expérience personnelle réelle.
+              </p>
+              <p className="mb-3 font-semibold">Sont strictement interdits :</p>
               <ul className="list-disc pl-6 space-y-2">
-                <li>Être basés sur une expérience personnelle réelle (pour les avis)</li>
-                <li>Être constructifs, polis et bienveillants (avis et chats)</li>
-                <li>Respecter la vie privée des personnes mentionnées (pas de doxing)</li>
-                <li>Ne contenir aucun propos haineux, discriminatoire ou sexuel</li>
-                <li>Ne pas contenir de fausses informations délibérées</li>
-                <li>Ne pas être du spam ou de la publicité non sollicitée</li>
-                <li>Ne peuvent être modifiés que 3 fois maximum après publication</li>
+                <li>Les propos diffamatoires, injurieux ou calomnieux</li>
+                <li>Les contenus discriminatoires (origine, religion, orientation sexuelle, handicap, etc.)</li>
+                <li>Les atteintes à la vie privée d'autrui (divulgation d'informations personnelles)</li>
+                <li>Les fausses informations ou accusations mensongères</li>
+                <li>Le harcèlement ou intimidation sous toute forme</li>
+                <li>Les contenus à caractère sexuel, violent ou haineux</li>
+                <li>Le spam, la publicité non sollicitée ou les contenus commerciaux</li>
               </ul>
+              <p className="mt-3 text-sm italic text-slate-600">
+                Les avis et messages peuvent être modifiés jusqu'à 3 fois maximum après leur publication initiale.
+              </p>
             </section>
 
             <section>
