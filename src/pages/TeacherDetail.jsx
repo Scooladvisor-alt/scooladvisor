@@ -218,6 +218,10 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
             navigate(createPageUrl("Schools"));
           }
         }}
+        avatar={{
+          photoUrl: teacher?.photo_url,
+          name: teacher?.name
+        }}
         reportButton={
           <ReportTeacherButton teacher={teacher} onUpdate={loadData} variant="flag" />
         }
