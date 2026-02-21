@@ -218,6 +218,37 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
             navigate(createPageUrl("Schools"));
           }
         }}
+        reportButton={
+          user && (
+            <ReportTeacherButton teacher={teacher} onUpdate={loadData} variant="flag" />
+          )
+        }
+        adminMenu={user && user.role === 'admin' ? (
+          <TeacherAdminMenu teacher={teacher} user={user} onUpdate={loadData} />
+        ) : null}
+        ratingWidget={
+          hasRating ? (
+            <motion.div
+              key={teacher.average_rating}
+              initial={{ scale: 1 }}
+              animate={{ scale: [1, 1.05, 1] }}
+              transition={{ duration: 0.3 }}
+              className="relative bg-gradient-to-br from-amber-50 to-amber-100 rounded-lg border border-amber-200 text-center note-widget px-2 py-1 shadow-sm"
+            >
+              <div className="relative z-10 flex items-center gap-1 whitespace-nowrap">
+                <Star className="w-3.5 h-3.5 text-amber-600 fill-amber-600" />
+                <span className="text-sm font-bold text-amber-900">{teacher.average_rating.toFixed(1)}</span>
+              </div>
+            </motion.div>
+          ) : (
+            <div className="bg-slate-50 rounded-lg border border-slate-200 text-center px-2 py-1 shadow-sm">
+              <div className="flex items-center gap-1 whitespace-nowrap">
+                <Star className="w-3.5 h-3.5 text-slate-400" />
+                <span className="text-[10px] font-medium text-slate-600">N/A</span>
+              </div>
+            </div>
+          )
+        }
       />
       {teacher &&
       <SEO
