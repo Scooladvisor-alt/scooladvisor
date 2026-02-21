@@ -29,9 +29,9 @@ export default function MobileHeader({ title, onBack, subtitle, badge, ratingWid
             {ratingWidget && <div className="flex-shrink-0">{ratingWidget}</div>}
           </div>
           {subtitle && (
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1.5">
               <p className="text-xs text-slate-500 truncate flex-1">{subtitle}</p>
-              {adminMenu && <div className="flex-shrink-0 opacity-60">{adminMenu}</div>}
+              {adminMenu && <div className="flex-shrink-0">{adminMenu}</div>}
             </div>
           )}
         </div>
