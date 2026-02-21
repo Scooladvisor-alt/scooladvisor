@@ -98,11 +98,21 @@ export default function TermsOfServicePage() {
             </section>
 
             <section>
-              <h2 className="text-2xl font-semibold text-slate-900 mb-4">4. Modération Automatisée par IA</h2>
-              <p>
-                Scooladvisor utilise un système de modération automatique par intelligence artificielle pour garantir 
-                la qualité et le respect des contenus publiés. Tous les avis, commentaires et messages de chat (National et École) passent par cette 
-                modération avant publication ou modification. Les contenus jugés inappropriés, offensants ou contraires à nos valeurs sont automatiquement refusés par l'IA.
+              <h2 className="text-2xl font-semibold text-slate-900 mb-4">4. Modération et Contrôle des Contenus</h2>
+              <p className="mb-3">
+                <strong>ScoolAdvisor se réserve le droit exclusif de refuser, modifier, masquer ou supprimer tout contenu publié sur la plateforme, 
+                sans préavis ni justification préalable.</strong>
+              </p>
+              <p className="mb-3">
+                Tous les avis, commentaires et messages de chat passent par un système de modération automatique par intelligence artificielle 
+                avant publication ou modification. Les contenus jugés inappropriés, offensants ou contraires à nos valeurs sont automatiquement refusés.
+              </p>
+              <p className="mb-3">
+                Une modération humaine complémentaire peut intervenir à tout moment pour examiner les contenus signalés ou suspects.
+              </p>
+              <p className="text-sm italic text-slate-600">
+                La plateforme met tout en œuvre pour garantir un environnement respectueux, mais ne peut garantir l'absence totale de contenus inappropriés 
+                compte tenu du volume de publications.
               </p>
             </section>
 
