@@ -470,7 +470,7 @@ rejected → si le message enfreint les règles ci-dessus"
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-[95vw] sm:max-w-5xl max-h-[90vh] overflow-y-auto rounded-2xl [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+      <DialogContent className="max-w-[95vw] sm:max-w-5xl max-h-[90vh] overflow-y-auto rounded-2xl [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] dark:bg-slate-800 dark:border-slate-700">
         <DialogHeader className="text-center pb-2">
           <DialogTitle className="text-lg sm:text-2xl font-bold text-center">
             <span className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
@@ -511,21 +511,21 @@ rejected → si le message enfreint les règles ci-dessus"
               return (
                 <div
                   key={key}
-                  className={`rounded-lg p-1.5 sm:p-3 pb-2.5 sm:pb-4 border border-slate-200 transition-all duration-500 relative overflow-hidden ${
-                  isMax ? gradient : 'bg-slate-50'} ${
-                  isFlashing ? 'animate-widget-shine ring-2 ring-offset-2 ring-offset-white ring-yellow-400' : ''}`}>
+                  className={`rounded-lg p-1.5 sm:p-3 pb-2.5 sm:pb-4 border border-slate-200 dark:border-slate-600 transition-all duration-500 relative overflow-hidden ${
+                  isMax ? gradient : 'bg-slate-50 dark:bg-slate-900'} ${
+                  isFlashing ? 'animate-widget-shine ring-2 ring-offset-2 ring-offset-white dark:ring-offset-slate-800 ring-yellow-400' : ''}`}>
 
                   <div className="flex items-center justify-between gap-2 relative z-10">
                     <div className="flex items-center gap-1.5 flex-1 min-w-0">
                       <Icon className={`w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0 ${color}`} />
                       <div className="min-w-0">
-                        <Label className="font-semibold text-[11px] sm:text-xs block">{label}</Label>
-                        <p className="text-[8px] sm:text-[9px] text-slate-500 truncate">{description}</p>
+                        <Label className="font-semibold text-[11px] sm:text-xs block dark:text-white">{label}</Label>
+                        <p className="text-[8px] sm:text-[9px] text-slate-500 dark:text-slate-400 truncate">{description}</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-0.5">
-                      <span className="text-sm sm:text-base font-bold text-slate-900">{formData[key].toFixed(2).replace(/[.,]00$/, "")}</span>
-                      <span className="text-xs text-slate-600">/5</span>
+                      <span className="text-sm sm:text-base font-bold text-slate-900 dark:text-white">{formData[key].toFixed(2).replace(/[.,]00$/, "")}</span>
+                      <span className="text-xs text-slate-600 dark:text-slate-400">/5</span>
                     </div>
                   </div>
                   <div className={sliderClass + " mt-1.5 relative z-10"}>
@@ -548,7 +548,7 @@ rejected → si le message enfreint les règles ci-dessus"
             })}
 
             {showStudentLifeBonus &&
-            <div className="relative overflow-hidden bg-slate-50/50 rounded-lg p-3 sm:p-4 border border-slate-200">
+            <div className="relative overflow-hidden bg-slate-50/50 dark:bg-slate-900/50 rounded-lg p-3 sm:p-4 border border-slate-200 dark:border-slate-600">
                 {(formData.has_student_life || formData.has_network) &&
               <>
                     {[...Array(8)].map((_, i) =>
@@ -570,7 +570,7 @@ rejected → si le message enfreint les règles ci-dessus"
                 
                 <div className="flex items-center gap-2 mb-2 sm:mb-3 relative z-10">
                   <Star className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-500 fill-yellow-500" />
-                  <Label className="font-semibold text-xs sm:text-sm text-slate-700">Bonus Établissement (Max +2)</Label>
+                  <Label className="font-semibold text-xs sm:text-sm text-slate-700 dark:text-slate-200">Bonus Établissement (Max +2)</Label>
                 </div>
 
                 <div className="flex flex-wrap items-center gap-4 sm:gap-8 relative z-10">
@@ -580,7 +580,7 @@ rejected → si le message enfreint les règles ci-dessus"
                     checked={formData.has_student_life}
                     onCheckedChange={(checked) => setFormData({ ...formData, has_student_life: checked })} />
 
-                    <Label htmlFor="has_student_life" className="text-xs sm:text-sm cursor-pointer font-medium text-slate-700">
+                    <Label htmlFor="has_student_life" className="text-xs sm:text-sm cursor-pointer font-medium text-slate-700 dark:text-slate-200">
                       Vie associative +1
                     </Label>
                   </div>
@@ -591,7 +591,7 @@ rejected → si le message enfreint les règles ci-dessus"
                     checked={formData.has_network}
                     onCheckedChange={(checked) => setFormData({ ...formData, has_network: checked })} />
 
-                    <Label htmlFor="has_network" className="text-xs sm:text-sm cursor-pointer font-medium text-slate-700">
+                    <Label htmlFor="has_network" className="text-xs sm:text-sm cursor-pointer font-medium text-slate-700 dark:text-slate-200">
                       Réseaux +1
                     </Label>
                   </div>
@@ -626,9 +626,9 @@ rejected → si le message enfreint les règles ci-dessus"
                 }}
                 placeholder="APPRÉCIATION GÉNÉRALE *"
                 rows={2}
-                className="text-sm sm:text-base pb-8" />
+                className="text-sm sm:text-base pb-8 dark:bg-slate-700 dark:border-slate-600 dark:text-white" />
               
-              <div className="absolute bottom-1.5 left-2 right-2 flex items-center justify-between gap-2 bg-white/95 rounded px-1.5 py-1 checkbox-gradient-only">
+              <div className="absolute bottom-1.5 left-2 right-2 flex items-center justify-between gap-2 bg-white/95 dark:bg-slate-800/95 rounded px-1.5 py-1 checkbox-gradient-only">
                 <div className="flex items-center gap-2">
                   <label htmlFor="is_anonymous_inline" className="flex items-center gap-1 cursor-pointer">
                     <Checkbox
@@ -637,7 +637,7 @@ rejected → si le message enfreint les règles ci-dessus"
                       onCheckedChange={(checked) => setFormData({ ...formData, is_anonymous: checked })}
                       className="h-3 w-3 checkbox-gradient-border"
                       disabled={false} />
-                    <span className="text-[9px] sm:text-[10px] font-medium text-slate-600">Anonyme</span>
+                    <span className="text-[9px] sm:text-[10px] font-medium text-slate-600 dark:text-slate-300">Anonyme</span>
                   </label>
 
                   <label htmlFor="is_former_student_inline" className="flex items-center gap-1 cursor-pointer">
@@ -647,7 +647,7 @@ rejected → si le message enfreint les règles ci-dessus"
                       onCheckedChange={(checked) => setFormData({ ...formData, is_former_student: checked })}
                       className="h-3 w-3 checkbox-gradient-border"
                       disabled={false} />
-                    <span className="text-[9px] sm:text-[10px] font-medium text-slate-600">Je suis ancien(ne) élève.</span>
+                    <span className="text-[9px] sm:text-[10px] font-medium text-slate-600 dark:text-slate-300">Je suis ancien(ne) élève.</span>
                   </label>
                 </div>
                 
@@ -658,7 +658,7 @@ rejected → si le message enfreint les règles ci-dessus"
             </div>
           </div>
           
-          <div className="flex items-center gap-2 p-2 bg-slate-50 rounded-lg border border-slate-200 checkbox-gradient-only">
+          <div className="flex items-center gap-2 p-2 bg-slate-50 dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-600 checkbox-gradient-only">
             <Checkbox
               id="certification"
               checked={formData.certification}
@@ -666,7 +666,7 @@ rejected → si le message enfreint les règles ci-dessus"
               className="h-3 w-3 checkbox-gradient-border" />
             <label
               htmlFor="certification"
-              className="text-[10px] font-medium cursor-pointer text-slate-700 leading-tight">
+              className="text-[10px] font-medium cursor-pointer text-slate-700 dark:text-slate-200 leading-tight">
               Je certifie être responsable de mon avis
             </label>
           </div>
