@@ -133,6 +133,15 @@ export default function SchoolDetailPage() {
         title={school?.name || 'Établissement'} 
         subtitle={school?.city}
         onBack={() => navigate(createPageUrl("Schools"))}
+        reportButton={
+          <button
+            onClick={() => setShowReportDialog(true)}
+            className="flex items-center justify-center p-0.5 hover:bg-red-50 rounded transition-colors"
+            aria-label="Signaler l'établissement"
+          >
+            <Flag className="w-3.5 h-3.5 text-red-500" />
+          </button>
+        }
         adminMenu={user && user.role === 'admin' ? (
           <SchoolAdminMenu school={school} user={user} onUpdate={loadData} />
         ) : null}

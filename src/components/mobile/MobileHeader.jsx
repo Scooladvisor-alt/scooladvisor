@@ -2,7 +2,7 @@ import React from 'react';
 import { ChevronLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
-export default function MobileHeader({ title, onBack, subtitle, badge, ratingWidget, adminMenu }) {
+export default function MobileHeader({ title, onBack, subtitle, badge, ratingWidget, adminMenu, reportButton }) {
   const navigate = useNavigate();
   
   const handleBack = () => {
@@ -30,7 +30,9 @@ export default function MobileHeader({ title, onBack, subtitle, badge, ratingWid
           </div>
           {subtitle && (
             <div className="flex items-center gap-1.5">
-              <p className="text-xs text-slate-500 truncate flex-1">{subtitle}</p>
+              <p className="text-xs text-slate-500 truncate">{subtitle}</p>
+              {reportButton && <div className="flex-shrink-0">{reportButton}</div>}
+              <div className="flex-1" />
               {adminMenu && <div className="flex-shrink-0">{adminMenu}</div>}
             </div>
           )}
