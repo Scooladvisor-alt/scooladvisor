@@ -369,10 +369,14 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
                       <div className="flex items-center gap-2 mb-2">
                         <h1 className="text-2xl sm:text-4xl font-bold text-slate-900 break-words">{teacher.name}</h1>
                         {user && (
-                          <ReportTeacherButton teacher={teacher} onUpdate={loadData} variant="flag" />
+                          <div className="hidden sm:block">
+                            <ReportTeacherButton teacher={teacher} onUpdate={loadData} variant="flag" />
+                          </div>
                         )}
                         {user && user.role === 'admin' && (
-                          <TeacherAdminMenu teacher={teacher} user={user} onUpdate={loadData} />
+                          <div className="hidden sm:block">
+                            <TeacherAdminMenu teacher={teacher} user={user} onUpdate={loadData} />
+                          </div>
                         )}
                       </div>
                     <div className="flex items-center gap-2 text-sm sm:text-base text-slate-600">
@@ -382,40 +386,34 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
                   </div>
                 </div>
 
-                {hasRating ?
-                <motion.div
-                  key={teacher.average_rating}
-                  initial={{ scale: 1 }}
-                  animate={{ scale: [1, 1.05, 1] }}
-                  transition={{ duration: 0.3 }}
-                  className="relative bg-gradient-to-br from-amber-50 to-amber-100 rounded-xl border-2 border-amber-200 w-full sm:w-auto note-widget"
-                  style={{ boxShadow: '0 0 12px rgba(168,85,247,0.15)' }}>
-
-                    <div className="relative z-10 flex sm:hidden items-center justify-center gap-1.5 px-3 py-2 whitespace-nowrap">
-                      <Star className="w-4 h-4 text-amber-600 fill-amber-600" />
-                      <span className="text-lg font-bold text-amber-900">{teacher.average_rating.toFixed(1)}</span>
-                      <span className="text-xs text-amber-700">/ 20</span>
-                      <span className="text-xs text-amber-600 ml-1">•</span>
-                      <span className="text-sm font-semibold text-amber-800">{teacher.review_count} avis</span>
-                    </div>
-                    
-                    <div className="relative z-10 hidden sm:block text-center p-4 min-w-[120px]">
-                      <div className="flex items-center justify-center gap-1.5 mb-1">
-                        <Star className="w-5 h-5 text-amber-600 fill-amber-600" />
-                        <span className="text-3xl font-bold text-amber-900" style={{ textShadow: '0 0 8px rgba(168,85,247,0.3)' }}>
-                          {teacher.average_rating.toFixed(1)}
-                        </span>
+                <div className="hidden sm:block">
+                  {hasRating ?
+                  <motion.div
+                    key={teacher.average_rating}
+                    initial={{ scale: 1 }}
+                    animate={{ scale: [1, 1.05, 1] }}
+                    transition={{ duration: 0.3 }}
+                    className="relative bg-gradient-to-br from-amber-50 to-amber-100 rounded-xl border-2 border-amber-200 w-full sm:w-auto note-widget"
+                    style={{ boxShadow: '0 0 12px rgba(168,85,247,0.15)' }}>
+                      
+                      <div className="relative z-10 text-center p-4 min-w-[120px]">
+                        <div className="flex items-center justify-center gap-1.5 mb-1">
+                          <Star className="w-5 h-5 text-amber-600 fill-amber-600" />
+                          <span className="text-3xl font-bold text-amber-900" style={{ textShadow: '0 0 8px rgba(168,85,247,0.3)' }}>
+                            {teacher.average_rating.toFixed(1)}
+                          </span>
+                        </div>
+                        <p className="text-xs font-medium text-amber-700">sur 20</p>
+                        <p className="text-xs text-amber-600 mt-0.5">{teacher.review_count} avis</p>
                       </div>
-                      <p className="text-xs font-medium text-amber-700">sur 20</p>
-                      <p className="text-xs text-amber-600 mt-0.5">{teacher.review_count} avis</p>
-                    </div>
-                  </motion.div> :
+                    </motion.div> :
 
-                <div className="bg-slate-50 rounded-xl p-3 sm:p-4 border-2 border-slate-200 text-center min-w-[100px] sm:min-w-[120px] w-full sm:w-auto">
-                    <Star className="w-5 h-5 sm:w-6 sm:h-6 text-slate-400 mx-auto mb-1" />
-                    <p className="text-xs text-slate-600">Pas encore noté</p>
-                  </div>
-                }
+                  <div className="bg-slate-50 rounded-xl p-3 sm:p-4 border-2 border-slate-200 text-center min-w-[100px] sm:min-w-[120px] w-full sm:w-auto">
+                      <Star className="w-5 h-5 sm:w-6 sm:h-6 text-slate-400 mx-auto mb-1" />
+                      <p className="text-xs text-slate-600">Pas encore noté</p>
+                    </div>
+                  }
+                </div>
               </div>
 
               <div className="flex flex-col sm:flex-row flex-wrap gap-3 mt-4">
