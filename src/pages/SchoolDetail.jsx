@@ -363,9 +363,14 @@ export default function SchoolDetailPage() {
                 </p>
               }
               
-              <p className="text-xs text-slate-500 text-center py-2 px-3 bg-slate-50 rounded-lg border border-slate-100">
-                📍 {school.address}
-              </p>
+              <div className="flex items-center justify-center gap-2 py-2 px-3 bg-slate-50 rounded-lg border border-slate-100">
+                <p className="text-xs text-slate-500 truncate flex-1 text-center">
+                  📍 {school.address}
+                </p>
+                <Badge className={`border-2 text-[10px] font-semibold shadow-md flex-shrink-0 ${typeColors[school.type]}`}>
+                  {typeLabels[school.type]}
+                </Badge>
+              </div>
             </div>
           </div>
         </motion.div>
