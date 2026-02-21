@@ -543,17 +543,30 @@ export default function Layout({ children }) {
               }
               
               {user &&
-              <Link
-                to={createPageUrl("Profile")}
-                onClick={() => setMobileMenuOpen(false)}
-                className={`flex items-center gap-2 px-4 py-2.5 mx-2 rounded-lg transition-all ${
-                location.pathname === createPageUrl("Profile") ?
-                `${darkMode ? 'bg-gradient-to-r from-[#FF4D8D]/20 via-purple-500/20 to-blue-500/20 text-white' : 'bg-gradient-to-r from-[#FF4D8D]/10 via-purple-500/10 to-blue-500/10 text-slate-900'} font-medium` :
-                `${darkMode ? 'text-slate-300 hover:bg-slate-700' : 'text-slate-600 hover:bg-slate-50'}`}`
-                }>
-                    <UserIcon className="w-5 h-5" />
-                    <span className="text-sm">Mon profil</span>
-                  </Link>
+              <>
+                <Link
+                  to={createPageUrl("Profile")}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={`flex items-center gap-2 px-4 py-2.5 mx-2 rounded-lg transition-all ${
+                  location.pathname === createPageUrl("Profile") ?
+                  `${darkMode ? 'bg-gradient-to-r from-[#FF4D8D]/20 via-purple-500/20 to-blue-500/20 text-white' : 'bg-gradient-to-r from-[#FF4D8D]/10 via-purple-500/10 to-blue-500/10 text-slate-900'} font-medium` :
+                  `${darkMode ? 'text-slate-300 hover:bg-slate-700' : 'text-slate-600 hover:bg-slate-50'}`}`
+                  }>
+                      <UserIcon className="w-5 h-5" />
+                      <span className="text-sm">Mon profil</span>
+                    </Link>
+                
+                <button
+                  onClick={() => {
+                    toggleDarkMode();
+                    setMobileMenuOpen(false);
+                  }}
+                  className={`flex items-center gap-2 px-4 py-2.5 mx-2 rounded-lg transition-all ${darkMode ? 'text-slate-300 hover:bg-slate-700' : 'text-slate-600 hover:bg-slate-50'}`}
+                >
+                  <span className="w-5 h-5 text-lg">{darkMode ? '☀️' : '🌙'}</span>
+                  <span className="text-sm">{darkMode ? 'Mode Clair' : 'Mode Sombre'}</span>
+                </button>
+              </>
               }
             </motion.div>
             }
