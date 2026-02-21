@@ -184,7 +184,7 @@ export default function AboutPage() {
                   className="space-y-4 sm:space-y-6">
 
                   {/* Widget 1 - IA */}
-                  <div className="group bg-white/60 backdrop-blur-md border border-white/50 p-4 sm:p-6 rounded-2xl shadow-lg hover:shadow-xl hover:bg-white/80 transition-all">
+                  <div className="group bg-white/60 dark:bg-slate-800/60 backdrop-blur-md border border-white/50 dark:border-slate-700/50 p-4 sm:p-6 rounded-2xl shadow-lg hover:shadow-xl hover:bg-white/80 dark:hover:bg-slate-800/80 transition-all">
                     <div className="flex items-center gap-4 sm:gap-5">
                       <div className="w-10 h-10 sm:w-14 sm:h-14 bg-gradient-to-br from-[#F59E0B] to-amber-600 rounded-2xl flex items-center justify-center shrink-0 group-hover:-rotate-6 transition-transform shadow-lg shadow-amber-200">
                         <Lightbulb className="w-5 h-5 sm:w-7 sm:h-7 text-white" />
@@ -197,7 +197,7 @@ export default function AboutPage() {
                   </div>
 
                   {/* Widget 2 - Outil */}
-                  <div className="group bg-white/60 backdrop-blur-md border border-white/50 p-4 sm:p-6 rounded-2xl shadow-lg hover:shadow-xl hover:bg-white/80 transition-all">
+                  <div className="group bg-white/60 dark:bg-slate-800/60 backdrop-blur-md border border-white/50 dark:border-slate-700/50 p-4 sm:p-6 rounded-2xl shadow-lg hover:shadow-xl hover:bg-white/80 dark:hover:bg-slate-800/80 transition-all">
                     <div className="flex items-center gap-4 sm:gap-5">
                       <div className="w-10 h-10 sm:w-14 sm:h-14 bg-gradient-to-br from-[#3B82F6] to-blue-600 rounded-2xl flex items-center justify-center shrink-0 group-hover:rotate-6 transition-transform shadow-lg shadow-blue-200">
                         <GraduationCap className="w-5 h-5 sm:w-7 sm:h-7 text-white" />
