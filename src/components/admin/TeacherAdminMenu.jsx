@@ -174,6 +174,13 @@ export default function TeacherAdminMenu({ teacher, user, onUpdate }) {
     <>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
+          <button className="flex items-center gap-0.5 text-slate-400 hover:text-slate-600 transition-colors p-0.5 md:hidden">
+            <span className="text-xs">•</span>
+            <span className="text-xs">•</span>
+            <span className="text-xs">•</span>
+          </button>
+        </DropdownMenuTrigger>
+        <DropdownMenuTrigger asChild className="hidden md:block">
           <Button
             variant="outline"
             size="icon"
