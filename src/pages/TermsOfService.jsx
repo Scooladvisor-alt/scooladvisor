@@ -117,14 +117,59 @@ export default function TermsOfServicePage() {
             </section>
 
             <section>
-              <h2 className="text-2xl font-semibold text-slate-900 mb-4">5. Sanctions</h2>
-              <p className="mb-3">En cas de non-respect des conditions :</p>
+              <h2 className="text-2xl font-semibold text-slate-900 mb-4">5. Droit de Suppression des Personnes Mentionnées</h2>
+              <p className="mb-3">
+                <strong>Toute personne (enseignant, personnel éducatif ou autre) mentionnée ou notée sur la plateforme dispose d'un droit 
+                de suppression immédiate de ses données personnelles et des contenus la concernant.</strong>
+              </p>
+              <p className="mb-3">
+                Cette demande peut être formulée à tout moment via la page de contact ou par email. ScoolAdvisor s'engage à traiter 
+                ces demandes dans les plus brefs délais et à supprimer définitivement les informations concernées.
+              </p>
+              <p className="text-sm italic text-slate-600">
+                Conformément au RGPD et à la loi Informatique et Libertés, toute personne dispose également d'un droit d'accès, 
+                de rectification et d'opposition sur ses données personnelles.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="text-2xl font-semibold text-slate-900 mb-4">6. Droit de Réponse</h2>
+              <p>
+                <strong>Toute personne notée ou mentionnée dans un avis dispose d'un droit de réponse.</strong> Cette réponse pourra être publiée 
+                sur son profil ou associée aux contenus la concernant. Pour exercer ce droit, veuillez nous contacter via la page de contact.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="text-2xl font-semibold text-slate-900 mb-4">7. Signalement de Contenu Illicite</h2>
+              <p className="mb-3">
+                Tout contenu illicite, diffamatoire, injurieux ou contraire aux présentes conditions peut être signalé directement 
+                via les boutons de signalement disponibles sur la plateforme, ou par email à l'adresse indiquée sur notre page de contact.
+              </p>
+              <p className="mb-3">
+                Les signalements sont traités dans les plus brefs délais. Les contenus manifestement illicites sont supprimés 
+                immédiatement. Les autres signalements font l'objet d'une analyse par notre équipe de modération.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="text-2xl font-semibold text-slate-900 mb-4">8. Sanctions en Cas de Non-Respect</h2>
+              <p className="mb-3">
+                <strong>Le compte utilisateur peut être suspendu temporairement ou définitivement en cas d'abus, de manquements répétés 
+                ou de violation grave des présentes conditions.</strong>
+              </p>
+              <p className="mb-3">Les sanctions applicables comprennent :</p>
               <ul className="list-disc pl-6 space-y-2">
-                <li>Suppression du contenu non conforme</li>
-                <li>Avertissement de l'utilisateur</li>
-                <li>Suspension temporaire ou définitive du compte</li>
-                <li>Signalement aux autorités compétentes si nécessaire</li>
+                <li>Suppression immédiate du contenu non conforme</li>
+                <li>Avertissement écrit de l'utilisateur</li>
+                <li>Suspension temporaire du compte (durée variable selon la gravité)</li>
+                <li>Bannissement définitif de la plateforme</li>
+                <li>Transmission des informations aux autorités compétentes en cas d'infraction pénale</li>
+                <li>Poursuites judiciaires si nécessaire</li>
               </ul>
+              <p className="mt-3 text-sm italic text-slate-600">
+                L'utilisateur dispose d'un droit de contestation de toute sanction via notre système de réclamation.
+              </p>
             </section>
 
             <section>
