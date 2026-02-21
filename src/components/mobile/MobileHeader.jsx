@@ -38,7 +38,7 @@ export default function MobileHeader({ title, onBack, subtitle, badge, ratingWid
             {ratingWidget && <div className="flex-shrink-0">{ratingWidget}</div>}
           </div>
           {subtitle && (
-            <div className="flex items-center gap-1 -mt-0.5">
+            <div className="flex items-center gap-1">
               <p className="text-sm text-slate-500 truncate">{subtitle}</p>
               {reportButton && <div className="flex-shrink-0 scale-75">{reportButton}</div>}
               {adminMenu && <div className="flex-shrink-0 ml-auto">{adminMenu}</div>}
