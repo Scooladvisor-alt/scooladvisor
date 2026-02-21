@@ -262,15 +262,33 @@ export default function Layout({ children }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [showBanDialog, setShowBanDialog] = useState(false);
   const [showLoginMessage, setShowLoginMessage] = useState(false);
+  const [darkMode, setDarkMode] = useState(false);
 
 
   useEffect(() => {
     loadUser();
+    // Charger la préférence dark mode
+    const savedDarkMode = localStorage.getItem('darkMode') === 'true';
+    setDarkMode(savedDarkMode);
+    if (savedDarkMode) {
+      document.documentElement.classList.add('dark');
+    }
   }, []);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [location.pathname]);
+
+  const toggleDarkMode = () => {
+    const newMode = !darkMode;
+    setDarkMode(newMode);
+    localStorage.setItem('darkMode', String(newMode));
+    if (newMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  };
 
   const loadUser = async () => {
     try {
@@ -462,6 +480,10 @@ export default function Layout({ children }) {
                       <DropdownMenuItem onClick={() => navigate(createPageUrl("Profile"))} className="cursor-pointer">
                         <UserIcon className="w-4 h-4 mr-2" />
                         Mon profil
+                      </DropdownMenuItem>
+                      <DropdownMenuItem onClick={toggleDarkMode} className="cursor-pointer">
+                        <span className="w-4 h-4 mr-2">{darkMode ? '☀️' : '🌙'}</span>
+                        {darkMode ? 'Mode Clair' : 'Mode Sombre'}
                       </DropdownMenuItem>
                       <DropdownMenuSeparator />
                       <DropdownMenuItem onClick={handleLogout} className="text-red-600 cursor-pointer">
