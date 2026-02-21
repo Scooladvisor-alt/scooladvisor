@@ -317,46 +317,6 @@ export default function SchoolDetailPage() {
                   </div>
                 }
               </div>
-              
-              <div className="flex md:hidden flex-col gap-4 mb-6">
-                {hasRating ?
-                <motion.div
-                  key={school.average_rating}
-                  initial={{ scale: 1 }}
-                  animate={{ scale: [1, 1.05, 1] }}
-                  transition={{ duration: 0.3 }}
-                  className="relative bg-gradient-to-br from-amber-50 to-amber-100 rounded-xl border border-amber-200 text-center w-full note-widget px-4 py-3 shadow-sm">
-                    <div className="relative z-10 flex items-center justify-center gap-1.5 whitespace-nowrap">
-                      <Star className="w-5 h-5 text-amber-600 fill-amber-600" />
-                      <span className="text-xl font-bold text-amber-900">{school.average_rating.toFixed(1)}</span>
-                      <span className="text-sm text-amber-700">/ 20</span>
-                      <span className="text-xs text-amber-600 ml-2">•</span>
-                      <span className="text-sm font-semibold text-amber-800">{school.review_count} avis</span>
-                    </div>
-                  </motion.div> :
-                <div className="bg-slate-50 rounded-xl border border-slate-200 text-center w-full px-4 py-3 shadow-sm">
-                    <div className="flex items-center justify-center gap-2 whitespace-nowrap">
-                      <Star className="w-5 h-5 text-slate-400" />
-                      <span className="text-sm font-medium text-slate-600">Pas encore noté</span>
-                    </div>
-                  </div>
-                }
-
-                <div className="flex items-center gap-2 justify-end">
-                  {user &&
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setShowReportDialog(true);
-                    }}
-                    className="text-red-500 hover:text-red-700 transition-colors flex items-center gap-1"
-                    title="Signaler cet établissement">
-                      <Flag className="w-4 h-4" />
-                      <span className="hidden md:inline text-xs">Signaler</span>
-                    </button>
-                  }
-                </div>
-              </div>
 
 
 
