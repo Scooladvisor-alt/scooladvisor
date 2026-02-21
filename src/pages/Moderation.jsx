@@ -120,10 +120,10 @@ export default function ModerationPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-purple-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-purple-50 dark:from-slate-950 dark:to-slate-900 flex items-center justify-center">
         <div className="text-center">
           <Shield className="w-16 h-16 text-purple-600 mx-auto mb-4 animate-pulse" />
-          <p className="text-slate-600">Chargement...</p>
+          <p className="text-slate-600 dark:text-slate-300">Chargement...</p>
         </div>
       </div>
     );
@@ -175,7 +175,7 @@ export default function ModerationPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-purple-50 to-slate-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-purple-50 to-slate-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
       <MobileHeader 
         title="Centre de Modération"
         onBack={() => navigate(createPageUrl("Schools"))}
@@ -191,8 +191,8 @@ export default function ModerationPage() {
               <Shield className="w-6 h-6 text-white" />
             </div>
             <div>
-              <h1 className="text-4xl font-bold text-slate-900">Centre de Modération</h1>
-              <p className="text-slate-600">Bienvenue, {user?.full_name}</p>
+              <h1 className="text-4xl font-bold text-slate-900 dark:text-white">Centre de Modération</h1>
+              <p className="text-slate-600 dark:text-slate-300">Bienvenue, {user?.full_name}</p>
             </div>
           </div>
 
@@ -204,12 +204,12 @@ export default function ModerationPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
               >
-                <Card className="bg-white/80 backdrop-blur-sm border-slate-200 hover:shadow-lg transition-shadow">
+                <Card className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border-slate-200 dark:border-slate-700 hover:shadow-lg transition-shadow">
                   <CardContent className="p-6">
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-sm text-slate-600 mb-1">{stat.title}</p>
-                        <p className="text-3xl font-bold text-slate-900">{stat.value}</p>
+                        <p className="text-sm text-slate-600 dark:text-slate-300 mb-1">{stat.title}</p>
+                        <p className="text-3xl font-bold text-slate-900 dark:text-white">{stat.value}</p>
                       </div>
                       <div className={`w-12 h-12 bg-gradient-to-br ${stat.color} rounded-xl flex items-center justify-center shadow-md`}>
                         <stat.icon className="w-6 h-6 text-white" />
@@ -223,7 +223,7 @@ export default function ModerationPage() {
         </motion.div>
 
         <Tabs defaultValue="reports" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-3 sm:grid-cols-6 bg-white/80 backdrop-blur-sm border border-slate-200 p-1 gap-1">
+          <TabsList className="grid w-full grid-cols-3 sm:grid-cols-6 bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-slate-200 dark:border-slate-700 p-1 gap-1">
             <TabsTrigger value="reports" className="data-[state=active]:bg-red-50 data-[state=active]:text-red-700 text-xs">
               <AlertTriangle className="w-4 h-4 mr-1 sm:mr-2" />
               <span className="hidden sm:inline">Signalements</span>
@@ -257,7 +257,7 @@ export default function ModerationPage() {
           </TabsList>
 
           <TabsContent value="reports">
-            <Card className="bg-white/80 backdrop-blur-sm">
+            <Card className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm dark:border-slate-700">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <AlertTriangle className="w-5 h-5 text-red-600" />
@@ -271,7 +271,7 @@ export default function ModerationPage() {
           </TabsContent>
 
           <TabsContent value="recent">
-            <Card className="bg-white/80 backdrop-blur-sm">
+            <Card className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm dark:border-slate-700">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Clock className="w-5 h-5 text-purple-600" />
@@ -285,7 +285,7 @@ export default function ModerationPage() {
           </TabsContent>
 
           <TabsContent value="contact">
-            <Card className="bg-white/80 backdrop-blur-sm">
+            <Card className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm dark:border-slate-700">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <MessageSquare className="w-5 h-5 text-amber-600" />
@@ -303,7 +303,7 @@ export default function ModerationPage() {
           </TabsContent>
 
           <TabsContent value="schools">
-            <Card className="bg-white/80 backdrop-blur-sm">
+            <Card className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm dark:border-slate-700">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <School className="w-5 h-5 text-blue-600" />
@@ -317,7 +317,7 @@ export default function ModerationPage() {
           </TabsContent>
 
           <TabsContent value="trash">
-            <Card className="bg-white/80 backdrop-blur-sm">
+            <Card className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm dark:border-slate-700">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Trash2 className="w-5 h-5 text-orange-600" />

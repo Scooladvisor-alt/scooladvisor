@@ -189,7 +189,7 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-pink-50/30 to-blue-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-pink-50/30 to-blue-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 flex items-center justify-center">
         <GradientSpinner size="w-12 h-12" />
       </div>);
 
@@ -207,7 +207,7 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
   const hasRating = teacher.review_count > 0 && teacher.average_rating !== undefined && teacher.average_rating !== null && teacher.average_rating > 0;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-pink-50/30 to-blue-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-pink-50/30 to-blue-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
       <MobileHeader 
         title={teacher?.name || 'Professeur'} 
         subtitle={teacher?.subject}
@@ -346,7 +346,7 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="md:bg-white/80 md:backdrop-blur-sm md:rounded-2xl md:shadow-xl md:border md:border-slate-200 overflow-hidden md:mb-8">
+          className="md:bg-white/80 dark:md:bg-slate-800/80 md:backdrop-blur-sm md:rounded-2xl md:shadow-xl md:border md:border-slate-200 dark:md:border-slate-700 overflow-hidden md:mb-8">
 
           <div className="relative p-3 md:p-8">
             <div className="hidden sm:block absolute top-0 right-0 w-72 h-72 bg-gradient-to-br from-[#FF4D8D]/10 via-purple-500/10 to-blue-500/5 rounded-bl-full" />
@@ -371,7 +371,7 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
                   
                   <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-2">
-                        <h1 className="text-2xl sm:text-4xl font-bold text-slate-900 break-words">{teacher.name}</h1>
+                        <h1 className="text-2xl sm:text-4xl font-bold text-slate-900 dark:text-white break-words">{teacher.name}</h1>
                         {user && (
                           <div className="hidden sm:block">
                             <ReportTeacherButton teacher={teacher} onUpdate={loadData} variant="flag" />
@@ -383,7 +383,7 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
                           </div>
                         )}
                       </div>
-                    <div className="flex items-center gap-2 text-sm sm:text-base text-slate-600">
+                    <div className="flex items-center gap-2 text-sm sm:text-base text-slate-600 dark:text-slate-300">
                       <BookOpen className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
                       <span className="break-words">{teacher.subject}</span>
                     </div>
@@ -412,9 +412,9 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
                       </div>
                     </motion.div> :
 
-                  <div className="bg-slate-50 rounded-xl p-3 sm:p-4 border-2 border-slate-200 text-center min-w-[100px] sm:min-w-[120px] w-full sm:w-auto">
+                  <div className="bg-slate-50 dark:bg-slate-700 rounded-xl p-3 sm:p-4 border-2 border-slate-200 dark:border-slate-600 text-center min-w-[100px] sm:min-w-[120px] w-full sm:w-auto">
                       <Star className="w-5 h-5 sm:w-6 sm:h-6 text-slate-400 mx-auto mb-1" />
-                      <p className="text-xs text-slate-600">Pas encore noté</p>
+                      <p className="text-xs text-slate-600 dark:text-slate-300">Pas encore noté</p>
                     </div>
                   }
                 </div>
@@ -449,7 +449,7 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
               </div>
               
               {!user &&
-              <p className="text-xs sm:text-sm text-slate-600 mt-3">
+              <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 mt-3">
                   📌 Connectez-vous pour noter ce professeur et accéder à toutes les fonctionnalités.
                 </p>
               }
@@ -458,7 +458,7 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
         </motion.div>
 
         <div className="flex flex-col lg:hidden gap-6 sm:gap-8 mx-4 lg:mx-0">
-          <Suspense fallback={<div className="p-4 bg-white rounded-lg shadow-md flex justify-center items-center h-64"><Loader2 className="w-8 h-8 animate-spin text-slate-400" /></div>}>
+          <Suspense fallback={<div className="p-4 bg-white dark:bg-slate-800 rounded-lg shadow-md flex justify-center items-center h-64"><Loader2 className="w-8 h-8 animate-spin text-slate-400" /></div>}>
             <TeacherStats teacher={teacher} />
           </Suspense>
           
@@ -477,9 +477,9 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-white/90 backdrop-blur-md rounded-2xl shadow-xl border border-slate-200 overflow-hidden">
+            className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-md rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
 
-            <div className="grid grid-cols-3 divide-x divide-slate-100 h-[360px]">
+            <div className="grid grid-cols-3 divide-x divide-slate-100 dark:divide-slate-700 h-[360px]">
               <div className="col-span-2 h-full overflow-hidden">
                 <Suspense fallback={<div className="flex justify-center items-center h-full min-h-[300px]"><Loader2 className="w-8 h-8 animate-spin text-slate-400" /></div>}>
                   <TeacherReviewsList
@@ -492,7 +492,7 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
                 </Suspense>
               </div>
 
-              <div className="bg-slate-50/50 h-full overflow-hidden">
+              <div className="bg-slate-50/50 dark:bg-slate-900/50 h-full overflow-hidden">
                 <Suspense fallback={<div className="flex justify-center items-center h-full min-h-[300px]"><Loader2 className="w-8 h-8 animate-spin text-slate-400" /></div>}>
                   <TeacherStats teacher={teacher} embedded={true} />
                 </Suspense>
@@ -529,19 +529,19 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
               <span className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
                 L'avis de Satoshi
               </span>
-              <span className="text-slate-900">sur {teacher.name}</span>
+              <span className="text-slate-900 dark:text-white">sur {teacher.name}</span>
             </DialogTitle>
           </DialogHeader>
           <div className="py-4 sm:py-6">
             {loadingAntonin ?
             <div className="flex flex-col items-center justify-center py-8 sm:py-12">
                 <GradientSpinner size="w-10 h-10 sm:w-12 sm:h-12" className="mb-4" />
-                <p className="text-slate-600 text-sm sm:text-base">Satoshi 🤖 analyse les avis...</p>
+                <p className="text-slate-600 dark:text-slate-300 text-sm sm:text-base">Satoshi 🤖 analyse les avis...</p>
               </div> :
 
             <div className="prose prose-slate max-w-none prose-sm sm:prose-base">
-                <div className="bg-gradient-to-r from-pink-50 via-purple-50/50 to-blue-50 rounded-lg p-4 sm:p-6 border-2 border-pink-100">
-                  <p className="text-slate-800 leading-relaxed text-base sm:text-lg whitespace-pre-wrap">
+                <div className="bg-gradient-to-r from-pink-50 via-purple-50/50 to-blue-50 dark:from-pink-950/30 dark:via-purple-950/30 dark:to-blue-950/30 rounded-lg p-4 sm:p-6 border-2 border-pink-100 dark:border-pink-900">
+                  <p className="text-slate-800 dark:text-slate-100 leading-relaxed text-base sm:text-lg whitespace-pre-wrap">
                     {antoninSummary}
                   </p>
                 </div>
