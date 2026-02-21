@@ -535,14 +535,14 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
 
       <Dialog open={showAntoninSummary} onOpenChange={setShowAntoninSummary}>
         <DialogContent className="max-w-[95vw] sm:max-w-2xl max-h-[80vh] overflow-y-auto rounded-2xl">
-          <DialogHeader>
-            <DialogTitle className="flex items-center gap-2 text-lg sm:text-2xl">
-              <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-[#FF4D8D]" />
-              <span className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
+          <DialogHeader className="pb-4">
+            <div className="flex items-center gap-2 mb-2">
+              <Sparkles className="w-6 h-6 text-[#FF4D8D]" />
+              <DialogTitle className="text-2xl font-bold bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
                 L'avis de Satoshi
-              </span>
-              <span className="text-slate-900 dark:text-white">sur {teacher.name}</span>
-            </DialogTitle>
+              </DialogTitle>
+            </div>
+            <p className="text-base text-slate-600 dark:text-slate-400">sur {teacher.name}</p>
           </DialogHeader>
           <div className="py-4 sm:py-6">
             {loadingAntonin ?
