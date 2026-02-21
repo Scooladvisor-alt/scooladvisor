@@ -342,13 +342,13 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
         }
       `}</style>
       
-      <div className="max-w-6xl mx-auto px-0 lg:px-4 py-4 pb-0 lg:pb-4">
+      <div className="md:max-w-6xl md:mx-auto md:px-4 md:py-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-slate-200 overflow-hidden mb-8 mx-4 lg:mx-0">
+          className="md:bg-white/80 md:backdrop-blur-sm md:rounded-2xl md:shadow-xl md:border md:border-slate-200 overflow-hidden md:mb-8">
 
-          <div className="relative p-4 sm:p-8">
+          <div className="relative p-3 md:p-8">
             <div className="hidden sm:block absolute top-0 right-0 w-72 h-72 bg-gradient-to-br from-[#FF4D8D]/10 via-purple-500/10 to-blue-500/5 rounded-bl-full" />
             
             <div className="relative">
