@@ -173,11 +173,33 @@ export default function TermsOfServicePage() {
             </section>
 
             <section>
-              <h2 className="text-2xl font-semibold text-slate-900 mb-4">6. Propriété Intellectuelle</h2>
+              <h2 className="text-2xl font-semibold text-slate-900 mb-4">9. Finalité de la Plateforme</h2>
+              <p className="mb-3">
+                <strong>ScoolAdvisor a pour vocation d'améliorer l'expérience éducative par le partage d'avis pédagogiques constructifs 
+                et le dialogue au sein de la communauté éducative.</strong>
+              </p>
+              <p className="mb-3">
+                La plateforme vise à :
+              </p>
+              <ul className="list-disc pl-6 space-y-2">
+                <li>Permettre aux élèves et étudiants de partager leurs expériences scolaires de manière authentique</li>
+                <li>Aider les futurs élèves et leurs familles dans leurs choix d'orientation</li>
+                <li>Favoriser le dialogue constructif entre les membres de la communauté éducative</li>
+                <li>Contribuer à l'amélioration continue de la qualité de l'enseignement</li>
+                <li>Valoriser les bons enseignants et établissements</li>
+              </ul>
+              <p className="mt-3 text-sm italic text-slate-600">
+                Tout usage détourné de la plateforme à des fins de dénigrement, de harcèlement ou contraires à cette finalité 
+                sera sanctionné.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="text-2xl font-semibold text-slate-900 mb-4">10. Propriété Intellectuelle</h2>
               <p>
-                Tous les contenus de Scooladvisor (design, logos, textes) sont protégés par les lois sur la propriété 
-                intellectuelle. En publiant du contenu, vous accordez à Scooladvisor une licence d'utilisation, 
-                de modification et de diffusion de ce contenu.
+                Tous les contenus de ScoolAdvisor (design, logos, textes, code source) sont protégés par les lois sur la propriété 
+                intellectuelle. En publiant du contenu, vous accordez à ScoolAdvisor une licence d'utilisation, 
+                de modification et de diffusion de ce contenu dans le cadre du fonctionnement de la plateforme.
               </p>
             </section>
 
