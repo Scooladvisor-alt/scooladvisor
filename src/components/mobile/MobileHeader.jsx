@@ -1,8 +1,9 @@
 import React from 'react';
 import { ChevronLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-export default function MobileHeader({ title, onBack, subtitle, badge, ratingWidget, adminMenu, reportButton }) {
+export default function MobileHeader({ title, onBack, subtitle, badge, ratingWidget, adminMenu, reportButton, avatar }) {
   const navigate = useNavigate();
   
   const handleBack = () => {
@@ -23,6 +24,14 @@ export default function MobileHeader({ title, onBack, subtitle, badge, ratingWid
         >
           <ChevronLeft className="w-5 h-5 text-slate-700" />
         </button>
+        {avatar && (
+          <Avatar className="w-10 h-10 border-2 border-white shadow-sm flex-shrink-0">
+            <AvatarImage src={avatar.photoUrl} />
+            <AvatarFallback className="bg-gradient-to-br from-[#FF4D8D] to-blue-500 text-white text-sm font-semibold">
+              {avatar.name?.charAt(0) || '?'}
+            </AvatarFallback>
+          </Avatar>
+        )}
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2">
             <h1 className="text-base font-semibold text-slate-900 truncate flex-1 leading-tight">{title}</h1>
