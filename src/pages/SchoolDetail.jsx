@@ -328,13 +328,13 @@ export default function SchoolDetailPage() {
 
 
 
-              <div className="flex items-center justify-center gap-2 py-2 px-3 bg-slate-50 rounded-lg border border-slate-100 mb-3 md:order-last md:mb-0">
-                <p className="text-xs text-slate-500 truncate flex-1 text-center">
-                  📍 {school.address}
-                </p>
-                <Badge className={`border-2 text-[10px] font-semibold shadow-md flex-shrink-0 ${typeColors[school.type]}`}>
+              <div className="flex items-center gap-2 py-1.5 px-2 bg-slate-50/50 rounded-lg border border-slate-100 mb-3 md:justify-center md:py-2 md:px-3 md:bg-slate-50 md:order-last md:mb-0">
+                <Badge className={`border text-[9px] font-medium shadow-sm flex-shrink-0 md:border-2 md:text-[10px] md:font-semibold md:shadow-md md:order-last ${typeColors[school.type]}`}>
                   {typeLabels[school.type]}
                 </Badge>
+                <p className="text-[11px] text-slate-500 truncate flex-1 md:text-xs md:text-center">
+                  📍 {school.address}
+                </p>
               </div>
 
               <div className="flex flex-col gap-2 sm:flex-row sm:gap-2.5 mb-4">
