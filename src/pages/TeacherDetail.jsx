@@ -432,7 +432,7 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
                 </div>
               </div>
 
-              <div className="flex flex-col sm:flex-row flex-wrap gap-3 mt-4 md:mt-4 mt-0">
+              <div className="flex flex-col sm:flex-row flex-wrap gap-3 mt-0 md:mt-4">
                 <Button
                   onClick={() => {
                     setShowAddReview(true);
