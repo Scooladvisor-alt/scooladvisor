@@ -2,7 +2,7 @@ import React, { useState, useEffect, lazy, Suspense, useMemo } from "react";
 import { base44 } from "@/api/base44Client";
 import { motion } from "framer-motion";
 import { Plus, Search, Filter, TrendingUp, ArrowRight, Globe, Loader2, Star } from "lucide-react";
-import { usePullToRefresh } from "@/components/mobile/usePullToRefresh";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
