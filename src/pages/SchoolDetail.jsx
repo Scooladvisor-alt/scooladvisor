@@ -362,7 +362,7 @@ export default function SchoolDetailPage() {
           </div>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 items-stretch justify-items-center">
+        <div className="flex flex-col-reverse lg:grid lg:grid-cols-2 gap-2 items-stretch justify-items-center">
           <div className="w-full max-h-[600px] lg:h-[500px] flex flex-col">
             <Suspense fallback={<div className="p-4 bg-white dark:bg-slate-800 rounded-lg shadow-md flex justify-center items-center h-full"><Loader2 className="w-8 h-8 animate-spin text-slate-400" /></div>}>
               <TeachersList
