@@ -175,15 +175,6 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
     join(' ');
   };
 
-  const cleanSchoolName = (name) => {
-    if (!name) return name;
-    // Supprimer les mots "Général", "Technologique", "Polyvalent" et leurs variantes
-    return name
-      .replace(/\b(Général|Generale|Technologique|Polyvalent|Polyvalente|Et)\b/gi, '')
-      .replace(/\s+/g, ' ') // Remplacer les espaces multiples par un seul
-      .trim();
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -286,11 +277,10 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
         return;
       }
 
-      let finalName = capitalizeWords(cleanName);
-      finalName = cleanSchoolName(finalName);
+      const capitalizedName = capitalizeWords(cleanName);
 
       const newSchool = await base44.entities.School.create({
-        name: finalName,
+        name: capitalizedName,
         type: formData.type,
         address: cleanAddress,
         city: cleanCity,
@@ -556,9 +546,8 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
           console.log("🎯 Place reçu dans AddSchoolDialog:", place);
           setIsAddressManuallyChanged(false);
           
-          // Capitaliser correctement le nom de l'école et la ville, puis nettoyer
-          let schoolName = place.name ? capitalizeWords(place.name) : formData.name;
-          schoolName = cleanSchoolName(schoolName);
+          // Capitaliser correctement le nom de l'école et la ville
+          const schoolName = place.name ? capitalizeWords(place.name) : formData.name;
           const capitalizedCity = place.city ? capitalizeWords(place.city) : "";
           
           console.log("📝 Mise à jour du formulaire avec ville:", capitalizedCity);

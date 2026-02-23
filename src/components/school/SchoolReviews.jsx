@@ -338,8 +338,8 @@ Rédige maintenant ton résumé façon "L'avis de Satoshi" en 3 phrases max.`;
           </linearGradient>
         </defs>
       </svg>
-      <Card className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-md border-slate-200 dark:border-slate-700 shadow-xl w-full h-auto lg:h-full flex flex-col hover:shadow-2xl transition-shadow duration-300">
-        <CardHeader className="border-b border-slate-100 dark:border-slate-700 bg-gradient-to-r from-yellow-400/10 via-yellow-500/10 to-amber-500/10 dark:from-yellow-400/20 dark:via-yellow-500/20 dark:to-amber-500/20 mb-2">
+      <Card className="bg-white/90 backdrop-blur-md border-slate-200 shadow-xl w-full h-auto lg:h-full flex flex-col hover:shadow-2xl transition-shadow duration-300">
+        <CardHeader className="border-b border-slate-100 bg-gradient-to-r from-yellow-400/10 via-yellow-500/10 to-amber-500/10 mb-2">
           <div className="flex items-center justify-between">
             <CardTitle className="flex items-center gap-3 text-lg sm:text-xl">
               <MessageSquare className="w-6 h-6 sm:w-8 sm:h-8" style={{ stroke: "url(#reviewGradient)" }} />
@@ -347,14 +347,14 @@ Rédige maintenant ton résumé façon "L'avis de Satoshi" en 3 phrases max.`;
                 <span className="text-base sm:text-2xl font-bold bg-gradient-to-r from-yellow-600 via-amber-600 to-orange-600 bg-clip-text text-transparent">Avis</span>
                 <span className="text-base sm:text-2xl">🍿</span>
               </div>
-              <span className="text-sm sm:text-base text-slate-500 dark:text-slate-400 font-normal">({reviews.length})</span>
+              <span className="text-sm sm:text-base text-slate-500 font-normal">({reviews.length})</span>
             </CardTitle>
             
             {reviews.length > 0 &&
             <Button
               onClick={handleAskAntonin}
               size="sm"
-              className="bg-transparent hover:bg-purple-50 dark:hover:bg-purple-950 border-0 shadow-none">
+              className="bg-transparent hover:bg-purple-50 border-0 shadow-none">
 
                 <Sparkles className="w-4 h-4 mr-1 text-[#FF4D8D]" />
                 <span className="text-xs font-bold bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">Satoshi</span>
@@ -393,8 +393,8 @@ Rédige maintenant ton résumé façon "L'avis de Satoshi" en 3 phrases max.`;
               <div className="w-20 h-20 bg-gradient-to-br from-amber-100 to-orange-100 rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm">
                 <MessageSquare className="w-10 h-10 text-amber-600" />
               </div>
-              <p className="text-slate-700 dark:text-slate-200 font-medium mb-2">Aucun avis pour le moment</p>
-              <p className="text-sm text-slate-500 dark:text-slate-400 mb-4 max-w-xs">
+              <p className="text-slate-700 font-medium mb-2">Aucun avis pour le moment</p>
+              <p className="text-sm text-slate-500 mb-4 max-w-xs">
                 Partage ton expérience et aide les autres ! 💬
               </p>
               <Button onClick={onAddReview} className="bg-gradient-to-r from-yellow-400 via-yellow-500 to-amber-500 hover:from-yellow-500 hover:via-yellow-600 hover:to-amber-600 text-white shadow-md">
@@ -409,15 +409,15 @@ Rédige maintenant ton résumé façon "L'avis de Satoshi" en 3 phrases max.`;
 
               const isRejected = review.status === 'rejected';
               return (
-                <div key={review.id} className={`p-2 rounded-lg border space-y-1.5 ${isRejected ? 'bg-slate-100 dark:bg-slate-900 border-slate-300 dark:border-slate-600 opacity-70' : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700'}`}>
+                <div key={review.id} className={`p-2 rounded-lg border space-y-1.5 ${isRejected ? 'bg-slate-100 border-slate-300 opacity-70' : 'bg-white border-slate-200'}`}>
                     {isRejected && (
-                        <div className="text-[10px] text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-950/30 px-2 py-1 rounded border border-red-100 dark:border-red-900 mb-1 flex items-center gap-1">
+                        <div className="text-[10px] text-red-600 bg-red-50 px-2 py-1 rounded border border-red-100 mb-1 flex items-center gap-1">
                             <AlertCircle className="w-3 h-3" /> Visible uniquement par vous (refusé par la modération)
                         </div>
                     )}
                     <div className="flex items-start justify-between">
                       <div className="flex items-center gap-2 sm:gap-3 flex-1">
-                        <Avatar className="w-8 h-8 sm:w-10 sm:h-10 border-2 border-slate-100 dark:border-slate-700">
+                        <Avatar className="w-8 h-8 sm:w-10 sm:h-10 border-2 border-slate-100">
                           {avatarUrl ?
                         <AvatarImage src={avatarUrl} /> :
                         null}
@@ -428,11 +428,11 @@ Rédige maintenant ton résumé façon "L'avis de Satoshi" en 3 phrases max.`;
                         <div className="flex-1 min-w-0">
                           <div className="flex items-start justify-between gap-2">
                             <div className="flex-1 min-w-0">
-                              <p className="font-medium text-slate-900 dark:text-white text-xs sm:text-sm">
+                              <p className="font-medium text-slate-900 text-xs sm:text-sm">
                                 {review.is_anonymous ? "Anonyme" : review.author_name || review.created_by?.split('@')[0] || "Utilisateur"}
-                                {review.is_former_student && <span className="text-slate-500 dark:text-slate-400 text-[10px] sm:text-xs ml-1 font-normal">(ancien élève)</span>}
+                                {review.is_former_student && <span className="text-slate-500 text-[10px] sm:text-xs ml-1 font-normal">(ancien élève)</span>}
                               </p>
-                              <p className="text-[10px] sm:text-xs text-slate-500 dark:text-slate-400">
+                              <p className="text-[10px] sm:text-xs text-slate-500">
                                 {format(new Date(review.created_date), "d MMM yyyy", { locale: fr })}
                               </p>
                             </div>
@@ -458,14 +458,14 @@ Rédige maintenant ton résumé façon "L'avis de Satoshi" en 3 phrases max.`;
                       const isLongComment = review.comment.split('\n').length > 3 || review.comment.length > 200;
                       const isExpanded = expandedComments.has(review.id);
                       return (
-                        <div className="relative bg-slate-50 dark:bg-slate-900 p-2 sm:p-3 rounded-lg mb-2 sm:mb-3">
-                          <p className={`text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed pr-6 ${!isExpanded && isLongComment ? 'line-clamp-3' : ''}`}>
+                        <div className="relative bg-slate-50 p-2 sm:p-3 rounded-lg mb-2 sm:mb-3">
+                          <p className={`text-xs sm:text-sm text-slate-700 leading-relaxed pr-6 ${!isExpanded && isLongComment ? 'line-clamp-3' : ''}`}>
                             {review.comment}
                           </p>
                           {isLongComment && (
                             <button
                               onClick={() => toggleCommentExpand(review.id)}
-                              className="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium mt-1">
+                              className="text-xs text-blue-600 hover:text-blue-700 font-medium mt-1">
                               {isExpanded ? "Voir moins" : "Voir plus"}
                             </button>
                           )}
@@ -482,19 +482,19 @@ Rédige maintenant ton résumé façon "L'avis de Satoshi" en 3 phrases max.`;
                     })()}
 
                     {expandedReviews.has(review.id) &&
-                  <div className="mt-2 pt-2 border-t border-slate-100 dark:border-slate-700">
+                  <div className="mt-2 pt-2 border-t border-slate-100">
                         <div className="flex items-center justify-between text-sm px-2">
                           {Object.entries(criteriaIcons).map(([key, { icon: Icon, color, label }]) =>
                       <div key={key} className="flex items-center gap-1.5" title={label}>
                               <Icon className={`w-4 h-4 ${color}`} />
-                              <span className="font-bold text-slate-700 dark:text-slate-200">{review[key]}/5</span>
+                              <span className="font-bold text-slate-700">{review[key]}/5</span>
                             </div>
                       )}
                         </div>
                       </div>
                   }
 
-                    <div className="flex items-center justify-between pt-2 border-t border-slate-100 dark:border-slate-700">
+                    <div className="flex items-center justify-between pt-2 border-t border-slate-100">
                       <div className="flex gap-2">
                         {user && review.created_by === user.email &&
                       <>
@@ -502,7 +502,7 @@ Rédige maintenant ton résumé façon "L'avis de Satoshi" en 3 phrases max.`;
                           variant="ghost"
                           size="icon"
                           onClick={() => onEditReview(review)}
-                          className="text-blue-600 hover:text-blue-700 hover:bg-blue-50 dark:hover:bg-blue-950 h-8 w-8">
+                          className="text-blue-600 hover:text-blue-700 hover:bg-blue-50 h-8 w-8">
 
                               <Edit className="w-4 h-4" />
                             </Button>
@@ -510,7 +510,7 @@ Rédige maintenant ton résumé façon "L'avis de Satoshi" en 3 phrases max.`;
                           variant="ghost"
                           size="icon"
                           onClick={() => handleDelete(review.id)}
-                          className="text-red-600 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-950 h-8 w-8">
+                          className="text-red-600 hover:text-red-700 hover:bg-red-50 h-8 w-8">
 
                               <Trash2 className="w-4 h-4" />
                             </Button>
@@ -521,7 +521,7 @@ Rédige maintenant ton résumé façon "L'avis de Satoshi" en 3 phrases max.`;
                         variant="ghost"
                         size="sm"
                         onClick={() => setReportingReview(review)}
-                        className="text-xs text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 h-7 px-2">
+                        className="text-xs text-slate-400 hover:text-slate-600 hover:bg-slate-50 h-7 px-2">
 
                           <AlertCircle className="w-3 h-3 mr-1" />
                           Signaler
@@ -534,8 +534,8 @@ Rédige maintenant ton résumé façon "L'avis de Satoshi" en 3 phrases max.`;
                         onClick={() => handleLike(review)}
                         className={`h-8 px-3 rounded-full border transition-all ${
                           userLikes.has(review.id)
-                            ? "bg-white dark:bg-slate-700 border-transparent shadow-sm ring-1 ring-pink-100 dark:ring-pink-900"
-                            : "bg-white dark:bg-slate-700 border-slate-200 dark:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-600"
+                            ? "bg-white border-transparent shadow-sm ring-1 ring-pink-100"
+                            : "bg-white border-slate-200 hover:bg-slate-50"
                         }`}
                       >
                         <ThumbsUp
@@ -577,7 +577,7 @@ Rédige maintenant ton résumé façon "L'avis de Satoshi" en 3 phrases max.`;
           <span className="font-bold bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent whitespace-nowrap text-base sm:text-lg">
             L'avis de Satoshi
           </span>
-          <span className="text-slate-900 dark:text-white font-medium whitespace-nowrap text-base sm:text-lg">
+          <span className="text-slate-900 font-medium whitespace-nowrap text-base sm:text-lg">
             sur l'établissement
           </span>
               </div>
@@ -587,12 +587,12 @@ Rédige maintenant ton résumé façon "L'avis de Satoshi" en 3 phrases max.`;
             {loadingAntonin ?
             <div className="flex flex-col items-center justify-center py-8 sm:py-12">
                 <GradientSpinner size="w-10 h-10 sm:w-12 sm:h-12" className="mb-4" />
-                <p className="text-slate-600 dark:text-slate-300 text-sm sm:text-base">Satoshi 🤖 analyse les avis...</p>
+                <p className="text-slate-600 text-sm sm:text-base">Satoshi 🤖 analyse les avis...</p>
               </div> :
 
             <div className="prose prose-slate max-w-none prose-sm sm:prose-base">
-                <div className="bg-gradient-to-r from-pink-50 via-purple-50 to-blue-50 dark:from-pink-950/30 dark:via-purple-950/30 dark:to-blue-950/30 rounded-lg p-4 sm:p-6 border-2 border-pink-100 dark:border-pink-900">
-                  <p className="text-slate-800 dark:text-slate-100 leading-relaxed text-base sm:text-lg whitespace-pre-wrap">
+                <div className="bg-gradient-to-r from-pink-50 via-purple-50 to-blue-50 rounded-lg p-4 sm:p-6 border-2 border-pink-100">
+                  <p className="text-slate-800 leading-relaxed text-base sm:text-lg whitespace-pre-wrap">
                     {antoninSummary}
                   </p>
                 </div>

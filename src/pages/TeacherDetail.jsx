@@ -383,21 +383,9 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
                           </div>
                         )}
                       </div>
-                    <div className="flex items-center gap-2 text-sm sm:text-base text-slate-600 dark:text-slate-300 mb-3">
+                    <div className="flex items-center gap-2 text-sm sm:text-base text-slate-600 dark:text-slate-300">
                       <BookOpen className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
                       <span className="break-words">{teacher.subject}</span>
-                    </div>
-                    <div className="hidden md:block">
-                      <Button
-                        onClick={handleAskAntonin}
-                        variant="outline"
-                        size="sm"
-                        className="border-2 border-pink-100 hover:bg-pink-50 hover:border-pink-200 text-slate-700 h-9 px-3 rounded-lg font-medium bg-white/50">
-                        <Sparkles className="w-3.5 h-3.5 mr-2 text-[#FF4D8D]" />
-                        <span className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent font-bold text-sm">
-                          Demander à Satoshi
-                        </span>
-                      </Button>
                     </div>
                   </div>
                 </div>
@@ -447,7 +435,7 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
                 <Button
                   onClick={handleAskAntonin}
                   variant="outline"
-                  className="flex-1 sm:flex-none md:hidden border-2 border-pink-100 hover:bg-pink-50 hover:border-pink-200 text-slate-700 h-11 px-4 rounded-xl font-medium bg-white/50">
+                  className="flex-1 sm:flex-none border-2 border-pink-100 hover:bg-pink-50 hover:border-pink-200 text-slate-700 h-11 px-4 rounded-xl font-medium bg-white/50">
                   <Sparkles className="w-4 h-4 mr-2 text-[#FF4D8D]" />
                   <span className="hidden sm:inline bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent font-bold">
                     Demander à Satoshi ce qu'il en pense
@@ -535,14 +523,14 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
 
       <Dialog open={showAntoninSummary} onOpenChange={setShowAntoninSummary}>
         <DialogContent className="max-w-[95vw] sm:max-w-2xl max-h-[80vh] overflow-y-auto rounded-2xl">
-          <DialogHeader className="pb-4">
-            <div className="flex items-center gap-2 mb-2">
-              <Sparkles className="w-6 h-6 text-[#FF4D8D]" />
-              <DialogTitle className="text-2xl font-bold bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2 text-lg sm:text-2xl">
+              <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-[#FF4D8D]" />
+              <span className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
                 L'avis de Satoshi
-              </DialogTitle>
-            </div>
-            <p className="text-base text-slate-600 dark:text-slate-400">sur {teacher.name}</p>
+              </span>
+              <span className="text-slate-900 dark:text-white">sur {teacher.name}</span>
+            </DialogTitle>
           </DialogHeader>
           <div className="py-4 sm:py-6">
             {loadingAntonin ?

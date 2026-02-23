@@ -63,7 +63,7 @@ export default function TeachersList({ schoolId, onAddTeacher }) {
           </linearGradient>
         </defs>
       </svg>
-      <Card className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-md border-slate-200 dark:border-slate-700 shadow-xl w-full flex flex-col hover:shadow-2xl transition-shadow duration-300 h-auto lg:h-full">
+      <Card className="bg-white/90 backdrop-blur-md border-slate-200 shadow-xl w-full flex flex-col hover:shadow-2xl transition-shadow duration-300 h-auto lg:h-full">
         <style>{`
           .teachers-list-scrollable {
             overflow-y: auto;
@@ -86,7 +86,7 @@ export default function TeachersList({ schoolId, onAddTeacher }) {
           }
         `}</style>
         
-        <CardHeader className="border-b border-slate-100 dark:border-slate-700 bg-gradient-to-r from-[#FF4D8D]/10 via-purple-500/10 to-blue-500/10 dark:from-[#FF4D8D]/20 dark:via-purple-500/20 dark:to-blue-500/20">
+        <CardHeader className="border-b border-slate-100 bg-gradient-to-r from-[#FF4D8D]/10 via-purple-500/10 to-blue-500/10">
           <div className="flex items-center justify-between">
             <CardTitle className="flex items-center gap-3 text-xl sm:text-2xl">
               <Users className="w-6 h-6 sm:w-8 sm:h-8" style={{ stroke: "url(#teacherGradient)" }} />
@@ -94,13 +94,13 @@ export default function TeachersList({ schoolId, onAddTeacher }) {
                 <span className="text-base sm:text-2xl font-bold bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">Professeurs</span>
                 <span className="text-base sm:text-2xl">❤️</span>
               </div>
-              <span className="text-sm sm:text-base text-slate-500 dark:text-slate-400 font-normal">({teachers.length})</span>
+              <span className="text-sm sm:text-base text-slate-500 font-normal">({teachers.length})</span>
             </CardTitle>
             <Button
               variant="ghost"
               size="icon"
               onClick={() => setShowSearch(!showSearch)}
-              className="text-blue-600 hover:text-blue-700 hover:bg-blue-50 dark:hover:bg-blue-950">
+              className="text-blue-600 hover:text-blue-700 hover:bg-blue-50">
               <Search className="w-5 h-5" />
             </Button>
           </div>
@@ -111,7 +111,7 @@ export default function TeachersList({ schoolId, onAddTeacher }) {
               placeholder="Rechercher un professeur ou une matière..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full dark:bg-slate-700 dark:border-slate-600 dark:text-white" />
+              className="w-full" />
             </div>
           }
         </CardHeader>
@@ -125,12 +125,12 @@ export default function TeachersList({ schoolId, onAddTeacher }) {
                 <div className="w-20 h-20 bg-gradient-to-br from-pink-200 via-purple-200 to-blue-200 rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm">
                   <Users className="w-10 h-10 text-blue-600" />
                 </div>
-                <p className="text-slate-700 dark:text-slate-200 font-medium mb-2">
+                <p className="text-slate-700 font-medium mb-2">
                   {searchQuery ? "Aucun professeur trouvé" : "Aucun professeur pour le moment"}
                 </p>
                 {!searchQuery &&
             <>
-                    <p className="text-sm text-slate-500 dark:text-slate-400 mb-4 max-w-xs">
+                    <p className="text-sm text-slate-500 mb-4 max-w-xs">
                       Sois le premier à ajouter les profs de cet établissement ! 🚀
                     </p>
                     <Button onClick={onAddTeacher} className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-white shadow-md">
@@ -153,7 +153,7 @@ export default function TeachersList({ schoolId, onAddTeacher }) {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: index * 0.05 }}>
                         <Link to={createPageUrl(`TeacherDetail?id=${teacher.id}`)}>
-                          <div className={`group flex items-center gap-2 sm:gap-4 p-4 border-b border-slate-100 dark:border-slate-700 last:border-0 hover:bg-slate-50 dark:hover:bg-slate-700 transition-all ${podiumClass} dark:bg-slate-800`}>
+                          <div className={`group flex items-center gap-2 sm:gap-4 p-4 border-b border-slate-100 last:border-0 hover:bg-slate-50 transition-all ${podiumClass}`}>
                             <Avatar className="w-10 h-10 sm:w-14 sm:h-14 border-2 border-white shadow-sm flex-shrink-0">
                               <AvatarImage src={teacher.photo_url} loading="lazy" />
                               <AvatarFallback className="bg-gradient-to-br from-blue-600 to-blue-800 text-white font-semibold text-sm sm:text-base">
@@ -162,21 +162,21 @@ export default function TeachersList({ schoolId, onAddTeacher }) {
                             </Avatar>
 
                             <div className="flex-1 min-w-0">
-                              <h3 className="font-semibold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors truncate flex items-center gap-1 sm:gap-2 text-sm sm:text-base">
+                              <h3 className="font-semibold text-slate-900 group-hover:text-blue-600 transition-colors truncate flex items-center gap-1 sm:gap-2 text-sm sm:text-base">
                                 {isPodium && <Award className={`w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0 ${podiumIconColors[index]}`} />}
                                 <span className="truncate">{teacher.name}</span>
                               </h3>
                               <div className="flex items-center gap-1 sm:gap-2 mt-1">
                                 <BookOpen className="w-3 h-3 sm:w-4 sm:h-4 text-slate-400 flex-shrink-0" />
-                                <span className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 truncate">{teacher.subject}</span>
+                                <span className="text-xs sm:text-sm text-slate-600 truncate">{teacher.subject}</span>
                               </div>
                             </div>
 
                             <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
                               {teacher.average_rating > 0 &&
-                          <div className="flex items-center gap-1 bg-white/50 dark:bg-slate-700/50 px-2 py-1 rounded-full border border-slate-200 dark:border-slate-600">
+                          <div className="flex items-center gap-1 bg-white/50 px-2 py-1 rounded-full border border-slate-200">
                                   <Star className="w-3 h-3 text-amber-500 fill-amber-500" />
-                                  <span className="font-bold text-slate-800 dark:text-white text-xs sm:text-sm">{teacher.average_rating.toFixed(1)}</span>
+                                  <span className="font-bold text-slate-800 text-xs sm:text-sm">{teacher.average_rating.toFixed(1)}</span>
                                 </div>
                           }
                               <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 text-slate-400 group-hover:text-blue-600 group-hover:translate-x-1 transition-all" />

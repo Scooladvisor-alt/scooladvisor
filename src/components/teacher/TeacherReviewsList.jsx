@@ -339,10 +339,10 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
           </linearGradient>
         </defs>
       </svg>
-      <div className="border-b border-slate-100 dark:border-slate-700 bg-gradient-to-r from-pink-500/10 via-purple-500/10 to-blue-500/10 dark:from-pink-500/20 dark:via-purple-500/20 dark:to-blue-500/20 p-4 mb-2 flex-shrink-0">
+      <div className="border-b border-slate-100 bg-gradient-to-r from-pink-500/10 via-purple-500/10 to-blue-500/10 p-4 mb-2 flex-shrink-0">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-white dark:bg-slate-700 rounded-lg shadow-sm">
+            <div className="p-2 bg-white rounded-lg shadow-sm">
               <MessageSquare className="w-5 h-5 text-[#FF4D8D]" />
             </div>
             <h3 className="text-lg font-bold flex items-center gap-2">
@@ -350,7 +350,7 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
                 Avis des étudiants
               </span>
               <span>🍿</span>
-              <span className="text-slate-400 dark:text-slate-500 font-medium text-sm">({reviews.length})</span>
+              <span className="text-slate-400 font-medium text-sm">({reviews.length})</span>
             </h3>
           </div>
         </div>
@@ -363,11 +363,11 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
             </div> :
           reviews.length === 0 ?
           <div className="text-center py-12">
-              <div className="w-16 h-16 bg-slate-50 dark:bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-4 border border-slate-100 dark:border-slate-700">
-                <MessageSquare className="w-8 h-8 text-slate-300 dark:text-slate-500" />
+              <div className="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-4 border border-slate-100">
+                <MessageSquare className="w-8 h-8 text-slate-300" />
               </div>
-              <p className="text-slate-600 dark:text-slate-300 font-medium">Aucun avis pour le moment</p>
-              <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">Soyez le premier à noter !</p>
+              <p className="text-slate-600 font-medium">Aucun avis pour le moment</p>
+              <p className="text-sm text-slate-500 mt-1">Soyez le premier à noter !</p>
             </div> :
 
           <div 
@@ -392,13 +392,13 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
                 <div
                   key={review.id}
                   className={`group relative p-5 rounded-2xl border transition-all duration-300
-                    ${isRejected ? 'bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-700 opacity-75 grayscale-[0.5]' : 'bg-white dark:bg-slate-800 border-slate-100 dark:border-slate-700 hover:border-purple-100 dark:hover:border-purple-700 shadow-[0_2px_8px_-2px_rgba(0,0,0,0.05)] hover:shadow-[0_8px_16px_-4px_rgba(0,0,0,0.08)]'}
+                    ${isRejected ? 'bg-slate-50 border-slate-200 opacity-75 grayscale-[0.5]' : 'bg-white border-slate-100 hover:border-purple-100 shadow-[0_2px_8px_-2px_rgba(0,0,0,0.05)] hover:shadow-[0_8px_16px_-4px_rgba(0,0,0,0.08)]'}
                   `}
                 >
                   {isRejected && (
-                    <div className="mb-3 p-2 bg-red-50 dark:bg-red-950/30 border border-red-100 dark:border-red-900 rounded-lg flex items-center gap-2">
+                    <div className="mb-3 p-2 bg-red-50 border border-red-100 rounded-lg flex items-center gap-2">
                         <AlertCircle className="w-4 h-4 text-red-500" />
-                        <span className="text-xs font-medium text-red-700 dark:text-red-400">
+                        <span className="text-xs font-medium text-red-700">
                             Visible uniquement par vous (contenu refusé par la modération)
                         </span>
                     </div>
@@ -406,7 +406,7 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
                   {/* Header */}
                   <div className="flex justify-between items-start gap-4">
                     <div className="flex gap-3">
-                      <Avatar className="w-10 h-10 border-2 border-white dark:border-slate-700 shadow-sm ring-1 ring-slate-100 dark:ring-slate-700">
+                      <Avatar className="w-10 h-10 border-2 border-white shadow-sm ring-1 ring-slate-100">
                          {avatarUrl ?
                             <AvatarImage src={avatarUrl} loading="lazy" /> : null}
                           <AvatarFallback className="bg-transparent">
@@ -414,13 +414,13 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
                           </AvatarFallback>
                       </Avatar>
                       <div>
-                        <h4 className="font-bold text-slate-900 dark:text-white text-sm">
+                        <h4 className="font-bold text-slate-900 text-sm">
                           {review.is_anonymous ? "Anonyme" : review.author_name || "Étudiant"}
                         </h4>
                         {review.is_former_student && (
-                          <p className="text-[10px] text-slate-500 dark:text-slate-400 font-medium -mt-0.5">Ancien élève</p>
+                          <p className="text-[10px] text-slate-500 font-medium -mt-0.5">Ancien élève</p>
                         )}
-                        <p className="text-xs text-slate-500 dark:text-slate-400 font-medium mt-0.5">
+                        <p className="text-xs text-slate-500 font-medium mt-0.5">
                           {formatDateWithTimezone(review.created_date, "d MMM yyyy")}
                         </p>
                       </div>
@@ -438,12 +438,12 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
                   {/* Comment & Expand Toggle */}
                   <div className="mt-4 mb-2">
                     <div className="flex items-start gap-2">
-                      <p className={`text-sm text-slate-700 dark:text-slate-200 leading-relaxed flex-1 ${!expandedComments.has(review.id) && isCommentLong(review.comment) ? 'line-clamp-3' : ''}`}>
+                      <p className={`text-sm text-slate-700 leading-relaxed flex-1 ${!expandedComments.has(review.id) && isCommentLong(review.comment) ? 'line-clamp-3' : ''}`}>
                         {review.comment}
                       </p>
                       <button
                         onClick={() => toggleExpand(review.id)}
-                        className="flex-shrink-0 p-1 text-slate-400 hover:text-purple-600 dark:hover:text-purple-400 transition-colors rounded-full hover:bg-slate-50 dark:hover:bg-slate-700"
+                        className="flex-shrink-0 p-1 text-slate-400 hover:text-purple-600 transition-colors rounded-full hover:bg-slate-50"
                         title={expandedReviews.has(review.id) ? "Masquer les détails" : "Voir les détails"}
                       >
                         <ChevronDown className={`w-5 h-5 transition-transform duration-300 ${expandedReviews.has(review.id) ? 'rotate-180' : ''}`} />
@@ -469,10 +469,10 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
                         className="overflow-hidden"
                       >
                         <div className="flex items-center justify-between text-sm pb-3 px-1 pt-1">
-                          {Object.entries(criteriaIcons).map(([key, { icon: Icon, label, color }]) => (
-                            <div key={key} className="flex items-center gap-1.5" title={label}>
-                               <Icon className={`w-4 h-4 ${color}`} />
-                               <span className="font-bold text-slate-700 dark:text-slate-200">{review[key]}/5</span>
+                           {Object.entries(criteriaIcons).map(([key, { icon: Icon, label, color }]) => (
+                             <div key={key} className="flex items-center gap-1.5" title={label}>
+                                <Icon className={`w-4 h-4 ${color}`} />
+                                <span className="font-bold text-slate-700">{review[key]}/5</span>
                              </div>
                            ))}
                         </div>
@@ -481,7 +481,7 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
                   </AnimatePresence>
 
                   {/* Actions Footer */}
-                  <div className="flex items-center justify-between pt-3 mt-1 border-t border-slate-50 dark:border-slate-700">
+                  <div className="flex items-center justify-between pt-3 mt-1 border-t border-slate-50">
                     <div className="flex items-center gap-2">
                        <Button
                           variant="ghost"
@@ -489,8 +489,8 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
                           onClick={() => handleLike(review)}
                           className={`h-8 px-3 rounded-full border transition-all ${
                             userLikes.has(review.id)
-                              ? "bg-white dark:bg-slate-700 border-transparent shadow-sm ring-1 ring-pink-100 dark:ring-pink-900"
-                              : "bg-white dark:bg-slate-700 border-slate-200 dark:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-600"
+                              ? "bg-white border-transparent shadow-sm ring-1 ring-pink-100"
+                              : "bg-white border-slate-200 hover:bg-slate-50"
                           }`}
                        >
                           <ThumbsUp
@@ -506,15 +506,15 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
                     <div className="flex items-center gap-1">
                       {user && review.created_by === user.email ? (
                         <>
-                          <Button variant="ghost" size="icon" onClick={() => onEditReview(review)} className="h-7 w-7 text-blue-600 hover:text-blue-700 hover:bg-blue-50 dark:hover:bg-blue-950 rounded-full">
+                          <Button variant="ghost" size="icon" onClick={() => onEditReview(review)} className="h-7 w-7 text-blue-600 hover:text-blue-700 hover:bg-blue-50 rounded-full">
                             <Edit className="w-3.5 h-3.5" />
                           </Button>
-                          <Button variant="ghost" size="icon" onClick={() => handleDelete(review.id)} className="h-7 w-7 text-red-600 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-950 rounded-full">
+                          <Button variant="ghost" size="icon" onClick={() => handleDelete(review.id)} className="h-7 w-7 text-red-600 hover:text-red-700 hover:bg-red-50 rounded-full">
                             <Trash2 className="w-3.5 h-3.5" />
                           </Button>
                         </>
                       ) : (
-                        <Button variant="ghost" size="icon" onClick={() => setReportingReview(review)} className="h-7 w-7 text-slate-300 hover:text-orange-500 hover:bg-orange-50 dark:hover:bg-orange-950 rounded-full" title="Signaler">
+                        <Button variant="ghost" size="icon" onClick={() => setReportingReview(review)} className="h-7 w-7 text-slate-300 hover:text-orange-500 hover:bg-orange-50 rounded-full" title="Signaler">
                            <AlertCircle className="w-3.5 h-3.5" />
                         </Button>
                       )}
@@ -527,7 +527,7 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
             
             {loadingMore && (
               <div className="text-center py-4">
-                <span className="flex items-center justify-center gap-2 text-slate-500 dark:text-slate-400 text-sm">
+                <span className="flex items-center justify-center gap-2 text-slate-500 text-sm">
                   <Loader2 className="w-4 h-4 animate-spin" />
                   Chargement...
                 </span>
@@ -544,7 +544,7 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
       {embedded ? (
         <Content />
       ) : (
-        <Card className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-md border-slate-200 dark:border-slate-700 shadow-xl w-full h-full flex flex-col hover:shadow-2xl transition-shadow duration-300">
+        <Card className="bg-white/90 backdrop-blur-md border-slate-200 shadow-xl w-full h-full flex flex-col hover:shadow-2xl transition-shadow duration-300">
           <Content />
         </Card>
       )}
