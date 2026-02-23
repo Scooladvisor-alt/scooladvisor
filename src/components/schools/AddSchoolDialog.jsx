@@ -176,6 +176,7 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
   };
 
   const cleanSchoolName = (name) => {
+    if (!name) return name;
     // Supprimer les mots "Général", "Technologique", "Polyvalent" et leurs variantes
     return name
       .replace(/\b(Général|Generale|Technologique|Polyvalent|Polyvalente|Et)\b/gi, '')
