@@ -224,12 +224,44 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
     return city;
   };
 
+  const cleanSchoolName = (name) => {
+    if (!name) return name;
+    
+    // Liste des mots à supprimer
+    const wordsToRemove = [
+      'technologique',
+      'général',
+      'générale',
+      'professionnel',
+      'professionnelle',
+      'polyvalent',
+      'polyvalente'
+    ];
+    
+    let cleaned = name;
+    
+    // Supprimer chaque mot (insensible à la casse)
+    wordsToRemove.forEach(word => {
+      const regex = new RegExp(`\\b${word}\\b`, 'gi');
+      cleaned = cleaned.replace(regex, '');
+    });
+    
+    // Nettoyer les espaces multiples et trim
+    cleaned = cleaned.replace(/\s+/g, ' ').trim();
+    
+    return cleaned;
+  };
+
   const handleConfirm = () => {
     if (selectedPlace) {
       console.log("📍 Place confirmed:", selectedPlace);
       console.log("🏙️ City extracted:", selectedPlace.city);
+      
+      const cleanedName = cleanSchoolName(selectedPlace.name);
+      console.log("🧹 School name cleaned:", selectedPlace.name, "→", cleanedName);
+      
       onPlaceSelected({
-        name: selectedPlace.name,
+        name: cleanedName,
         address: selectedPlace.address,
         city: selectedPlace.city
       });
