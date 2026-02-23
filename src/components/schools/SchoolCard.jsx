@@ -114,7 +114,7 @@ export default function SchoolCard({ school, teacherCount }) {
         }
       `}</style>
       
-      <div className="bg-white rounded-xl sm:rounded-2xl shadow-md border border-slate-200 p-2 sm:p-6 transition-all duration-300 hover:shadow-xl hover:scale-[1.02] hover:-translate-y-1 h-full flex flex-col relative z-10">
+      <div className="bg-white dark:bg-slate-800 rounded-xl sm:rounded-2xl shadow-md border border-slate-200 dark:border-slate-700 p-2 sm:p-6 transition-all duration-300 hover:shadow-xl hover:scale-[1.02] hover:-translate-y-1 h-full flex flex-col relative z-10">
         <div className="flex-1 flex flex-col min-h-0">
           <div className="flex items-start justify-between mb-1.5 sm:mb-3">
             <Badge className={`inline-flex items-center gap-1 text-[9px] sm:text-xs border sm:border-2 font-semibold shadow-sm sm:shadow-md type-badge ${typeColors[school.type]}`}>
@@ -131,18 +131,18 @@ export default function SchoolCard({ school, teacherCount }) {
                 <span className="text-[9px] sm:text-xs text-amber-700">/20</span>
               </div>
             ) : (
-              <div className="flex-shrink-0 bg-slate-100 rounded-md sm:rounded-lg border border-slate-200 px-2 py-1 sm:px-3 sm:py-1.5 flex items-center gap-0.5 sm:gap-1">
+              <div className="flex-shrink-0 bg-slate-100 dark:bg-slate-700 rounded-md sm:rounded-lg border border-slate-200 dark:border-slate-600 px-2 py-1 sm:px-3 sm:py-1.5 flex items-center gap-0.5 sm:gap-1">
                 <Star className="w-3 h-3 sm:w-4 sm:h-4 text-slate-400 flex-shrink-0" />
-                <span className="text-[10px] sm:text-xs text-slate-600 font-medium whitespace-nowrap">N/A</span>
+                <span className="text-[10px] sm:text-xs text-slate-600 dark:text-slate-300 font-medium whitespace-nowrap">N/A</span>
               </div>
             )}
           </div>
 
-          <h3 className="font-bold text-slate-900 text-xs sm:text-xl mb-1 sm:mb-3 leading-tight line-clamp-2">
+          <h3 className="font-bold text-slate-900 dark:text-white text-xs sm:text-xl mb-1 sm:mb-3 leading-tight line-clamp-2">
             {school.name}
           </h3>
 
-          <div className="flex items-center gap-1 sm:gap-2 text-[10px] sm:text-sm text-slate-600 mb-1.5 sm:mb-4">
+          <div className="flex items-center gap-1 sm:gap-2 text-[10px] sm:text-sm text-slate-600 dark:text-slate-300 mb-1.5 sm:mb-4">
             <MapPin className="w-2.5 h-2.5 sm:w-4 sm:h-4 text-slate-400 flex-shrink-0" />
             <span className="truncate">{school.city}</span>
             {school.region && school.region.trim().toLowerCase() === "international" && (
@@ -152,7 +152,7 @@ export default function SchoolCard({ school, teacherCount }) {
         </div>
 
         <div className="grid grid-cols-2 gap-1.5 sm:gap-3 mt-auto">
-          <div className="stat-widget bg-blue-50 rounded-md sm:rounded-xl p-1 sm:p-2.5 border border-blue-100 flex items-center justify-center gap-1 sm:gap-2">
+          <div className="stat-widget bg-blue-50 dark:bg-blue-950/30 rounded-md sm:rounded-xl p-1 sm:p-2.5 border border-blue-100 dark:border-blue-900 flex items-center justify-center gap-1 sm:gap-2">
             <MessageSquare className="w-3 h-3 sm:w-5 sm:h-5 text-blue-500 flex-shrink-0" />
             <div className="flex items-baseline gap-0.5 sm:gap-1">
               <span className="text-sm sm:text-xl font-bold text-blue-700">{school.review_count || 0}</span>
@@ -160,7 +160,7 @@ export default function SchoolCard({ school, teacherCount }) {
             </div>
           </div>
 
-          <div className="stat-widget bg-[#FF4D8D]/5 rounded-md sm:rounded-xl p-1 sm:p-2.5 border border-[#FF4D8D]/20 flex items-center justify-center gap-1 sm:gap-2">
+          <div className="stat-widget bg-[#FF4D8D]/5 dark:bg-[#FF4D8D]/10 rounded-md sm:rounded-xl p-1 sm:p-2.5 border border-[#FF4D8D]/20 dark:border-[#FF4D8D]/30 flex items-center justify-center gap-1 sm:gap-2">
             <Users className="w-3 h-3 sm:w-5 sm:h-5 text-[#FF4D8D] flex-shrink-0" />
             <div className="flex items-baseline gap-0.5 sm:gap-1">
               <span className="text-sm sm:text-xl font-bold text-[#FF4D8D]">{teacherCount}</span>

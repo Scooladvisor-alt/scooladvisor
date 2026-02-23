@@ -337,7 +337,7 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-[95vw] sm:max-w-3xl max-h-[90vh] overflow-hidden rounded-2xl flex flex-col px-8 py-4 sm:py-6">
+      <DialogContent className="max-w-[95vw] sm:max-w-3xl max-h-[90vh] overflow-hidden rounded-2xl flex flex-col px-8 py-4 sm:py-6 dark:bg-slate-800 dark:border-slate-700">
         <DialogHeader className="pb-2 flex-shrink-0 text-center">
           <DialogTitle className="text-base sm:text-xl font-bold">
             <span className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
@@ -347,15 +347,15 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
         </DialogHeader>
 
         {error &&
-        <Alert variant="destructive" className="flex-shrink-0">
+        <Alert variant="destructive" className="flex-shrink-0 dark:bg-red-950/30 dark:border-red-900">
             <AlertCircle className="h-4 w-4" />
-            <AlertDescription className="text-xs sm:text-sm">{error}</AlertDescription>
+            <AlertDescription className="text-xs sm:text-sm dark:text-red-400">{error}</AlertDescription>
           </Alert>
         }
 
         <form onSubmit={handleSubmit} className="space-y-2 flex-1 flex flex-col overflow-hidden">
           <div className="space-y-1 flex-shrink-0">
-            <Label htmlFor="name" className="text-xs sm:text-sm">Nom du professeur *</Label>
+            <Label htmlFor="name" className="text-xs sm:text-sm dark:text-slate-200">Nom du professeur *</Label>
             <div className="flex items-center gap-2">
               <Input
                 id="name"
@@ -363,15 +363,15 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 required
                 placeholder="M. Dupont"
-                className="h-7 text-xs sm:text-sm flex-1" />
-              <div className="flex items-center gap-1.5 bg-gradient-to-r from-pink-50 to-blue-50 px-2 py-1.5 rounded-lg border border-pink-200">
+                className="h-7 text-xs sm:text-sm flex-1 dark:bg-slate-900 dark:border-slate-600 dark:text-white" />
+              <div className="flex items-center gap-1.5 bg-gradient-to-r from-pink-50 to-blue-50 dark:from-pink-950/30 dark:to-blue-950/30 px-2 py-1.5 rounded-lg border border-pink-200 dark:border-pink-800">
                 <input
                   type="checkbox"
                   id="is_former"
                   checked={formData.is_former}
                   onChange={(e) => setFormData({ ...formData, is_former: e.target.checked })}
                   className="w-3.5 h-3.5 rounded accent-orange-500 cursor-pointer" />
-                <label htmlFor="is_former" className="text-[10px] sm:text-xs font-medium text-orange-800 whitespace-nowrap cursor-pointer">
+                <label htmlFor="is_former" className="text-[10px] sm:text-xs font-medium text-orange-800 dark:text-orange-400 whitespace-nowrap cursor-pointer">
                   Ancien
                 </label>
               </div>
@@ -380,7 +380,7 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
 
           {!showCustomSubject ?
           <div className="space-y-1 flex-shrink-0">
-              <Label htmlFor="subject" className="text-xs sm:text-sm">Matière enseignée *</Label>
+              <Label htmlFor="subject" className="text-xs sm:text-sm dark:text-slate-200">Matière enseignée *</Label>
               <Select
               value={formData.subject}
               onValueChange={(value) => {
@@ -392,7 +392,7 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
                 }
               }}>
 
-                <SelectTrigger className="h-8 text-xs sm:text-sm">
+                <SelectTrigger className="h-8 text-xs sm:text-sm dark:bg-slate-900 dark:border-slate-600 dark:text-white">
                   <SelectValue placeholder="Sélectionnez une matière" />
                 </SelectTrigger>
                 <SelectContent className="max-h-[250px]">
@@ -415,14 +415,14 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
             </div> :
 
           <div className="space-y-1 flex-shrink-0">
-              <Label htmlFor="customSubject" className="text-xs sm:text-sm">Autre matière *</Label>
+              <Label htmlFor="customSubject" className="text-xs sm:text-sm dark:text-slate-200">Autre matière *</Label>
               <Input
               id="customSubject"
               value={formData.customSubject}
               onChange={(e) => setFormData({ ...formData, customSubject: e.target.value })}
               required
               placeholder="Entrez le nom de la matière"
-              className="h-8 text-xs sm:text-sm" />
+              className="h-8 text-xs sm:text-sm dark:bg-slate-900 dark:border-slate-600 dark:text-white" />
 
               <Button
               type="button"
@@ -432,7 +432,7 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
                 setShowCustomSubject(false);
                 setFormData({ ...formData, customSubject: "" });
               }}
-              className="w-full h-6 text-[10px] sm:text-xs">
+              className="w-full h-6 text-[10px] sm:text-xs dark:text-slate-300 dark:hover:bg-slate-700">
 
                 Retour aux matières prédéfinies
               </Button>
@@ -440,8 +440,8 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
           }
 
           <div className="space-y-1 flex-shrink-0">
-            <Label className="text-xs sm:text-sm">Avatar du professeur</Label>
-            <div className="w-full bg-slate-50 rounded-lg p-2 border border-slate-200 h-[280px] overflow-y-auto
+            <Label className="text-xs sm:text-sm dark:text-slate-200">Avatar du professeur</Label>
+            <div className="w-full bg-slate-50 dark:bg-slate-900 rounded-lg p-2 border border-slate-200 dark:border-slate-600 h-[280px] overflow-y-auto
                   [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-gray-100 
                   [&::-webkit-scrollbar-thumb]:bg-gray-400 [&::-webkit-scrollbar-thumb]:rounded-full 
                   [&::-webkit-scrollbar-thumb]:hover:bg-gray-500">
@@ -457,10 +457,10 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
                     className={`relative rounded-lg transition-all overflow-hidden ${
                       isSelected 
                         ? 'p-[3px] bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 shadow-md' 
-                        : 'p-[2px] bg-slate-200 hover:bg-gradient-to-r hover:from-[#FF4D8D]/50 hover:via-purple-500/50 hover:to-blue-500/50'
+                        : 'p-[2px] bg-slate-200 dark:bg-slate-700 hover:bg-gradient-to-r hover:from-[#FF4D8D]/50 hover:via-purple-500/50 hover:to-blue-500/50'
                     }`}
                   >
-                    <div className="rounded-md w-full aspect-square flex items-center justify-center bg-white overflow-hidden">
+                    <div className="rounded-md w-full aspect-square flex items-center justify-center bg-white dark:bg-slate-800 overflow-hidden">
                       <img
                         src={avatar.url}
                         alt={avatar.name}
@@ -472,7 +472,7 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
               })}
                 </div>
               ) : (
-                <div className="text-center py-6 text-slate-500 text-xs sm:text-sm italic">
+                <div className="text-center py-6 text-slate-500 dark:text-slate-400 text-xs sm:text-sm italic">
                   Aucun avatar disponible pour le moment.
                   <br />
                   Ils seront bientôt ajoutés ! 📸
@@ -482,7 +482,7 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
           </div>
 
           <DialogFooter className="gap-2 pt-2 flex-shrink-0">
-            <Button type="button" variant="outline" onClick={() => onOpenChange(false)} className="text-xs sm:text-sm h-8">
+            <Button type="button" variant="outline" onClick={() => onOpenChange(false)} className="text-xs sm:text-sm h-8 dark:bg-slate-700 dark:text-slate-200 dark:border-slate-600">
               Annuler
             </Button>
             <Button type="submit" disabled={loading} className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 text-primary-foreground px-4 py-2 bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-xs sm:text-sm h-8 text-white shadow-md">

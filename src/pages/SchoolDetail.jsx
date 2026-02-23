@@ -98,7 +98,7 @@ export default function SchoolDetailPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 p-8 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-950 dark:to-slate-900 p-8 flex items-center justify-center">
         <GradientSpinner size="w-12 h-12" />
       </div>);
 
@@ -128,7 +128,7 @@ export default function SchoolDetailPage() {
   const canModerate = user && (user.role === 'admin' || user.role === 'moderator');
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
       <MobileHeader 
         title={school?.name || 'Établissement'} 
         subtitle={school?.city}
@@ -271,13 +271,13 @@ export default function SchoolDetailPage() {
         }
       `}</style>
       
-      <div className="max-w-6xl mx-auto px-4 py-4">
+      <div className="md:max-w-6xl md:mx-auto md:px-4 md:py-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-slate-200 overflow-hidden mb-4">
+          className="md:bg-white/80 dark:md:bg-slate-800/80 md:backdrop-blur-sm md:rounded-2xl md:shadow-xl md:border md:border-slate-200 dark:md:border-slate-700 overflow-hidden md:mb-4">
 
-          <div className="relative p-3 sm:p-6 md:p-8">
+          <div className="relative p-3 md:p-6 md:p-8">
             <div className="relative">
               {school.status === 'banned' &&
                 <Badge className="mb-3 bg-red-100 text-red-800 border-red-200 text-xs">
@@ -292,12 +292,12 @@ export default function SchoolDetailPage() {
                       {typeLabels[school.type]}
                     </Badge>
                   </div>
-                  <h1 className="text-3xl font-bold text-slate-900 mb-2">
+                  <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">
                     {school.name}
                   </h1>
-                  <div className="flex items-center gap-2 text-slate-600">
+                  <div className="flex items-center gap-2 text-slate-600 dark:text-slate-300">
                     <MapPin className="w-4 h-4" />
-                    <span>{school.city}</span>
+                    <span>{school.city} • {school.address}</span>
                   </div>
                 </div>
                 
@@ -319,20 +319,20 @@ export default function SchoolDetailPage() {
                       <p className="text-xs text-amber-600">{school.review_count} avis</p>
                     </div>
                   </motion.div> :
-                  <div className="bg-slate-50 rounded-xl border border-slate-200 text-center px-6 py-4 min-w-[140px] shadow-sm flex-shrink-0">
+                  <div className="bg-slate-50 dark:bg-slate-700 rounded-xl border border-slate-200 dark:border-slate-600 text-center px-6 py-4 min-w-[140px] shadow-sm flex-shrink-0">
                     <Star className="w-8 h-8 text-slate-400 mx-auto mb-2" />
-                    <p className="text-sm font-medium text-slate-600">Pas encore noté</p>
+                    <p className="text-sm font-medium text-slate-600 dark:text-slate-300">Pas encore noté</p>
                   </div>
                 }
               </div>
 
 
 
-              <div className="flex items-center gap-2 py-1.5 px-2 bg-slate-50/50 rounded-lg border border-slate-100 mb-3 md:justify-center md:py-2 md:px-3 md:bg-slate-50 md:order-last md:mb-0">
-                <Badge className={`border text-[9px] font-medium shadow-sm flex-shrink-0 md:border-2 md:text-[10px] md:font-semibold md:shadow-md md:order-last ${typeColors[school.type]}`}>
+              <div className="flex items-center gap-2 py-1.5 px-2 bg-slate-50/50 dark:bg-slate-800/50 rounded-lg border border-slate-100 dark:border-slate-700 mb-3 md:hidden">
+                <Badge className={`border text-[9px] font-medium shadow-sm flex-shrink-0 ${typeColors[school.type]}`}>
                   {typeLabels[school.type]}
                 </Badge>
-                <p className="text-[11px] text-slate-500 truncate flex-1 md:text-xs md:text-center">
+                <p className="text-[11px] text-slate-500 dark:text-slate-400 truncate flex-1">
                   📍 {school.address}
                 </p>
               </div>
@@ -354,7 +354,7 @@ export default function SchoolDetailPage() {
               </div>
               
               {!user &&
-              <p className="text-[11px] leading-tight text-slate-600 mb-3 text-center bg-blue-50 rounded-lg py-1.5 px-2 border border-blue-100 md:text-sm md:py-2 md:px-3">
+              <p className="text-[11px] leading-tight text-slate-600 dark:text-slate-300 mb-3 text-center bg-blue-50 dark:bg-blue-950/30 rounded-lg py-1.5 px-2 border border-blue-100 dark:border-blue-900 md:text-sm md:py-2 md:px-3">
                   📌 Connecte-toi pour noter et ajouter tes profs.
                 </p>
               }
@@ -364,7 +364,7 @@ export default function SchoolDetailPage() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 items-stretch justify-items-center">
           <div className="w-full max-h-[600px] lg:h-[500px] flex flex-col">
-            <Suspense fallback={<div className="p-4 bg-white rounded-lg shadow-md flex justify-center items-center h-full"><Loader2 className="w-8 h-8 animate-spin text-slate-400" /></div>}>
+            <Suspense fallback={<div className="p-4 bg-white dark:bg-slate-800 rounded-lg shadow-md flex justify-center items-center h-full"><Loader2 className="w-8 h-8 animate-spin text-slate-400" /></div>}>
               <TeachersList
                 schoolId={schoolId}
                 onAddTeacher={() => setShowAddTeacher(true)} />
@@ -373,7 +373,7 @@ export default function SchoolDetailPage() {
           </div>
 
           <div className="w-full max-h-[600px] lg:h-[500px] flex flex-col">
-             <Suspense fallback={<div className="p-4 bg-white rounded-lg shadow-md flex justify-center items-center h-full"><Loader2 className="w-8 h-8 animate-spin text-slate-400" /></div>}>
+             <Suspense fallback={<div className="p-4 bg-white dark:bg-slate-800 rounded-lg shadow-md flex justify-center items-center h-full"><Loader2 className="w-8 h-8 animate-spin text-slate-400" /></div>}>
               <SchoolReviews
                 schoolId={schoolId}
                 user={user}

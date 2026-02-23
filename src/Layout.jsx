@@ -262,15 +262,33 @@ export default function Layout({ children }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [showBanDialog, setShowBanDialog] = useState(false);
   const [showLoginMessage, setShowLoginMessage] = useState(false);
+  const [darkMode, setDarkMode] = useState(false);
 
 
   useEffect(() => {
     loadUser();
+    // Charger la préférence dark mode
+    const savedDarkMode = localStorage.getItem('darkMode') === 'true';
+    setDarkMode(savedDarkMode);
+    if (savedDarkMode) {
+      document.documentElement.classList.add('dark');
+    }
   }, []);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [location.pathname]);
+
+  const toggleDarkMode = () => {
+    const newMode = !darkMode;
+    setDarkMode(newMode);
+    localStorage.setItem('darkMode', String(newMode));
+    if (newMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  };
 
   const loadUser = async () => {
     try {
@@ -316,7 +334,7 @@ export default function Layout({ children }) {
 
   return (
     <div 
-      className="min-h-screen flex flex-col bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-950 dark:to-slate-900 relative"
+      className={`min-h-screen flex flex-col ${darkMode ? 'bg-gradient-to-br from-slate-950 to-slate-900' : 'bg-gradient-to-br from-slate-50 to-blue-50'} relative`}
       style={{
         paddingTop: 'env(safe-area-inset-top)',
         paddingBottom: 'env(safe-area-inset-bottom)',
@@ -403,7 +421,7 @@ export default function Layout({ children }) {
         `}</style>
       
       <header 
-        className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-700 sticky top-0 z-50 shadow-sm"
+        className={`${darkMode ? 'bg-slate-800/90 border-slate-700' : 'bg-white/90 border-slate-200'} backdrop-blur-md border-b sticky top-0 z-50 shadow-sm`}
         style={{
           paddingTop: 'max(0px, calc(env(safe-area-inset-top) - 16px))',
         }}
@@ -418,6 +436,37 @@ export default function Layout({ children }) {
 
               <span className="text-base sm:text-2xl font-bold bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 text-transparent bg-clip-text">Scooladvisor</span>
             </Link>
+
+            <nav className="hidden md:flex items-center gap-6 flex-1 justify-center">
+              {navigationItems.map((item) => (
+                <Link
+                  key={item.title}
+                  to={item.url}
+                  className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all font-medium ${
+                    location.pathname === item.url
+                      ? 'text-slate-900 dark:text-white bg-slate-100 dark:bg-slate-700'
+                      : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800'
+                  }`}
+                >
+                  <item.icon className="w-4 h-4" />
+                  <span>{item.title}</span>
+                </Link>
+              ))}
+              
+              {user && (user.role === 'moderator' || user.role === 'admin') && (
+                <Link
+                  to={createPageUrl("Moderation")}
+                  className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all font-medium ${
+                    location.pathname === createPageUrl("Moderation")
+                      ? 'text-amber-700 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/30'
+                      : 'text-slate-600 dark:text-slate-300 hover:text-amber-700 dark:hover:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-900/30'
+                  }`}
+                >
+                  <ShieldCheck className="w-4 h-4" />
+                  <span>Modération</span>
+                </Link>
+              )}
+            </nav>
 
             <div className="flex items-center gap-1 sm:gap-3 pr-0 min-w-[100px] sm:min-w-[140px] justify-end">
               {loading ?
@@ -434,10 +483,10 @@ export default function Layout({ children }) {
                         </Avatar>
                       </Button>
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end" className="w-56 bg-white dark:bg-slate-800">
+                    <DropdownMenuContent align="end" className={`w-56 ${darkMode ? 'bg-slate-800 border-slate-700' : 'bg-white'}`}>
                       <div className="px-3 py-2">
-                        <p className="text-sm font-medium text-slate-900 dark:text-white">{user.full_name}</p>
-                        <p className="text-xs text-slate-500 dark:text-slate-400 truncate">{user.email}</p>
+                        <p className={`text-sm font-medium ${darkMode ? 'text-white' : 'text-slate-900'}`}>{user.full_name}</p>
+                        <p className={`text-xs ${darkMode ? 'text-slate-400' : 'text-slate-500'} truncate`}>{user.email}</p>
                       </div>
                       <DropdownMenuSeparator />
                       
@@ -462,6 +511,10 @@ export default function Layout({ children }) {
                       <DropdownMenuItem onClick={() => navigate(createPageUrl("Profile"))} className="cursor-pointer">
                         <UserIcon className="w-4 h-4 mr-2" />
                         Mon profil
+                      </DropdownMenuItem>
+                      <DropdownMenuItem onClick={toggleDarkMode} className="cursor-pointer">
+                        <span className="w-4 h-4 mr-2">{darkMode ? '☀️' : '🌙'}</span>
+                        {darkMode ? 'Mode Clair' : 'Mode Sombre'}
                       </DropdownMenuItem>
                       <DropdownMenuSeparator />
                       <DropdownMenuItem onClick={handleLogout} className="text-red-600 cursor-pointer">
@@ -489,7 +542,7 @@ export default function Layout({ children }) {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.2 }} className="bg-white/95 dark:bg-slate-800/95 mt-2 mb-1 ml-1 pr-2 pb-2 rounded-xl md:hidden absolute top-16 right-4 w-56 backdrop-blur-md shadow-xl border border-slate-200 dark:border-slate-700 z-50">
+            transition={{ duration: 0.2 }} className={`${darkMode ? 'bg-slate-800/95 border-slate-700' : 'bg-white/95 border-slate-200'} mt-2 mb-1 ml-1 pr-2 pb-2 rounded-xl md:hidden absolute top-16 right-4 w-56 backdrop-blur-md shadow-xl border z-50`}>
 
               {navigationItems.map((item) =>
               <Link
@@ -498,8 +551,8 @@ export default function Layout({ children }) {
                 onClick={() => setMobileMenuOpen(false)}
                 className={`flex items-center gap-2 px-4 py-2.5 mx-2 rounded-lg transition-all ${
                 location.pathname === item.url ?
-                'bg-gradient-to-r from-[#FF4D8D]/10 via-purple-500/10 to-blue-500/10 text-slate-900 dark:text-white font-medium dark:bg-gradient-to-r dark:from-[#FF4D8D]/20 dark:via-purple-500/20 dark:to-blue-500/20' :
-                'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700'}`
+                `${darkMode ? 'bg-gradient-to-r from-[#FF4D8D]/20 via-purple-500/20 to-blue-500/20 text-white' : 'bg-gradient-to-r from-[#FF4D8D]/10 via-purple-500/10 to-blue-500/10 text-slate-900'} font-medium` :
+                `${darkMode ? 'text-slate-300 hover:bg-slate-700' : 'text-slate-600 hover:bg-slate-50'}`}`
                 }>
                     <item.icon className="w-5 h-5" />
                     <span className="text-sm">{item.title}</span>
@@ -512,8 +565,8 @@ export default function Layout({ children }) {
                 onClick={() => setMobileMenuOpen(false)}
                 className={`flex items-center gap-2 px-4 py-2.5 mx-2 rounded-lg transition-all ${
                 location.pathname === createPageUrl("Moderation") ?
-                'bg-amber-50 text-amber-700 font-medium' :
-                'text-slate-600 hover:bg-slate-50'}`
+                `${darkMode ? 'bg-amber-900/30 text-amber-400' : 'bg-amber-50 text-amber-700'} font-medium` :
+                `${darkMode ? 'text-slate-300 hover:bg-slate-700' : 'text-slate-600 hover:bg-slate-50'}`}`
                 }>
                     <ShieldCheck className="w-5 h-5" />
                     <span className="text-sm">Modération</span>
@@ -521,17 +574,30 @@ export default function Layout({ children }) {
               }
               
               {user &&
-              <Link
-                to={createPageUrl("Profile")}
-                onClick={() => setMobileMenuOpen(false)}
-                className={`flex items-center gap-2 px-4 py-2.5 mx-2 rounded-lg transition-all ${
-                location.pathname === createPageUrl("Profile") ?
-                'bg-gradient-to-r from-[#FF4D8D]/10 via-purple-500/10 to-blue-500/10 text-slate-900 font-medium' :
-                'text-slate-600 hover:bg-slate-50'}`
-                }>
-                    <UserIcon className="w-5 h-5" />
-                    <span className="text-sm">Mon profil</span>
-                  </Link>
+              <>
+                <Link
+                  to={createPageUrl("Profile")}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={`flex items-center gap-2 px-4 py-2.5 mx-2 rounded-lg transition-all ${
+                  location.pathname === createPageUrl("Profile") ?
+                  `${darkMode ? 'bg-gradient-to-r from-[#FF4D8D]/20 via-purple-500/20 to-blue-500/20 text-white' : 'bg-gradient-to-r from-[#FF4D8D]/10 via-purple-500/10 to-blue-500/10 text-slate-900'} font-medium` :
+                  `${darkMode ? 'text-slate-300 hover:bg-slate-700' : 'text-slate-600 hover:bg-slate-50'}`}`
+                  }>
+                      <UserIcon className="w-5 h-5" />
+                      <span className="text-sm">Mon profil</span>
+                    </Link>
+                
+                <button
+                  onClick={() => {
+                    toggleDarkMode();
+                    setMobileMenuOpen(false);
+                  }}
+                  className={`flex items-center gap-2 px-4 py-2.5 mx-2 rounded-lg transition-all ${darkMode ? 'text-slate-300 hover:bg-slate-700' : 'text-slate-600 hover:bg-slate-50'}`}
+                >
+                  <span className="w-5 h-5 text-lg">{darkMode ? '☀️' : '🌙'}</span>
+                  <span className="text-sm">{darkMode ? 'Mode Clair' : 'Mode Sombre'}</span>
+                </button>
+              </>
               }
             </motion.div>
             }

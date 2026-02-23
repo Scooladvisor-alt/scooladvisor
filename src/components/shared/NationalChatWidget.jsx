@@ -303,7 +303,7 @@ Si la décision est "approved", "reason" peut être vide ou null.`,
 
   return (
     <>
-      <div className="my-4 sm:my-6 p-2.5 sm:p-3 rounded-xl bg-gradient-to-br from-[#FF4D8D] via-purple-500 to-blue-500 shadow-lg cursor-pointer hover:shadow-xl transition-all hover:-translate-y-1 relative overflow-hidden sticky bottom-4 z-10 group"
+      <div className="my-4 sm:my-6 p-2.5 sm:p-3 rounded-xl bg-gradient-to-br from-[#FF4D8D] via-purple-500 to-blue-500 dark:from-[#FF4D8D]/90 dark:via-purple-500/90 dark:to-blue-500/90 shadow-lg cursor-pointer hover:shadow-xl transition-all hover:-translate-y-1 relative overflow-hidden sticky bottom-4 z-10 group"
       onClick={() => setShowDialog(true)}>
         <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/20 to-transparent z-0" style={{ transform: 'skewX(-20deg)' }} />
 
@@ -315,14 +315,14 @@ Si la décision est "approved", "reason" peut être vide ou null.`,
         {loading ?
         <p className="text-white/80 text-xs">Chargement...</p> :
         lastMessage ?
-        <div className="mt-1.5 p-2 rounded-lg bg-white shadow-sm">
+        <div className="mt-1.5 p-2 rounded-lg bg-white dark:bg-slate-800 shadow-sm">
             <p className="text-xs font-semibold line-clamp-2">
-              <span className="font-bold text-blue-600">
+              <span className="font-bold text-blue-600 dark:text-blue-400">
                 {lastMessage.is_anonymous ? 'Anonyme' : lastMessage.author_name}:
               </span>{' '}
-              <span className="text-black">{lastMessage.message}</span>
+              <span className="text-black dark:text-white">{lastMessage.message}</span>
             </p>
-            <p className="text-[10px] text-slate-500 mt-1 text-right">
+            <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-1 text-right">
               {formatDateWithTimezone(lastMessage.created_date, "'Le' d MMM 'à' HH:mm")}
             </p>
           </div> :
@@ -332,8 +332,8 @@ Si la décision est "approved", "reason" peut être vide ou null.`,
       </div>
 
       <Dialog open={showDialog} onOpenChange={setShowDialog}>
-        <DialogContent className="max-w-[95vw] sm:max-w-5xl max-h-[90vh] flex flex-col p-0 rounded-2xl overflow-hidden">
-          <DialogHeader className="p-3 border-b">
+        <DialogContent className="max-w-[95vw] sm:max-w-5xl max-h-[90vh] flex flex-col p-0 rounded-2xl overflow-hidden dark:bg-slate-800 dark:border-slate-700">
+          <DialogHeader className="p-3 border-b dark:border-slate-700">
             <DialogTitle className="text-base font-bold">
               <span className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
                 Micro National
@@ -343,8 +343,8 @@ Si la décision est "approved", "reason" peut être vide ou null.`,
 
           <div className="flex-1 overflow-y-auto px-4 py-3">
             {messages.length === 0 ?
-            <div className="text-center text-slate-500 py-16">
-                <p className="text-lg mb-4 text-slate-500">C'est calme ici... Prends le micro !</p>
+            <div className="text-center text-slate-500 dark:text-slate-400 py-16">
+                <p className="text-lg mb-4 text-slate-500 dark:text-slate-400">C'est calme ici... Prends le micro !</p>
               </div> :
 
             <div className="space-y-3">
@@ -368,7 +368,7 @@ Si la décision est "approved", "reason" peut être vide ou null.`,
             }
           </div>
 
-          <div className="border-t bg-white p-2">
+          <div className="border-t dark:border-slate-700 bg-white dark:bg-slate-800 p-2">
             <div className="relative">
               <Textarea
                 placeholder={user ? "Ton message..." : "Connecte-toi pour participer"}
@@ -379,13 +379,13 @@ Si la décision est "approved", "reason" peut être vide ou null.`,
                     setNewMessage(text);
                   }
                 }}
-                className="min-h-[60px] text-xs pr-20 pb-8 resize-none rounded-2xl"
+                className="min-h-[60px] text-xs pr-20 pb-8 resize-none rounded-2xl dark:bg-slate-700 dark:border-slate-600 dark:text-white"
                 disabled={!user} 
               />
               
               <div className="absolute bottom-2 left-2 flex items-center gap-2">
                 {user && (
-                  <div className="flex items-center space-x-1 bg-slate-50 px-1.5 py-0.5 rounded-md border border-slate-100">
+                  <div className="flex items-center space-x-1 bg-slate-50 dark:bg-slate-900 px-1.5 py-0.5 rounded-md border border-slate-100 dark:border-slate-600">
                     <Checkbox
                       id="anonymous_national"
                       checked={isAnonymous}
@@ -454,13 +454,13 @@ const NationalMessageBubble = ({ message, user, onEdit, onSave, onCancelEdit, on
 
   return (
     <div className="w-full mb-1.5">
-      <div className="group relative bg-white p-2.5 rounded-xl border border-slate-100 shadow-sm hover:shadow-md transition-all duration-300">
+      <div className="group relative bg-white dark:bg-slate-800 p-2.5 rounded-xl border border-slate-100 dark:border-slate-700 shadow-sm hover:shadow-md transition-all duration-300">
         <div className="flex items-center justify-between gap-2 mb-2">
           <div className="flex items-baseline gap-2 flex-1">
             <p className="font-bold text-xs bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
               {message.is_anonymous ? "Anonyme" : message.author_name}
             </p>
-            <p className="text-[10px] text-slate-400">
+            <p className="text-[10px] text-slate-400 dark:text-slate-500">
               {formatDistanceWithTimezone(message.created_date)}
               {message.is_edited && " (modifié)"}
             </p>
@@ -471,7 +471,7 @@ const NationalMessageBubble = ({ message, user, onEdit, onSave, onCancelEdit, on
               <Button 
                 variant="ghost" 
                 size="icon" 
-                className="h-7 w-7 text-red-500 hover:bg-red-50" 
+                className="h-7 w-7 text-red-500 hover:bg-red-50 dark:hover:bg-red-950" 
                 onClick={() => onReport(message)}
               >
                 <Flag className="w-3.5 h-3.5" />
@@ -482,7 +482,7 @@ const NationalMessageBubble = ({ message, user, onEdit, onSave, onCancelEdit, on
                 <Button 
                   variant="outline" 
                   size="sm" 
-                  className="h-7 px-2 bg-red-50 border-red-200 text-red-600 hover:bg-red-100 font-semibold shadow-sm" 
+                  className="h-7 px-2 bg-red-50 dark:bg-red-950/30 border-red-200 dark:border-red-900 text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-950 font-semibold shadow-sm" 
                   onClick={() => onDelete(message.id)}
                 >
                   <Trash2 className="w-3.5 h-3.5 mr-1" />
@@ -492,7 +492,7 @@ const NationalMessageBubble = ({ message, user, onEdit, onSave, onCancelEdit, on
                   <Button 
                     variant="outline" 
                     size="sm" 
-                    className="h-7 px-2 bg-blue-50 border-blue-200 text-blue-600 hover:bg-blue-100" 
+                    className="h-7 px-2 bg-blue-50 dark:bg-blue-950/30 border-blue-200 dark:border-blue-900 text-blue-600 dark:text-blue-400 hover:bg-blue-100 dark:hover:bg-blue-950" 
                     onClick={() => onEdit(message)}
                   >
                     <Edit className="w-3.5 h-3.5 mr-1" />
@@ -509,10 +509,10 @@ const NationalMessageBubble = ({ message, user, onEdit, onSave, onCancelEdit, on
             <Textarea
               value={editedContent}
               onChange={(e) => setEditedContent(e.target.value)}
-              className="bg-slate-50 text-slate-900 text-sm min-h-[60px] mb-2"
+              className="bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white text-sm min-h-[60px] mb-2 dark:border-slate-600"
             />
             <div className="flex gap-2 justify-end">
-              <Button size="sm" variant="ghost" onClick={onCancelEdit} className="h-7 text-xs">
+              <Button size="sm" variant="ghost" onClick={onCancelEdit} className="h-7 text-xs dark:text-slate-300 dark:hover:bg-slate-700">
                 Annuler
               </Button>
               <Button size="sm" onClick={() => onSave(message.id, editedContent, message.edit_count || 0)} className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 text-white h-7 text-xs border-0">
@@ -521,7 +521,7 @@ const NationalMessageBubble = ({ message, user, onEdit, onSave, onCancelEdit, on
             </div>
           </div>
         ) : (
-          <p className="text-sm leading-relaxed text-slate-700 font-medium">
+          <p className="text-sm leading-relaxed text-slate-700 dark:text-slate-200 font-medium">
             {message.message}
           </p>
         )}

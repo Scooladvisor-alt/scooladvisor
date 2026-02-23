@@ -352,7 +352,7 @@ export default function AddTeacherReviewDialog({ open, onOpenChange, teacherId, 
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-[95vw] sm:max-w-5xl max-h-[90vh] overflow-y-auto rounded-2xl [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+      <DialogContent className="max-w-[95vw] sm:max-w-5xl max-h-[90vh] overflow-y-auto rounded-2xl [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] dark:bg-slate-800 dark:border-slate-700">
         <DialogHeader className="text-center pb-2">
           <DialogTitle className="text-lg sm:text-2xl font-bold text-center">
             <span className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
@@ -394,21 +394,21 @@ export default function AddTeacherReviewDialog({ open, onOpenChange, teacherId, 
               return (
                 <div
                   key={key}
-                  className={`rounded-lg p-1.5 sm:p-3 border border-slate-200 transition-all duration-500 relative overflow-hidden ${
-                  isMax ? gradient : 'bg-slate-50'} ${
-                  isFlashing ? 'animate-widget-shine ring-2 ring-offset-2 ring-offset-white ring-yellow-400' : ''}`}>
+                  className={`rounded-lg p-1.5 sm:p-3 border border-slate-200 dark:border-slate-600 transition-all duration-500 relative overflow-hidden ${
+                  isMax ? gradient : 'bg-slate-50 dark:bg-slate-900'} ${
+                  isFlashing ? 'animate-widget-shine ring-2 ring-offset-2 ring-offset-white dark:ring-offset-slate-800 ring-yellow-400' : ''}`}>
 
                   <div className="flex items-center justify-between gap-2 relative z-10">
                     <div className="flex items-center gap-1.5 flex-1 min-w-0">
                       <Icon className={`w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0 ${color}`} />
                       <div className="min-w-0">
-                        <Label className="font-semibold text-[11px] sm:text-xs block">{label}</Label>
-                        <p className="text-[8px] sm:text-[9px] text-slate-500 truncate">{description}</p>
+                        <Label className="font-semibold text-[11px] sm:text-xs block dark:text-white">{label}</Label>
+                        <p className="text-[8px] sm:text-[9px] text-slate-500 dark:text-slate-400 truncate">{description}</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-0.5">
-                      <span className="text-sm sm:text-base font-bold text-slate-900">{formData[key].toFixed(2).replace(/[.,]00$/, "")}</span>
-                      <span className="text-xs text-slate-500">/5</span>
+                      <span className="text-sm sm:text-base font-bold text-slate-900 dark:text-white">{formData[key].toFixed(2).replace(/[.,]00$/, "")}</span>
+                      <span className="text-xs text-slate-500 dark:text-slate-400">/5</span>
                     </div>
                   </div>
                   <div className={sliderClass + " mt-1.5 relative z-10"}>
@@ -457,9 +457,9 @@ export default function AddTeacherReviewDialog({ open, onOpenChange, teacherId, 
                 }}
                 placeholder="APPRÉCIATION GÉNÉRALE *"
                 rows={2}
-                className="text-sm sm:text-base pb-8" />
+                className="text-sm sm:text-base pb-8 dark:bg-slate-700 dark:border-slate-600 dark:text-white" />
               
-              <div className="absolute bottom-1.5 left-2 right-2 flex items-center justify-between gap-2 bg-white/95 rounded px-1.5 py-1 checkbox-gradient-only">
+              <div className="absolute bottom-1.5 left-2 right-2 flex items-center justify-between gap-2 bg-white/95 dark:bg-slate-800/95 rounded px-1.5 py-1 checkbox-gradient-only">
                 <div className="flex items-center gap-2">
                   <label htmlFor="is_anonymous_inline" className="flex items-center gap-1 cursor-pointer">
                     <Checkbox
@@ -468,7 +468,7 @@ export default function AddTeacherReviewDialog({ open, onOpenChange, teacherId, 
                       onCheckedChange={(checked) => setFormData({ ...formData, is_anonymous: checked })}
                       className="h-3 w-3 checkbox-gradient-border"
                       disabled={false} />
-                    <span className="text-[9px] sm:text-[10px] font-medium text-slate-600">Anonyme</span>
+                    <span className="text-[9px] sm:text-[10px] font-medium text-slate-600 dark:text-slate-300">Anonyme</span>
                   </label>
 
                   <label htmlFor="is_former_student_inline" className="flex items-center gap-1 cursor-pointer">
@@ -478,7 +478,7 @@ export default function AddTeacherReviewDialog({ open, onOpenChange, teacherId, 
                       onCheckedChange={(checked) => setFormData({ ...formData, is_former_student: checked })}
                       className="h-3 w-3 checkbox-gradient-border"
                       disabled={false} />
-                    <span className="text-[9px] sm:text-[10px] font-medium text-slate-600">Ancien</span>
+                    <span className="text-[9px] sm:text-[10px] font-medium text-slate-600 dark:text-slate-300">Ancien</span>
                   </label>
                 </div>
                 
@@ -489,7 +489,7 @@ export default function AddTeacherReviewDialog({ open, onOpenChange, teacherId, 
             </div>
           </div>
 
-          <div className="flex items-center gap-2 p-2 bg-slate-50 rounded-lg border border-slate-200 checkbox-gradient-only">
+          <div className="flex items-center gap-2 p-2 bg-slate-50 dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-600 checkbox-gradient-only">
             <Checkbox
               id="certification"
               checked={formData.certification}
@@ -497,7 +497,7 @@ export default function AddTeacherReviewDialog({ open, onOpenChange, teacherId, 
               className="h-3 w-3 checkbox-gradient-border" />
             <label
               htmlFor="certification"
-              className="text-[10px] font-medium cursor-pointer text-slate-700 leading-tight">
+              className="text-[10px] font-medium cursor-pointer text-slate-700 dark:text-slate-200 leading-tight">
               Je certifie être responsable de mon avis
             </label>
           </div>
