@@ -437,6 +437,37 @@ export default function Layout({ children }) {
               <span className="text-base sm:text-2xl font-bold bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 text-transparent bg-clip-text">Scooladvisor</span>
             </Link>
 
+            <nav className="hidden md:flex items-center gap-6 flex-1 justify-center">
+              {navigationItems.map((item) => (
+                <Link
+                  key={item.title}
+                  to={item.url}
+                  className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all font-medium ${
+                    location.pathname === item.url
+                      ? 'text-slate-900 dark:text-white bg-slate-100 dark:bg-slate-700'
+                      : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800'
+                  }`}
+                >
+                  <item.icon className="w-4 h-4" />
+                  <span>{item.title}</span>
+                </Link>
+              ))}
+              
+              {user && (user.role === 'moderator' || user.role === 'admin') && (
+                <Link
+                  to={createPageUrl("Moderation")}
+                  className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all font-medium ${
+                    location.pathname === createPageUrl("Moderation")
+                      ? 'text-amber-700 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/30'
+                      : 'text-slate-600 dark:text-slate-300 hover:text-amber-700 dark:hover:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-900/30'
+                  }`}
+                >
+                  <ShieldCheck className="w-4 h-4" />
+                  <span>Modération</span>
+                </Link>
+              )}
+            </nav>
+
             <div className="flex items-center gap-1 sm:gap-3 pr-0 min-w-[100px] sm:min-w-[140px] justify-end">
               {loading ?
               <div className="w-10 h-10 bg-slate-200 rounded-full animate-pulse" /> :
