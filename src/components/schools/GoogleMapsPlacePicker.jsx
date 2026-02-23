@@ -235,7 +235,8 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
       'professionnel',
       'professionnelle',
       'polyvalent',
-      'polyvalente'
+      'polyvalente',
+      'et'
     ];
     
     let cleaned = name;
