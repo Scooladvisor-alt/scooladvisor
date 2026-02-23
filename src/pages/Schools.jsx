@@ -348,7 +348,7 @@ export default function SchoolsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-purple-50 to-blue-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-purple-50 to-blue-50">
       {/* Pull to Refresh Indicator */}
       {isPulling && (
         <div 
@@ -536,21 +536,21 @@ export default function SchoolsPage() {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-12">
 
-          <div className="inline-flex items-center gap-2 bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm px-4 py-2 rounded-full border border-purple-100 dark:border-slate-700 shadow-sm mb-6 relative z-10">
+          <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full border border-purple-100 shadow-sm mb-6 relative z-10">
             <TrendingUp className="w-4 h-4 text-[#FF4D8D]" />
             <span className="text-sm font-medium bg-gradient-to-r from-[#FF4D8D] to-purple-600 bg-clip-text text-transparent">
               Le réseau social des étudiants
             </span>
           </div>
 
-          <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold text-slate-900 dark:text-white mb-4 sm:mb-6 leading-tight relative z-10 cursor-default">
+          <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold text-slate-900 mb-4 sm:mb-6 leading-tight relative z-10 cursor-default">
             <span className="btn-shine-hover inline-block text-6xl sm:text-5xl md:text-7xl lg:text-8xl bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent mb-2">
               L'avis des étudiants
             </span>
-            <span className="block text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-slate-900 dark:text-white">sur leurs écoles et professeurs</span>
+            <span className="block text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-slate-900">sur leurs écoles et professeurs</span>
           </h1>
 
-          <p className="hidden sm:block text-xs sm:text-sm md:text-base text-slate-600 dark:text-slate-300 max-w-3xl mx-auto mb-4 sm:mb-8 relative z-10">Les profs notent, les élèves aussi 😎</p>
+          <p className="hidden sm:block text-xs sm:text-sm md:text-base text-slate-600 max-w-3xl mx-auto mb-4 sm:mb-8 relative z-10">Les profs notent, les élèves aussi 😎</p>
         </motion.div>
 
         <motion.div
@@ -559,19 +559,19 @@ export default function SchoolsPage() {
           transition={{ delay: 0.1 }}
           className="rotating-shine-widget rounded-2xl shadow-lg mb-6 sm:mb-8">
 
-          <div className="search-widget-content p-3 sm:p-6 dark:bg-slate-800">
+          <div className="search-widget-content p-3 sm:p-6">
             <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 items-start sm:items-center">
               <div className="flex-1 relative w-full">
-                <Search className="absolute left-2.5 sm:left-3 top-1/2 transform -translate-y-1/2 w-3.5 h-3.5 sm:w-5 sm:h-5 text-slate-400 dark:text-slate-500 z-10" />
+                <Search className="absolute left-2.5 sm:left-3 top-1/2 transform -translate-y-1/2 w-3.5 h-3.5 sm:w-5 sm:h-5 text-slate-400 z-10" />
                 <Input
                   placeholder="Chercher école ou ville..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-8 sm:pl-10 h-9 sm:h-12 border-slate-200 dark:border-slate-600 dark:bg-slate-700 dark:text-white focus:border-blue-400 text-xs sm:text-base w-full" />
+                  className="pl-8 sm:pl-10 h-9 sm:h-12 border-slate-200 focus:border-blue-400 text-xs sm:text-base w-full" />
               </div>
 
               <Select value={typeFilter} onValueChange={setTypeFilter}>
-                <SelectTrigger className="h-9 sm:h-12 text-xs sm:text-base w-full sm:w-[220px] border-slate-200 dark:border-slate-600 dark:bg-slate-700 dark:text-white">
+                <SelectTrigger className="h-9 sm:h-12 text-xs sm:text-base w-full sm:w-[220px] border-slate-200">
                   <SelectValue placeholder="Type">
                     {typeFilter === "all" ? (
                       <span className="text-slate-600 font-medium text-xs sm:text-sm">Tous les types</span>
@@ -672,7 +672,7 @@ export default function SchoolsPage() {
             </div>
 
             <div className="flex items-center justify-between gap-3 pt-3 border-t border-slate-100 mt-3">
-              <div className="flex items-center gap-1 sm:gap-1.5 text-[10px] sm:text-sm text-slate-600 dark:text-slate-300">
+              <div className="flex items-center gap-1 sm:gap-1.5 text-[10px] sm:text-sm text-slate-600">
                 <Filter className="w-3 h-3 sm:w-4 sm:h-4" />
                 <span>{filteredTotalCount} établissement(s)</span>
               </div>
@@ -684,7 +684,7 @@ export default function SchoolsPage() {
                   onCheckedChange={setInternationalOnly} />
                 <Label
                   htmlFor="international-mobile"
-                  className="text-[10px] text-slate-600 dark:text-slate-300 cursor-pointer flex items-center gap-1">
+                  className="text-[10px] text-slate-600 cursor-pointer flex items-center gap-1">
                   <Globe className="w-3 h-3" />
                   <span>International</span>
                 </Label>
@@ -725,11 +725,11 @@ export default function SchoolsPage() {
           </div> :
         schools.length === 0 ?
         <div className="text-center py-20">
-            <div className="w-20 h-20 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className="w-20 h-20 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <Search className="w-10 h-10 text-slate-400" />
             </div>
-            <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-2">Aucun établissement trouvé</h3>
-            <p className="text-slate-600 dark:text-slate-300 mb-4">Commencez par ajouter des établissements.</p>
+            <h3 className="text-xl font-semibold text-slate-900 mb-2">Aucun établissement trouvé</h3>
+            <p className="text-slate-600 mb-4">Commencez par ajouter des établissements.</p>
             {user &&
           <Button onClick={() => setShowAddDialog(true)}>
                 <Plus className="w-4 h-4 mr-2" />
@@ -744,13 +744,13 @@ export default function SchoolsPage() {
             animate={{ opacity: 1, scale: 1 }}
             className="max-w-md mx-auto">
 
-              <div className="w-20 h-20 bg-gradient-to-br from-amber-100 to-amber-200 dark:from-amber-900 dark:to-amber-800 rounded-full flex items-center justify-center mx-auto mb-6">
+              <div className="w-20 h-20 bg-gradient-to-br from-amber-100 to-amber-200 rounded-full flex items-center justify-center mx-auto mb-6">
                 <Search className="w-10 h-10 text-amber-600" />
               </div>
-              <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-3">
+              <h3 className="text-2xl font-bold text-slate-900 mb-3">
                 Ton école n'est pas là ?
               </h3>
-              <p className="text-slate-600 dark:text-slate-300 mb-6">
+              <p className="text-slate-600 mb-6">
                 Ajoute-la maintenant et sois le premier à donner ton avis ! 🚀
               </p>
               <Button
