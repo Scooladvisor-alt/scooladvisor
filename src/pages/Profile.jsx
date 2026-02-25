@@ -294,7 +294,7 @@ export default function ProfilePage() {
   const avatarUrl = user.profile_avatar && user.profile_avatar !== 'letter' ? getAvatarUrl(user.profile_avatar) : null;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 overflow-x-hidden">
       {/* Pull to Refresh Indicator */}
       {isPulling && (
         <div 
@@ -371,12 +371,13 @@ export default function ProfilePage() {
         }
       `}</style>
       
-      <div className="min-h-screen px-4 py-8">
+      <div className="min-h-screen">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}>
+          animate={{ opacity: 1, y: 0 }}
+          className="h-full">
 
-          <Card className="bg-white/80 dark:bg-slate-800/80 border-slate-200 dark:border-slate-700 backdrop-blur-sm shadow-xl relative z-10">
+          <Card className="bg-white/80 dark:bg-slate-800/80 border-slate-200 dark:border-slate-700 backdrop-blur-sm shadow-xl relative z-10 h-full rounded-none border-x-0">
             <CardHeader className="border-slate-100 dark:border-slate-700 border-b">
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                 <CardTitle className="tracking-tight text-2xl sm:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent whitespace-nowrap">
@@ -710,7 +711,7 @@ export default function ProfilePage() {
           </Card>
 
           {/* Zone de suppression de compte */}
-          <div className="mt-8 flex justify-center">
+          <div className="mt-0 pb-6 flex justify-center">
             <button
               onClick={() => setShowDeleteDialog(true)}
               className="text-xs text-slate-400 dark:text-slate-500 hover:text-red-500 dark:hover:text-red-400 transition-colors flex items-center gap-1">
