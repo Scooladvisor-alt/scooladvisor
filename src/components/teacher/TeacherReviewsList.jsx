@@ -449,12 +449,12 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
                         <ChevronDown className={`w-5 h-5 transition-transform duration-300 ${expandedReviews.has(review.id) ? 'rotate-180' : ''}`} />
                       </button>
                     </div>
-                    {isCommentLong(review.comment) && (
+                    {isCommentLong(review.comment) && !expandedComments.has(review.id) && (
                       <button
                         onClick={() => toggleCommentExpand(review.id)}
                         className="text-xs text-blue-600 hover:text-blue-700 font-medium mt-1"
                       >
-                        {expandedComments.has(review.id) ? "Voir moins" : "Voir plus"}
+                        Voir plus
                       </button>
                     )}
                   </div>
