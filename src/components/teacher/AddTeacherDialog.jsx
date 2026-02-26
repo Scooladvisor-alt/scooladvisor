@@ -174,6 +174,7 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
               value={formData.name}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
               required
+              className="text-slate-900 dark:text-white"
             />
           </div>
 
@@ -208,6 +209,7 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
                 placeholder="Nom de la nouvelle matière"
                 value={newSubject}
                 onChange={(e) => setNewSubject(e.target.value)}
+                className="text-slate-900 dark:text-white"
               />
               <Button type="button" onClick={handleAddNewSubject}>Ajouter</Button>
             </div>

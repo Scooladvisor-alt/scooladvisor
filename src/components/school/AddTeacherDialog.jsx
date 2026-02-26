@@ -363,7 +363,7 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 required
                 placeholder="M. Dupont"
-                className="h-7 text-xs sm:text-sm flex-1 dark:bg-slate-900 dark:border-slate-600 dark:text-white" />
+                className="h-7 text-xs sm:text-sm flex-1 text-slate-900 dark:bg-slate-900 dark:border-slate-600 dark:text-white" />
               <div className="flex items-center gap-1.5 bg-gradient-to-r from-pink-50 to-blue-50 dark:from-pink-950/30 dark:to-blue-950/30 px-2 py-1.5 rounded-lg border border-pink-200 dark:border-pink-800">
                 <input
                   type="checkbox"
@@ -422,7 +422,7 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
               onChange={(e) => setFormData({ ...formData, customSubject: e.target.value })}
               required
               placeholder="Entrez le nom de la matière"
-              className="h-8 text-xs sm:text-sm dark:bg-slate-900 dark:border-slate-600 dark:text-white" />
+              className="h-8 text-xs sm:text-sm text-slate-900 dark:bg-slate-900 dark:border-slate-600 dark:text-white" />
 
               <Button
               type="button"

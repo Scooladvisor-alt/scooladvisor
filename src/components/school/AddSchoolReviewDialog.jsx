@@ -626,7 +626,7 @@ rejected → si le message enfreint les règles ci-dessus"
                 }}
                 placeholder="APPRÉCIATION GÉNÉRALE *"
                 rows={2}
-                className="text-sm sm:text-base pb-8 dark:bg-slate-700 dark:border-slate-600 dark:text-white" />
+                className="text-sm sm:text-base pb-8 text-slate-900 dark:bg-slate-700 dark:border-slate-600 dark:text-white" />
               
               <div className="absolute bottom-1.5 left-2 right-2 flex items-center justify-between gap-2 bg-white/95 dark:bg-slate-800/95 rounded px-1.5 py-1 checkbox-gradient-only">
                 <div className="flex items-center gap-2">
