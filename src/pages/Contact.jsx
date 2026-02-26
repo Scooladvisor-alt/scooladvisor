@@ -101,7 +101,8 @@ export default function ContactPage() {
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                       required
-                      placeholder="Votre nom" />
+                      placeholder="Votre nom"
+                      className="text-slate-900 dark:text-white" />
 
                     </div>
 
@@ -113,7 +114,8 @@ export default function ContactPage() {
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       required
-                      placeholder="votre.email@exemple.com" />
+                      placeholder="votre.email@exemple.com"
+                      className="text-slate-900 dark:text-white" />
 
                     </div>
                   </div>
@@ -125,7 +127,8 @@ export default function ContactPage() {
                     value={formData.subject}
                     onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                     required
-                    placeholder="Objet de votre message" />
+                    placeholder="Objet de votre message"
+                    className="text-slate-900 dark:text-white" />
 
                   </div>
 
@@ -137,7 +140,8 @@ export default function ContactPage() {
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     required
                     placeholder="Décrivez votre demande..."
-                    rows={6} />
+                    rows={6}
+                    className="text-slate-900 dark:text-white" />
 
                   </div>
 
