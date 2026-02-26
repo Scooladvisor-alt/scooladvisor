@@ -102,7 +102,7 @@ export default function ReportDialog({ open, onOpenChange, reviewType, reviewId,
             onChange={(e) => setDetails(e.target.value)}
             placeholder="Détails supplémentaires (optionnel)..."
             rows={3}
-            className="text-xs placeholder:text-xs"
+            className="text-xs placeholder:text-xs text-slate-900 dark:text-white"
           />
 
           <Alert className="bg-blue-50 border-blue-200 p-2 sm:p-4">

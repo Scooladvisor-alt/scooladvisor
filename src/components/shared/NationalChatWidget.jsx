@@ -379,7 +379,7 @@ Si la décision est "approved", "reason" peut être vide ou null.`,
                     setNewMessage(text);
                   }
                 }}
-                className="min-h-[60px] text-xs pr-20 pb-8 resize-none rounded-2xl dark:bg-slate-700 dark:border-slate-600 dark:text-white"
+                className="min-h-[60px] text-xs pr-20 pb-8 resize-none rounded-2xl text-slate-900 dark:bg-slate-700 dark:border-slate-600 dark:text-white"
                 disabled={!user} 
               />
               

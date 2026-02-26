@@ -148,7 +148,7 @@ export default function TeacherLoveNotes({ teacherId, user }) {
                 placeholder="Merci pour tout, meilleur prof..."
                 value={newMessage}
                 onChange={(e) => setNewMessage(e.target.value)}
-                className="bg-white border-pink-200 focus:border-pink-400 min-h-[60px] mb-2 text-sm" />
+                className="bg-white border-pink-200 focus:border-pink-400 min-h-[60px] mb-2 text-sm text-slate-900 dark:bg-slate-900 dark:border-slate-600 dark:text-white" />
 
                 <div className="flex items-center justify-between gap-2">
                   <div className="flex items-center space-x-2 bg-white/50 px-2 py-1 rounded border border-pink-100">

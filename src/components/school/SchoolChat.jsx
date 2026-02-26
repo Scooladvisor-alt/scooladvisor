@@ -38,7 +38,7 @@ const ChatBubble = ({ message, user, onEdit, onSave, onCancelEdit, onDelete, onR
             <Textarea
               value={editedContent}
               onChange={(e) => setEditedContent(e.target.value)}
-              className="bg-slate-50 text-slate-900 text-sm min-h-[80px] mb-2"
+              className="bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white text-sm min-h-[80px] mb-2 dark:border-slate-600"
             />
             <div className="flex gap-2 justify-end">
               <Button size="sm" variant="ghost" onClick={onCancelEdit} className="h-8 text-xs">
@@ -559,7 +559,7 @@ Si la décision est "approved", la "reason" doit être null.`,
                     setNewMessage(text);
                   }
                 }}
-                className="min-h-[60px] text-xs pr-20 pb-8 resize-none rounded-2xl"
+                className="min-h-[60px] text-xs pr-20 pb-8 resize-none rounded-2xl text-slate-900 dark:bg-slate-700 dark:border-slate-600 dark:text-white"
                 disabled={!user} 
               />
               
