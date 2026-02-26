@@ -351,21 +351,19 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
         setIsAddressManuallyChanged(false);
       }
     }}>
-      <DialogContent className="max-w-full sm:max-w-5xl h-screen sm:max-h-[90vh] overflow-y-auto rounded-none sm:rounded-2xl m-0 sm:m-auto p-4 sm:p-6">
-        <DialogHeader className="text-center">
-          <DialogTitle className="text-lg sm:text-2xl font-bold text-center">
+      <DialogContent className="max-w-full sm:max-w-5xl h-screen sm:max-h-[90vh] overflow-y-auto rounded-none sm:rounded-2xl m-0 sm:m-auto p-4 sm:p-6 flex flex-col">
+        <DialogHeader className="text-center flex-shrink-0 pb-4 sm:pb-6">
+          <DialogTitle className="text-xl sm:text-2xl font-bold text-center">
             <span className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
               Ton établissement est absent ?
             </span>
-            <p className="text-sm sm:text-base font-normal text-slate-600 mt-2">Sois celui qui le fait débarquer ! 🚀</p>
+            <p className="text-sm sm:text-base font-normal text-slate-600 dark:text-slate-400 mt-2">Sois celui qui le fait débarquer ! 🚀</p>
           </DialogTitle>
         </DialogHeader>
 
-
-
-        <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
+        <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5 flex-1 flex flex-col">
           <div className="space-y-1 sm:space-y-2">
-            <Label htmlFor="type" className="text-xs sm:text-sm">Type d'établissement *</Label>
+            <Label htmlFor="type" className="text-sm sm:text-base font-medium">Type d'établissement *</Label>
             <Select
               value={formData.type}
               onValueChange={(value) => {
@@ -384,7 +382,7 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
                 setFormData({ ...formData, type: value, name: newName });
               }}>
 
-              <SelectTrigger id="type" className="h-9 sm:h-10 text-xs sm:text-sm">
+              <SelectTrigger id="type" className="h-11 sm:h-12 text-sm sm:text-base">
                 <SelectValue placeholder="Sélectionnez un type">
                   {formData.type === "college" ? (
                     <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold border-2 shadow-md bg-[#3498DB] text-white border-[#3498DB]">
@@ -453,14 +451,14 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
           <Button
             type="button"
             onClick={() => setShowMapsPicker(true)}
-            className="w-full h-10 bg-gradient-to-r from-pink-500/20 via-purple-500/20 to-blue-500/20 hover:bg-gradient-to-r hover:from-pink-500/20 hover:via-purple-500/20 hover:to-blue-500/20 text-black border-2 border-black shadow-lg shadow-purple-300/50 relative overflow-hidden hover:shadow-xl transition-shadow duration-300 before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-white/20 before:to-transparent before:translate-x-[-200%] hover:before:translate-x-[200%] before:transition-transform before:duration-700"
+            className="w-full h-11 sm:h-12 bg-gradient-to-r from-pink-500/20 via-purple-500/20 to-blue-500/20 hover:bg-gradient-to-r hover:from-pink-500/30 hover:via-purple-500/30 hover:to-blue-500/30 text-black dark:text-white border-2 border-black dark:border-white shadow-lg shadow-purple-300/50 dark:shadow-purple-900/50 relative overflow-hidden hover:shadow-xl transition-all duration-300 before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-white/20 before:to-transparent before:translate-x-[-200%] hover:before:translate-x-[200%] before:transition-transform before:duration-700 active:scale-95"
           >
-            <MapPin className="w-4 h-4 mr-2 text-black relative z-10" />
-            <span className="font-medium relative z-10">Trouver mon école sur Google Maps</span>
+            <MapPin className="w-4 h-4 sm:w-5 sm:h-5 mr-2 text-black dark:text-white relative z-10" />
+            <span className="font-semibold text-sm sm:text-base relative z-10">Trouver mon école sur Google Maps</span>
           </Button>
 
           <div className="space-y-1 sm:space-y-2">
-            <Label htmlFor="name" className="text-xs sm:text-sm">Nom de l'établissement *</Label>
+            <Label htmlFor="name" className="text-sm sm:text-base font-medium">Nom de l'établissement *</Label>
             <Input
               id="name"
               ref={nameInputRef}
@@ -491,12 +489,12 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
               }}
               required
               placeholder={hasLockedPrefix(formData.type) ? `${getSchoolPrefix(formData.type)}Victor Hugo` : "École de management..."}
-              className="h-9 sm:h-10 text-xs sm:text-sm" />
+              className="h-11 sm:h-12 text-sm sm:text-base" />
 
           </div>
 
           <div className="space-y-1 sm:space-y-2 relative" ref={addressInputRef}>
-            <Label htmlFor="address" className="text-xs sm:text-sm">Adresse *</Label>
+            <Label htmlFor="address" className="text-sm sm:text-base font-medium">Adresse *</Label>
             <Input
               id="address"
               value={formData.address}
@@ -506,7 +504,7 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
               }}
               required
               placeholder="10 rue de la République"
-              className="h-9 sm:h-10 text-xs sm:text-sm" />
+              className="h-11 sm:h-12 text-sm sm:text-base" />
 
             {addressLoading &&
             <div className="absolute right-3 top-9">
@@ -539,7 +537,7 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
           </div>
 
           <div className="space-y-1 sm:space-y-2">
-            <Label htmlFor="city" className="text-xs sm:text-sm">Ville *</Label>
+            <Label htmlFor="city" className="text-sm sm:text-base font-medium">Ville *</Label>
             <div className="flex gap-2 sm:gap-3">
               <Input
                 id="city"
@@ -548,9 +546,9 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
                 onChange={(e) => setFormData({ ...formData, city: e.target.value })}
                 required
                 placeholder="Paris"
-                className="h-9 sm:h-10 text-xs sm:text-sm flex-1" />
+                className="h-11 sm:h-12 text-sm sm:text-base flex-1" />
 
-              <div className="flex items-center space-x-2 px-3 bg-gradient-to-r from-pink-100 to-blue-100 rounded-lg border border-blue-200 whitespace-nowrap">
+              <div className="flex items-center space-x-2 px-3 sm:px-4 bg-gradient-to-r from-pink-100 to-blue-100 dark:from-pink-900/30 dark:to-blue-900/30 rounded-lg border-2 border-blue-200 dark:border-blue-700 whitespace-nowrap h-11 sm:h-12">
                 <Checkbox
                   id="isInternational"
                   checked={formData.isInternational}
@@ -558,7 +556,7 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
 
                 <label
                   htmlFor="isInternational"
-                  className="text-xs sm:text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer text-slate-700">
+                  className="text-sm sm:text-base font-semibold leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer text-slate-700 dark:text-slate-300">
 
                   Hors France
                 </label>
@@ -566,15 +564,15 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
             </div>
           </div>
           
-          <DialogFooter className="flex flex-col sm:flex-row sm:justify-center sm:items-center gap-2 mt-4 sm:mt-6">
+          <DialogFooter className="flex flex-col sm:flex-row sm:justify-center sm:items-center gap-2 mt-auto pt-6 sticky bottom-0 bg-white dark:bg-slate-900 pb-2">
             <Button
               type="submit"
               disabled={loading}
-              className="w-full bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-white text-xs sm:text-sm h-10 sm:h-11 font-semibold shadow-md">
+              className="w-full bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-white text-base sm:text-lg h-12 sm:h-14 font-bold shadow-lg active:scale-95 transition-transform">
 
               {loading ?
               <>
-                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                  <Loader2 className="w-5 h-5 mr-2 animate-spin" />
                   Ajout en cours...
                 </> :
 
