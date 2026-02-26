@@ -285,8 +285,8 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
 
   return (
     <Dialog open={open} onOpenChange={handleClose}>
-      <DialogContent className="max-w-[96vw] sm:max-w-5xl max-h-[92vh] sm:max-h-[90vh] overflow-y-auto rounded-2xl p-5 sm:p-6 [&>button]:hidden flex flex-col">
-        <div className="space-y-4 flex-1 flex flex-col">
+      <DialogContent className="max-w-[96vw] sm:max-w-5xl max-h-[92vh] sm:max-h-[90vh] overflow-hidden rounded-2xl p-0 [&>button]:hidden">
+        <div className="p-5 sm:p-6 space-y-4 overflow-y-auto max-h-[92vh] sm:max-h-[90vh]">
           {error && !user &&
           <Alert variant="destructive">
               <AlertCircle className="h-4 w-4" />
@@ -347,7 +347,7 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
           </div>
 
           {/* Carte */}
-          <div className="relative w-full flex-1 min-h-[40vh] rounded-xl overflow-hidden border border-slate-200 bg-slate-100">
+          <div className="relative w-full h-[50vh] rounded-xl overflow-hidden border border-slate-200 bg-slate-100">
             {loading && !user &&
             <div className="absolute inset-0 flex items-center justify-center bg-slate-100/90 backdrop-blur-sm z-10">
                 <div className="text-center">
