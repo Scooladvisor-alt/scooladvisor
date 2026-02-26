@@ -567,7 +567,7 @@ export default function SchoolsPage() {
                   placeholder="Chercher école ou ville..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-8 sm:pl-10 h-9 sm:h-12 border-slate-200 dark:border-slate-600 dark:bg-slate-700 dark:text-white focus:border-blue-400 text-xs sm:text-base w-full" />
+                  className="pl-8 sm:pl-10 h-9 sm:h-12 border-slate-200 dark:border-slate-600 dark:bg-slate-700 dark:text-white text-slate-900 dark:placeholder:text-slate-400 placeholder:text-slate-400 focus:border-blue-400 text-xs sm:text-base w-full" />
               </div>
 
               <Select value={typeFilter} onValueChange={setTypeFilter}>
