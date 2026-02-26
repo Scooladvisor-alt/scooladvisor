@@ -385,15 +385,67 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
               }}>
 
               <SelectTrigger id="type" className="h-9 sm:h-10 text-xs sm:text-sm">
-                <SelectValue placeholder="Sélectionnez un type" />
+                <SelectValue placeholder="Sélectionnez un type">
+                  {formData.type === "college" ? (
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold border-2 shadow-md bg-[#3498DB] text-white border-[#3498DB]">
+                      Collège
+                    </span>
+                  ) : formData.type === "lycee" ? (
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold border-2 shadow-md bg-[#1ABC9C] text-white border-[#1ABC9C]">
+                      Lycée
+                    </span>
+                  ) : formData.type === "universite" ? (
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold border-2 shadow-md bg-[#27AE60] text-white border-[#27AE60]">
+                      Université
+                    </span>
+                  ) : formData.type === "ecole_privee" ? (
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold border-2 shadow-md bg-[#F39C12] text-white border-[#F39C12]">
+                      École privée
+                    </span>
+                  ) : formData.type === "ecole_commerce" ? (
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold border-2 shadow-md bg-[#E74C3C] text-white border-[#E74C3C]">
+                      École de commerce
+                    </span>
+                  ) : formData.type === "ecole_ingenieur" ? (
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold border-2 shadow-md bg-[#FF6B35] text-white border-[#FF6B35]">
+                      École d'ingénieurs
+                    </span>
+                  ) : (
+                    <span className="text-slate-600">Sélectionnez un type</span>
+                  )}
+                </SelectValue>
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="college">Collège</SelectItem>
-                <SelectItem value="lycee">Lycée</SelectItem>
-                <SelectItem value="universite">Université</SelectItem>
-                <SelectItem value="ecole_privee">École privée</SelectItem>
-                <SelectItem value="ecole_commerce">École de commerce</SelectItem>
-                <SelectItem value="ecole_ingenieur">École d'ingénieurs</SelectItem>
+                <SelectItem value="college">
+                  <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold border-2 shadow-md bg-[#3498DB] text-white border-[#3498DB]">
+                    Collège
+                  </span>
+                </SelectItem>
+                <SelectItem value="lycee">
+                  <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold border-2 shadow-md bg-[#1ABC9C] text-white border-[#1ABC9C]">
+                    Lycée
+                  </span>
+                </SelectItem>
+                <SelectItem value="universite">
+                  <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold border-2 shadow-md bg-[#27AE60] text-white border-[#27AE60]">
+                    Université
+                  </span>
+                </SelectItem>
+                <SelectItem value="ecole_privee">
+                  <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold border-2 shadow-md bg-[#F39C12] text-white border-[#F39C12]">
+                    École privée
+                  </span>
+                </SelectItem>
+                <SelectItem value="ecole_commerce">
+                  <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold border-2 shadow-md bg-[#E74C3C] text-white border-[#E74C3C]">
+                    École de commerce
+                  </span>
+                </SelectItem>
+                <SelectItem value="ecole_ingenieur">
+                  <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold border-2 shadow-md bg-[#FF6B35] text-white border-[#FF6B35]">
+                    École d'ingénieurs
+                  </span>
+                </SelectItem>
               </SelectContent>
             </Select>
           </div>
