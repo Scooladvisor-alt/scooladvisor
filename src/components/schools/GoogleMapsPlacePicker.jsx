@@ -304,7 +304,7 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && handleSearch()}
                 placeholder="Rechercher un établissement, une adresse..."
-                className="pl-9 h-9"
+                className="pl-9 h-9 text-slate-900 dark:text-white"
                 disabled={!user} />
 
             </div>
