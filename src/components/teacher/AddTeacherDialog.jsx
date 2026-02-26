@@ -168,7 +168,7 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="name">Nom du professeur</Label>
+            <Label htmlFor="name" className="text-slate-900 dark:text-slate-200">Nom du professeur</Label>
             <Input
               id="name"
               value={formData.name}
@@ -178,7 +178,7 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="subject">Matière enseignée</Label>
+            <Label htmlFor="subject" className="text-slate-900 dark:text-slate-200">Matière enseignée</Label>
             <Select
               value={formData.subject}
               onValueChange={(value) => setFormData({ ...formData, subject: value })}

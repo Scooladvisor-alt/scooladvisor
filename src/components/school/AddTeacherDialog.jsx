@@ -355,7 +355,7 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
 
         <form onSubmit={handleSubmit} className="space-y-2 flex-1 flex flex-col overflow-hidden">
           <div className="space-y-1 flex-shrink-0">
-            <Label htmlFor="name" className="text-xs sm:text-sm dark:text-slate-200">Nom du professeur *</Label>
+            <Label htmlFor="name" className="text-xs sm:text-sm text-slate-900 dark:text-slate-200">Nom du professeur *</Label>
             <div className="flex items-center gap-2">
               <Input
                 id="name"
@@ -380,7 +380,7 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
 
           {!showCustomSubject ?
           <div className="space-y-1 flex-shrink-0">
-              <Label htmlFor="subject" className="text-xs sm:text-sm dark:text-slate-200">Matière enseignée *</Label>
+              <Label htmlFor="subject" className="text-xs sm:text-sm text-slate-900 dark:text-slate-200">Matière enseignée *</Label>
               <Select
               value={formData.subject}
               onValueChange={(value) => {
@@ -415,7 +415,7 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
             </div> :
 
           <div className="space-y-1 flex-shrink-0">
-              <Label htmlFor="customSubject" className="text-xs sm:text-sm dark:text-slate-200">Autre matière *</Label>
+              <Label htmlFor="customSubject" className="text-xs sm:text-sm text-slate-900 dark:text-slate-200">Autre matière *</Label>
               <Input
               id="customSubject"
               value={formData.customSubject}
@@ -440,7 +440,7 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
           }
 
           <div className="space-y-1 flex-shrink-0">
-            <Label className="text-xs sm:text-sm dark:text-slate-200">Avatar du professeur</Label>
+            <Label className="text-xs sm:text-sm text-slate-900 dark:text-slate-200">Avatar du professeur</Label>
             <div className="w-full bg-slate-50 dark:bg-slate-900 rounded-lg p-2 border border-slate-200 dark:border-slate-600 h-[280px] overflow-y-auto
                   [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-gray-100 
                   [&::-webkit-scrollbar-thumb]:bg-gray-400 [&::-webkit-scrollbar-thumb]:rounded-full 

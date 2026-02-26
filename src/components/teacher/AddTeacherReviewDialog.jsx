@@ -402,7 +402,7 @@ export default function AddTeacherReviewDialog({ open, onOpenChange, teacherId, 
                     <div className="flex items-center gap-1.5 flex-1 min-w-0">
                       <Icon className={`w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0 ${color}`} />
                       <div className="min-w-0">
-                        <Label className="font-semibold text-[11px] sm:text-xs block dark:text-white">{label}</Label>
+                        <Label className="font-semibold text-[11px] sm:text-xs block text-slate-900 dark:text-white">{label}</Label>
                         <p className="text-[8px] sm:text-[9px] text-slate-500 dark:text-slate-400 truncate">{description}</p>
                       </div>
                     </div>
