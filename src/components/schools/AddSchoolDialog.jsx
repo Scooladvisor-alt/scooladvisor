@@ -546,7 +546,7 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
                 onChange={(e) => setFormData({ ...formData, city: e.target.value })}
                 required
                 placeholder="Paris"
-                className="h-11 sm:h-12 text-sm sm:text-base flex-1" />
+                className="h-11 sm:h-12 text-sm sm:text-base flex-1 text-slate-900 dark:text-white" />
 
               <div className="flex items-center space-x-2 px-3 sm:px-4 bg-gradient-to-r from-pink-100 to-blue-100 dark:from-pink-900/30 dark:to-blue-900/30 rounded-lg border-2 border-blue-200 dark:border-blue-700 whitespace-nowrap h-11 sm:h-12">
                 <Checkbox
