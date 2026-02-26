@@ -489,7 +489,7 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
               }}
               required
               placeholder={hasLockedPrefix(formData.type) ? `${getSchoolPrefix(formData.type)}Victor Hugo` : "École de management..."}
-              className="h-11 sm:h-12 text-sm sm:text-base" />
+              className="h-11 sm:h-12 text-sm sm:text-base text-slate-900 dark:text-white" />
 
           </div>
 
@@ -504,7 +504,7 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
               }}
               required
               placeholder="10 rue de la République"
-              className="h-11 sm:h-12 text-sm sm:text-base" />
+              className="h-11 sm:h-12 text-sm sm:text-base text-slate-900 dark:text-white" />
 
             {addressLoading &&
             <div className="absolute right-3 top-9">

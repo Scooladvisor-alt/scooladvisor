@@ -750,7 +750,7 @@ export default function ProfilePage() {
                 type="text"
                 value={deleteConfirmText}
                 onChange={(e) => setDeleteConfirmText(e.target.value)}
-                className="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-md text-sm dark:bg-slate-900 dark:text-white"
+                className="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-md text-sm text-slate-900 dark:bg-slate-900 dark:text-white"
                 placeholder="SUPPRIMER"
               />
             </div>
