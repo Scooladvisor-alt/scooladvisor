@@ -347,7 +347,7 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
           </div>
 
           {/* Carte */}
-          <div className="relative w-full h-[50vh] rounded-xl overflow-hidden border border-slate-200 bg-slate-100">
+          <div className="relative w-full h-[60vh] rounded-xl overflow-hidden border border-slate-200 bg-slate-100">
             {loading && !user &&
             <div className="absolute inset-0 flex items-center justify-center bg-slate-100/90 backdrop-blur-sm z-10">
                 <div className="text-center">
