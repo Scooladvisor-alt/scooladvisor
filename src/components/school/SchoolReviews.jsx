@@ -394,7 +394,7 @@ Rédige maintenant ton résumé façon "L'avis de Satoshi" en 3 phrases max.`;
               <p className="text-sm text-slate-500 dark:text-slate-400 mb-4 max-w-xs">
                 Partage ton expérience et aide les autres ! 💬
               </p>
-              <Button onClick={onAddReview} className="bg-gradient-to-r from-yellow-400 via-yellow-500 to-amber-500 hover:from-yellow-500 hover:via-yellow-600 hover:to-amber-600 text-white shadow-md">
+              <Button onClick={onAddReview} className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:opacity-90 text-white shadow-md">
                 <Star className="w-4 h-4 mr-2" />
                 Laisser le premier avis
               </Button>
