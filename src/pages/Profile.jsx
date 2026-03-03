@@ -378,58 +378,103 @@ export default function ProfilePage() {
           className="h-full">
 
           <Card className="bg-white/80 dark:bg-slate-800/80 border-slate-200 dark:border-slate-700 backdrop-blur-sm shadow-xl relative z-10 h-full rounded-none border-x-0">
-            <CardHeader className="border-slate-100 dark:border-slate-700 border-b">
-              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-                <CardTitle className="tracking-tight text-2xl sm:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent whitespace-nowrap">
+            {/* Header: titre + bouton retour sur la même ligne */}
+            <CardHeader className="border-slate-100 dark:border-slate-700 border-b px-4 py-3 sm:px-6 sm:py-4">
+              <div className="flex items-center justify-between">
+                <CardTitle className="tracking-tight text-xl sm:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent whitespace-nowrap">
                   Mon Profil
                 </CardTitle>
                 <Button
                   variant="ghost"
+                  size="sm"
                   onClick={() => navigate(createPageUrl("Schools"))}
-                  className="flex items-center gap-2 dark:text-slate-300 dark:hover:bg-slate-700">
+                  className="flex items-center gap-1 text-slate-500 dark:text-slate-300 dark:hover:bg-slate-700 text-sm">
                   <ChevronLeft className="w-4 h-4" />
                   Retour
                 </Button>
               </div>
             </CardHeader>
             
-            <CardContent className="p-6 sm:p-8">
-              <div className="flex flex-col sm:flex-row gap-6 sm:gap-8 items-center sm:items-start">
+            {/* Section profil : layout horizontal sur mobile aussi */}
+            <CardContent className="p-4 sm:p-8">
+              {/* Mobile: layout horizontal compact */}
+              <div className="flex sm:hidden items-center gap-4">
+                {/* Avatar + bouton edit */}
+                <div className="relative flex-shrink-0 cursor-pointer group" onClick={() => setShowAvatarDialog(true)}>
+                  <Avatar className="w-20 h-20 border-2 border-white shadow-lg ring-2 ring-purple-200">
+                    {avatarUrl ? <AvatarImage src={avatarUrl} /> : null}
+                    <AvatarFallback className="bg-transparent">
+                      <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/f5396bc58_a-humanized-black-graduation-cap-with-a-star-shape-3.png" alt="Avatar" className="w-full h-full object-cover" />
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="absolute bottom-0 right-0 w-6 h-6 bg-gradient-to-br from-[#FF4D8D] via-purple-500 to-blue-500 rounded-full flex items-center justify-center shadow-md">
+                    <Edit className="w-3 h-3 text-white" />
+                  </div>
+                </div>
+
+                {/* Infos utilisateur */}
+                <div className="flex-1 min-w-0">
+                  <h2 className="text-lg font-bold text-slate-900 dark:text-white truncate">
+                    {user.full_name}
+                  </h2>
+                  <div className="flex items-center gap-1.5 text-slate-500 dark:text-slate-400 mb-2">
+                    <Mail className="w-3 h-3 flex-shrink-0" />
+                    <span className="text-xs truncate">{user.email}</span>
+                  </div>
+                  <div className="flex flex-wrap gap-1.5">
+                    <Badge className="bg-gradient-to-r from-[#FF4D8D]/10 via-purple-500/10 to-blue-500/10 text-purple-700 border-purple-200 text-xs px-2 py-0.5">
+                      <Shield className="w-3 h-3 mr-1" />
+                      {user.role === 'admin' ? 'Admin' : user.role === 'moderator' ? 'Modérateur' : 'Étudiant'}
+                    </Badge>
+                    {(user.warnings_count > 0 || user.is_banned) && (
+                      <Badge className={`text-xs px-2 py-0.5 ${user.is_banned ? 'bg-red-50 text-red-700 border-red-200' : 'bg-orange-50 text-orange-700 border-orange-200'}`}>
+                        {user.is_banned 
+                          ? `Banni` 
+                          : `${user.warnings_count} avert.`
+                        }
+                      </Badge>
+                    )}
+                  </div>
+                  {user.warnings_count > 0 && !user.is_banned && (
+                    <p className="text-[10px] text-slate-400 dark:text-slate-500 mt-1 italic leading-tight">
+                      3 avertissements = suspension temporaire
+                    </p>
+                  )}
+                </div>
+              </div>
+
+              {/* Desktop: layout original */}
+              <div className="hidden sm:flex sm:flex-row gap-8 items-start">
                 <div className="flex flex-col items-center gap-4 relative">
                   <div className="relative group cursor-pointer" onClick={() => setShowAvatarDialog(true)}>
-                    <Avatar className="w-32 h-32 sm:w-40 sm:h-40 border-4 border-blue-100 shadow-lg">
-                      {avatarUrl ?
-                      <AvatarImage src={avatarUrl} /> :
-                      null}
+                    <Avatar className="w-40 h-40 border-4 border-blue-100 shadow-lg">
+                      {avatarUrl ? <AvatarImage src={avatarUrl} /> : null}
                       <AvatarFallback className="bg-transparent">
                         <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/f5396bc58_a-humanized-black-graduation-cap-with-a-star-shape-3.png" alt="Avatar" className="w-full h-full object-cover" />
                       </AvatarFallback>
                     </Avatar>
-                    
                     <div className="absolute bottom-2 right-2 w-10 h-10 bg-black/60 rounded-full flex items-center justify-center group-hover:bg-black/80 transition-colors shadow-lg">
                       <Edit className="w-5 h-5 text-white" />
                     </div>
                   </div>
                 </div>
 
-                <div className="flex-1 space-y-4 w-full text-center sm:text-left">
+                <div className="flex-1 space-y-4 w-full text-left">
                   <div>
-                    <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mb-2">
+                    <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">
                       {user.full_name}
                     </h2>
-                    <div className="flex items-center justify-center sm:justify-start gap-2 text-slate-600 dark:text-slate-400 mb-3">
+                    <div className="flex items-center gap-2 text-slate-600 dark:text-slate-400 mb-3">
                       <Mail className="w-4 h-4" />
                       <span className="text-sm">{user.email}</span>
                     </div>
-                    <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2">
+                    <div className="flex flex-wrap items-center gap-2">
                       <div className="flex items-center gap-2">
                         <Shield className="w-4 h-4 text-blue-600" />
                         <Badge className="bg-blue-100 text-blue-800 border-blue-200 text-sm">
                           {user.role === 'admin' ? 'Administrateur' : user.role === 'moderator' ? 'Modérateur' : 'Étudiant'}
                         </Badge>
                       </div>
-                      
-                      {/* Section Modération */}
                       {(user.warnings_count > 0 || user.is_banned) && (
                         <div className={`flex items-center gap-2 px-3 py-1 rounded-full border ${user.is_banned ? 'bg-red-50 border-red-200 text-red-700' : 'bg-orange-50 border-orange-200 text-orange-700'}`}>
                           <Shield className="w-3.5 h-3.5" />
@@ -442,7 +487,6 @@ export default function ProfilePage() {
                         </div>
                       )}
                     </div>
-                    
                     {user.warnings_count > 0 && !user.is_banned && (
                       <p className="text-xs text-slate-500 dark:text-slate-400 mt-2 italic">
                         Attention : à partir de 3 avertissements, ton compte sera suspendu temporairement.
