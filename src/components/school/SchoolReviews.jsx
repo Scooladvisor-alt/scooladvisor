@@ -339,15 +339,13 @@ Rédige maintenant ton résumé façon "L'avis de Satoshi" en 3 phrases max.`;
         </defs>
       </svg>
       <Card className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-md border-slate-200 dark:border-slate-700 shadow-xl w-full h-auto lg:h-full flex flex-col hover:shadow-2xl transition-shadow duration-300">
-        <CardHeader className="border-b border-slate-100 dark:border-slate-700 bg-gradient-to-r from-yellow-400/10 via-yellow-500/10 to-amber-500/10 dark:from-yellow-400/20 dark:via-yellow-500/20 dark:to-amber-500/20 mb-2">
+        <CardHeader className="border-b border-slate-100 dark:border-slate-700 mb-2 px-4 py-3 sm:px-6 sm:py-4">
           <div className="flex items-center justify-between">
-            <CardTitle className="flex items-center gap-3 text-lg sm:text-xl">
-              <MessageSquare className="w-6 h-6 sm:w-8 sm:h-8" style={{ stroke: "url(#reviewGradient)" }} />
-              <div className="flex items-center gap-1">
-                <span className="text-base sm:text-2xl font-bold bg-gradient-to-r from-yellow-600 via-amber-600 to-orange-600 bg-clip-text text-transparent">Avis</span>
-                <span className="text-base sm:text-2xl">🍿</span>
-              </div>
-              <span className="text-sm sm:text-base text-slate-500 dark:text-slate-400 font-normal">({reviews.length})</span>
+            <CardTitle className="flex items-center gap-2 text-lg sm:text-xl">
+              <MessageSquare className="w-5 h-5 sm:w-6 sm:h-6" style={{ stroke: "url(#chat-gradient)" }} />
+              <span className="text-base sm:text-xl font-bold bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">Avis</span>
+              <span className="text-base sm:text-xl">🍿</span>
+              <span className="text-sm text-slate-400 dark:text-slate-500 font-normal">({reviews.length})</span>
             </CardTitle>
             
             {reviews.length > 0 &&
@@ -355,7 +353,6 @@ Rédige maintenant ton résumé façon "L'avis de Satoshi" en 3 phrases max.`;
               onClick={handleAskAntonin}
               size="sm"
               className="bg-transparent hover:bg-purple-50 dark:hover:bg-purple-950 border-0 shadow-none">
-
                 <Sparkles className="w-4 h-4 mr-1 text-[#FF4D8D]" />
                 <span className="text-xs font-bold bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">Satoshi</span>
               </Button>
