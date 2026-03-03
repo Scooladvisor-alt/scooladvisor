@@ -86,15 +86,13 @@ export default function TeachersList({ schoolId, onAddTeacher }) {
           }
         `}</style>
         
-        <CardHeader className="border-b border-slate-100 dark:border-slate-700 bg-gradient-to-r from-[#FF4D8D]/10 via-purple-500/10 to-blue-500/10 dark:from-[#FF4D8D]/20 dark:via-purple-500/20 dark:to-blue-500/20">
+        <CardHeader className="border-b border-slate-100 dark:border-slate-700 px-4 py-3 sm:px-6 sm:py-4">
           <div className="flex items-center justify-between">
-            <CardTitle className="flex items-center gap-3 text-xl sm:text-2xl">
-              <Users className="w-6 h-6 sm:w-8 sm:h-8" style={{ stroke: "url(#teacherGradient)" }} />
-              <div className="flex items-center gap-1">
-                <span className="text-base sm:text-2xl font-bold bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">Professeurs</span>
-                <span className="text-base sm:text-2xl">❤️</span>
-              </div>
-              <span className="text-sm sm:text-base text-slate-500 dark:text-slate-400 font-normal">({teachers.length})</span>
+            <CardTitle className="flex items-center gap-2 text-lg sm:text-xl">
+              <Users className="w-5 h-5 sm:w-6 sm:h-6" style={{ stroke: "url(#teacherGradient)" }} />
+              <span className="text-base sm:text-xl font-bold bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">Professeurs</span>
+              <span className="text-base sm:text-xl">❤️</span>
+              <span className="text-sm text-slate-400 dark:text-slate-500 font-normal">({teachers.length})</span>
             </CardTitle>
             <Button
               variant="ghost"
