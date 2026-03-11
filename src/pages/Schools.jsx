@@ -536,13 +536,6 @@ export default function SchoolsPage() {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-12">
 
-          <div className="inline-flex items-center gap-2 bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm px-4 py-2 rounded-full border border-purple-100 dark:border-slate-700 shadow-sm mb-6 relative z-10">
-            <TrendingUp className="w-4 h-4 text-[#FF4D8D]" />
-            <span className="text-sm font-medium bg-gradient-to-r from-[#FF4D8D] to-purple-600 bg-clip-text text-transparent">
-              Le réseau social des étudiants
-            </span>
-          </div>
-
           <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold text-slate-900 dark:text-white mb-4 sm:mb-6 leading-tight relative z-10 cursor-default">
             <span className="btn-shine-hover inline-block text-6xl sm:text-5xl md:text-7xl lg:text-8xl bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent mb-2">
               L'avis des étudiants
