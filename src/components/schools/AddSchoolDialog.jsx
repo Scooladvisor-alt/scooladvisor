@@ -351,17 +351,18 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
         setIsAddressManuallyChanged(false);
       }
     }}>
-      <DialogContent className="max-w-[96vw] sm:max-w-5xl max-h-[92vh] sm:max-h-[90vh] overflow-y-auto rounded-2xl p-5 sm:p-6 flex flex-col">
-        <DialogHeader className="text-center flex-shrink-0 pb-4 sm:pb-6">
+      <DialogContent className="max-w-[96vw] sm:max-w-2xl h-auto rounded-2xl p-0 flex flex-col overflow-hidden">
+        <DialogHeader className="text-center flex-shrink-0 px-5 sm:px-6 pt-5 sm:pt-6 pb-3">
           <DialogTitle className="text-xl sm:text-2xl font-bold text-center">
             <span className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
               Ton établissement est absent ?
             </span>
-            <p className="text-sm sm:text-base font-normal text-slate-600 dark:text-slate-400 mt-2">Sois celui qui le fait débarquer ! 🚀</p>
+            <p className="text-sm sm:text-base font-normal text-slate-600 dark:text-slate-400 mt-1">Sois celui qui le fait débarquer ! 🚀</p>
           </DialogTitle>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5 flex-1 flex flex-col">
+        <form onSubmit={handleSubmit} className="flex flex-col flex-1 min-h-0">
+          <div className="flex-1 overflow-y-auto px-5 sm:px-6 py-3 space-y-3 sm:space-y-4">
           <div className="space-y-1 sm:space-y-2">
             <Label htmlFor="type" className="text-sm sm:text-base font-medium">Type d'établissement *</Label>
             <Select
