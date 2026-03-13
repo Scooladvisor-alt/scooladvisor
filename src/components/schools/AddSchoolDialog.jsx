@@ -363,6 +363,7 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
 
         <form onSubmit={handleSubmit} className="flex flex-col flex-1 min-h-0">
           <div className="flex-1 overflow-y-auto px-5 sm:px-6 py-3 space-y-3 sm:space-y-4">
+
           <div className="space-y-1 sm:space-y-2">
             <Label htmlFor="type" className="text-sm sm:text-base font-medium">Type d'établissement *</Label>
             <Select
