@@ -341,12 +341,7 @@ export default function Layout({ children }) {
         fontFamily: "'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
       }}
     >
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
-        *, body, h1, h2, h3, h4, h5, h6, button, input, textarea, select, span, p, a, div, label {
-          font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
-        }
-      `}</style>
+
       {showDecoration && <FloatingDecoration />}
       
       <style>{`
