@@ -564,8 +564,8 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
               </div>
             </div>
           </div>
-          
-          <DialogFooter className="flex flex-col sm:flex-row sm:justify-center sm:items-center gap-2 mt-auto pt-6 sticky bottom-0 bg-white dark:bg-slate-900 pb-2">
+
+          <div className="flex-shrink-0 px-5 sm:px-6 py-4 border-t border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900">
             {error ? (
               <Alert variant="destructive" className="w-full border-red-300 bg-red-50 dark:bg-red-900/20">
                 <AlertCircle className="h-4 w-4" />
@@ -586,7 +586,7 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
                 ) : "Ajouter l'établissement"}
               </Button>
             )}
-          </DialogFooter>
+          </div>
         </form>
       </DialogContent>
       
