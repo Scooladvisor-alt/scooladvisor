@@ -564,6 +564,15 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
             </div>
           </div>
           
+          {error && (
+            <Alert variant="destructive" className="border-red-300 bg-red-50 dark:bg-red-900/20">
+              <AlertCircle className="h-4 w-4" />
+              <AlertDescription className="text-red-700 dark:text-red-400 font-medium">
+                {error}
+              </AlertDescription>
+            </Alert>
+          )}
+
           <DialogFooter className="flex flex-col sm:flex-row sm:justify-center sm:items-center gap-2 mt-auto pt-6 sticky bottom-0 bg-white dark:bg-slate-900 pb-2">
             <Button
               type="submit"
