@@ -564,6 +564,7 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
               </div>
             </div>
           </div>
+          </div>
 
           <div className="flex-shrink-0 px-5 sm:px-6 py-4 border-t border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900">
             {error ? (
