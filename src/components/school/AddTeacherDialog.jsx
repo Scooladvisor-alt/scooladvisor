@@ -482,7 +482,7 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
           </div>
 
           <DialogFooter className="gap-2 pt-2 flex-shrink-0">
-            <Button type="button" variant="outline" onClick={() => onOpenChange(false)} className="text-xs sm:text-sm h-8 dark:bg-slate-700 dark:text-slate-200 dark:border-slate-600">
+            <Button type="button" variant="outline" onClick={() => onOpenChange(false)} className="text-xs sm:text-sm h-8 bg-black text-white border-black hover:bg-black/90 dark:bg-black dark:text-white dark:border-black">
               Annuler
             </Button>
             <Button type="submit" disabled={loading} className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 text-primary-foreground px-4 py-2 bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-xs sm:text-sm h-8 text-white shadow-md">
