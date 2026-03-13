@@ -412,12 +412,20 @@ export default function Layout({ children }) {
         /* iOS Safe Area & Smooth Scrolling */
         * {
           -webkit-overflow-scrolling: touch;
+          font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
         }
         
         body {
           overscroll-behavior: contain;
           user-select: text;
           -webkit-user-select: text;
+          font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+          font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+          font-weight: 700;
+          letter-spacing: -0.01em;
         }
 
         `}</style>
