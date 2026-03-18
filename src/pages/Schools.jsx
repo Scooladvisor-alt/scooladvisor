@@ -890,7 +890,7 @@ export default function SchoolsPage() {
                   placeholder="Chercher un prof ou une matière..."
                   value={teacherSearchTerm}
                   onChange={(e) => setTeacherSearchTerm(e.target.value)}
-                  className="pl-11 pr-4 h-12 text-sm sm:text-base border-2 border-slate-200 dark:border-slate-600 focus:border-purple-400 dark:focus:border-purple-500 focus:ring-2 focus:ring-purple-100 dark:focus:ring-purple-900 rounded-xl bg-white dark:bg-slate-900 dark:text-white shadow-md transition-all w-full"
+                  className="pl-11 pr-4 h-12 text-sm sm:text-base border-2 border-black dark:border-white focus:border-black dark:focus:border-white focus:ring-2 focus:ring-black/10 dark:focus:ring-white/10 rounded-xl bg-white dark:bg-slate-900 dark:text-white shadow-md transition-all w-full"
                   autoFocus />
               </div>
             </motion.div>
