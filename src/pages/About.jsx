@@ -125,7 +125,7 @@ export default function AboutPage() {
               <div className="w-14 h-14 bg-gradient-to-br from-[#3B82F6] to-blue-700 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-md group-hover:scale-110 transition-transform">
                 <Users className="w-7 h-7 text-white" />
               </div>
-              <h3 className="font-black text-slate-800 dark:text-white text-lg sm:text-xl uppercase italic mb-2">Construire Ensemble</h3>
+              <h3 className="font-black text-slate-800 dark:text-white text-lg sm:text-xl uppercase italic mb-2">Construire</h3>
               <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
                 Une communauté bienveillante où chaque avis aide un autre élève à mieux choisir son avenir.
               </p>
