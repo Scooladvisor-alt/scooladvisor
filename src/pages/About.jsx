@@ -174,48 +174,13 @@ export default function AboutPage() {
               </div>
             </motion.div>
 
-            {/* Split Columns */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 items-stretch">
-              {/* Left Column: 2 Widgets */}
+            {/* Movement Widget */}
+            <div className="flex justify-center">
               <motion.div
-                  initial={{ opacity: 0, x: -50 }}
-                  whileInView={{ opacity: 1, x: 0 }}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  className="space-y-4 sm:space-y-6">
-
-                  {/* Widget 1 - IA */}
-                  <div className="group bg-white/60 dark:bg-slate-800/60 backdrop-blur-md border border-white/50 dark:border-slate-700/50 p-4 sm:p-6 rounded-2xl shadow-lg hover:shadow-xl hover:bg-white/80 dark:hover:bg-slate-800/80 transition-all">
-                    <div className="flex items-center gap-4 sm:gap-5">
-                      <div className="w-10 h-10 sm:w-14 sm:h-14 bg-gradient-to-br from-[#F59E0B] to-amber-600 rounded-2xl flex items-center justify-center shrink-0 group-hover:-rotate-6 transition-transform shadow-lg shadow-amber-200">
-                        <Lightbulb className="w-5 h-5 sm:w-7 sm:h-7 text-white" />
-                      </div>
-                      <div>
-                        <h4 className="font-black text-slate-800 dark:text-white uppercase italic text-base sm:text-lg tracking-wide">IA Surpuissante</h4>
-                        <p className="text-sm sm:text-base font-medium text-slate-600 dark:text-slate-300 mt-1">Satoshi résume tout en 2s.</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Widget 2 - Outil */}
-                  <div className="group bg-white/60 dark:bg-slate-800/60 backdrop-blur-md border border-white/50 dark:border-slate-700/50 p-4 sm:p-6 rounded-2xl shadow-lg hover:shadow-xl hover:bg-white/80 dark:hover:bg-slate-800/80 transition-all">
-                    <div className="flex items-center gap-4 sm:gap-5">
-                      <div className="w-10 h-10 sm:w-14 sm:h-14 bg-gradient-to-br from-[#3B82F6] to-blue-600 rounded-2xl flex items-center justify-center shrink-0 group-hover:rotate-6 transition-transform shadow-lg shadow-blue-200">
-                        <GraduationCap className="w-5 h-5 sm:w-7 sm:h-7 text-white" />
-                      </div>
-                      <div>
-                        <h4 className="font-black text-slate-800 dark:text-white uppercase italic text-base sm:text-lg tracking-wide">L'Outil Ultime</h4>
-                        <p className="text-sm sm:text-base font-medium text-slate-600 dark:text-slate-300 mt-1">Ne choisis plus au hasard.</p>
-                      </div>
-                    </div>
-                  </div>
-              </motion.div>
-
-              {/* Right Column: Movement Widget */}
-              <motion.div
-                  initial={{ opacity: 0, x: 50 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  className="relative w-full">
+                  className="relative w-full max-w-md">
 
                  <div className="relative w-full">
                     <div className="absolute inset-0 bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 rounded-[2rem] transform rotate-2 blur-xl opacity-20" />
