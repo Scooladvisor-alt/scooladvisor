@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Sparkles, Heart, Shield, Users, GraduationCap, ArrowRight, Lightbulb, Target } from "lucide-react";
+import { Sparkles, Heart, Shield, Users, ArrowRight, Target } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { createPageUrl } from "@/utils";
