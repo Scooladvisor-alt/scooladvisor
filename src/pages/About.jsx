@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Sparkles, Heart, Shield, Users, ArrowRight, Target } from "lucide-react";
+import { Sparkles, Heart, Star, MessageCircle, HandHeart, ArrowRight, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { createPageUrl } from "@/utils";
@@ -9,28 +9,19 @@ import SEO from "@/components/shared/SEO";
 export default function AboutPage() {
   const containerVariants = {
     hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2
-      }
-    }
+    visible: { opacity: 1, transition: { staggerChildren: 0.15 } }
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.6 }
-    }
+    hidden: { opacity: 0, y: 24 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
   };
 
   return (
     <>
       <SEO
         title="À propos de ScoolAdvisor - Notre Mission"
-        description="ScoolAdvisor est le réseau social des étudiants. Partagez votre expérience, notez vos établissements et professeurs. Une communauté authentique et transparente."
+        description="ScoolAdvisor est le réseau social des étudiants. Remerciez vos professeurs, partagez ce que vous ressentez vraiment. Une communauté fondée sur l'amour et la bienveillance."
         canonicalPath="/About"
         structuredData={{
           "@context": "https://schema.org",
@@ -40,176 +31,159 @@ export default function AboutPage() {
           "url": window.location.origin
         }} />
 
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-purple-50 to-blue-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-pink-50 to-purple-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
 
+        {/* Hero */}
+        <div className="relative overflow-hidden py-16 sm:py-28 px-4">
+          <div className="absolute inset-0 pointer-events-none overflow-hidden">
+            <div className="absolute top-[10%] left-[15%] w-80 h-80 bg-pink-300/20 rounded-full blur-3xl animate-pulse" />
+            <div className="absolute bottom-[10%] right-[15%] w-96 h-96 bg-purple-300/20 rounded-full blur-3xl animate-pulse delay-1000" />
+          </div>
 
-      {/* Hero Section */}
-      <div className="relative overflow-hidden py-12 sm:py-32 px-4">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full overflow-hidden pointer-events-none">
-          <div className="absolute top-[10%] left-[20%] w-72 h-72 bg-pink-300/20 rounded-full blur-3xl animate-pulse" />
-          <div className="absolute top-[30%] right-[20%] w-96 h-96 bg-blue-300/20 rounded-full blur-3xl animate-pulse delay-1000" />
-        </div>
-
-        <div className="max-w-4xl mx-auto text-center relative z-10">
-          <motion.div
+          <div className="max-w-3xl mx-auto text-center relative z-10">
+            <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5 }}
-              className="inline-flex items-center gap-2 bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm px-4 py-2 rounded-full border border-purple-100 dark:border-slate-700 shadow-sm mb-8">
+              className="inline-flex items-center gap-2 bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm px-4 py-2 rounded-full border border-pink-100 dark:border-slate-700 shadow-sm mb-8">
+              <Heart className="w-4 h-4 text-[#FF4D8D] fill-[#FF4D8D]" />
+              <span className="text-sm font-semibold bg-gradient-to-r from-[#FF4D8D] to-purple-600 bg-clip-text text-transparent">
+                L'amour au cœur de l'éducation
+              </span>
+            </motion.div>
 
-            <Sparkles className="w-4 h-4 text-[#FF4D8D]" />
-            <span className="text-sm font-medium bg-gradient-to-r from-[#FF4D8D] to-purple-600 bg-clip-text text-transparent">
-              La transparence au service de l'éducation
-            </span>
-          </motion.div>
-
-          <motion.h1
+            <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="text-3xl sm:text-6xl md:text-7xl font-bold text-slate-900 dark:text-white mb-4 sm:mb-6 tracking-tight">
+              className="text-4xl sm:text-6xl md:text-7xl font-black text-slate-900 dark:text-white mb-6 tracking-tight leading-tight">
+              <span className="block text-5xl sm:text-7xl italic uppercase tracking-tighter mb-3 transform -rotate-1 drop-shadow-sm">
+                SCOOL QUOI ?
+              </span>
+              <span className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent text-3xl sm:text-5xl">
+                ScoolAdvisor.
+              </span>
+            </motion.h1>
 
-            <span className="block text-5xl sm:text-8xl font-black italic uppercase tracking-tighter text-slate-900 dark:text-white mb-2 sm:mb-4 transform -rotate-2 origin-center drop-shadow-sm">
-              SCOOL QUOI ?
-            </span>
-            <span className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
-              ScoolAdvisor.
-            </span>
-          </motion.h1>
-
-          <motion.p
+            <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="text-base sm:text-xl text-slate-600 dark:text-slate-300 leading-relaxed max-w-2xl mx-auto mb-6 sm:mb-10">
-
-            Plus qu’un site d’avis, c’est une communauté. Pour mieux comprendre, choisir et éclairer ton avenir.
-          </motion.p>
+              className="text-lg sm:text-2xl text-slate-600 dark:text-slate-300 leading-relaxed max-w-2xl mx-auto font-medium">
+              Un endroit pour dire merci. Pour exprimer ce qu'on ressent vraiment. Pour honorer ceux qui ont compté.
+            </motion.p>
+          </div>
         </div>
-      </div>
 
-      {/* Mission Section */}
-      <div className="max-w-6xl mx-auto px-4 pb-12 sm:pb-24">
-        <motion.div
+        {/* Message principal */}
+        <div className="max-w-4xl mx-auto px-4 pb-16">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="relative bg-gradient-to-br from-[#FF4D8D]/10 via-purple-500/10 to-blue-500/10 dark:from-[#FF4D8D]/5 dark:via-purple-500/5 dark:to-blue-500/5 rounded-3xl p-8 sm:p-14 border border-pink-100 dark:border-slate-700 shadow-xl text-center mb-12">
+            <div className="absolute -top-6 left-1/2 -translate-x-1/2 w-12 h-12 bg-gradient-to-br from-[#FF4D8D] to-purple-500 rounded-2xl flex items-center justify-center shadow-lg">
+              <Heart className="w-6 h-6 text-white fill-white" />
+            </div>
+            <h2 className="text-2xl sm:text-4xl font-black text-slate-800 dark:text-white mb-6 leading-tight">
+              ScoolAdvisor, c'est d'abord<br />
+              <span className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">un acte d'amour.</span>
+            </h2>
+            <p className="text-base sm:text-xl text-slate-600 dark:text-slate-300 leading-relaxed max-w-2xl mx-auto">
+              On a tous eu ce prof qui a tout changé. Celui qui t'a donné confiance, qui t'a poussé à te dépasser, qui t'a simplement écouté. ScoolAdvisor, c'est l'endroit où tu peux enfin lui dire <strong className="text-slate-800 dark:text-white">merci</strong>.
+            </p>
+          </motion.div>
+
+          {/* 3 valeurs */}
+          <motion.div
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 items-stretch">
+            className="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-16">
 
-          {/* Card 1 - Dominant */}
-          <motion.div variants={itemVariants} className="lg:col-span-7 relative group">
-            <div className="absolute inset-0 bg-gradient-to-r from-pink-200 to-rose-200 rounded-2xl blur-lg opacity-40 transform translate-x-2 translate-y-2 group-hover:opacity-60 transition-all" />
-            <div className="relative bg-white/60 dark:bg-slate-800/60 backdrop-blur-xl rounded-2xl p-6 sm:p-8 border border-white/50 dark:border-slate-700/50 shadow-xl h-full flex flex-col sm:flex-row items-center gap-4 sm:gap-6 hover:border-pink-200 dark:hover:border-pink-600 transition-colors">
-              <div className="shrink-0 w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-[#FF4D8D] to-pink-600 rounded-2xl flex items-center justify-center shadow-lg transform -rotate-3 group-hover:rotate-0 transition-transform">
-                <Target className="w-8 h-8 sm:w-10 sm:h-10 text-white shrink-0" />
+            <motion.div variants={itemVariants} className="group bg-white/70 dark:bg-slate-800/70 backdrop-blur-md rounded-2xl p-6 sm:p-8 border border-white/60 dark:border-slate-700 shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all text-center">
+              <div className="w-14 h-14 bg-gradient-to-br from-[#FF4D8D] to-pink-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-md group-hover:scale-110 transition-transform">
+                <Heart className="w-7 h-7 text-white fill-white" />
               </div>
-              <div>
-                <h3 className="text-2xl sm:text-3xl font-black text-slate-800 dark:text-white mb-2 uppercase italic tracking-tight text-center sm:text-left">Orienter avec <span className="bg-gradient-to-r from-[#FF4D8D] to-pink-600 bg-clip-text text-transparent">Confiance</span></h3>
-                <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 font-medium leading-relaxed text-center sm:text-left">
-                  Fini le hasard. On te donne les vraies infos, modérées avec intelligence, pour tracer ta route.
-                </p>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Card 2 - Compact & Bold */}
-          <motion.div variants={itemVariants} className="lg:col-span-5 relative group mt-0 lg:mt-0">
-             <div className="absolute inset-0 bg-gradient-to-r from-purple-200 to-indigo-200 rounded-2xl blur-lg opacity-40 transform translate-x-2 translate-y-2 group-hover:opacity-60 transition-all" />
-            <div className="relative bg-white/60 dark:bg-slate-800/60 backdrop-blur-xl rounded-2xl p-6 sm:p-8 border border-white/50 dark:border-slate-700/50 shadow-xl h-full flex flex-col sm:flex-row items-center gap-4 sm:gap-6 hover:border-purple-200 dark:hover:border-purple-600 transition-colors">
-               <div className="shrink-0 w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-[#8B5CF6] to-purple-600 rounded-2xl flex items-center justify-center shadow-lg transform rotate-3 group-hover:rotate-0 transition-transform">
-                <Heart className="w-8 h-8 sm:w-10 sm:h-10 text-white shrink-0" />
-              </div>
-              <div>
-                <h3 className="text-xl sm:text-2xl font-black text-slate-800 dark:text-white mb-2 uppercase italic text-center sm:text-left">Pas de Haine,<br />Que du <span className="bg-gradient-to-r from-[#8B5CF6] to-purple-600 bg-clip-text text-transparent">Vrai</span></h3>
-                <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 font-medium leading-relaxed text-center sm:text-left">
-                  On construit, on ne casse pas. La critique constructive est notre arme.
-                </p>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Card 3 - Wide & Impactful */}
-          <motion.div variants={itemVariants} className="lg:col-span-12 relative group mt-0">
-             <div className="absolute inset-0 bg-gradient-to-r from-blue-200 to-cyan-200 rounded-2xl blur-lg opacity-40 transform translate-x-2 translate-y-2 group-hover:opacity-60 transition-all" />
-             <div className="relative bg-white/60 dark:bg-slate-800/60 backdrop-blur-xl rounded-2xl p-6 sm:p-10 border border-white/50 dark:border-slate-700/50 shadow-xl flex flex-col md:flex-row items-center gap-4 sm:gap-8 h-full hover:border-blue-200 dark:hover:border-blue-600 transition-colors">
-                <div className="shrink-0 w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-[#3B82F6] to-blue-600 rounded-2xl flex items-center justify-center shadow-lg transform -rotate-6 group-hover:rotate-0 transition-transform">
-                  <Users className="w-8 h-8 sm:w-10 sm:h-10 text-white shrink-0" />
-                </div>
-                <div>
-                   <h3 className="text-2xl sm:text-3xl font-black text-slate-800 dark:text-white mb-2 uppercase italic text-center sm:text-left">Plateforme <span className="bg-gradient-to-r from-[#3B82F6] to-blue-600 bg-clip-text text-transparent">Communautaire</span></h3>
-                   <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 font-medium leading-relaxed text-center sm:text-left">
-                     Étudiants, parents, profs : on brise les silos. Un espace authentique pour l'école de demain.
-                   </p>
-                </div>
-             </div>
-          </motion.div>
-        </motion.div>
-      </div>
-
-      {/* Concept Detail */}
-      <div className="relative px-1 py-12 sm:py-24">
-        <div className="absolute inset-0 bg-gradient-to-b from-white/0 via-white/40 to-white/0 pointer-events-none" />
-        <div className="max-w-7xl mx-auto px-4 relative z-10">
-          <div className="flex flex-col gap-8 sm:gap-12">
-            {/* Full width Text Section */}
-            <motion.div
-                initial={{ opacity: 0, y: -20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="text-center max-w-4xl mx-auto">
-
-              <div className="relative inline-block">
-                <div className="absolute -top-10 -left-10 w-40 h-40 bg-yellow-200 rounded-full blur-3xl opacity-30" />
-                <h2 className="text-2xl sm:text-5xl font-black text-slate-800 dark:text-white mb-4 sm:mb-6 relative z-10 uppercase italic tracking-tight">
-                  Pourquoi ScoolAdvisor ?
-                </h2>
-              </div>
-              <div className="space-y-4 sm:space-y-6 text-base sm:text-xl text-slate-600 dark:text-slate-300 leading-relaxed">
-                <p>
-                  Hésitation sur ton orientation ? Doute sur une école ?
-                </p>
-                <p>
-                  <strong className="text-slate-900 dark:text-white font-bold">Le savoir, c'est le pouvoir.</strong> On crée ensemble la carte de l'éducation.
-                </p>
-              </div>
+              <h3 className="font-black text-slate-800 dark:text-white text-lg sm:text-xl uppercase italic mb-2">Dire Merci</h3>
+              <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
+                Remercie tes professeurs qui ont marqué ta vie. Un mot peut tout changer pour eux aussi.
+              </p>
             </motion.div>
 
-            {/* Movement Widget */}
-            <div className="flex justify-center">
-              <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  className="relative w-full max-w-md">
-
-                 <div className="relative w-full">
-                    <div className="absolute inset-0 bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 rounded-[2rem] transform rotate-2 blur-xl opacity-20" />
-
-                    <div className="bg-white/60 dark:bg-slate-800/60 mx-10 pt-12 pr-6 pb-8 pl-4 text-center rounded-[2rem] relative backdrop-blur-xl border border-white/50 dark:border-slate-700/50 sm:p-6 flex flex-col items-center justify-center overflow-hidden transform -rotate-1 hover:rotate-0 transition-all duration-500 shadow-xl hover:shadow-2xl hover:border-purple-200 dark:hover:border-purple-600">
-                      <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-pink-50 to-blue-50 rounded-2xl flex items-center justify-center mb-3 shadow-sm border border-white">
-                        <span className="text-xl sm:text-2xl animate-bounce">🎓</span>
-                      </div>
-                      <h3 className="text-base sm:text-xl font-black text-slate-800 dark:text-white mb-2 uppercase italic tracking-tight">
-                        Rejoignez le<br />
-                        <span className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">Mouvement</span>
-                      </h3>
-                      <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 font-medium mb-3 max-w-xs">Déjà des milliers d'avis partagés.</p>
-                      <Link to={createPageUrl("Schools")} className="w-full sm:w-auto">
-                        <Button className="w-full sm:w-auto bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-white shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all rounded-xl px-5 py-2 sm:px-5 sm:py-2 text-xs sm:text-sm font-bold uppercase tracking-wide border border-white/20">
-                          Voir les écoles
-                          <ArrowRight className="ml-2 w-3 h-3" />
-                        </Button>
-                      </Link>
-                    </div>
-                 </div>
-              </motion.div>
+            <motion.div variants={itemVariants} className="group bg-white/70 dark:bg-slate-800/70 backdrop-blur-md rounded-2xl p-6 sm:p-8 border border-white/60 dark:border-slate-700 shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all text-center">
+              <div className="w-14 h-14 bg-gradient-to-br from-purple-500 to-purple-700 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-md group-hover:scale-110 transition-transform">
+                <MessageCircle className="w-7 h-7 text-white" />
               </div>
-              </div>
-              </div>
-              </div>
+              <h3 className="font-black text-slate-800 dark:text-white text-lg sm:text-xl uppercase italic mb-2">S'exprimer Vrai</h3>
+              <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
+                Partage ce que tu ressens vraiment, avec sincérité et respect. Ton vécu compte et il aide les autres.
+              </p>
+            </motion.div>
 
+            <motion.div variants={itemVariants} className="group bg-white/70 dark:bg-slate-800/70 backdrop-blur-md rounded-2xl p-6 sm:p-8 border border-white/60 dark:border-slate-700 shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all text-center">
+              <div className="w-14 h-14 bg-gradient-to-br from-[#3B82F6] to-blue-700 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-md group-hover:scale-110 transition-transform">
+                <Users className="w-7 h-7 text-white" />
+              </div>
+              <h3 className="font-black text-slate-800 dark:text-white text-lg sm:text-xl uppercase italic mb-2">Construire Ensemble</h3>
+              <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
+                Une communauté bienveillante où chaque avis aide un autre élève à mieux choisir son avenir.
+              </p>
+            </motion.div>
+          </motion.div>
 
+          {/* Bloc "pas de haine" */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="bg-white/80 dark:bg-slate-800/80 rounded-3xl p-8 sm:p-12 border border-slate-100 dark:border-slate-700 shadow-xl mb-12">
+            <div className="flex flex-col sm:flex-row items-center gap-6 sm:gap-10">
+              <div className="shrink-0 w-20 h-20 bg-gradient-to-br from-amber-400 to-orange-500 rounded-3xl flex items-center justify-center shadow-lg text-4xl">
+                🚫
+              </div>
+              <div>
+                <h3 className="text-xl sm:text-3xl font-black text-slate-800 dark:text-white mb-3 uppercase italic text-center sm:text-left">
+                  Ici, la haine n'a pas sa place.
+                </h3>
+                <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed text-center sm:text-left">
+                  ScoolAdvisor, c'est <strong className="text-slate-800 dark:text-white">la critique constructive, le retour sincère, le mot bienveillant</strong>. Pas un défouloir. On construit, on n'écrase pas. Chaque commentaire passe par notre modération pour que cet espace reste sain, juste et utile pour tous.
+                </p>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Citation inspirante */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.97 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className="text-center mb-14">
+            <div className="relative inline-block">
+              <span className="text-6xl sm:text-8xl text-pink-200 dark:text-pink-900 font-black absolute -top-4 -left-4 select-none">"</span>
+              <p className="text-xl sm:text-3xl font-bold text-slate-700 dark:text-slate-200 italic leading-relaxed px-8 sm:px-16 relative z-10">
+                Un prof peut changer une vie. Dis-le-lui.
+              </p>
+              <span className="text-6xl sm:text-8xl text-pink-200 dark:text-pink-900 font-black absolute -bottom-8 -right-4 select-none">"</span>
+            </div>
+          </motion.div>
+
+          {/* CTA */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="flex justify-center">
+            <Link to={createPageUrl("Schools")}>
+              <Button className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:opacity-90 text-white shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all rounded-2xl px-8 py-4 sm:px-12 sm:py-5 text-base sm:text-lg font-bold">
+                <Heart className="w-5 h-5 mr-2 fill-white" />
+                Trouver mon école
+                <ArrowRight className="w-5 h-5 ml-2" />
+              </Button>
+            </Link>
+          </motion.div>
+        </div>
       </div>
-    </>);
-
+    </>
+  );
 }
