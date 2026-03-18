@@ -398,10 +398,10 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
                 <SelectContent className="max-h-[250px]">
                   <SelectItem
                   value="__add_custom__"
-                  className="bg-gradient-to-r from-pink-50 to-rose-50 border-b-2 border-pink-200 font-semibold text-pink-700 hover:bg-pink-100">
+                  className="border-b-2 border-pink-200 font-semibold">
 
-                    <div className="flex items-center gap-2">
-                      <Plus className="w-3.5 h-3.5" />
+                    <div className="flex items-center gap-2 bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
+                      <Plus className="w-3.5 h-3.5 text-[#FF4D8D]" />
                       Ajouter une autre matière
                     </div>
                   </SelectItem>
