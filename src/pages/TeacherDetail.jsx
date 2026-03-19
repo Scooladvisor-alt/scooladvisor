@@ -60,25 +60,28 @@ export default function TeacherDetailPage() {
   const loadData = async () => {
     setLoading(true);
     try {
+      // Charger l'utilisateur connecté
+      let loggedUser = null;
+      try { loggedUser = await base44.auth.me(); } catch {}
+
       const teachersData = await base44.entities.Teacher.filter({ id: teacherId });
       const foundTeacher = teachersData[0];
+
       // Un prof masqué n'est pas accessible publiquement (sauf admin/modérateur)
-      let currentUser = null;
-      try { currentUser = await base44.auth.me(); } catch {}
-      const canSeeHidden = currentUser && (currentUser.role === 'admin' || currentUser.role === 'moderator');
+      const canSeeHidden = loggedUser && (loggedUser.role === 'admin' || loggedUser.role === 'moderator');
       if (foundTeacher && foundTeacher.is_hidden && !canSeeHidden) {
         setTeacher(null);
         setLoading(false);
         return;
       }
+
       setTeacher(foundTeacher || null);
+      setUser(loggedUser);
 
       if (foundTeacher && foundTeacher.school_id) {
         const schoolsData = await base44.entities.School.filter({ id: foundTeacher.school_id });
         setSchool(schoolsData[0] || null);
       }
-
-      setUser(currentUser);
     } catch (error) {
       console.error("Error loading teacher data:", error);
       setTeacher(null);
