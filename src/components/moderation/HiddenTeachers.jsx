@@ -19,15 +19,11 @@ export default function HiddenTeachers({ onUpdate }) {
   const loadHiddenTeachers = async () => {
     setLoading(true);
     try {
-      const all = await base44.entities.Teacher.filter({ status: "approved" });
-      // Les profs masqués ont is_hidden: true ou status hidden — on cherche ceux avec is_deleted: false mais marqués hidden
-      // D'après le schéma Teacher, le statut masqué est géré via un champ séparé ou via status
-      // On cherche les profs avec un champ is_hidden ou status === "hidden"
-      const hidden = all.filter(t => t.is_hidden === true || t.status === "hidden");
-      // Aussi chercher dans les profs non-approved qui seraient "rejected" mais ça n'est pas "masqué"
-      // On cherche également status === "hidden" depuis tous les profs
       const allTeachers = await base44.entities.Teacher.list();
-      const hiddenTeachers = allTeachers.filter(t => t.is_hidden === true || t.status === "hidden");
+      // Profs masqués : is_hidden: true (nouveau) OU is_deleted: true sans is_hidden explicitement false (ancien comportement avant migration)
+      const hiddenTeachers = allTeachers.filter(t =>
+        t.is_hidden === true || t.status === "hidden"
+      );
       
       // Enrichir avec le nom de l'école
       const schoolIds = [...new Set(hiddenTeachers.map(t => t.school_id))];
