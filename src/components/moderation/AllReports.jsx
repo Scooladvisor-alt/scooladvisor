@@ -178,6 +178,13 @@ export default function AllReports({ onUpdate }) {
         console.warn("Could not load SchoolReport entity:", error);
       }
 
+      let removalReqs = [];
+      try {
+        removalReqs = await base44.entities.TeacherRemovalRequest.filter({ status: "pending" }, "-created_date");
+      } catch (error) {
+        console.warn("Could not load TeacherRemovalRequest entity:", error);
+      }
+
       const allTeacherReports = [...teacherStatus, ...teacherFraud];
       const enrichedTeacherReports = await enrichReports(allTeacherReports, 'teacher');
       const enrichedSchoolReports = await enrichReports(schools, 'school');
@@ -186,6 +193,7 @@ export default function AllReports({ onUpdate }) {
       setReviewReports(enrichedReviewReports);
       setTeacherReports(enrichedTeacherReports);
       setSchoolReports(enrichedSchoolReports);
+      setRemovalRequests(removalReqs);
     } catch (error) {
       console.error("Failed to load reports:", error);
       toast.error("Impossible de charger les signalements.");
