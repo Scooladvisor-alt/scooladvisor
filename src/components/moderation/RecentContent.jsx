@@ -80,8 +80,9 @@ export default function RecentContent({ onUpdate }) {
         })
       ];
 
-      allItems.sort((a, b) => new Date(b.date) - new Date(a.date));
-      setRecentItems(allItems);
+      const recentFiltered = allItems.filter(item => new Date(item.date) >= thirtyDaysAgo);
+      recentFiltered.sort((a, b) => new Date(b.date) - new Date(a.date));
+      setRecentItems(recentFiltered);
     } catch (error) {
       console.error("Error loading recent content:", error);
       toast.error("Erreur lors du chargement du contenu récent");
