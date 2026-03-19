@@ -303,6 +303,9 @@ export default function SchoolDetailPage() {
                     >
                       <Flag className="w-4 h-4 text-red-500" />
                     </button>
+                    {user && (user.role === 'admin' || user.role === 'moderator') && (
+                      <SchoolAdminMenu school={school} user={user} onUpdate={loadData} />
+                    )}
                   </div>
                   <div className="flex items-center gap-2 text-slate-600 dark:text-slate-300">
                     <MapPin className="w-4 h-4" />
