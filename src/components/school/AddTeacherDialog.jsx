@@ -364,14 +364,14 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
                 required
                 placeholder="M. Dupont"
                 className="h-7 text-xs sm:text-sm flex-1 text-slate-900 dark:bg-slate-900 dark:border-slate-600 dark:text-white" />
-              <div className="flex items-center gap-1.5 bg-gradient-to-r from-pink-50 to-blue-50 dark:from-pink-950/30 dark:to-blue-950/30 px-2 py-1.5 rounded-lg border border-pink-200 dark:border-pink-800">
+              <div className="flex items-center gap-1.5 bg-slate-800 dark:bg-slate-900 px-2 py-1.5 rounded-lg border border-slate-700 dark:border-slate-600">
                 <input
                   type="checkbox"
                   id="is_former"
                   checked={formData.is_former}
                   onChange={(e) => setFormData({ ...formData, is_former: e.target.checked })}
-                  className="w-3.5 h-3.5 rounded accent-orange-500 cursor-pointer" />
-                <label htmlFor="is_former" className="text-[10px] sm:text-xs font-medium text-orange-800 dark:text-orange-400 whitespace-nowrap cursor-pointer">
+                  className="w-3.5 h-3.5 rounded accent-slate-600 cursor-pointer" />
+                <label htmlFor="is_former" className="text-[10px] sm:text-xs font-medium text-white dark:text-slate-200 whitespace-nowrap cursor-pointer">
                   Ancien
                 </label>
               </div>
