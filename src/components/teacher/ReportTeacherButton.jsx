@@ -26,6 +26,10 @@ export default function ReportTeacherButton({ teacher, onUpdate, variant = "defa
   const [removalReason, setRemovalReason] = useState("");
   const [platformRating, setPlatformRating] = useState(0);
   const [removalMessage, setRemovalMessage] = useState("");
+  const [removalFirstName, setRemovalFirstName] = useState("");
+  const [removalLastName, setRemovalLastName] = useState("");
+  const [removalEmail, setRemovalEmail] = useState("");
+  const [removalAttest, setRemovalAttest] = useState(false);
 
   const handleReport = async () => {
     setLoading(true);
