@@ -20,9 +20,9 @@ export default function HiddenTeachers({ onUpdate }) {
     setLoading(true);
     try {
       const allTeachers = await base44.entities.Teacher.list();
-      // Profs masqués : is_hidden: true (nouveau) OU is_deleted: true sans is_hidden explicitement false (ancien comportement avant migration)
+      // Profs masqués : is_hidden: true (nouveau) OU is_deleted: true avec is_hidden != false (ancienne logique avant migration)
       const hiddenTeachers = allTeachers.filter(t =>
-        t.is_hidden === true || t.status === "hidden"
+        t.is_hidden === true || t.status === "hidden" || (t.is_deleted === true && t.is_hidden !== false)
       );
       
       // Enrichir avec le nom de l'école
