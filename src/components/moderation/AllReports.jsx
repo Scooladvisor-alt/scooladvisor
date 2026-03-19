@@ -326,15 +326,18 @@ export default function AllReports({ onUpdate }) {
       {/* Barre de recherche supprimée à la demande de l'utilisateur */}
       
       <Tabs defaultValue="reviews" className="space-y-4">
-        <TabsList className="grid w-full grid-cols-3">
+        <TabsList className="grid w-full grid-cols-4">
           <TabsTrigger value="reviews">
             Avis ({reviewReports?.length || 0})
           </TabsTrigger>
           <TabsTrigger value="teachers">
-            Professeurs ({filteredTeacherReports?.length || 0})
+            Profs ({filteredTeacherReports?.length || 0})
           </TabsTrigger>
           <TabsTrigger value="schools">
-            Établissements ({filteredSchoolReports?.length || 0})
+            Écoles ({filteredSchoolReports?.length || 0})
+          </TabsTrigger>
+          <TabsTrigger value="removals" className="text-pink-700 data-[state=active]:bg-pink-50">
+            Suppressions ({removalRequests?.length || 0})
           </TabsTrigger>
         </TabsList>
 
