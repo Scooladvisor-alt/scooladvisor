@@ -76,7 +76,7 @@ export default function HiddenItems({ onUpdate }) {
   const unhideSchool = async (school) => {
     setActionLoading(school.id);
     try {
-      await base44.entities.School.update(school.id, { status: "approved" });
+      await base44.entities.School.update(school.id, { is_hidden: false });
       toast.success(`${school.name} est de nouveau visible.`);
       setHiddenSchools(prev => prev.filter(s => s.id !== school.id));
       if (onUpdate) onUpdate();
