@@ -507,12 +507,6 @@ export default function ProfilePage() {
             </CardContent>
           
             <CardContent className="p-6 border-slate-100 dark:border-slate-700 border-t">
-              <div className="flex items-center gap-2 mb-6">
-                <TrendingUp className="w-6 h-6 text-[#FF4D8D]" />
-                <h2 className="text-2xl font-bold bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
-                  Mes avis ({totalReviews})
-                </h2>
-              </div>
               {reviewsLoading ?
               <div className="flex justify-center py-12">
                   <div className="w-8 h-8 border-4 border-[#FF4D8D] border-t-transparent rounded-full animate-spin" />
