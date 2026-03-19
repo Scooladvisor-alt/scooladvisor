@@ -284,7 +284,7 @@ export default function ModerationPage() {
           </div>
         </motion.div>
 
-        <Tabs defaultValue="reports" className="space-y-6">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
           <TabsList className="grid w-full grid-cols-4 sm:grid-cols-7 bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-slate-200 dark:border-slate-700 p-1 gap-1">
             <TabsTrigger value="reports" data-value="reports" className="data-[state=active]:bg-red-50 data-[state=active]:text-red-700 text-xs">
               <AlertTriangle className="w-4 h-4 mr-1 sm:mr-2" />
