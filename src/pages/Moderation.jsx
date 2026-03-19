@@ -40,6 +40,7 @@ export default function ModerationPage() {
     totalSchools: 0,
     deletedItems: 0,
     recentContent: 0,
+    hiddenTeachers: 0,
   });
 
   useEffect(() => {
