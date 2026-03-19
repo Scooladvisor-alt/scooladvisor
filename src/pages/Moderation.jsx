@@ -240,7 +240,7 @@ export default function ModerationPage() {
         </motion.div>
 
         <Tabs defaultValue="reports" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-3 sm:grid-cols-6 bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-slate-200 dark:border-slate-700 p-1 gap-1">
+          <TabsList className="grid w-full grid-cols-4 sm:grid-cols-7 bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-slate-200 dark:border-slate-700 p-1 gap-1">
             <TabsTrigger value="reports" className="data-[state=active]:bg-red-50 data-[state=active]:text-red-700 text-xs">
               <AlertTriangle className="w-4 h-4 mr-1 sm:mr-2" />
               <span className="hidden sm:inline">Signalements</span>
