@@ -42,8 +42,8 @@ export default function TrashBin({ onUpdate }) {
         base44.entities.NationalMessage.list("-updated_date", 100).catch(() => [])
       ]);
       
-      // Écoles supprimées
-      const deletedSchools = schools.filter(s => s.is_deleted).map(item => ({
+      // Écoles supprimées (exclure les masquées status:"banned")
+      const deletedSchools = schools.filter(s => s.is_deleted && s.status !== "banned").map(item => ({
         ...item,
         entity_type: 'School',
         display_name: item.name,
