@@ -303,31 +303,50 @@ Si la décision est "approved", "reason" peut être vide ou null.`,
 
   return (
     <>
-      <div className="my-4 sm:my-6 p-2.5 sm:p-3 rounded-xl bg-gradient-to-br from-[#FF4D8D] via-purple-500 to-blue-500 dark:from-[#FF4D8D]/90 dark:via-purple-500/90 dark:to-blue-500/90 shadow-lg cursor-pointer hover:shadow-xl transition-all hover:-translate-y-1 relative overflow-hidden sticky bottom-4 z-10 group"
-      onClick={() => setShowDialog(true)}>
-        <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/20 to-transparent z-0" style={{ transform: 'skewX(-20deg)' }} />
-
-        <div className="flex items-center justify-between gap-2 mb-1">
-          <h2 className="text-xs sm:text-base font-bold text-white">🧭 Mon Orientation</h2>
-          <p className="text-white/70 text-[10px] sm:text-xs hidden sm:block">Discute d'orientation avec d'autres élèves & étudiants</p>
+      <div
+        className="my-6 rounded-2xl overflow-hidden shadow-lg cursor-pointer group hover:shadow-xl transition-all duration-300"
+        onClick={() => setShowDialog(true)}
+      >
+        {/* Header bande colorée */}
+        <div className="relative bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 px-4 py-3 flex items-center justify-between overflow-hidden">
+          <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+          <div className="flex items-center gap-2">
+            <Compass className="w-4 h-4 text-white" />
+            <span className="font-bold text-white text-sm">Mon Orientation</span>
+          </div>
+          <div className="flex items-center gap-1 text-white/80 text-xs">
+            <MessageCircle className="w-3.5 h-3.5" />
+            <span>{messages.length} message{messages.length !== 1 ? 's' : ''}</span>
+            <ChevronRight className="w-3.5 h-3.5 ml-1 group-hover:translate-x-1 transition-transform" />
+          </div>
         </div>
-        {loading ?
-        <p className="text-white/80 text-xs">Chargement...</p> :
-        lastMessage ?
-        <div className="mt-1.5 p-2 rounded-lg bg-white dark:bg-slate-800 shadow-sm">
-            <p className="text-xs font-semibold line-clamp-2">
-              <span className="font-bold text-blue-600 dark:text-blue-400">
-                {lastMessage.is_anonymous ? 'Anonyme' : lastMessage.author_name}:
-              </span>{' '}
-              <span className="text-black dark:text-white">{lastMessage.message}</span>
-            </p>
-            <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-1 text-right">
-              {formatDateWithTimezone(lastMessage.created_date, "'Le' d MMM 'à' HH:mm")}
-            </p>
-          </div> :
 
-        <p className="text-white/80 text-xs">Pose ta première question d'orientation ! 🚀</p>
-        }
+        {/* Corps blanc */}
+        <div className="bg-white dark:bg-slate-800 border border-t-0 border-slate-200 dark:border-slate-700 rounded-b-2xl px-4 py-3">
+          <p className="text-xs text-slate-500 dark:text-slate-400 mb-2">
+            Discute d'orientation, pose tes questions et trouve des conseils avec d'autres élèves &amp; étudiants.
+          </p>
+          {loading ? (
+            <div className="flex items-center gap-2 text-slate-400 text-xs">
+              <Loader2 className="w-3.5 h-3.5 animate-spin" />
+              <span>Chargement...</span>
+            </div>
+          ) : lastMessage ? (
+            <div className="bg-slate-50 dark:bg-slate-900 rounded-xl px-3 py-2 border border-slate-100 dark:border-slate-700">
+              <p className="text-xs line-clamp-2 text-slate-700 dark:text-slate-200">
+                <span className="font-semibold text-purple-600 dark:text-purple-400">
+                  {lastMessage.is_anonymous ? 'Anonyme' : lastMessage.author_name} :
+                </span>{' '}
+                {lastMessage.message}
+              </p>
+              <p className="text-[10px] text-slate-400 mt-1">
+                {formatDistanceWithTimezone(lastMessage.created_date)}
+              </p>
+            </div>
+          ) : (
+            <p className="text-xs text-slate-400 italic">Sois le premier à poser une question !</p>
+          )}
+        </div>
       </div>
 
       <Dialog open={showDialog} onOpenChange={setShowDialog}>
