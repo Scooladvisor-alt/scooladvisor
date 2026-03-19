@@ -184,32 +184,52 @@ export default function ReportTeacherButton({ teacher, onUpdate, variant = "defa
           {/* Formulaire de suppression (je suis ce prof) */}
           {showRemovalForm ? (
             removalSent ? (
-              <div className="py-6 text-center space-y-4">
-                <div className="w-16 h-16 bg-gradient-to-br from-pink-100 to-purple-100 rounded-full flex items-center justify-center mx-auto">
-                  <Heart className="w-8 h-8 text-[#FF4D8D]" />
+              <div className="py-8 text-center space-y-4">
+                <div className="w-16 h-16 bg-gradient-to-br from-green-100 to-emerald-100 rounded-full flex items-center justify-center mx-auto">
+                  <span className="text-3xl">✅</span>
                 </div>
-                <h3 className="text-xl font-bold text-slate-900">Votre demande a bien été envoyée 💌</h3>
-                <p className="text-slate-600 text-sm leading-relaxed max-w-md mx-auto">
-                  Nous allons intervenir immédiatement. Scooladvisor, c'est fait pour du love et de la bonne humeur —
-                  si quelque chose vous déplaît, ce n'est pas dans notre intérêt ni dans notre objectif. Merci de nous
-                  avoir fait confiance.
+                <h3 className="text-xl font-bold text-slate-900">Demande bien reçue !</h3>
+                <p className="text-slate-600 text-sm leading-relaxed max-w-sm mx-auto">
+                  Notre équipe de modération va examiner votre demande dans les meilleurs délais.
+                  Nous vous contacterons à l'adresse indiquée si nécessaire.
+                </p>
+                <p className="text-xs text-slate-400 max-w-xs mx-auto">
+                  Scooladvisor est une plateforme bienveillante — chaque demande est traitée avec sérieux et respect.
                 </p>
                 <Button onClick={() => setShowDialog(false)} className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 text-white">
                   Fermer
                 </Button>
               </div>
             ) : (
-              <div className="space-y-5">
+              <div className="space-y-4">
+                {/* Identité */}
+                <div>
+                  <p className="text-sm font-semibold text-slate-700 mb-3">Vos informations <span className="text-red-500">*</span></p>
+                  <div className="grid grid-cols-2 gap-3 mb-3">
+                    <div>
+                      <Label className="text-xs text-slate-500 mb-1 block">Prénom</Label>
+                      <Input value={removalFirstName} onChange={(e) => setRemovalFirstName(e.target.value)} placeholder="Prénom" />
+                    </div>
+                    <div>
+                      <Label className="text-xs text-slate-500 mb-1 block">Nom</Label>
+                      <Input value={removalLastName} onChange={(e) => setRemovalLastName(e.target.value)} placeholder="Nom" />
+                    </div>
+                  </div>
+                  <div>
+                    <Label className="text-xs text-slate-500 mb-1 block">Adresse e-mail</Label>
+                    <Input type="email" value={removalEmail} onChange={(e) => setRemovalEmail(e.target.value)} placeholder="votre@email.com" />
+                  </div>
+                </div>
+
                 {/* Raison */}
                 <div>
-                  <p className="text-sm font-semibold text-slate-700 mb-3">Pourquoi souhaitez-vous supprimer votre profil ?</p>
+                  <p className="text-sm font-semibold text-slate-700 mb-3">Motif de la demande <span className="text-red-500">*</span></p>
                   <RadioGroup value={removalReason} onValueChange={setRemovalReason} className="space-y-2">
                     {[
-                      { value: "je_suis_ce_professeur", label: "Je suis ce professeur et je n'ai pas consenti à figurer ici" },
-                      { value: "atteinte_vie_privee", label: "Atteinte à ma vie privée" },
-                      { value: "informations_incorrectes", label: "Les informations me concernant sont incorrectes" },
-                      { value: "avis_diffamatoires", label: "Des avis diffamatoires me concernent" },
-                      { value: "autre", label: "Autre raison" },
+                      { value: "je_suis_ce_professeur", label: "Je pense être la personne représentée par ce profil" },
+                      { value: "informations_incorrectes", label: "Les informations affichées ne semblent pas exactes" },
+                      { value: "avis_diffamatoires", label: "Certains avis me semblent injustes ou inappropriés" },
+                      { value: "autre", label: "Autre motif" },
                     ].map((opt) => (
                       <div key={opt.value} className={`flex items-start space-x-3 p-3 rounded-lg border-2 cursor-pointer transition-all ${removalReason === opt.value ? 'border-pink-400 bg-pink-50' : 'border-slate-200 hover:border-pink-200 hover:bg-pink-50/30'}`}>
                         <RadioGroupItem value={opt.value} id={opt.value} className="mt-0.5" />
@@ -219,33 +239,46 @@ export default function ReportTeacherButton({ teacher, onUpdate, variant = "defa
                   </RadioGroup>
                 </div>
 
+                {/* Message libre */}
+                <div>
+                  <p className="text-sm font-semibold text-slate-700 mb-2">Informations complémentaires <span className="text-red-500">*</span></p>
+                  <Textarea
+                    value={removalMessage}
+                    onChange={(e) => setRemovalMessage(e.target.value)}
+                    placeholder="Expliquez votre situation en quelques mots..."
+                    rows={3}
+                    className="resize-none"
+                  />
+                  <p className="text-xs text-slate-400 mt-1">{removalMessage.length} caractères (20 min)</p>
+                </div>
+
+                {/* Attestation */}
+                <div className={`flex items-start gap-3 p-3 rounded-lg border-2 cursor-pointer transition-all ${removalAttest ? 'border-purple-400 bg-purple-50' : 'border-slate-200 hover:border-purple-200'}`}
+                  onClick={() => setRemovalAttest(!removalAttest)}>
+                  <Checkbox
+                    checked={removalAttest}
+                    onCheckedChange={setRemovalAttest}
+                    className="mt-0.5 flex-shrink-0"
+                  />
+                  <p className="text-xs text-slate-700 leading-relaxed">
+                    J'atteste être la personne la mieux placée pour représenter ce profil et agir en son nom. Je comprends que cette demande sera examinée par notre équipe de modération.
+                  </p>
+                </div>
+
                 {/* Note plateforme */}
                 <div>
-                  <p className="text-sm font-semibold text-slate-700 mb-2">Quelle note donnez-vous à notre plateforme ? <span className="text-slate-400 font-normal">(optionnel)</span></p>
-                  <div className="flex gap-2 flex-wrap">
+                  <p className="text-xs text-slate-500 mb-2">Quelle note donnez-vous à Scooladvisor ? <span className="text-slate-400">(optionnel)</span></p>
+                  <div className="flex gap-1.5 flex-wrap">
                     {[1,2,3,4,5,6,7,8,9,10].map((n) => (
                       <button
                         key={n}
                         onClick={() => setPlatformRating(n)}
-                        className={`w-9 h-9 rounded-lg text-sm font-bold border-2 transition-all ${platformRating === n ? 'bg-gradient-to-br from-[#FF4D8D] to-purple-500 text-white border-pink-400' : 'border-slate-200 text-slate-600 hover:border-pink-300'}`}
+                        className={`w-8 h-8 rounded-lg text-xs font-bold border-2 transition-all ${platformRating === n ? 'bg-gradient-to-br from-[#FF4D8D] to-purple-500 text-white border-pink-400' : 'border-slate-200 text-slate-600 hover:border-pink-300'}`}
                       >
                         {n}
                       </button>
                     ))}
                   </div>
-                </div>
-
-                {/* Message libre */}
-                <div>
-                  <p className="text-sm font-semibold text-slate-700 mb-2">Détaillez votre demande <span className="text-red-500">*</span></p>
-                  <Textarea
-                    value={removalMessage}
-                    onChange={(e) => setRemovalMessage(e.target.value)}
-                    placeholder="Expliquez votre situation en quelques mots..."
-                    rows={4}
-                    className="resize-none"
-                  />
-                  <p className="text-xs text-slate-400 mt-1">{removalMessage.length} caractères (20 min)</p>
                 </div>
 
                 <DialogFooter className="gap-2">
