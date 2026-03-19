@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
-import { CheckCircle, XCircle, AlertTriangle, Trash2, Loader2, ExternalLink, School as SchoolIcon, Search } from "lucide-react";
+import { CheckCircle, XCircle, AlertTriangle, Trash2, Loader2, ExternalLink, School as SchoolIcon, Search, UserMinus, Star } from "lucide-react";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 import { motion } from "framer-motion";
