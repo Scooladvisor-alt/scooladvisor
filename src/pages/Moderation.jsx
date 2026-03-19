@@ -107,10 +107,12 @@ export default function ModerationPage() {
       const rejectedReviews = [...teacherReviews, ...schoolReviews].filter(r => r.status === 'rejected');
       const recentContentCount = activeSchools.length + teacherReviews.length + schoolReviews.length;
 
-      let hiddenTeachersCount = 0;
+      let hiddenCount = 0;
       try {
         const allTeachers = await base44.entities.Teacher.list();
-        hiddenTeachersCount = allTeachers.filter(t => t.is_hidden === true || t.status === "hidden").length;
+        const hiddenTeachersCount = allTeachers.filter(t => t.is_hidden === true || (t.is_deleted === true && t.is_hidden !== false)).length;
+        const hiddenSchoolsCount = allSchools.filter(s => s.status === "banned").length;
+        hiddenCount = hiddenTeachersCount + hiddenSchoolsCount;
       } catch {}
 
       setStats({
@@ -118,10 +120,10 @@ export default function ModerationPage() {
         recentReviews: teacherReviews.length + schoolReviews.length,
         contactMessages: contactMessages.length,
         bannedUsers: bannedUsers.length,
-        totalSchools: activeSchools.length,
-        deletedItems: deletedSchools.length + rejectedReviews.length,
+        totalSchools: activeSchools.filter(s => s.status !== "banned").length,
+        deletedItems: deletedSchools.filter(s => s.status !== "banned").length + rejectedReviews.length,
         recentContent: recentContentCount,
-        hiddenTeachers: hiddenTeachersCount,
+        hiddenTeachers: hiddenCount,
       });
     } catch (error) {
       console.error("Error loading stats:", error);
