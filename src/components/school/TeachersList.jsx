@@ -33,7 +33,7 @@ export default function TeachersList({ schoolId, onAddTeacher }) {
     const loadTeachers = async () => {
       setLoading(true);
       // Charger TOUS les professeurs sans limite (5000 max par sécurité technique, mais c'est énorme)
-      const teachersData = await base44.entities.Teacher.filter({ school_id: schoolId, status: "approved", is_deleted: false }, "-average_rating", 5000);
+      const teachersData = await base44.entities.Teacher.filter({ school_id: schoolId, status: "approved", is_deleted: false, is_hidden: false }, "-average_rating", 5000);
       setTeachers(teachersData);
       setLoading(false);
     };

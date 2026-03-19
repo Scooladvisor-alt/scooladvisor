@@ -96,10 +96,21 @@ export default function TeacherAdminMenu({ teacher, user, onUpdate }) {
   const handleHide = async () => {
     setLoading(true);
     try {
-      const newStatus = !teacher.is_hidden;
-      await base44.entities.Teacher.update(teacher.id, { is_hidden: newStatus });
-      await logAction(newStatus ? "hide" : "unhide", `Professeur ${newStatus ? "masqué" : "affiché"}`);
-      toast.success(newStatus ? "Professeur masqué" : "Professeur affiché");
+      const newHidden = !teacher.is_hidden;
+      await base44.entities.Teacher.update(teacher.id, { is_hidden: newHidden });
+
+      // Masquer ou restaurer tous les avis du professeur
+      const reviews = await base44.entities.TeacherReview.filter({ teacher_id: teacher.id });
+      for (const r of reviews) {
+        if (newHidden && r.status === "published") {
+          await base44.entities.TeacherReview.update(r.id, { status: "hidden" });
+        } else if (!newHidden && r.status === "hidden") {
+          await base44.entities.TeacherReview.update(r.id, { status: "published" });
+        }
+      }
+
+      await logAction(newHidden ? "hide" : "unhide", `Professeur ${newHidden ? "masqué" : "affiché"}`);
+      toast.success(newHidden ? "Professeur masqué et avis cachés" : "Professeur affiché et avis restaurés");
       setShowHideConfirm(false);
       onUpdate();
     } catch (error) {
