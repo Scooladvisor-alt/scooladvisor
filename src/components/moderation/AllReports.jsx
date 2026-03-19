@@ -138,6 +138,7 @@ export default function AllReports({ onUpdate }) {
   const [reviewReports, setReviewReports] = useState([]);
   const [teacherReports, setTeacherReports] = useState([]);
   const [schoolReports, setSchoolReports] = useState([]);
+  const [removalRequests, setRemovalRequests] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
 
