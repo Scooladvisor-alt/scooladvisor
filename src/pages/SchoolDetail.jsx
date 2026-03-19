@@ -53,11 +53,6 @@ export default function SchoolDetailPage() {
     setLoading(true);
 
     try {
-      const schoolsData = await base44.entities.School.filter({ id: schoolId });
-      const foundSchool = schoolsData[0];
-      setSchool(foundSchool);
-
-
       let currentUser = null;
       try {
         currentUser = await base44.auth.me();
@@ -65,6 +60,19 @@ export default function SchoolDetailPage() {
       } catch (error) {
         setUser(null);
       }
+
+      const schoolsData = await base44.entities.School.filter({ id: schoolId });
+      const foundSchool = schoolsData[0];
+
+      // Un établissement masqué n'est accessible qu'aux modérateurs/admins
+      const canSeeHidden = currentUser && (currentUser.role === 'admin' || currentUser.role === 'moderator');
+      if (foundSchool && foundSchool.is_hidden && !canSeeHidden) {
+        setSchool(null);
+        setLoading(false);
+        return;
+      }
+
+      setSchool(foundSchool);
     } catch (error) {
       console.error("Error loading school data:", error);
       setSchool(null);
