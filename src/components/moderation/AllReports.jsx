@@ -286,7 +286,7 @@ export default function AllReports({ onUpdate }) {
     );
   }
 
-  const totalReports = (reviewReports?.length || 0) + (teacherReports?.length || 0) + (schoolReports?.length || 0);
+  const totalReports = (reviewReports?.length || 0) + (teacherReports?.length || 0) + (schoolReports?.length || 0) + (removalRequests?.length || 0);
 
   if (totalReports === 0) {
     return (
