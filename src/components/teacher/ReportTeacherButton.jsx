@@ -112,6 +112,29 @@ export default function ReportTeacherButton({ teacher, onUpdate, variant = "defa
     setLoading(false);
   };
 
+  const handleRemovalRequest = async () => {
+    if (!removalReason) { toast.error("Veuillez choisir une raison."); return; }
+    if (!removalMessage.trim() || removalMessage.trim().length < 20) { toast.error("Veuillez détailler votre demande (20 caractères min)."); return; }
+    setLoading(true);
+    try {
+      const user = await base44.auth.me();
+      await base44.entities.TeacherRemovalRequest.create({
+        teacher_id: teacher.id,
+        teacher_name: teacher.name,
+        requester_email: user.email,
+        requester_id: user.id,
+        removal_reason: removalReason,
+        platform_rating: platformRating || null,
+        message: removalMessage,
+        status: "pending"
+      });
+      setRemovalSent(true);
+    } catch (error) {
+      toast.error("Erreur lors de l'envoi de la demande.");
+    }
+    setLoading(false);
+  };
+
   return (
     <>
       {variant === "flag" ? (
