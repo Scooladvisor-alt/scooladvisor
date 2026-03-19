@@ -261,8 +261,8 @@ export default function SchoolsPage() {
   const filterSchools = () => {
     let filtered = [...schools];
 
-    // Exclure uniquement les écoles supprimées
-    filtered = filtered.filter((school) => !school.is_deleted);
+    // Exclure les écoles supprimées ou masquées
+    filtered = filtered.filter((school) => !school.is_deleted && !school.is_hidden);
 
     if (searchTerm) {
       const normalizedSearch = normalizeString(searchTerm);
