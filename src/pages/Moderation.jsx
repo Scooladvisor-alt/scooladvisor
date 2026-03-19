@@ -351,6 +351,20 @@ export default function ModerationPage() {
               </CardContent>
             </Card>
           </TabsContent>
+
+          <TabsContent value="hidden-teachers">
+            <Card className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm dark:border-slate-700">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <EyeOff className="w-5 h-5 text-pink-600" />
+                  Professeurs masqués
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <HiddenTeachers onUpdate={loadStats} />
+              </CardContent>
+            </Card>
+          </TabsContent>
         </Tabs>
       </div>
     </div>
