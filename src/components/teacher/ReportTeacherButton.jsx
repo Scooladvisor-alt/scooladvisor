@@ -170,7 +170,7 @@ export default function ReportTeacherButton({ teacher, onUpdate, variant = "defa
         </Button>
       )}
 
-      <Dialog open={showDialog} onOpenChange={(open) => { setShowDialog(open); if (!open) { setShowRemovalForm(false); setRemovalSent(false); setRemovalReason(""); setPlatformRating(0); setRemovalMessage(""); } }}>
+      <Dialog open={showDialog} onOpenChange={(open) => { setShowDialog(open); if (!open) { setShowRemovalForm(false); setRemovalSent(false); setRemovalReason(""); setPlatformRating(0); setRemovalMessage(""); setRemovalFirstName(""); setRemovalLastName(""); setRemovalEmail(""); setRemovalAttest(false); } }}>
         <DialogContent className="max-w-[98vw] sm:max-w-5xl max-h-[90vh] overflow-y-auto rounded-2xl">
           <DialogHeader>
             <DialogTitle className="text-lg sm:text-xl font-bold flex items-center gap-2">
