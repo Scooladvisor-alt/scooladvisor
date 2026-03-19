@@ -200,7 +200,7 @@ export default function TeacherAdminMenu({ teacher, user, onUpdate }) {
               onClick={() => setShowHideConfirm(true)}
               className="cursor-pointer"
             >
-              {teacher.is_deleted ? (
+              {teacher.is_hidden ? (
                 <>
                   <Eye className="w-4 h-4 mr-2 text-green-600" />
                   <span className="text-green-700">Afficher le professeur</span>
