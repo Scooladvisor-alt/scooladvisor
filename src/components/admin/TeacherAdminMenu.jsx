@@ -263,11 +263,11 @@ export default function TeacherAdminMenu({ teacher, user, onUpdate }) {
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
-              {teacher.is_deleted ? <Eye className="w-5 h-5 text-green-600" /> : <EyeOff className="w-5 h-5 text-amber-600" />}
-              {teacher.is_deleted ? "Afficher le professeur" : "Masquer le professeur"}
+              {teacher.is_hidden ? <Eye className="w-5 h-5 text-green-600" /> : <EyeOff className="w-5 h-5 text-amber-600" />}
+              {teacher.is_hidden ? "Afficher le professeur" : "Masquer le professeur"}
             </DialogTitle>
             <DialogDescription>
-              {teacher.is_deleted
+              {teacher.is_hidden
                 ? "Le profil sera à nouveau visible pour tous les utilisateurs."
                 : "Le profil sera caché du site mais conservé en base de données."}
             </DialogDescription>
