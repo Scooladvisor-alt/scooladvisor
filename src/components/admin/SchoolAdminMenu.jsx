@@ -130,7 +130,7 @@ export default function SchoolAdminMenu({ school, user, onUpdate }) {
     ecole_ingenieur: "École d'ingénieurs",
   };
 
-  const isHidden = school.status === "banned";
+  const isHidden = school.is_hidden === true;
 
   return (
     <>
