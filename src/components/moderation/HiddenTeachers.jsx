@@ -48,6 +48,7 @@ export default function HiddenTeachers({ onUpdate }) {
       // Remettre le prof visible : is_hidden: false et status: "approved"
       await base44.entities.Teacher.update(teacher.id, {
         is_hidden: false,
+        is_deleted: false,
         status: "approved"
       });
 
