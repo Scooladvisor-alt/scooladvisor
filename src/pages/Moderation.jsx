@@ -48,6 +48,19 @@ export default function ModerationPage() {
     checkAccess();
   }, []);
 
+  // Rechargement auto des stats toutes les 30 secondes
+  useEffect(() => {
+    const interval = setInterval(() => {
+      loadStats();
+    }, 30000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Recharger les stats à chaque changement d'onglet
+  useEffect(() => {
+    if (user) loadStats();
+  }, [activeTab]);
+
   const checkAccess = async () => {
     try {
       const currentUser = await base44.auth.me();
