@@ -62,6 +62,15 @@ export default function TeacherDetailPage() {
     try {
       const teachersData = await base44.entities.Teacher.filter({ id: teacherId });
       const foundTeacher = teachersData[0];
+      // Un prof masqué n'est pas accessible publiquement (sauf admin/modérateur)
+      let currentUser = null;
+      try { currentUser = await base44.auth.me(); } catch {}
+      const canSeeHidden = currentUser && (currentUser.role === 'admin' || currentUser.role === 'moderator');
+      if (foundTeacher && foundTeacher.is_hidden && !canSeeHidden) {
+        setTeacher(null);
+        setLoading(false);
+        return;
+      }
       setTeacher(foundTeacher || null);
 
       if (foundTeacher && foundTeacher.school_id) {
