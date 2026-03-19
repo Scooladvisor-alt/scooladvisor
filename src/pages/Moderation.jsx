@@ -185,7 +185,7 @@ export default function ModerationPage() {
       tab: "trash"
     },
     {
-      title: "Profs masqués",
+      title: "Masqués",
       value: stats.hiddenTeachers,
       icon: EyeOff,
       color: "from-pink-500 to-pink-600",
