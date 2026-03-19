@@ -29,10 +29,10 @@ export default function RecentContent({ onUpdate }) {
     setLoading(true);
     try {
       const [schools, teachers, teacherReviews, schoolReviews] = await Promise.all([
-        base44.entities.School.list("-created_date", 50).catch(() => []),
-        base44.entities.Teacher.list().catch(() => []),
-        base44.entities.TeacherReview.list("-created_date", 50).catch(() => []),
-        base44.entities.SchoolReview.list("-created_date", 50).catch(() => [])
+        base44.entities.School.list("-created_date", 200).catch(() => []),
+        base44.entities.Teacher.list("-created_date", 500).catch(() => []),
+        base44.entities.TeacherReview.list("-created_date", 200).catch(() => []),
+        base44.entities.SchoolReview.list("-created_date", 200).catch(() => [])
       ]);
 
       // Créer des maps pour les données relationnelles
