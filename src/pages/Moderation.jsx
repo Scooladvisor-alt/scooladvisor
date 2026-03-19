@@ -82,60 +82,55 @@ export default function ModerationPage() {
   const loadStats = async () => {
     try {
       const [
-        teacherReviews,
-        schoolReviews,
         contactMessages,
         bannedUsers,
-        allSchools
+        allSchools,
+        allTeachers,
+        allTeacherReviews,
+        allSchoolReviews,
+        deletedItems,
       ] = await Promise.all([
-        base44.entities.TeacherReview.list("-created_date", 50).catch(() => []),
-        base44.entities.SchoolReview.list("-created_date", 50).catch(() => []),
         base44.entities.ContactMessage.filter({ status: "pending" }).catch(() => []),
         base44.entities.User.filter({ is_banned: true }).catch(() => []),
-        base44.entities.School.list("-created_date", 500).catch(() => [])
+        base44.entities.School.list("-created_date", 1000).catch(() => []),
+        base44.entities.Teacher.list("-created_date", 1000).catch(() => []),
+        base44.entities.TeacherReview.list("-created_date", 500).catch(() => []),
+        base44.entities.SchoolReview.list("-created_date", 500).catch(() => []),
+        base44.entities.DeletedItem.list().catch(() => []),
       ]);
 
-      let reportsCount = 0;
-      try {
-        const reports = await base44.entities.Report.filter({ status: "pending" });
-        reportsCount += reports.length;
-      } catch (error) {}
+      // Signalements en attente
+      const [reports, teacherReports, fraudReports, schoolReports, removalRequests] = await Promise.all([
+        base44.entities.Report.filter({ status: "pending" }).catch(() => []),
+        base44.entities.TeacherStatusReport.filter({ status: "pending" }).catch(() => []),
+        base44.entities.TeacherFraudReport.filter({ status: "pending" }).catch(() => []),
+        base44.entities.SchoolReport.filter({ status: "pending" }).catch(() => []),
+        base44.entities.TeacherRemovalRequest.filter({ status: "pending" }).catch(() => []),
+      ]);
+      const reportsCount = reports.length + teacherReports.length + fraudReports.length + schoolReports.length + removalRequests.length;
 
-      try {
-        const teacherReports = await base44.entities.TeacherStatusReport.filter({ status: "pending" });
-        reportsCount += teacherReports.length;
-      } catch (error) {}
+      // Établissements actifs (non supprimés, non masqués)
+      const activeSchools = allSchools.filter(s => !s.is_deleted && !s.is_hidden);
 
-      try {
-        const fraudReports = await base44.entities.TeacherFraudReport.filter({ status: "pending" });
-        reportsCount += fraudReports.length;
-      } catch (error) {}
+      // Corbeille = DeletedItem entity
+      const trashCount = deletedItems.length;
 
-      try {
-        const schoolReports = await base44.entities.SchoolReport.filter({ status: "pending" });
-        reportsCount += schoolReports.length;
-      } catch (error) {}
+      // Masqués = profs masqués + écoles masquées
+      const hiddenTeachersCount = allTeachers.filter(t => t.is_hidden === true).length;
+      const hiddenSchoolsCount = allSchools.filter(s => s.is_hidden === true).length;
+      const hiddenCount = hiddenTeachersCount + hiddenSchoolsCount;
 
-      const activeSchools = allSchools.filter(s => !s.is_deleted);
-      const deletedSchools = allSchools.filter(s => s.is_deleted);
-      const rejectedReviews = [...teacherReviews, ...schoolReviews].filter(r => r.status === 'rejected');
-      const recentContentCount = activeSchools.length + teacherReviews.length + schoolReviews.length;
-
-      let hiddenCount = 0;
-      try {
-        const allTeachers = await base44.entities.Teacher.list();
-        const hiddenTeachersCount = allTeachers.filter(t => t.is_hidden === true || (t.is_deleted === true && t.is_hidden !== false)).length;
-        const hiddenSchoolsCount = allSchools.filter(s => s.status === "banned").length;
-        hiddenCount = hiddenTeachersCount + hiddenSchoolsCount;
-      } catch {}
+      // Contenu récent = avis publiés récemment
+      const recentContentCount = allTeacherReviews.filter(r => r.status === 'published').length
+        + allSchoolReviews.filter(r => r.status === 'published').length;
 
       setStats({
         pendingReports: reportsCount,
-        recentReviews: teacherReviews.length + schoolReviews.length,
+        recentReviews: allTeacherReviews.length + allSchoolReviews.length,
         contactMessages: contactMessages.length,
         bannedUsers: bannedUsers.length,
-        totalSchools: activeSchools.filter(s => s.status !== "banned").length,
-        deletedItems: deletedSchools.filter(s => s.status !== "banned").length + rejectedReviews.length,
+        totalSchools: activeSchools.length,
+        deletedItems: trashCount,
         recentContent: recentContentCount,
         hiddenTeachers: hiddenCount,
       });
