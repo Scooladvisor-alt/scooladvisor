@@ -351,14 +351,17 @@ Si la décision est "approved", "reason" peut être vide ou null.`,
 
       <Dialog open={showDialog} onOpenChange={setShowDialog}>
         <DialogContent className="max-w-[95vw] sm:max-w-5xl max-h-[90vh] flex flex-col p-0 rounded-2xl overflow-hidden dark:bg-slate-800 dark:border-slate-700">
-          <DialogHeader className="p-3 border-b dark:border-slate-700">
-            <div>
-              <DialogTitle className="text-base font-bold">
-                <span className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
-                  🧭 Mon Orientation
-                </span>
-              </DialogTitle>
-              <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Un espace pour discuter d'orientation et trouver des conseils avec d'autres élèves & étudiants.</p>
+          <DialogHeader className="border-b dark:border-slate-700 px-4 py-3">
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#FF4D8D] via-purple-500 to-blue-500 flex items-center justify-center flex-shrink-0">
+                <Compass className="w-4 h-4 text-white" />
+              </div>
+              <div>
+                <DialogTitle className="text-base font-bold bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
+                  Mon Orientation
+                </DialogTitle>
+                <p className="text-xs text-slate-500 dark:text-slate-400">Pose tes questions, partage tes conseils d'orientation.</p>
+              </div>
             </div>
           </DialogHeader>
 
