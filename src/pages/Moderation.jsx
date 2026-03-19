@@ -266,9 +266,7 @@ export default function ModerationPage() {
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: index * 0.05 }}
-                onClick={() => {
-                  document.querySelector(`[data-value="${stat.tab}"]`)?.click();
-                }}
+                onClick={() => setActiveTab(stat.tab)}
                 className={`relative group flex flex-col items-center justify-center gap-2 p-4 rounded-2xl border ${stat.bg} ${stat.border} hover:shadow-md transition-all duration-200 hover:scale-105 cursor-pointer text-center`}
               >
                 {stat.alert && (
