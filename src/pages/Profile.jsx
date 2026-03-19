@@ -757,13 +757,6 @@ export default function ProfilePage() {
             </CardContent>
           </Card>
 
-          <div className="px-4 py-3 text-center">
-            <button
-              onClick={() => setShowDeleteDialog(true)}
-              className="text-xs text-slate-400 dark:text-slate-500 hover:text-red-500 dark:hover:text-red-400 transition-colors">
-              Supprimer mon compte
-            </button>
-          </div>
 
         </motion.div>
       </div>
