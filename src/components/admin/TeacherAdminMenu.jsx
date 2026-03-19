@@ -96,8 +96,8 @@ export default function TeacherAdminMenu({ teacher, user, onUpdate }) {
   const handleHide = async () => {
     setLoading(true);
     try {
-      const newStatus = !teacher.is_deleted;
-      await base44.entities.Teacher.update(teacher.id, { is_deleted: newStatus });
+      const newStatus = !teacher.is_hidden;
+      await base44.entities.Teacher.update(teacher.id, { is_hidden: newStatus });
       await logAction(newStatus ? "hide" : "unhide", `Professeur ${newStatus ? "masqué" : "affiché"}`);
       toast.success(newStatus ? "Professeur masqué" : "Professeur affiché");
       setShowHideConfirm(false);
