@@ -333,11 +333,14 @@ Si la décision est "approved", "reason" peut être vide ou null.`,
       <Dialog open={showDialog} onOpenChange={setShowDialog}>
         <DialogContent className="max-w-[95vw] sm:max-w-5xl max-h-[90vh] flex flex-col p-0 rounded-2xl overflow-hidden dark:bg-slate-800 dark:border-slate-700">
           <DialogHeader className="p-3 border-b dark:border-slate-700">
-            <DialogTitle className="text-base font-bold">
-              <span className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
-                Micro National
-              </span>
-            </DialogTitle>
+            <div>
+              <DialogTitle className="text-base font-bold">
+                <span className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
+                  🧭 Mon Orientation
+                </span>
+              </DialogTitle>
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Un espace pour discuter d'orientation et trouver des conseils avec d'autres élèves & étudiants.</p>
+            </div>
           </DialogHeader>
 
           <div className="flex-1 overflow-y-auto px-4 py-3">
