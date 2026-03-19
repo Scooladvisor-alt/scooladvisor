@@ -273,7 +273,7 @@ export default function ReportTeacherButton({ teacher, onUpdate, variant = "defa
                   {/* Message bienveillance */}
                   <div className="bg-gradient-to-br from-blue-50 to-purple-50 border border-blue-200 rounded-xl p-4">
                     <p className="text-xs text-slate-700 leading-relaxed">
-                      💙 <span className="font-semibold">Scooladvisor</span> est une communauté bienveillante. On croit au pouvoir des retours constructifs et de l'authenticité. Si tu souhaites modifier ou supprimer ton profil, nous respecterons ta demande avec sérieux. Chaque demande est examinée avec attention et bienveillance.
+                      💙 <span className="font-semibold">Scooladvisor</span> est une plateforme bienveillante fondée sur la confiance et l'authenticité. Nous examinons chaque demande avec sérieux et respect, en veillant à soutenir une communauté positive et constructive pour tous.
                     </p>
                   </div>
 
