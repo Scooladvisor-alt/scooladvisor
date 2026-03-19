@@ -187,98 +187,110 @@ export default function ReportTeacherButton({ teacher, onUpdate, variant = "defa
             removalSent ? (
               <div className="py-8 text-center space-y-4">
                 <div className="w-16 h-16 bg-gradient-to-br from-green-100 to-emerald-100 rounded-full flex items-center justify-center mx-auto">
-                  <span className="text-3xl">✅</span>
+                  <Heart className="w-8 h-8 text-green-600 fill-green-600" />
                 </div>
-                <h3 className="text-xl font-bold text-slate-900">Demande bien reçue !</h3>
+                <h3 className="text-xl font-bold text-slate-900">Demande reçue avec ❤️</h3>
                 <p className="text-slate-600 text-sm leading-relaxed max-w-sm mx-auto">
-                  Notre équipe de modération va examiner votre demande dans les meilleurs délais.
-                  Nous vous contacterons à l'adresse indiquée si nécessaire.
+                  Notre équipe va examiner votre demande dans les meilleurs délais. Nous vous contacterons à l'adresse indiquée si besoin.
                 </p>
-                <p className="text-xs text-slate-400 max-w-xs mx-auto">
-                  Scooladvisor est une plateforme bienveillante — chaque demande est traitée avec sérieux et respect.
+                <p className="text-xs text-slate-500 max-w-md mx-auto">
+                  Scooladvisor est une communauté qui valorise la bienveillance et le respect. On te souhaite le meilleur.
                 </p>
                 <Button onClick={() => setShowDialog(false)} className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 text-white">
                   Fermer
                 </Button>
               </div>
             ) : (
-              <div className="space-y-4">
-                {/* Identité */}
-                <div>
-                  <p className="text-sm font-semibold text-slate-700 mb-3">Vos informations <span className="text-red-500">*</span></p>
-                  <div className="grid grid-cols-2 gap-3 mb-3">
-                    <div>
-                      <Label className="text-xs text-slate-500 mb-1 block">Prénom</Label>
-                      <Input value={removalFirstName} onChange={(e) => setRemovalFirstName(e.target.value)} placeholder="Prénom" />
-                    </div>
-                    <div>
-                      <Label className="text-xs text-slate-500 mb-1 block">Nom</Label>
-                      <Input value={removalLastName} onChange={(e) => setRemovalLastName(e.target.value)} placeholder="Nom" />
+              <div className="space-y-5">
+                {/* Confirmation d'identité — case cocher avant tout */}
+                <div className={`p-4 rounded-xl border-2 cursor-pointer transition-all ${isConfirmedPerson ? 'border-green-400 bg-green-50' : 'border-slate-300 bg-white hover:border-green-300 hover:bg-green-50/30'}`}
+                  onClick={() => setIsConfirmedPerson(!isConfirmedPerson)}>
+                  <div className="flex items-start gap-3">
+                    <Checkbox
+                      checked={isConfirmedPerson}
+                      onCheckedChange={setIsConfirmedPerson}
+                      className="mt-1 flex-shrink-0 w-5 h-5"
+                    />
+                    <div className="flex-1">
+                      <p className="font-semibold text-slate-900 text-sm">Je pense être la personne représentée par ce profil</p>
+                      <p className="text-xs text-slate-500 mt-1">Cette case est obligatoire pour continuer. Confirme que tu es la personne concernée avant de détailler ta demande.</p>
                     </div>
                   </div>
+                </div>
+
+                {/* Reste du formulaire — désactivé tant qu'on n'a pas coché */}
+                <div className={`space-y-4 ${!isConfirmedPerson ? 'opacity-50 pointer-events-none' : ''}`}>
+                  {/* Identité */}
                   <div>
-                    <Label className="text-xs text-slate-500 mb-1 block">Adresse e-mail</Label>
-                    <Input type="email" value={removalEmail} onChange={(e) => setRemovalEmail(e.target.value)} placeholder="votre@email.com" />
-                  </div>
-                </div>
-
-                {/* Raison */}
-                <div>
-                  <p className="text-sm font-semibold text-slate-700 mb-3">Motif de la demande <span className="text-red-500">*</span></p>
-                  <RadioGroup value={removalReason} onValueChange={setRemovalReason} className="space-y-2">
-                    {[
-                      { value: "je_suis_ce_professeur", label: "Je pense être la personne représentée par ce profil" },
-                      { value: "informations_incorrectes", label: "Les informations affichées ne semblent pas exactes" },
-                      { value: "avis_diffamatoires", label: "Certains avis me semblent injustes ou inappropriés" },
-                      { value: "autre", label: "Autre motif" },
-                    ].map((opt) => (
-                      <div key={opt.value} className={`flex items-start space-x-3 p-3 rounded-lg border-2 cursor-pointer transition-all ${removalReason === opt.value ? 'border-pink-400 bg-pink-50' : 'border-slate-200 hover:border-pink-200 hover:bg-pink-50/30'}`}>
-                        <RadioGroupItem value={opt.value} id={opt.value} className="mt-0.5" />
-                        <Label htmlFor={opt.value} className="cursor-pointer text-sm text-slate-800">{opt.label}</Label>
+                    <p className="text-sm font-semibold text-slate-700 mb-3">Vos informations <span className="text-red-500">*</span></p>
+                    <div className="grid grid-cols-2 gap-3 mb-3">
+                      <div>
+                        <Label className="text-xs text-slate-500 mb-1 block">Prénom</Label>
+                        <Input value={removalFirstName} onChange={(e) => setRemovalFirstName(e.target.value)} placeholder="Prénom" disabled={!isConfirmedPerson} />
                       </div>
-                    ))}
-                  </RadioGroup>
-                </div>
+                      <div>
+                        <Label className="text-xs text-slate-500 mb-1 block">Nom</Label>
+                        <Input value={removalLastName} onChange={(e) => setRemovalLastName(e.target.value)} placeholder="Nom" disabled={!isConfirmedPerson} />
+                      </div>
+                    </div>
+                    <div>
+                      <Label className="text-xs text-slate-500 mb-1 block">Adresse e-mail</Label>
+                      <Input type="email" value={removalEmail} onChange={(e) => setRemovalEmail(e.target.value)} placeholder="votre@email.com" disabled={!isConfirmedPerson} />
+                    </div>
+                  </div>
 
-                {/* Message libre */}
-                <div>
-                  <p className="text-sm font-semibold text-slate-700 mb-2">Informations complémentaires <span className="text-red-500">*</span></p>
-                  <Textarea
-                    value={removalMessage}
-                    onChange={(e) => setRemovalMessage(e.target.value)}
-                    placeholder="Expliquez votre situation en quelques mots..."
-                    rows={3}
-                    className="resize-none"
-                  />
-                  <p className="text-xs text-slate-400 mt-1">{removalMessage.length} caractères (20 min)</p>
-                </div>
+                  {/* Raison */}
+                  <div>
+                    <p className="text-sm font-semibold text-slate-700 mb-3">Motif de la demande <span className="text-red-500">*</span></p>
+                    <RadioGroup value={removalReason} onValueChange={setRemovalReason} className="space-y-2">
+                      {[
+                        { value: "informations_incorrectes", label: "Les informations affichées ne semblent pas exactes" },
+                        { value: "autre", label: "Simplement gêné(e) que mon nom apparaisse sur la plateforme" },
+                        { value: "avis_diffamatoires", label: "Certains avis me semblent injustes ou inappropriés" },
+                      ].map((opt) => (
+                        <div key={opt.value} className={`flex items-start space-x-3 p-3 rounded-lg border-2 cursor-pointer transition-all ${removalReason === opt.value ? 'border-pink-400 bg-pink-50' : 'border-slate-200 hover:border-pink-200 hover:bg-pink-50/30'}`}>
+                          <RadioGroupItem value={opt.value} id={opt.value} className="mt-0.5" />
+                          <Label htmlFor={opt.value} className="cursor-pointer text-sm text-slate-800">{opt.label}</Label>
+                        </div>
+                      ))}
+                    </RadioGroup>
+                  </div>
 
-                {/* Attestation */}
-                <div className={`flex items-start gap-3 p-3 rounded-lg border-2 cursor-pointer transition-all ${removalAttest ? 'border-purple-400 bg-purple-50' : 'border-slate-200 hover:border-purple-200'}`}
-                  onClick={() => setRemovalAttest(!removalAttest)}>
-                  <Checkbox
-                    checked={removalAttest}
-                    onCheckedChange={setRemovalAttest}
-                    className="mt-0.5 flex-shrink-0"
-                  />
-                  <p className="text-xs text-slate-700 leading-relaxed">
-                    J'atteste être la personne la mieux placée pour représenter ce profil et agir en son nom. Je comprends que cette demande sera examinée par notre équipe de modération.
-                  </p>
-                </div>
+                  {/* Message libre */}
+                  <div>
+                    <p className="text-sm font-semibold text-slate-700 mb-2">Informations complémentaires <span className="text-red-500">*</span></p>
+                    <Textarea
+                      value={removalMessage}
+                      onChange={(e) => setRemovalMessage(e.target.value)}
+                      placeholder="Explique ta situation en quelques mots..."
+                      rows={3}
+                      className="resize-none"
+                      disabled={!isConfirmedPerson}
+                    />
+                    <p className="text-xs text-slate-400 mt-1">{removalMessage.length} caractères (20 min)</p>
+                  </div>
 
-                {/* Note plateforme */}
-                <div>
-                  <p className="text-xs text-slate-500 mb-2">Quelle note donnez-vous à Scooladvisor ? <span className="text-slate-400">(optionnel)</span></p>
-                  <div className="flex gap-1.5 flex-wrap">
-                    {[1,2,3,4,5,6,7,8,9,10].map((n) => (
-                      <button
-                        key={n}
-                        onClick={() => setPlatformRating(n)}
-                        className={`w-8 h-8 rounded-lg text-xs font-bold border-2 transition-all ${platformRating === n ? 'bg-gradient-to-br from-[#FF4D8D] to-purple-500 text-white border-pink-400' : 'border-slate-200 text-slate-600 hover:border-pink-300'}`}
-                      >
-                        {n}
-                      </button>
-                    ))}
+                  {/* Message bienveillance */}
+                  <div className="bg-gradient-to-br from-blue-50 to-purple-50 border border-blue-200 rounded-xl p-4">
+                    <p className="text-xs text-slate-700 leading-relaxed">
+                      💙 <span className="font-semibold">Scooladvisor</span> est une communauté bienveillante. On croit au pouvoir des retours constructifs et de l'authenticité. Si tu souhaites modifier ou supprimer ton profil, nous respecterons ta demande avec sérieux. Chaque demande est examinée avec attention et bienveillance.
+                    </p>
+                  </div>
+
+                  {/* Note plateforme */}
+                  <div>
+                    <p className="text-xs text-slate-500 mb-2">Quelle note donnez-vous à Scooladvisor ? <span className="text-slate-400">(optionnel)</span></p>
+                    <div className="flex gap-1.5 flex-wrap">
+                      {[1,2,3,4,5,6,7,8,9,10].map((n) => (
+                        <button
+                          key={n}
+                          onClick={() => setPlatformRating(n)}
+                          className={`w-8 h-8 rounded-lg text-xs font-bold border-2 transition-all ${platformRating === n ? 'bg-gradient-to-br from-[#FF4D8D] to-purple-500 text-white border-pink-400' : 'border-slate-200 text-slate-600 hover:border-pink-300'}`}
+                        >
+                          {n}
+                        </button>
+                      ))}
+                    </div>
                   </div>
                 </div>
 
@@ -286,8 +298,8 @@ export default function ReportTeacherButton({ teacher, onUpdate, variant = "defa
                   <Button variant="outline" onClick={() => setShowRemovalForm(false)}>Retour</Button>
                   <Button
                     onClick={handleRemovalRequest}
-                    disabled={loading}
-                    className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 text-white font-semibold"
+                    disabled={loading || !isConfirmedPerson}
+                    className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 text-white font-semibold disabled:opacity-50"
                   >
                     {loading ? "Envoi..." : "Envoyer ma demande"}
                   </Button>
