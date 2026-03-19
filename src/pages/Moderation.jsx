@@ -287,37 +287,37 @@ export default function ModerationPage() {
 
         <Tabs defaultValue="reports" className="space-y-6">
           <TabsList className="grid w-full grid-cols-4 sm:grid-cols-7 bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-slate-200 dark:border-slate-700 p-1 gap-1">
-            <TabsTrigger value="reports" className="data-[state=active]:bg-red-50 data-[state=active]:text-red-700 text-xs">
+            <TabsTrigger value="reports" data-value="reports" className="data-[state=active]:bg-red-50 data-[state=active]:text-red-700 text-xs">
               <AlertTriangle className="w-4 h-4 mr-1 sm:mr-2" />
               <span className="hidden sm:inline">Signalements</span>
               <span className="sm:hidden">🚩</span>
             </TabsTrigger>
-            <TabsTrigger value="recent" className="data-[state=active]:bg-purple-50 data-[state=active]:text-purple-700 text-xs">
+            <TabsTrigger value="recent" data-value="recent" className="data-[state=active]:bg-purple-50 data-[state=active]:text-purple-700 text-xs">
               <Clock className="w-4 h-4 mr-1 sm:mr-2" />
               <span className="hidden sm:inline">Récents</span>
               <span className="sm:hidden">🕐</span>
             </TabsTrigger>
-            <TabsTrigger value="contact" className="data-[state=active]:bg-amber-50 data-[state=active]:text-amber-700 text-xs">
+            <TabsTrigger value="contact" data-value="contact" className="data-[state=active]:bg-amber-50 data-[state=active]:text-amber-700 text-xs">
               <MessageSquare className="w-4 h-4 mr-1 sm:mr-2" />
               <span className="hidden sm:inline">Contact</span>
               <span className="sm:hidden">📧</span>
             </TabsTrigger>
-            <TabsTrigger value="banned" className="data-[state=active]:bg-slate-100 data-[state=active]:text-slate-700 text-xs">
+            <TabsTrigger value="banned" data-value="banned" className="data-[state=active]:bg-slate-100 data-[state=active]:text-slate-700 text-xs">
               <UserX className="w-4 h-4 mr-1 sm:mr-2" />
               <span className="hidden sm:inline">Bannis</span>
               <span className="sm:hidden">🚫</span>
             </TabsTrigger>
-            <TabsTrigger value="schools" className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 text-xs">
+            <TabsTrigger value="schools" data-value="schools" className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 text-xs">
               <School className="w-4 h-4 mr-1 sm:mr-2" />
               <span className="hidden sm:inline">Établissements</span>
               <span className="sm:hidden">🏫</span>
             </TabsTrigger>
-            <TabsTrigger value="trash" className="data-[state=active]:bg-orange-50 data-[state=active]:text-orange-700 text-xs">
+            <TabsTrigger value="trash" data-value="trash" className="data-[state=active]:bg-orange-50 data-[state=active]:text-orange-700 text-xs">
               <Trash2 className="w-4 h-4 mr-1 sm:mr-2" />
               <span className="hidden sm:inline">Corbeille</span>
               <span className="sm:hidden">🗑️</span>
             </TabsTrigger>
-            <TabsTrigger value="hidden-teachers" className="data-[state=active]:bg-pink-50 data-[state=active]:text-pink-700 text-xs">
+            <TabsTrigger value="hidden-teachers" data-value="hidden-teachers" className="data-[state=active]:bg-pink-50 data-[state=active]:text-pink-700 text-xs">
               <EyeOff className="w-4 h-4 mr-1 sm:mr-2" />
               <span className="hidden sm:inline">Masqués</span>
               <span className="sm:hidden">👁️</span>
