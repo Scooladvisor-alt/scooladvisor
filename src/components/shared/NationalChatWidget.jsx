@@ -307,11 +307,10 @@ Si la décision est "approved", "reason" peut être vide ou null.`,
       onClick={() => setShowDialog(true)}>
         <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/20 to-transparent z-0" style={{ transform: 'skewX(-20deg)' }} />
 
-        <h2 className="text-xs sm:text-base font-bold text-white flex items-center gap-2 mb-1.5 sm:mb-2">
-          <span className="text-white">
-            Micro National
-          </span>
-        </h2>
+        <div className="flex items-center justify-between gap-2 mb-1">
+          <h2 className="text-xs sm:text-base font-bold text-white">🧭 Mon Orientation</h2>
+          <p className="text-white/70 text-[10px] sm:text-xs hidden sm:block">Discute d'orientation avec d'autres élèves & étudiants</p>
+        </div>
         {loading ?
         <p className="text-white/80 text-xs">Chargement...</p> :
         lastMessage ?
@@ -327,7 +326,7 @@ Si la décision est "approved", "reason" peut être vide ou null.`,
             </p>
           </div> :
 
-        <p className="text-white/80 text-xs">Et si tu ouvrais la conversation ? 💬</p>
+        <p className="text-white/80 text-xs">Pose ta première question d'orientation ! 🚀</p>
         }
       </div>
 
