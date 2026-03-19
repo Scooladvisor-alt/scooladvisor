@@ -643,6 +643,82 @@ export default function AllReports({ onUpdate }) {
           </motion.div>
         ))}
       </TabsContent>
+
+      <TabsContent value="removals" className="space-y-4">
+        {(!removalRequests || removalRequests.length === 0) && (
+          <p className="text-center text-slate-500 py-4">Aucune demande de suppression de profil.</p>
+        )}
+        {removalRequests && removalRequests.map((req, index) => (
+          <motion.div
+            key={req.id}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: index * 0.1 }}
+          >
+            <Card className="bg-white/80 backdrop-blur-sm border-pink-200">
+              <CardContent className="p-6">
+                <div className="space-y-4">
+                  <div className="flex items-center gap-3 pb-3 border-b">
+                    <UserMinus className="w-6 h-6 text-pink-600" />
+                    <h3 className="text-xl font-bold text-slate-900">Demande de suppression de profil</h3>
+                    <Badge className="bg-pink-100 text-pink-700 border-pink-200">Urgent</Badge>
+                  </div>
+
+                  <div className="bg-pink-50 border border-pink-200 rounded-lg p-4 space-y-2 text-sm">
+                    <p><span className="font-medium text-slate-700">Professeur concerné :</span> <span className="font-bold text-slate-900">{req.teacher_name}</span></p>
+                    <p><span className="font-medium text-slate-700">Demandé par :</span> {req.requester_email}</p>
+                    <p><span className="font-medium text-slate-700">Raison :</span> <span className="font-semibold text-pink-700">{req.removal_reason?.replace(/_/g, ' ')}</span></p>
+                    {req.platform_rating && (
+                      <p className="flex items-center gap-1">
+                        <span className="font-medium text-slate-700">Note plateforme :</span>
+                        <span className="font-bold text-amber-600">{req.platform_rating}/10</span>
+                        <Star className="w-3.5 h-3.5 fill-amber-500 text-amber-500" />
+                      </p>
+                    )}
+                    <p><span className="font-medium text-slate-700">Date :</span> {formatDateWithTimezone(req.created_date, "d MMM yyyy 'à' HH:mm")}</p>
+                  </div>
+
+                  <div className="bg-white border border-slate-200 rounded-lg p-4">
+                    <p className="text-xs font-semibold text-slate-600 mb-2">💬 Message du demandeur :</p>
+                    <p className="text-sm text-slate-800 leading-relaxed italic">"{req.message}"</p>
+                  </div>
+
+                  <div className="flex flex-wrap justify-end gap-2 pt-3 border-t">
+                    <Link to={createPageUrl(`TeacherDetail?id=${req.teacher_id}`)} target="_blank">
+                      <Button variant="outline" size="sm">
+                        <ExternalLink className="w-4 h-4 mr-1" /> Voir le profil
+                      </Button>
+                    </Link>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={async () => {
+                        await base44.entities.TeacherRemovalRequest.update(req.id, { status: "rejected" });
+                        toast.success("Demande rejetée");
+                        loadAllReports();
+                      }}
+                    >
+                      <XCircle className="w-4 h-4 mr-1" /> Rejeter
+                    </Button>
+                    <Button
+                      size="sm"
+                      className="bg-pink-600 hover:bg-pink-700 text-white"
+                      onClick={async () => {
+                        await base44.entities.Teacher.update(req.teacher_id, { is_hidden: true });
+                        await base44.entities.TeacherRemovalRequest.update(req.id, { status: "processed" });
+                        toast.success("Profil masqué suite à la demande");
+                        loadAllReports();
+                      }}
+                    >
+                      <Trash2 className="w-4 h-4 mr-1" /> Masquer le profil
+                    </Button>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+        ))}
+      </TabsContent>
     </Tabs>
     </div>
   );
