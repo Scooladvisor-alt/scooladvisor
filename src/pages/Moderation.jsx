@@ -32,6 +32,7 @@ export default function ModerationPage() {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState("reports");
   const [stats, setStats] = useState({
     pendingReports: 0,
     recentReviews: 0,
