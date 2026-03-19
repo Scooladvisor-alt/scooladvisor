@@ -933,33 +933,44 @@ export default function SchoolsPage() {
                         <div className="flex flex-col items-center text-center gap-1.5 sm:gap-2 flex-1">
                           {/* Photo de profil */}
                           <div className="relative shrink-0">
-                            <img
-                            src={teacher.photo_url}
-                            alt={teacher.name}
-                            className="w-12 h-12 sm:w-14 sm:h-14 rounded-full object-cover border-2 sm:border-3 border-white shadow-sm group-hover:border-pink-100 transition-all" />
+                            {teacher.is_hidden ? (
+                              <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-slate-200 dark:bg-slate-600 border-2 border-white shadow-sm flex items-center justify-center">
+                                <span className="text-lg">🚫</span>
+                              </div>
+                            ) : (
+                              <img
+                                src={teacher.photo_url}
+                                alt={teacher.name}
+                                className="w-12 h-12 sm:w-14 sm:h-14 rounded-full object-cover border-2 sm:border-3 border-white shadow-sm group-hover:border-pink-100 transition-all"
+                              />
+                            )}
                           </div>
 
                           {/* Infos prof */}
                           <div className="w-full flex-1 flex flex-col items-center">
-                            <h3 className="font-bold text-slate-900 dark:text-white text-xs sm:text-sm mb-0.5 sm:mb-1 truncate w-full">
-                              {teacher.name}
-                            </h3>
+                            {teacher.is_hidden ? (
+                              <div className="w-3/4 h-3 bg-slate-300 dark:bg-slate-600 rounded-full mb-1 sm:mb-1.5 blur-[2px]" />
+                            ) : (
+                              <h3 className="font-bold text-slate-900 dark:text-white text-xs sm:text-sm mb-0.5 sm:mb-1 truncate w-full">
+                                {teacher.name}
+                              </h3>
+                            )}
                             
                             <div className="inline-flex items-center gap-1 bg-gradient-to-r from-pink-50 to-blue-50 px-1.5 sm:px-2 py-0.5 rounded-full mb-1 sm:mb-1.5 border border-slate-100 max-w-full">
                               <span className="text-[10px] sm:text-xs font-semibold bg-gradient-to-r from-[#FF4D8D] to-[#4DA6FF] bg-clip-text text-transparent line-clamp-2 text-center break-words" style={{ fontSize: teacher.subject.length > 20 ? '9px' : teacher.subject.length > 15 ? '10px' : '' }}>
-                                {teacher.subject}
+                                {teacher.is_hidden ? "• • •" : teacher.subject}
                               </span>
                             </div>
                             
                             <p className="text-[10px] sm:text-xs text-slate-500 dark:text-slate-400 line-clamp-2 min-h-[2em] sm:min-h-[2.5em] leading-tight">
-                              📍 {school?.name || "Établissement inconnu"}
+                              {teacher.is_hidden ? "" : `📍 ${school?.name || "Établissement inconnu"}`}
                             </p>
                           </div>
 
                           {/* Bouton voir profil */}
                           <div className="w-full mt-auto pt-1.5 sm:pt-2 border-t border-slate-100 dark:border-slate-700">
                             <div className="text-[10px] sm:text-xs font-semibold text-center text-slate-400 dark:text-slate-500 group-hover:text-pink-500 dark:group-hover:text-pink-400 transition-colors flex items-center justify-center gap-0.5 sm:gap-1">
-                              Voir profil <ArrowRight className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
+                              {teacher.is_hidden ? "Masqué" : <>Voir profil <ArrowRight className="w-2.5 h-2.5 sm:w-3 sm:h-3" /></>}
                             </div>
                           </div>
                         </div>
