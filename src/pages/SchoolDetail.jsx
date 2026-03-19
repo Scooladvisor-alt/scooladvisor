@@ -279,11 +279,6 @@ export default function SchoolDetailPage() {
 
           <div className="relative p-3 md:p-6 md:p-8">
             <div className="relative">
-              {school.status === 'banned' &&
-                <Badge className="mb-3 bg-red-100 text-red-800 border-red-200 text-xs">
-                  Établissement Banni
-                </Badge>
-              }
               
               <div className="hidden md:flex justify-between items-start gap-6 mb-6">
                 <div className="flex-1">
