@@ -452,18 +452,18 @@ Rédige maintenant ton résumé façon "L'avis de Satoshi" en 3 phrases max.`;
                         </div>
 
                     {review.comment && (() => {
-                      const isLongComment = review.comment.split('\n').length > 3 || review.comment.length > 200;
+                      const isLongComment = review.comment.length > 300;
                       const isExpanded = expandedComments.has(review.id);
                       return (
                         <div className="relative bg-slate-50 dark:bg-slate-900 p-2 sm:p-3 rounded-lg mb-2 sm:mb-3">
-                          <p className={`text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed pr-6 ${!isExpanded && isLongComment ? 'line-clamp-3' : ''}`}>
+                          <p className={`text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed pr-6 ${isLongComment && !isExpanded ? 'line-clamp-3' : ''}`}>
                             {review.comment}
                           </p>
                           {isLongComment && (
                             <button
                               onClick={() => toggleCommentExpand(review.id)}
                               className="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium mt-1">
-                              {isExpanded ? "Voir moins" : "Voir plus"}
+                              {isExpanded ? "Voir moins ▲" : "Voir plus ▼"}
                             </button>
                           )}
                           <button
