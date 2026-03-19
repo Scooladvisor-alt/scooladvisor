@@ -129,7 +129,7 @@ export default function SchoolsPage() {
     const duplicateIds = new Set();
 
     for (const school of schoolsList) {
-      if (school.is_deleted) continue;
+      if (school.is_deleted || school.is_hidden) continue;
 
       const normalizedName = normalizeString(school.name);
       const normalizedAddress = normalizeString(school.address);
