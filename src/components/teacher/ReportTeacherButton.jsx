@@ -160,58 +160,156 @@ export default function ReportTeacherButton({ teacher, onUpdate, variant = "defa
         </Button>
       )}
 
-      <Dialog open={showDialog} onOpenChange={setShowDialog}>
+      <Dialog open={showDialog} onOpenChange={(open) => { setShowDialog(open); if (!open) { setShowRemovalForm(false); setRemovalSent(false); setRemovalReason(""); setPlatformRating(0); setRemovalMessage(""); } }}>
         <DialogContent className="max-w-[98vw] sm:max-w-5xl max-h-[90vh] overflow-y-auto rounded-2xl">
           <DialogHeader>
             <DialogTitle className="text-lg sm:text-xl font-bold flex items-center gap-2">
               <AlertTriangle className="w-5 h-5 text-[#FF4D8D]" />
               <span className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
-                Signaler ce professeur
+                {showRemovalForm ? "Demande de suppression de profil" : "Signaler ce professeur"}
               </span>
             </DialogTitle>
           </DialogHeader>
 
-          <RadioGroup value={reportType} onValueChange={setReportType} className="space-y-3">
-            <div className="flex items-start space-x-3 p-3 rounded-lg border-2 border-amber-200 bg-amber-50/40 hover:bg-amber-50 hover:border-amber-300 transition-all cursor-pointer">
-              <RadioGroupItem value="former" id="former" className="mt-1 border-amber-400 text-amber-600" />
-              <div className="flex-1">
-                <Label htmlFor="former" className="font-medium text-slate-900 cursor-pointer flex items-center gap-2 text-sm sm:text-base">
-                  <UserX className="w-4 h-4 text-amber-600" />
-                  Ne fait plus partie de l'établissement
-                </Label>
+          {/* Formulaire de suppression (je suis ce prof) */}
+          {showRemovalForm ? (
+            removalSent ? (
+              <div className="py-6 text-center space-y-4">
+                <div className="w-16 h-16 bg-gradient-to-br from-pink-100 to-purple-100 rounded-full flex items-center justify-center mx-auto">
+                  <Heart className="w-8 h-8 text-[#FF4D8D]" />
+                </div>
+                <h3 className="text-xl font-bold text-slate-900">Votre demande a bien été envoyée 💌</h3>
+                <p className="text-slate-600 text-sm leading-relaxed max-w-md mx-auto">
+                  Nous allons intervenir immédiatement. Scooladvisor, c'est fait pour du love et de la bonne humeur —
+                  si quelque chose vous déplaît, ce n'est pas dans notre intérêt ni dans notre objectif. Merci de nous
+                  avoir fait confiance.
+                </p>
+                <Button onClick={() => setShowDialog(false)} className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 text-white">
+                  Fermer
+                </Button>
               </div>
-            </div>
+            ) : (
+              <div className="space-y-5">
+                {/* Raison */}
+                <div>
+                  <p className="text-sm font-semibold text-slate-700 mb-3">Pourquoi souhaitez-vous supprimer votre profil ?</p>
+                  <RadioGroup value={removalReason} onValueChange={setRemovalReason} className="space-y-2">
+                    {[
+                      { value: "je_suis_ce_professeur", label: "Je suis ce professeur et je n'ai pas consenti à figurer ici" },
+                      { value: "atteinte_vie_privee", label: "Atteinte à ma vie privée" },
+                      { value: "informations_incorrectes", label: "Les informations me concernant sont incorrectes" },
+                      { value: "avis_diffamatoires", label: "Des avis diffamatoires me concernent" },
+                      { value: "autre", label: "Autre raison" },
+                    ].map((opt) => (
+                      <div key={opt.value} className={`flex items-start space-x-3 p-3 rounded-lg border-2 cursor-pointer transition-all ${removalReason === opt.value ? 'border-pink-400 bg-pink-50' : 'border-slate-200 hover:border-pink-200 hover:bg-pink-50/30'}`}>
+                        <RadioGroupItem value={opt.value} id={opt.value} className="mt-0.5" />
+                        <Label htmlFor={opt.value} className="cursor-pointer text-sm text-slate-800">{opt.label}</Label>
+                      </div>
+                    ))}
+                  </RadioGroup>
+                </div>
 
-            <div className="flex items-start space-x-3 p-3 rounded-lg border-2 border-red-200 bg-red-50/40 hover:bg-red-50 hover:border-red-300 transition-all cursor-pointer">
-              <RadioGroupItem value="fraud" id="fraud" className="mt-1 border-red-400 text-red-600" />
-              <div className="flex-1">
-                <Label htmlFor="fraud" className="font-medium text-slate-900 cursor-pointer flex items-center gap-2 text-sm sm:text-base">
-                  <XCircle className="w-4 h-4 text-red-600" />
-                  Ce n'est pas un vrai professeur
-                </Label>
+                {/* Note plateforme */}
+                <div>
+                  <p className="text-sm font-semibold text-slate-700 mb-2">Quelle note donnez-vous à notre plateforme ? <span className="text-slate-400 font-normal">(optionnel)</span></p>
+                  <div className="flex gap-2 flex-wrap">
+                    {[1,2,3,4,5,6,7,8,9,10].map((n) => (
+                      <button
+                        key={n}
+                        onClick={() => setPlatformRating(n)}
+                        className={`w-9 h-9 rounded-lg text-sm font-bold border-2 transition-all ${platformRating === n ? 'bg-gradient-to-br from-[#FF4D8D] to-purple-500 text-white border-pink-400' : 'border-slate-200 text-slate-600 hover:border-pink-300'}`}
+                      >
+                        {n}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Message libre */}
+                <div>
+                  <p className="text-sm font-semibold text-slate-700 mb-2">Détaillez votre demande <span className="text-red-500">*</span></p>
+                  <Textarea
+                    value={removalMessage}
+                    onChange={(e) => setRemovalMessage(e.target.value)}
+                    placeholder="Expliquez votre situation en quelques mots..."
+                    rows={4}
+                    className="resize-none"
+                  />
+                  <p className="text-xs text-slate-400 mt-1">{removalMessage.length} caractères (20 min)</p>
+                </div>
+
+                <DialogFooter className="gap-2">
+                  <Button variant="outline" onClick={() => setShowRemovalForm(false)}>Retour</Button>
+                  <Button
+                    onClick={handleRemovalRequest}
+                    disabled={loading}
+                    className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 text-white font-semibold"
+                  >
+                    {loading ? "Envoi..." : "Envoyer ma demande"}
+                  </Button>
+                </DialogFooter>
               </div>
-            </div>
-          </RadioGroup>
+            )
+          ) : (
+            <>
+              <RadioGroup value={reportType} onValueChange={setReportType} className="space-y-3">
+                <div className="flex items-start space-x-3 p-3 rounded-lg border-2 border-amber-200 bg-amber-50/40 hover:bg-amber-50 hover:border-amber-300 transition-all cursor-pointer">
+                  <RadioGroupItem value="former" id="former" className="mt-1 border-amber-400 text-amber-600" />
+                  <div className="flex-1">
+                    <Label htmlFor="former" className="font-medium text-slate-900 cursor-pointer flex items-center gap-2 text-sm sm:text-base">
+                      <UserX className="w-4 h-4 text-amber-600" />
+                      Ne fait plus partie de l'établissement
+                    </Label>
+                  </div>
+                </div>
 
-          <Alert className="bg-blue-50 border-blue-200">
-            <AlertTriangle className="h-4 w-4 text-blue-600" />
-            <AlertDescription className="text-blue-800 text-sm">
-              Les faux signalements peuvent entraîner la suspension de votre compte.
-            </AlertDescription>
-          </Alert>
+                <div className="flex items-start space-x-3 p-3 rounded-lg border-2 border-red-200 bg-red-50/40 hover:bg-red-50 hover:border-red-300 transition-all cursor-pointer">
+                  <RadioGroupItem value="fraud" id="fraud" className="mt-1 border-red-400 text-red-600" />
+                  <div className="flex-1">
+                    <Label htmlFor="fraud" className="font-medium text-slate-900 cursor-pointer flex items-center gap-2 text-sm sm:text-base">
+                      <XCircle className="w-4 h-4 text-red-600" />
+                      Ce n'est pas un vrai professeur
+                    </Label>
+                  </div>
+                </div>
+              </RadioGroup>
 
-          <DialogFooter className="gap-2">
-            <Button variant="outline" onClick={() => setShowDialog(false)} className="text-xs sm:text-sm">
-              Annuler
-            </Button>
-            <Button 
-              onClick={handleReport} 
-              disabled={loading}
-              className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-white shadow-md text-xs sm:text-sm font-semibold"
-            >
-              {loading ? "Signalement..." : "Confirmer le signalement"}
-            </Button>
-          </DialogFooter>
+              {/* 3ème option — je suis ce prof */}
+              <div
+                onClick={() => setShowRemovalForm(true)}
+                className="flex items-start space-x-3 p-3 rounded-lg border-2 border-pink-200 bg-pink-50/40 hover:bg-pink-50 hover:border-pink-300 transition-all cursor-pointer"
+              >
+                <div className="mt-1 w-4 h-4 rounded-full border-2 border-pink-400 flex-shrink-0" />
+                <div className="flex-1">
+                  <p className="font-medium text-slate-900 flex items-center gap-2 text-sm sm:text-base">
+                    <Trash2 className="w-4 h-4 text-pink-600" />
+                    Je suis ce professeur et je souhaite supprimer mon profil
+                  </p>
+                  <p className="text-xs text-slate-500 mt-0.5">Uniquement si vous êtes directement concerné(e)</p>
+                </div>
+              </div>
+
+              <Alert className="bg-blue-50 border-blue-200">
+                <AlertTriangle className="h-4 w-4 text-blue-600" />
+                <AlertDescription className="text-blue-800 text-sm">
+                  Les faux signalements peuvent entraîner la suspension de votre compte.
+                </AlertDescription>
+              </Alert>
+
+              <DialogFooter className="gap-2">
+                <Button variant="outline" onClick={() => setShowDialog(false)} className="text-xs sm:text-sm">
+                  Annuler
+                </Button>
+                <Button
+                  onClick={handleReport}
+                  disabled={loading}
+                  className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-white shadow-md text-xs sm:text-sm font-semibold"
+                >
+                  {loading ? "Signalement..." : "Confirmer le signalement"}
+                </Button>
+              </DialogFooter>
+            </>
+          )}
         </DialogContent>
       </Dialog>
     </>
