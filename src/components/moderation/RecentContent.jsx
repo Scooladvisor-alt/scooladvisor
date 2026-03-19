@@ -56,25 +56,25 @@ export default function RecentContent({ onUpdate }) {
         })),
         ...teacherReviews.map(item => {
           const teacher = teachersMap[item.teacher_id];
-          const school = teacher ? schoolsMap[teacher.school_id] : null;
+          const school = teacher ? (allSchoolsMap[teacher.school_id] || schoolsMap[teacher.school_id]) : null;
           return {
             ...item,
             type: 'teacher_review',
-            display_name: `Avis professeur`,
+            display_name: teacher ? `Avis sur ${teacher.name}` : `Avis professeur`,
             subtitle: `Par ${item.created_by || 'Utilisateur inconnu'}`,
-            school_name: school?.name || 'École inconnue',
-            school_id: school?.id,
+            school_name: school?.name || (teacher ? 'École inconnue' : 'École inconnue'),
+            school_id: school?.id || null,
             teacher_id: item.teacher_id,
             date: item.created_date,
             comment: item.comment
           };
         }),
         ...schoolReviews.map(item => {
-          const school = schoolsMap[item.school_id];
+          const school = allSchoolsMap[item.school_id] || schoolsMap[item.school_id];
           return {
             ...item,
             type: 'school_review',
-            display_name: `Avis établissement`,
+            display_name: school ? `Avis sur ${school.name}` : `Avis établissement`,
             subtitle: `Par ${item.created_by || 'Utilisateur inconnu'}`,
             school_name: school?.name || 'École inconnue',
             school_id: item.school_id,
