@@ -46,14 +46,10 @@ export default function RecentContent({ onUpdate }) {
       const allSchoolsMap = {};
       schools.forEach(s => { allSchoolsMap[s.id] = s; });
 
+      const thirtyDaysAgo = new Date();
+      thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+
       const allItems = [
-        ...schools.filter(s => !s.is_deleted).map(item => ({
-          ...item,
-          type: 'school',
-          display_name: item.name,
-          subtitle: `${item.city || 'Ville inconnue'} - ${item.type || 'Type inconnu'}`,
-          date: item.created_date
-        })),
         ...teacherReviews.map(item => {
           const teacher = teachersMap[item.teacher_id];
           const school = teacher ? (allSchoolsMap[teacher.school_id] || schoolsMap[teacher.school_id]) : null;
