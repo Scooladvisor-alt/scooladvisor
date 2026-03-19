@@ -142,7 +142,7 @@ export default function SchoolDetailPage() {
             <Flag className="w-3.5 h-3.5 text-red-500" />
           </button>
         }
-        adminMenu={user && user.role === 'admin' ? (
+        adminMenu={user && (user.role === 'admin' || user.role === 'moderator') ? (
           <SchoolAdminMenu school={school} user={user} onUpdate={loadData} />
         ) : null}
         ratingWidget={
