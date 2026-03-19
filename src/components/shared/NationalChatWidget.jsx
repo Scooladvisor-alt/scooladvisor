@@ -346,7 +346,7 @@ Si la décision est "approved", "reason" peut être vide ou null.`,
           <div className="flex-1 overflow-y-auto px-4 py-3">
             {messages.length === 0 ?
             <div className="text-center text-slate-500 dark:text-slate-400 py-16">
-                <p className="text-lg mb-4 text-slate-500 dark:text-slate-400">C'est calme ici... Prends le micro !</p>
+                <p className="text-lg mb-4 text-slate-500 dark:text-slate-400">C'est calme ici... Pose ta première question ! 🧭</p>
               </div> :
 
             <div className="space-y-3">
