@@ -76,10 +76,10 @@ export default function SchoolAdminMenu({ school, user, onUpdate }) {
   const handleHide = async () => {
     setLoading(true);
     try {
-      const newStatus = school.status === "banned" ? "approved" : "banned";
-      await base44.entities.School.update(school.id, { status: newStatus });
-      await logAction(newStatus === "banned" ? "hide" : "unhide", `Établissement ${newStatus === "banned" ? "masqué" : "affiché"}`);
-      toast.success(newStatus === "banned" ? "Établissement masqué" : "Établissement affiché");
+      const newHidden = !school.is_hidden;
+      await base44.entities.School.update(school.id, { is_hidden: newHidden });
+      await logAction(newHidden ? "hide" : "unhide", `Établissement ${newHidden ? "masqué" : "affiché"}`);
+      toast.success(newHidden ? "Établissement masqué" : "Établissement affiché");
       setShowHideConfirm(false);
       onUpdate();
     } catch (error) {
