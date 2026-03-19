@@ -5,7 +5,7 @@ import { base44 } from "@/api/base44Client";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Mic, Send, Loader2, Edit, Trash2, Save, Flag } from "lucide-react";
+import { Send, Loader2, Edit, Trash2, Save, Flag, Compass, MessageCircle, ChevronRight } from "lucide-react";
 import { format, formatDistanceToNow } from "date-fns";
 import { fr } from "date-fns/locale";
 import { toast } from "sonner";
