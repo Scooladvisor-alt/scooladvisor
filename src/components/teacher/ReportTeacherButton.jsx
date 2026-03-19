@@ -18,6 +18,13 @@ export default function ReportTeacherButton({ teacher, onUpdate, variant = "defa
   const [reportType, setReportType] = useState("former");
   const [loading, setLoading] = useState(false);
 
+  // Formulaire demande de suppression (je suis ce prof)
+  const [showRemovalForm, setShowRemovalForm] = useState(false);
+  const [removalSent, setRemovalSent] = useState(false);
+  const [removalReason, setRemovalReason] = useState("");
+  const [platformRating, setPlatformRating] = useState(0);
+  const [removalMessage, setRemovalMessage] = useState("");
+
   const handleReport = async () => {
     setLoading(true);
     try {
