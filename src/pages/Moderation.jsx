@@ -271,6 +271,11 @@ export default function ModerationPage() {
               <span className="hidden sm:inline">Corbeille</span>
               <span className="sm:hidden">🗑️</span>
             </TabsTrigger>
+            <TabsTrigger value="hidden-teachers" className="data-[state=active]:bg-pink-50 data-[state=active]:text-pink-700 text-xs">
+              <EyeOff className="w-4 h-4 mr-1 sm:mr-2" />
+              <span className="hidden sm:inline">Profs masqués</span>
+              <span className="sm:hidden">👁️</span>
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="reports">
