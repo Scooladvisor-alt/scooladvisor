@@ -42,6 +42,10 @@ export default function RecentContent({ onUpdate }) {
       const teachersMap = {};
       teachers.forEach(t => { teachersMap[t.id] = t; });
 
+      // Construire un map complet de toutes les écoles (y compris hors des 50 premières)
+      const allSchoolsMap = {};
+      schools.forEach(s => { allSchoolsMap[s.id] = s; });
+
       const allItems = [
         ...schools.filter(s => !s.is_deleted).map(item => ({
           ...item,
