@@ -757,15 +757,7 @@ export default function ProfilePage() {
             </CardContent>
           </Card>
 
-          {/* Zone de suppression de compte */}
-          <div className="mt-0 pb-6 flex justify-center">
-            <button
-              onClick={() => setShowDeleteDialog(true)}
-              className="text-xs text-slate-400 dark:text-slate-500 hover:text-red-500 dark:hover:text-red-400 transition-colors flex items-center gap-1">
-              <Trash2 className="w-3 h-3" />
-              Supprimer mon compte
-            </button>
-          </div>
+
         </motion.div>
       </div>
 
