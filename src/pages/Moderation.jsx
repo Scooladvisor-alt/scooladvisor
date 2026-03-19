@@ -26,7 +26,7 @@ import BannedUsers from "../components/moderation/BannedUsers";
 import AllSchools from "../components/moderation/AllSchools";
 import TrashBin from "../components/moderation/TrashBin";
 import RecentContent from "../components/moderation/RecentContent";
-import HiddenTeachers from "../components/moderation/HiddenTeachers";
+import HiddenItems from "../components/moderation/HiddenItems";
 
 export default function ModerationPage() {
   const navigate = useNavigate();
