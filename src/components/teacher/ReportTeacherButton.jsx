@@ -7,11 +7,13 @@ import { base44 } from "@/api/base44Client";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { AlertTriangle, UserX, XCircle, Flag, Trash2, Heart, Star } from "lucide-react";
+import { AlertTriangle, UserX, XCircle, Flag, Trash2, Heart, Star, CheckSquare } from "lucide-react";
 import { toast } from "sonner";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { Input } from "@/components/ui/input";
+import { Checkbox } from "@/components/ui/checkbox";
 
 export default function ReportTeacherButton({ teacher, onUpdate, variant = "default" }) {
   const [showDialog, setShowDialog] = useState(false);
