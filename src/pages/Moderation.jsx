@@ -143,53 +143,95 @@ export default function ModerationPage() {
 
   const statCards = [
     {
-      title: "Signalements actifs",
+      title: "Signalements",
       value: stats.pendingReports,
       icon: AlertTriangle,
-      color: "from-red-500 to-red-600",
-      tab: "reports"
+      bg: "bg-red-50 dark:bg-red-950/30",
+      border: "border-red-100 dark:border-red-900/50",
+      iconBg: "bg-red-100 dark:bg-red-900/50",
+      iconColor: "text-red-600 dark:text-red-400",
+      valueColor: "text-red-700 dark:text-red-300",
+      labelColor: "text-red-500 dark:text-red-400",
+      tab: "reports",
+      alert: stats.pendingReports > 0
     },
     {
       title: "Contenu récent",
       value: stats.recentContent,
       icon: Clock,
-      color: "from-purple-500 to-purple-600",
-      tab: "recent"
+      bg: "bg-violet-50 dark:bg-violet-950/30",
+      border: "border-violet-100 dark:border-violet-900/50",
+      iconBg: "bg-violet-100 dark:bg-violet-900/50",
+      iconColor: "text-violet-600 dark:text-violet-400",
+      valueColor: "text-violet-700 dark:text-violet-300",
+      labelColor: "text-violet-500 dark:text-violet-400",
+      tab: "recent",
+      alert: false
     },
     {
-      title: "Messages contact",
+      title: "Messages",
       value: stats.contactMessages,
       icon: MessageSquare,
-      color: "from-amber-500 to-amber-600",
-      tab: "contact"
+      bg: "bg-amber-50 dark:bg-amber-950/30",
+      border: "border-amber-100 dark:border-amber-900/50",
+      iconBg: "bg-amber-100 dark:bg-amber-900/50",
+      iconColor: "text-amber-600 dark:text-amber-400",
+      valueColor: "text-amber-700 dark:text-amber-300",
+      labelColor: "text-amber-500 dark:text-amber-400",
+      tab: "contact",
+      alert: stats.contactMessages > 0
     },
     {
-      title: "Utilisateurs bannis",
+      title: "Bannis",
       value: stats.bannedUsers,
       icon: UserX,
-      color: "from-slate-500 to-slate-600",
-      tab: "banned"
+      bg: "bg-slate-50 dark:bg-slate-800/50",
+      border: "border-slate-200 dark:border-slate-700",
+      iconBg: "bg-slate-100 dark:bg-slate-700",
+      iconColor: "text-slate-600 dark:text-slate-400",
+      valueColor: "text-slate-700 dark:text-slate-300",
+      labelColor: "text-slate-500 dark:text-slate-400",
+      tab: "banned",
+      alert: false
     },
     {
       title: "Établissements",
       value: stats.totalSchools,
       icon: School,
-      color: "from-blue-500 to-blue-600",
-      tab: "schools"
+      bg: "bg-blue-50 dark:bg-blue-950/30",
+      border: "border-blue-100 dark:border-blue-900/50",
+      iconBg: "bg-blue-100 dark:bg-blue-900/50",
+      iconColor: "text-blue-600 dark:text-blue-400",
+      valueColor: "text-blue-700 dark:text-blue-300",
+      labelColor: "text-blue-500 dark:text-blue-400",
+      tab: "schools",
+      alert: false
     },
     {
       title: "Corbeille",
       value: stats.deletedItems,
       icon: Trash2,
-      color: "from-orange-500 to-orange-600",
-      tab: "trash"
+      bg: "bg-orange-50 dark:bg-orange-950/30",
+      border: "border-orange-100 dark:border-orange-900/50",
+      iconBg: "bg-orange-100 dark:bg-orange-900/50",
+      iconColor: "text-orange-600 dark:text-orange-400",
+      valueColor: "text-orange-700 dark:text-orange-300",
+      labelColor: "text-orange-500 dark:text-orange-400",
+      tab: "trash",
+      alert: false
     },
     {
       title: "Masqués",
       value: stats.hiddenTeachers,
       icon: EyeOff,
-      color: "from-pink-500 to-pink-600",
-      tab: "hidden-teachers"
+      bg: "bg-pink-50 dark:bg-pink-950/30",
+      border: "border-pink-100 dark:border-pink-900/50",
+      iconBg: "bg-pink-100 dark:bg-pink-900/50",
+      iconColor: "text-pink-600 dark:text-pink-400",
+      valueColor: "text-pink-700 dark:text-pink-300",
+      labelColor: "text-pink-500 dark:text-pink-400",
+      tab: "hidden-teachers",
+      alert: false
     }
   ];
 
@@ -205,38 +247,40 @@ export default function ModerationPage() {
           animate={{ opacity: 1, y: 0 }}
           className="mb-8"
         >
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-12 h-12 bg-gradient-to-br from-purple-600 to-purple-800 rounded-xl flex items-center justify-center shadow-lg">
-              <Shield className="w-6 h-6 text-white" />
+          <div className="flex items-center gap-3 mb-8">
+            <div className="w-10 h-10 bg-gradient-to-br from-purple-600 to-purple-800 rounded-xl flex items-center justify-center shadow-lg">
+              <Shield className="w-5 h-5 text-white" />
             </div>
             <div>
-              <h1 className="text-4xl font-bold text-slate-900 dark:text-white">Centre de Modération</h1>
-              <p className="text-slate-600 dark:text-slate-300">Bienvenue, {user?.full_name}</p>
+              <h1 className="text-2xl font-bold text-slate-900 dark:text-white leading-tight">Centre de Modération</h1>
+              <p className="text-sm text-slate-500 dark:text-slate-400">Connecté en tant que <span className="font-medium text-purple-600 dark:text-purple-400">{user?.full_name}</span></p>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+          {/* Stats Grid */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3 mb-8">
             {statCards.map((stat, index) => (
-              <motion.div
+              <motion.button
                 key={stat.title}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: index * 0.05 }}
+                onClick={() => {
+                  document.querySelector(`[data-value="${stat.tab}"]`)?.click();
+                }}
+                className={`relative group flex flex-col items-center justify-center gap-2 p-4 rounded-2xl border ${stat.bg} ${stat.border} hover:shadow-md transition-all duration-200 hover:scale-105 cursor-pointer text-center`}
               >
-                <Card className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border-slate-200 dark:border-slate-700 hover:shadow-lg transition-shadow">
-                  <CardContent className="p-6">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="text-sm text-slate-600 dark:text-slate-300 mb-1">{stat.title}</p>
-                        <p className="text-3xl font-bold text-slate-900 dark:text-white">{stat.value}</p>
-                      </div>
-                      <div className={`w-12 h-12 bg-gradient-to-br ${stat.color} rounded-xl flex items-center justify-center shadow-md`}>
-                        <stat.icon className="w-6 h-6 text-white" />
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </motion.div>
+                {stat.alert && (
+                  <span className="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full animate-pulse" />
+                )}
+                <div className={`w-9 h-9 rounded-xl flex items-center justify-center ${stat.iconBg}`}>
+                  <stat.icon className={`w-4 h-4 ${stat.iconColor}`} />
+                </div>
+                <div>
+                  <p className={`text-2xl font-black leading-none ${stat.valueColor}`}>{stat.value}</p>
+                  <p className={`text-[10px] font-medium mt-0.5 leading-tight ${stat.labelColor}`}>{stat.title}</p>
+                </div>
+              </motion.button>
             ))}
           </div>
         </motion.div>
