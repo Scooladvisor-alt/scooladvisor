@@ -78,14 +78,7 @@ export default function TeacherDetailPage() {
         setSchool(schoolsData[0] || null);
       }
 
-      let currentUser = null;
-      try {
-        currentUser = await base44.auth.me();
-        setUser(currentUser);
-      } catch (error) {
-        console.warn("User not authenticated or error during base44.auth.me():", error);
-        setUser(null);
-      }
+      setUser(currentUser);
     } catch (error) {
       console.error("Error loading teacher data:", error);
       setTeacher(null);
