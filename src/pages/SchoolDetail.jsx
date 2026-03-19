@@ -292,9 +292,18 @@ export default function SchoolDetailPage() {
                       {typeLabels[school.type]}
                     </Badge>
                   </div>
-                  <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">
-                    {school.name}
-                  </h1>
+                  <div className="flex items-center gap-3 mb-2">
+                    <h1 className="text-3xl font-bold text-slate-900 dark:text-white">
+                      {school.name}
+                    </h1>
+                    <button
+                      onClick={() => setShowReportDialog(true)}
+                      className="flex items-center justify-center p-1.5 hover:bg-red-50 rounded-lg transition-colors flex-shrink-0"
+                      aria-label="Signaler l'établissement"
+                    >
+                      <Flag className="w-4 h-4 text-red-500" />
+                    </button>
+                  </div>
                   <div className="flex items-center gap-2 text-slate-600 dark:text-slate-300">
                     <MapPin className="w-4 h-4" />
                     <span>{school.city} • {school.address}</span>
