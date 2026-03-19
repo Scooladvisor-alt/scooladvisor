@@ -367,8 +367,12 @@ Si la décision est "approved", "reason" peut être vide ou null.`,
 
           <div className="flex-1 overflow-y-auto px-4 py-3">
             {messages.length === 0 ?
-            <div className="text-center text-slate-500 dark:text-slate-400 py-16">
-                <p className="text-lg mb-4 text-slate-500 dark:text-slate-400">C'est calme ici... Pose ta première question ! 🧭</p>
+            <div className="text-center text-slate-500 dark:text-slate-400 py-16 flex flex-col items-center gap-3">
+                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-purple-100 to-blue-100 dark:from-purple-900/30 dark:to-blue-900/30 flex items-center justify-center">
+                  <Compass className="w-6 h-6 text-purple-400" />
+                </div>
+                <p className="text-sm font-medium">C'est calme ici... Lance la discussion !</p>
+                <p className="text-xs text-slate-400">Pose ta première question d'orientation.</p>
               </div> :
 
             <div className="space-y-3">
