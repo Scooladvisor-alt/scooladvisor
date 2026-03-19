@@ -384,14 +384,23 @@ export default function ProfilePage() {
                 <CardTitle className="tracking-tight text-xl sm:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent whitespace-nowrap">
                   Mon Profil
                 </CardTitle>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => navigate(createPageUrl("Schools"))}
-                  className="flex items-center gap-1 text-slate-500 dark:text-slate-300 dark:hover:bg-slate-700 text-sm">
-                  <ChevronLeft className="w-4 h-4" />
-                  Retour
-                </Button>
+                <div className="flex items-center gap-2">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setShowDeleteDialog(true)}
+                    className="text-red-500 hover:text-red-600 dark:text-red-400 dark:hover:text-red-300 dark:hover:bg-red-950/30 hover:bg-red-50 text-xs sm:text-sm p-1.5 sm:p-2">
+                    <Trash2 className="w-4 h-4" />
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => navigate(createPageUrl("Schools"))}
+                    className="flex items-center gap-1 text-slate-500 dark:text-slate-300 dark:hover:bg-slate-700 text-sm">
+                    <ChevronLeft className="w-4 h-4" />
+                    Retour
+                  </Button>
+                </div>
               </div>
             </CardHeader>
             
