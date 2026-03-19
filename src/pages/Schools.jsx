@@ -918,7 +918,7 @@ export default function SchoolsPage() {
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: index * 0.05, duration: 0.3 }}
-                      onClick={() => handleTeacherClick(teacher)}
+                      onClick={() => !teacher.is_hidden && handleTeacherClick(teacher)}
                       className="teacher-card-shimmer group p-2 sm:p-3 text-left bg-white dark:bg-slate-800 rounded-lg sm:rounded-xl border border-slate-200 dark:border-slate-700 hover:border-pink-200 dark:hover:border-pink-600 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 h-full flex flex-col relative">
 
                         {teacher.average_rating > 0 &&
