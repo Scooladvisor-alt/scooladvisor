@@ -53,7 +53,8 @@ export default function SchoolAdminMenu({ school, user, onUpdate }) {
 
 
   const isAdmin = user && user.role === "admin";
-  if (!isAdmin) return null;
+  const canAccess = user && (user.role === "admin" || user.role === "moderator");
+  if (!canAccess) return null;
 
   const logAction = async (actionType, details = "") => {
     try {
