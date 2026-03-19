@@ -31,8 +31,8 @@ export default function HiddenItems({ onUpdate }) {
         t => t.is_hidden === true || (t.is_deleted === true && t.is_hidden !== false)
       );
 
-      // Établissements masqués : status "banned"
-      const schools = allSchools.filter(s => s.status === "banned");
+      // Établissements masqués : is_hidden true
+      const schools = allSchools.filter(s => s.is_hidden === true);
 
       // Enrichir les profs avec le nom de l'école
       const schoolIds = [...new Set(teachers.map(t => t.school_id))];
