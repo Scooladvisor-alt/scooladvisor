@@ -468,7 +468,7 @@ export default function Layout({ children }) {
                   to={createPageUrl("Moderation")}
                   className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all font-medium ${
                     location.pathname === createPageUrl("Moderation")
-                      ? 'text-amber-700 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/30'
+                      ? 'bg-gradient-to-r from-[#FF4D8D]/15 via-purple-500/15 to-blue-500/15 text-slate-900 dark:text-white border border-pink-200/50 dark:border-pink-700/30'
                       : 'text-slate-600 dark:text-slate-300 hover:text-amber-700 dark:hover:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-900/30'
                   }`}
                 >
