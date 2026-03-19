@@ -455,7 +455,7 @@ export default function Layout({ children }) {
                   className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all font-medium ${
                     location.pathname === item.url
                       ? 'bg-gradient-to-r from-[#FF4D8D]/15 via-purple-500/15 to-blue-500/15 text-slate-900 dark:text-white border border-pink-200/50 dark:border-pink-700/30'
-                      : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800'
+                      : 'text-slate-600 dark:text-slate-300 hover:text-[#FF4D8D] dark:hover:text-[#FF4D8D] hover:bg-gradient-to-r hover:from-[#FF4D8D]/10 hover:via-purple-500/10 hover:to-blue-500/10'
                   }`}
                 >
                   <item.icon className="w-4 h-4" />
