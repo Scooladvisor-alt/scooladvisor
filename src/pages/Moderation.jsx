@@ -8,6 +8,7 @@ import {
   MessageSquare, 
   AlertTriangle,
   Eye,
+  EyeOff,
   UserX,
   School,
   Trash2,
