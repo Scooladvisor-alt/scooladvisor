@@ -359,11 +359,11 @@ export default function ModerationPage() {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <EyeOff className="w-5 h-5 text-pink-600" />
-                  Professeurs masqués
+                  Éléments masqués
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <HiddenTeachers onUpdate={loadStats} />
+                <HiddenItems onUpdate={loadStats} />
               </CardContent>
             </Card>
           </TabsContent>
