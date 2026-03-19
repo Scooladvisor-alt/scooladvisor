@@ -69,8 +69,8 @@ export default function TrashBin({ onUpdate }) {
         content: item.comment
       }));
 
-      // Professeurs supprimés
-      const deletedTeachers = teachers.filter(t => t.is_deleted).map(item => ({
+      // Professeurs supprimés (exclure les masqués qui ont is_hidden: true)
+      const deletedTeachers = teachers.filter(t => t.is_deleted && !t.is_hidden).map(item => ({
         ...item,
         entity_type: 'Teacher',
         display_name: item.name,
