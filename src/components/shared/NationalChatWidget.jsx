@@ -302,8 +302,8 @@ export default function NationalChatWidget() {
                 onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); handlePublish(); } }}
                 disabled={!user}
                 rows={2}
-                className="w-full text-xs pr-20 pb-8 pl-3 pt-2.5 resize-none rounded-2xl border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-800 dark:text-white text-slate-900 outline-none focus:border-purple-300 dark:focus:border-purple-600 transition-colors"
-                style={{ fontFamily: "inherit", minHeight: 60 }}
+                className="w-full pr-20 pb-8 pl-3 pt-2.5 resize-none rounded-2xl border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-800 dark:text-white text-slate-900 outline-none focus:border-purple-300 dark:focus:border-purple-600 transition-colors"
+                style={{ fontFamily: "inherit", minHeight: 60, fontSize: "9px" }}
               />
 
               {/* Anonyme toggle */}
