@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { NationalMessage } from "@/entities/NationalMessage";
 import { base44 } from "@/api/base44Client";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { Loader2, Send, Edit, Trash2, Save, Flag, Compass, MessageCircle, ChevronRight, MoreHorizontal, X } from "lucide-react";
+import { Loader2, Send, Edit, Trash2, Save, Flag, Compass, MessageCircle, ChevronRight, MoreHorizontal } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { fr } from "date-fns/locale";
 import { toast } from "sonner";
