@@ -152,19 +152,19 @@ export default function SchoolCard({ school, teacherCount }) {
         </div>
 
         <div className="grid grid-cols-2 gap-1.5 sm:gap-3 mt-auto">
-          <div className="stat-widget bg-blue-500/5 dark:bg-blue-500/10 rounded-md sm:rounded-xl p-1 sm:p-2.5 border border-blue-500/20 dark:border-blue-500/30 flex items-center justify-center gap-1 sm:gap-2">
-            <MessageSquare className="w-3 h-3 sm:w-5 sm:h-5 text-blue-500 flex-shrink-0" />
+          <div className="stat-widget bg-[#FF4D8D]/5 dark:bg-[#FF4D8D]/10 rounded-md sm:rounded-xl p-1 sm:p-2.5 border border-[#FF4D8D]/20 dark:border-[#FF4D8D]/30 flex items-center justify-center gap-1 sm:gap-2">
+            <MessageSquare className="w-3 h-3 sm:w-5 sm:h-5 text-[#FF4D8D] flex-shrink-0" />
             <div className="flex items-baseline gap-0.5 sm:gap-1">
-              <span className="text-sm sm:text-xl font-bold text-blue-500">{school.review_count || 0}</span>
-              <span className="text-[9px] sm:text-xs text-blue-500 font-medium hidden sm:inline">Avis</span>
+              <span className="text-sm sm:text-xl font-bold text-[#FF4D8D]">{school.review_count || 0}</span>
+              <span className="text-[9px] sm:text-xs text-[#FF4D8D] font-medium hidden sm:inline">Avis</span>
             </div>
           </div>
 
-          <div className="stat-widget bg-[#FF4D8D]/5 dark:bg-[#FF4D8D]/10 rounded-md sm:rounded-xl p-1 sm:p-2.5 border border-[#FF4D8D]/20 dark:border-[#FF4D8D]/30 flex items-center justify-center gap-1 sm:gap-2">
-            <Users className="w-3 h-3 sm:w-5 sm:h-5 text-[#FF4D8D] flex-shrink-0" />
+          <div className="stat-widget bg-blue-500/5 dark:bg-blue-500/10 rounded-md sm:rounded-xl p-1 sm:p-2.5 border border-blue-500/20 dark:border-blue-500/30 flex items-center justify-center gap-1 sm:gap-2">
+            <Users className="w-3 h-3 sm:w-5 sm:h-5 text-blue-500 flex-shrink-0" />
             <div className="flex items-baseline gap-0.5 sm:gap-1">
-              <span className="text-sm sm:text-xl font-bold text-[#FF4D8D]">{teacherCount}</span>
-              <span className="text-[9px] sm:text-xs text-[#FF4D8D] font-medium hidden sm:inline">Profs</span>
+              <span className="text-sm sm:text-xl font-bold text-blue-500">{teacherCount}</span>
+              <span className="text-[9px] sm:text-xs text-blue-500 font-medium hidden sm:inline">Profs</span>
             </div>
           </div>
         </div>
