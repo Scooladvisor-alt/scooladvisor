@@ -470,14 +470,16 @@ rejected → si le message enfreint les règles ci-dessus"
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-[95vw] sm:max-w-3xl rounded-2xl dark:bg-slate-800 dark:border-slate-700">
+      <DialogContent className="max-w-[95vw] sm:max-w-5xl max-h-[90vh] overflow-y-auto rounded-2xl [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] dark:bg-slate-800 dark:border-slate-700">
         <DialogHeader className="text-center pb-2">
-          <DialogTitle className="text-lg sm:text-xl font-bold text-center">
+          <DialogTitle className="text-lg sm:text-2xl font-bold text-center">
             <span className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
               {existingReview ? "Modifier mon avis" : "Noter l'établissement"}
             </span>
           </DialogTitle>
         </DialogHeader>
+
+
 
         <style>{`
           .slider-pink .bg-primary { background-color: #ec4899; }
@@ -500,8 +502,8 @@ rejected → si le message enfreint les règles ci-dessus"
             border: 2px solid black !important;
           }
         `}</style>
-        <form onSubmit={handleSubmit} className="space-y-3">
-          <div className="grid grid-cols-2 gap-2">
+        <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
+          <div className="space-y-2 sm:space-y-3">
             {criteria.map(({ key, label, icon: Icon, color, description, gradient, sliderClass }) => {
               const isMax = formData[key] === 5;
               const isFlashing = flashingWidgets[key];
@@ -509,7 +511,7 @@ rejected → si le message enfreint les règles ci-dessus"
               return (
                 <div
                   key={key}
-                  className={`rounded-lg p-2 border border-slate-200 dark:border-slate-600 transition-all duration-500 relative overflow-hidden ${
+                  className={`rounded-lg p-1.5 sm:p-3 pb-2.5 sm:pb-4 border border-slate-200 dark:border-slate-600 transition-all duration-500 relative overflow-hidden ${
                   isMax ? gradient : 'bg-slate-50 dark:bg-slate-900'} ${
                   isFlashing ? 'animate-widget-shine ring-2 ring-offset-2 ring-offset-white dark:ring-offset-slate-800 ring-yellow-400' : ''}`}>
 
@@ -545,10 +547,8 @@ rejected → si le message enfreint les règles ci-dessus"
 
             })}
 
-          </div>
-
-          {showStudentLifeBonus &&
-            <div className="relative overflow-hidden bg-slate-50/50 dark:bg-slate-900/50 rounded-lg p-2 border border-slate-200 dark:border-slate-600">
+            {showStudentLifeBonus &&
+            <div className="relative overflow-hidden bg-slate-50/50 dark:bg-slate-900/50 rounded-lg p-3 sm:p-4 border border-slate-200 dark:border-slate-600">
                 {(formData.has_student_life || formData.has_network) &&
               <>
                     {[...Array(8)].map((_, i) =>
@@ -597,9 +597,10 @@ rejected → si le message enfreint les règles ci-dessus"
                   </div>
                 </div>
               </div>
-          }
+            }
+          </div>
 
-          <div className="bg-gradient-to-r from-amber-50 to-amber-100 rounded-lg p-2 border border-amber-200">
+          <div className="bg-gradient-to-r from-amber-50 to-amber-100 rounded-lg p-2 sm:p-2.5 border border-amber-200">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-1.5">
                 <Star className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-600 fill-amber-600" />
