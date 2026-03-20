@@ -514,9 +514,9 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
                           </Button>
                         </>
                       ) : (
-                        <button onClick={() => setReportingReview(review)} className="text-slate-300 hover:text-red-500 transition-colors p-1" title="Signaler">
-                           <AlertCircle className="w-3.5 h-3.5" />
-                        </Button>
+                        <button onClick={() => setReportingReview(review)} className="text-slate-300 hover:text-red-500 transition-colors p-1 text-sm leading-none" title="Signaler">
+                          🚩
+                        </button>
                       )}
                     </div>
                   </div>
