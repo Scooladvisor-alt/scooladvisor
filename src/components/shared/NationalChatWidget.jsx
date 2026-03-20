@@ -232,7 +232,7 @@ export default function NationalChatWidget() {
                           <textarea
                             value={editedContent}
                             onChange={(e) => setEditedContent(e.target.value)}
-                            className="w-full text-xs rounded-xl border border-purple-300 dark:border-purple-700 bg-white dark:bg-slate-800 dark:text-white p-2 resize-none focus:outline-none focus:ring-1 focus:ring-purple-400"
+                            className="w-full text-xs rounded-xl border border-purple-300 dark:border-purple-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white p-2 resize-none focus:outline-none focus:ring-1 focus:ring-purple-400"
                             rows={3}
                             style={{ fontFamily: "inherit" }}
                           />
