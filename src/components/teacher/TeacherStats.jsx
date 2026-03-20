@@ -108,7 +108,7 @@ export default function TeacherStats({ teacher: initialTeacher, embedded = false
   if (embedded) return <Content />;
 
   return (
-    <Card className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-md border-slate-200 dark:border-slate-700 shadow-xl w-full h-full flex flex-col hover:shadow-2xl transition-shadow duration-300">
+    <Card className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-md border-slate-200 dark:border-slate-700 border-x-0 sm:border-x shadow-xl w-full h-full flex flex-col hover:shadow-2xl transition-shadow duration-300 rounded-none sm:rounded-xl">
       <Content />
     </Card>
   );
