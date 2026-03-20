@@ -339,7 +339,7 @@ export default function ReportTeacherButton({ teacher, onUpdate, variant = "defa
                 <div className="flex-1">
                   <p className="font-medium text-slate-900 flex items-center gap-2 text-sm sm:text-base">
                     <Trash2 className="w-4 h-4 text-pink-600" />
-                    Je suis ce professeur et je souhaite supprimer mon profil
+                    Je pense être ce professeur et je souhaite supprimer ce profil
                   </p>
                   <p className="text-xs text-slate-500 mt-0.5">Uniquement si vous êtes directement concerné(e)</p>
                 </div>
