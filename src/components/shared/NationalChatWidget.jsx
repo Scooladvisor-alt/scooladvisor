@@ -296,7 +296,7 @@ export default function NationalChatWidget() {
           <div className="border-t border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-2 flex-shrink-0">
             <div className="relative">
               <textarea
-                placeholder={user ? "Pose ta question ou partage un conseil d'orientation..." : "Connecte-toi pour participer"}
+                placeholder={user ? "Question ou conseil d'orientation..." : "Connecte-toi pour participer"}
                 value={newMessage}
                 onChange={(e) => { if (e.target.value.length <= MAX_LENGTH) setNewMessage(e.target.value); }}
                 onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); handlePublish(); } }}
