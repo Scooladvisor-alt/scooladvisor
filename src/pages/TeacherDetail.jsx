@@ -474,20 +474,18 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
           </div>
         </motion.div>
 
-        <div className="flex flex-col lg:hidden gap-6 sm:gap-8 mx-4 lg:mx-0">
-          <Suspense fallback={<div className="p-4 bg-white dark:bg-slate-800 rounded-lg shadow-md flex justify-center items-center h-64"><Loader2 className="w-8 h-8 animate-spin text-slate-400" /></div>}>
+        <div className="flex flex-col lg:hidden gap-0 lg:mx-0">
+          <Suspense fallback={<div className="p-4 bg-white dark:bg-slate-800 flex justify-center items-center h-48"><Loader2 className="w-8 h-8 animate-spin text-slate-400" /></div>}>
             <TeacherStats teacher={teacher} />
           </Suspense>
           
-          <div className="h-[360px]">
-            <Suspense fallback={<div className="p-4 bg-white rounded-lg shadow-md flex justify-center items-center h-full"><Loader2 className="w-8 h-8 animate-spin text-slate-400" /></div>}>
-              <TeacherReviewsList
-                teacherId={teacherId}
-                user={user}
-                onReload={loadData}
-                onEditReview={handleEditReview} />
-            </Suspense>
-          </div>
+          <Suspense fallback={<div className="p-4 bg-white dark:bg-slate-800 flex justify-center items-center h-64"><Loader2 className="w-8 h-8 animate-spin text-slate-400" /></div>}>
+            <TeacherReviewsList
+              teacherId={teacherId}
+              user={user}
+              onReload={loadData}
+              onEditReview={handleEditReview} />
+          </Suspense>
         </div>
 
         <div className="hidden lg:block">
