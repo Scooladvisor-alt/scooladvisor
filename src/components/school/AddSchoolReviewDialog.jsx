@@ -471,7 +471,7 @@ rejected → si le message enfreint les règles ci-dessus"
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-[95vw] sm:max-w-5xl max-h-[90vh] overflow-y-auto rounded-2xl [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] dark:bg-slate-800 dark:border-slate-700">
-        <DialogHeader className="pb-2">
+        <DialogHeader className="pb-0">
           <DialogTitle className="text-lg sm:text-xl font-bold">
             <span className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
               {existingReview ? "Modifier mon avis" : "Noter l'établissement"}
