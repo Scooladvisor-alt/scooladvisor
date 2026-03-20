@@ -74,7 +74,7 @@ function AvatarSelectionDialog({ open, onOpenChange, currentAvatar, onAvatarSele
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-[90vw] sm:max-w-2xl max-h-[85vh] overflow-y-auto rounded-2xl dark:bg-slate-800 dark:border-slate-700">
+      <DialogContent className="max-w-[95vw] sm:max-w-xl rounded-2xl dark:bg-slate-800 dark:border-slate-700">
         <DialogHeader className="p-4 sm:p-6 pb-3 sm:pb-4 border-b dark:border-slate-700 rounded-t-3xl">
           <DialogTitle className="text-xl sm:text-2xl font-bold">
             <span className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
