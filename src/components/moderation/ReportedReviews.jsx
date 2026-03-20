@@ -69,29 +69,28 @@ export default function ReportedReviews({ onUpdate }) {
   const handleApprove = async (reportId, reviewId, reviewType) => {
     try {
       const review = reviews[reviewId];
+      const allReviews = Object.values(reviews);
       
       if (reviewType === "teacher") {
         await TeacherReview.update(reviewId, { status: "hidden" });
-        // Recalculer les stats du prof
+        // Recalcul depuis le state local (sans requête supplémentaire)
         if (review?.teacher_id) {
-          const { base44 } = await import("@/api/base44Client");
-          const publishedReviews = await base44.entities.TeacherReview.filter({ teacher_id: review.teacher_id, status: "published" });
-          const avg = publishedReviews.length > 0 ? publishedReviews.reduce((s, r) => s + r.total_rating, 0) / publishedReviews.length : 0;
-          await base44.entities.Teacher.update(review.teacher_id, { average_rating: avg, review_count: publishedReviews.length });
+          const published = allReviews.filter(r => r.type === "teacher" && r.teacher_id === review.teacher_id && r.id !== reviewId && r.status === "published");
+          const avg = published.length > 0 ? published.reduce((s, r) => s + r.total_rating, 0) / published.length : 0;
+          await Teacher.update(review.teacher_id, { average_rating: avg, review_count: published.length });
         }
       } else {
         await SchoolReview.update(reviewId, { status: "hidden" });
-        // Recalculer les stats de l'école
+        // Recalcul depuis le state local (sans requête supplémentaire)
         if (review?.school_id) {
-          const { base44 } = await import("@/api/base44Client");
-          const publishedReviews = await base44.entities.SchoolReview.filter({ school_id: review.school_id, status: "published" });
-          const avg = publishedReviews.length > 0 ? publishedReviews.reduce((s, r) => s + r.rating, 0) / publishedReviews.length : 0;
-          await base44.entities.School.update(review.school_id, { average_rating: avg, review_count: publishedReviews.length });
+          const published = allReviews.filter(r => r.type === "school" && r.school_id === review.school_id && r.id !== reviewId && r.status === "published");
+          const avg = published.length > 0 ? published.reduce((s, r) => s + r.rating, 0) / published.length : 0;
+          await School.update(review.school_id, { average_rating: avg, review_count: published.length });
         }
       }
       await Report.update(reportId, { status: "approved" });
       toast.success("Avis masqué suite au signalement");
-      loadReports();
+      setReports(prev => prev.filter(r => r.id !== reportId));
       onUpdate();
     } catch (error) {
       toast.error("Erreur lors du traitement");
