@@ -301,9 +301,9 @@ export default function NationalChatWidget() {
                 onChange={(e) => { if (e.target.value.length <= MAX_LENGTH) setNewMessage(e.target.value); }}
                 onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); handlePublish(); } }}
                 disabled={!user}
-                rows={2}
-                className="w-full pr-20 pb-8 pl-3 pt-2.5 resize-none rounded-2xl border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-800 dark:text-white text-slate-900 outline-none focus:border-purple-300 dark:focus:border-purple-600 transition-colors placeholder:text-[9px]"
-                style={{ fontFamily: "inherit", minHeight: 60, fontSize: "11px" }}
+                rows={1}
+                className="w-full pr-20 pb-6 pl-3 pt-2 resize-none rounded-2xl border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-800 dark:text-white text-slate-900 outline-none focus:border-purple-300 dark:focus:border-purple-600 transition-colors placeholder:text-[9px]"
+                style={{ fontFamily: "inherit", minHeight: 44, fontSize: "11px" }}
               />
 
               {/* Anonyme toggle */}
