@@ -163,7 +163,7 @@ export default function NationalChatWidget() {
           lastMessage ?
           <div className="bg-slate-50 dark:bg-slate-900 rounded-xl px-3 py-2 border border-slate-100 dark:border-slate-700">
               <p className="text-xs line-clamp-2 text-slate-700 dark:text-slate-200">
-                <span className="font-semibold text-purple-600 dark:text-purple-400">{lastMessage.is_anonymous ? "Anonyme" : lastMessage.author_name} :</span>{" "}{lastMessage.message}
+                <span className="font-semibold bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">{lastMessage.is_anonymous ? "Anonyme" : lastMessage.author_name} :</span>{" "}{lastMessage.message}
               </p>
               <p className="text-[10px] text-slate-400 mt-1">{formatDistance(lastMessage.created_date)}</p>
             </div> :
