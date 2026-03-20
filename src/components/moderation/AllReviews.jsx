@@ -54,16 +54,17 @@ export default function AllReviews({ onUpdate }) {
     setLoading(false);
   };
 
-  const recalcTeacherStats = async (teacherId) => {
-    const published = await base44.entities.TeacherReview.filter({ teacher_id: teacherId, status: "published" });
+  // Recalcul des stats depuis le state local (0 requêtes API supplémentaires)
+  const recalcTeacherStatsLocal = async (teacherId, updatedReviews) => {
+    const published = updatedReviews.filter(r => r.teacher_id === teacherId && r.status === "published");
     const avg = published.length > 0 ? published.reduce((s, r) => s + r.total_rating, 0) / published.length : 0;
-    await base44.entities.Teacher.update(teacherId, { average_rating: avg, review_count: published.length });
+    await Teacher.update(teacherId, { average_rating: avg, review_count: published.length });
   };
 
-  const recalcSchoolStats = async (schoolId) => {
-    const published = await base44.entities.SchoolReview.filter({ school_id: schoolId, status: "published" });
+  const recalcSchoolStatsLocal = async (schoolId, updatedReviews) => {
+    const published = updatedReviews.filter(r => r.school_id === schoolId && r.status === "published");
     const avg = published.length > 0 ? published.reduce((s, r) => s + r.rating, 0) / published.length : 0;
-    await base44.entities.School.update(schoolId, { average_rating: avg, review_count: published.length });
+    await School.update(schoolId, { average_rating: avg, review_count: published.length });
   };
 
   const handleDeleteTeacherReview = async (reviewId) => {
@@ -71,9 +72,10 @@ export default function AllReviews({ onUpdate }) {
     try {
       const review = teacherReviews.find(r => r.id === reviewId);
       await TeacherReview.update(reviewId, { status: "hidden" });
-      if (review?.teacher_id) await recalcTeacherStats(review.teacher_id);
+      const updated = teacherReviews.map(r => r.id === reviewId ? { ...r, status: "hidden" } : r);
+      setTeacherReviews(updated);
+      if (review?.teacher_id) await recalcTeacherStatsLocal(review.teacher_id, updated);
       toast.success("Avis masqué avec succès.");
-      loadReviews();
       onUpdate();
     } catch (error) {
       toast.error("Erreur lors du masquage de l'avis.");
@@ -85,9 +87,10 @@ export default function AllReviews({ onUpdate }) {
     try {
       const review = schoolReviews.find(r => r.id === reviewId);
       await SchoolReview.update(reviewId, { status: "hidden" });
-      if (review?.school_id) await recalcSchoolStats(review.school_id);
+      const updated = schoolReviews.map(r => r.id === reviewId ? { ...r, status: "hidden" } : r);
+      setSchoolReviews(updated);
+      if (review?.school_id) await recalcSchoolStatsLocal(review.school_id, updated);
       toast.success("Avis masqué avec succès.");
-      loadReviews();
       onUpdate();
     } catch (error) {
       toast.error("Erreur lors du masquage de l'avis.");
@@ -98,9 +101,10 @@ export default function AllReviews({ onUpdate }) {
     try {
       const review = teacherReviews.find(r => r.id === reviewId);
       await TeacherReview.update(reviewId, { status: "published" });
-      if (review?.teacher_id) await recalcTeacherStats(review.teacher_id);
+      const updated = teacherReviews.map(r => r.id === reviewId ? { ...r, status: "published" } : r);
+      setTeacherReviews(updated);
+      if (review?.teacher_id) await recalcTeacherStatsLocal(review.teacher_id, updated);
       toast.success("Avis restauré (publié) avec succès.");
-      loadReviews();
       onUpdate();
     } catch (error) {
       toast.error("Erreur lors de la restauration de l'avis.");
@@ -111,9 +115,10 @@ export default function AllReviews({ onUpdate }) {
     try {
       const review = schoolReviews.find(r => r.id === reviewId);
       await SchoolReview.update(reviewId, { status: "published" });
-      if (review?.school_id) await recalcSchoolStats(review.school_id);
+      const updated = schoolReviews.map(r => r.id === reviewId ? { ...r, status: "published" } : r);
+      setSchoolReviews(updated);
+      if (review?.school_id) await recalcSchoolStatsLocal(review.school_id, updated);
       toast.success("Avis restauré (publié) avec succès.");
-      loadReviews();
       onUpdate();
     } catch (error) {
       toast.error("Erreur lors de la restauration de l'avis.");
@@ -124,8 +129,8 @@ export default function AllReviews({ onUpdate }) {
     if (!confirm("Êtes-vous sûr de vouloir signaler cet avis ? Il sera déplacé vers la section 'Avis Signalés' pour modération.")) return;
     try {
       await TeacherReview.update(reviewId, { status: "reported" });
+      setTeacherReviews(prev => prev.map(r => r.id === reviewId ? { ...r, status: "reported" } : r));
       toast.success("Avis signalé avec succès.");
-      loadReviews();
       onUpdate();
     } catch (error) {
       toast.error("Erreur lors du signalement de l'avis.");
@@ -136,8 +141,8 @@ export default function AllReviews({ onUpdate }) {
     if (!confirm("Êtes-vous sûr de vouloir signaler cet avis ? Il sera déplacé vers la section 'Avis Signalés' pour modération.")) return;
     try {
       await SchoolReview.update(reviewId, { status: "reported" });
+      setSchoolReviews(prev => prev.map(r => r.id === reviewId ? { ...r, status: "reported" } : r));
       toast.success("Avis signalé avec succès.");
-      loadReviews();
       onUpdate();
     } catch (error) {
       toast.error("Erreur lors du signalement de l'avis.");
