@@ -441,7 +441,7 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
 
           <div className="space-y-1 flex-shrink-0">
             <Label className="text-xs sm:text-sm text-slate-900 dark:text-slate-200">Avatar du professeur</Label>
-            <div className="w-full bg-slate-50 dark:bg-slate-900 rounded-lg p-2 border border-slate-200 dark:border-slate-600 h-[280px] overflow-y-auto
+            <div className="w-full bg-slate-50 dark:bg-slate-900 rounded-lg p-2 border border-slate-200 dark:border-slate-600 h-[220px] overflow-y-auto
                   [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-gray-100 
                   [&::-webkit-scrollbar-thumb]:bg-gray-400 [&::-webkit-scrollbar-thumb]:rounded-full 
                   [&::-webkit-scrollbar-thumb]:hover:bg-gray-500">
