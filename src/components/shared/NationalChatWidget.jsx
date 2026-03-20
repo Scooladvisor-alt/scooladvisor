@@ -182,16 +182,10 @@ export default function NationalChatWidget() {
               <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: "linear-gradient(135deg, #FF4D8D, #a855f7, #3b82f6)" }}>
                 <Compass className="w-4 h-4 text-white" />
               </div>
-              <div>
-                <div className="text-base font-bold bg-clip-text text-transparent" style={{ backgroundImage: "linear-gradient(90deg, #FF4D8D, #a855f7, #3b82f6)" }}>
-                  Mon Orientation
-                </div>
-                <p className="text-xs text-slate-400">Pose tes questions, partage tes conseils d'orientation.</p>
+              <div className="text-base font-bold bg-clip-text text-transparent" style={{ backgroundImage: "linear-gradient(90deg, #FF4D8D, #a855f7, #3b82f6)" }}>
+                Mon Orientation
               </div>
             </div>
-            <button onClick={() => setShowDialog(false)} className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors">
-              <X className="w-4 h-4" />
-            </button>
           </div>
 
           {/* Messages */}
