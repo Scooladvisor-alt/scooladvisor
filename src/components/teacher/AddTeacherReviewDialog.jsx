@@ -489,7 +489,7 @@ export default function AddTeacherReviewDialog({ open, onOpenChange, teacherId, 
             </div>
           </div>
 
-          <div className="flex items-center gap-2 p-2 bg-slate-50 dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-600 checkbox-gradient-only">
+          <div className="flex items-center gap-2 p-2 bg-gradient-to-r from-pink-50 via-purple-50 to-blue-50 dark:from-pink-950/30 dark:via-purple-950/30 dark:to-blue-950/30 rounded-lg border border-pink-200/60 dark:border-purple-700/40 checkbox-gradient-only">
             <Checkbox
               id="certification"
               checked={formData.certification}
