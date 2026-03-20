@@ -83,7 +83,7 @@ function AvatarSelectionDialog({ open, onOpenChange, currentAvatar, onAvatarSele
           </DialogTitle>
         </DialogHeader>
 
-        <div className="grid grid-cols-5 gap-2 py-3 sm:py-4">
+        <div className="grid grid-cols-5 gap-2 py-2">
           {avatars.map((avatar) =>
           <button
             key={avatar.id}
