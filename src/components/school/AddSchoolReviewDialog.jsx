@@ -598,9 +598,8 @@ rejected → si le message enfreint les règles ci-dessus"
                 </div>
               </div>
             }
-          </div>
 
-          <div className="bg-gradient-to-r from-amber-50 to-amber-100 rounded-lg p-2 sm:p-2.5 border border-amber-200">
+          <div className="bg-gradient-to-r from-amber-50 to-amber-100 rounded-lg p-2 border border-amber-200">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-1.5">
                 <Star className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-600 fill-amber-600" />
