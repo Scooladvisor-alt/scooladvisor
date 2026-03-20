@@ -48,52 +48,32 @@ export default function ReportDialog({ open, onOpenChange, reviewType, reviewId,
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-[95vw] sm:max-w-3xl max-h-[85vh] overflow-y-auto rounded-2xl">
-        <DialogHeader>
-          <DialogTitle className="text-lg sm:text-xl font-bold flex items-center gap-2">
-            <AlertTriangle className="w-5 h-5 text-[#FF4D8D]" />
+      <DialogContent className="max-w-[95vw] sm:max-w-3xl max-h-[90vh] overflow-y-auto rounded-2xl p-4 sm:p-6">
+        <DialogHeader className="pb-2 sm:pb-4">
+          <DialogTitle className="text-base sm:text-xl font-bold flex items-center gap-2">
+            <AlertTriangle className="w-4 h-4 sm:w-5 sm:h-5 text-[#FF4D8D]" />
             <span className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
               Signaler ce contenu
             </span>
           </DialogTitle>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <RadioGroup value={reason} onValueChange={setReason} className="space-y-3">
-            <div className="flex items-start space-x-3 p-3 rounded-lg border-2 border-red-200 bg-red-50/40 hover:bg-red-50 hover:border-red-300 transition-all cursor-pointer">
-              <RadioGroupItem value="diffamation" id="diffamation" className="mt-1 border-red-400 text-red-600" />
-              <Label htmlFor="diffamation" className="font-medium cursor-pointer flex-1 text-sm sm:text-base text-slate-800">
-                Diffamation ou mensonges
-              </Label>
-            </div>
-
-            <div className="flex items-start space-x-3 p-3 rounded-lg border-2 border-orange-200 bg-orange-50/40 hover:bg-orange-50 hover:border-orange-300 transition-all cursor-pointer">
-              <RadioGroupItem value="injure" id="injure" className="mt-1 border-orange-400 text-orange-600" />
-              <Label htmlFor="injure" className="font-medium cursor-pointer flex-1 text-sm sm:text-base text-slate-800">
-                Insultes ou offensant
-              </Label>
-            </div>
-
-            <div className="flex items-start space-x-3 p-3 rounded-lg border-2 border-yellow-200 bg-yellow-50/40 hover:bg-yellow-50 hover:border-yellow-300 transition-all cursor-pointer">
-              <RadioGroupItem value="hors_sujet" id="hors_sujet" className="mt-1 border-yellow-400 text-yellow-600" />
-              <Label htmlFor="hors_sujet" className="font-medium cursor-pointer flex-1 text-sm sm:text-base text-slate-800">
-                Hors sujet / Spam
-              </Label>
-            </div>
-
-            <div className="flex items-start space-x-3 p-3 rounded-lg border-2 border-blue-200 bg-blue-50/40 hover:bg-blue-50 hover:border-blue-300 transition-all cursor-pointer">
-              <RadioGroupItem value="fausse_info" id="fausse_info" className="mt-1 border-blue-400 text-blue-600" />
-              <Label htmlFor="fausse_info" className="font-medium cursor-pointer flex-1 text-sm sm:text-base text-slate-800">
-                Fausses informations
-              </Label>
-            </div>
-
-            <div className="flex items-start space-x-3 p-3 rounded-lg border-2 border-slate-200 bg-slate-50/40 hover:bg-slate-50 hover:border-slate-300 transition-all cursor-pointer">
-              <RadioGroupItem value="autre" id="autre" className="mt-1 border-slate-400 text-slate-600" />
-              <Label htmlFor="autre" className="font-medium cursor-pointer flex-1 text-sm sm:text-base text-slate-800">
-                Autre raison
-              </Label>
-            </div>
+        <form onSubmit={handleSubmit} className="space-y-2 sm:space-y-4">
+          <RadioGroup value={reason} onValueChange={setReason} className="space-y-1.5 sm:space-y-3">
+            {[
+              { value: "diffamation", label: "Diffamation ou mensonges", border: "border-red-200", bg: "bg-red-50/40", hover: "hover:bg-red-50 hover:border-red-300", radio: "border-red-400 text-red-600" },
+              { value: "injure", label: "Insultes ou offensant", border: "border-orange-200", bg: "bg-orange-50/40", hover: "hover:bg-orange-50 hover:border-orange-300", radio: "border-orange-400 text-orange-600" },
+              { value: "hors_sujet", label: "Hors sujet / Spam", border: "border-yellow-200", bg: "bg-yellow-50/40", hover: "hover:bg-yellow-50 hover:border-yellow-300", radio: "border-yellow-400 text-yellow-600" },
+              { value: "fausse_info", label: "Fausses informations", border: "border-blue-200", bg: "bg-blue-50/40", hover: "hover:bg-blue-50 hover:border-blue-300", radio: "border-blue-400 text-blue-600" },
+              { value: "autre", label: "Autre raison", border: "border-slate-200", bg: "bg-slate-50/40", hover: "hover:bg-slate-50 hover:border-slate-300", radio: "border-slate-400 text-slate-600" },
+            ].map(({ value, label, border, bg, hover, radio }) => (
+              <div key={value} className={`flex items-center space-x-2.5 px-2.5 py-2 sm:p-3 rounded-lg border-2 ${border} ${bg} ${hover} transition-all cursor-pointer`}>
+                <RadioGroupItem value={value} id={value} className={radio} />
+                <Label htmlFor={value} className="font-medium cursor-pointer flex-1 text-xs sm:text-base text-slate-800">
+                  {label}
+                </Label>
+              </div>
+            ))}
           </RadioGroup>
 
           <Textarea
@@ -101,25 +81,25 @@ export default function ReportDialog({ open, onOpenChange, reviewType, reviewId,
             value={details}
             onChange={(e) => setDetails(e.target.value)}
             placeholder="Détails supplémentaires (optionnel)..."
-            rows={3}
+            rows={2}
             className="text-xs placeholder:text-xs text-slate-900 dark:text-white"
           />
 
-          <Alert className="bg-blue-50 border-blue-200 p-2 sm:p-4">
-            <AlertTriangle className="h-3 w-3 sm:h-4 sm:w-4 text-blue-600" />
-            <AlertDescription className="text-blue-800 text-xs sm:text-sm">
+          <Alert className="bg-blue-50 border-blue-200 p-2">
+            <AlertTriangle className="h-3 w-3 text-blue-600" />
+            <AlertDescription className="text-blue-800 text-xs">
               Les faux signalements peuvent entraîner la suspension de votre compte.
             </AlertDescription>
           </Alert>
 
-          <DialogFooter className="gap-2">
-            <Button type="button" variant="outline" onClick={() => onOpenChange(false)} className="text-xs sm:text-sm">
+          <DialogFooter className="gap-2 pt-1">
+            <Button type="button" variant="outline" onClick={() => onOpenChange(false)} className="text-xs sm:text-sm h-8 sm:h-9">
               Annuler
             </Button>
             <Button 
               type="submit" 
               disabled={loading} 
-              className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-white shadow-md text-xs sm:text-sm font-semibold"
+              className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-white shadow-md text-xs sm:text-sm font-semibold h-8 sm:h-9"
             >
               {loading ? "Envoi..." : "Envoyer le signalement"}
             </Button>
