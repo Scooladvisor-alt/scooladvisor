@@ -470,16 +470,14 @@ rejected → si le message enfreint les règles ci-dessus"
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-[95vw] sm:max-w-5xl max-h-[90vh] overflow-y-auto rounded-2xl [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] dark:bg-slate-800 dark:border-slate-700">
+      <DialogContent className="max-w-[95vw] sm:max-w-3xl rounded-2xl dark:bg-slate-800 dark:border-slate-700">
         <DialogHeader className="text-center pb-2">
-          <DialogTitle className="text-lg sm:text-2xl font-bold text-center">
+          <DialogTitle className="text-lg sm:text-xl font-bold text-center">
             <span className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
               {existingReview ? "Modifier mon avis" : "Noter l'établissement"}
             </span>
           </DialogTitle>
         </DialogHeader>
-
-
 
         <style>{`
           .slider-pink .bg-primary { background-color: #ec4899; }
@@ -502,8 +500,8 @@ rejected → si le message enfreint les règles ci-dessus"
             border: 2px solid black !important;
           }
         `}</style>
-        <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
-          <div className="space-y-2 sm:space-y-3">
+        <form onSubmit={handleSubmit} className="space-y-3">
+          <div className="grid grid-cols-2 gap-2">
             {criteria.map(({ key, label, icon: Icon, color, description, gradient, sliderClass }) => {
               const isMax = formData[key] === 5;
               const isFlashing = flashingWidgets[key];
