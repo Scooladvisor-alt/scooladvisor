@@ -58,21 +58,23 @@ export default function ReportDialog({ open, onOpenChange, reviewType, reviewId,
           </DialogTitle>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit} className="space-y-2 sm:space-y-4">
-          <RadioGroup value={reason} onValueChange={setReason} className="space-y-1.5 sm:space-y-3">
+        <form onSubmit={handleSubmit} className="space-y-3">
+          <RadioGroup value={reason} onValueChange={setReason} className="grid grid-cols-1 gap-2">
             {[
-              { value: "diffamation", label: "Diffamation ou mensonges", border: "border-red-200", bg: "bg-red-50/40", hover: "hover:bg-red-50 hover:border-red-300", radio: "border-red-400 text-red-600" },
-              { value: "injure", label: "Insultes ou offensant", border: "border-orange-200", bg: "bg-orange-50/40", hover: "hover:bg-orange-50 hover:border-orange-300", radio: "border-orange-400 text-orange-600" },
-              { value: "hors_sujet", label: "Hors sujet / Spam", border: "border-yellow-200", bg: "bg-yellow-50/40", hover: "hover:bg-yellow-50 hover:border-yellow-300", radio: "border-yellow-400 text-yellow-600" },
-              { value: "fausse_info", label: "Fausses informations", border: "border-blue-200", bg: "bg-blue-50/40", hover: "hover:bg-blue-50 hover:border-blue-300", radio: "border-blue-400 text-blue-600" },
-              { value: "autre", label: "Autre raison", border: "border-slate-200", bg: "bg-slate-50/40", hover: "hover:bg-slate-50 hover:border-slate-300", radio: "border-slate-400 text-slate-600" },
-            ].map(({ value, label, border, bg, hover, radio }) => (
-              <div key={value} className={`flex items-center space-x-2.5 px-2.5 py-2 sm:p-3 rounded-lg border-2 ${border} ${bg} ${hover} transition-all cursor-pointer`}>
-                <RadioGroupItem value={value} id={value} className={radio} />
-                <Label htmlFor={value} className="font-medium cursor-pointer flex-1 text-xs sm:text-base text-slate-800">
-                  {label}
-                </Label>
-              </div>
+              { value: "diffamation", label: "Diffamation ou mensonges", border: "border-red-200", bg: "bg-red-50/50", hover: "hover:bg-red-50 hover:border-red-300", selectedBg: "data-selected:bg-red-100" },
+              { value: "injure", label: "Insultes ou langage offensant", border: "border-orange-200", bg: "bg-orange-50/50", hover: "hover:bg-orange-50 hover:border-orange-300" },
+              { value: "hors_sujet", label: "Hors sujet / Spam", border: "border-yellow-200", bg: "bg-yellow-50/50", hover: "hover:bg-yellow-50 hover:border-yellow-300" },
+              { value: "fausse_info", label: "Fausses informations", border: "border-blue-200", bg: "bg-blue-50/50", hover: "hover:bg-blue-50 hover:border-blue-300" },
+              { value: "autre", label: "Autre raison", border: "border-slate-200", bg: "bg-slate-50/50", hover: "hover:bg-slate-50 hover:border-slate-300" },
+            ].map(({ value, label, border, bg, hover }) => (
+              <label
+                key={value}
+                htmlFor={value}
+                className={`flex items-center gap-3 px-3 py-3 rounded-xl border-2 cursor-pointer transition-all ${border} ${bg} ${hover} ${reason === value ? 'ring-2 ring-purple-300 border-purple-300' : ''}`}
+              >
+                <RadioGroupItem value={value} id={value} className="shrink-0" />
+                <span className="text-sm font-medium text-slate-800 leading-snug">{label}</span>
+              </label>
             ))}
           </RadioGroup>
 
@@ -82,26 +84,26 @@ export default function ReportDialog({ open, onOpenChange, reviewType, reviewId,
             onChange={(e) => setDetails(e.target.value)}
             placeholder="Détails supplémentaires (optionnel)..."
             rows={2}
-            className="text-xs placeholder:text-xs text-slate-900 dark:text-white"
+            className="text-sm placeholder:text-sm text-slate-900 dark:text-white"
           />
 
-          <Alert className="bg-blue-50 border-blue-200 p-2">
-            <AlertTriangle className="h-3 w-3 text-blue-600" />
-            <AlertDescription className="text-blue-800 text-xs">
+          <Alert className="bg-blue-50 border-blue-200 py-2 px-3">
+            <AlertTriangle className="h-3.5 w-3.5 text-blue-600" />
+            <AlertDescription className="text-blue-800 text-xs leading-snug">
               Les faux signalements peuvent entraîner la suspension de votre compte.
             </AlertDescription>
           </Alert>
 
-          <DialogFooter className="gap-2 pt-1">
-            <Button type="button" variant="outline" onClick={() => onOpenChange(false)} className="text-xs sm:text-sm h-8 sm:h-9">
+          <DialogFooter className="flex-row gap-2 pt-1">
+            <Button type="button" variant="outline" onClick={() => onOpenChange(false)} className="flex-1 text-sm h-10">
               Annuler
             </Button>
-            <Button 
-              type="submit" 
-              disabled={loading} 
-              className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-white shadow-md text-xs sm:text-sm font-semibold h-8 sm:h-9"
+            <Button
+              type="submit"
+              disabled={loading}
+              className="flex-1 bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 text-white text-sm font-semibold h-10"
             >
-              {loading ? "Envoi..." : "Envoyer le signalement"}
+              {loading ? "Envoi..." : "Signaler"}
             </Button>
           </DialogFooter>
         </form>
