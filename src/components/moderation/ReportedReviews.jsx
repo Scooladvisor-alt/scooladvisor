@@ -68,10 +68,26 @@ export default function ReportedReviews({ onUpdate }) {
 
   const handleApprove = async (reportId, reviewId, reviewType) => {
     try {
+      const review = reviews[reportId] || Object.values(reviews).find(r => r.id === reviewId);
+      
       if (reviewType === "teacher") {
         await TeacherReview.update(reviewId, { status: "hidden" });
+        // Recalculer les stats du prof
+        if (review?.teacher_id) {
+          const { base44 } = await import("@/api/base44Client");
+          const publishedReviews = await base44.entities.TeacherReview.filter({ teacher_id: review.teacher_id, status: "published" });
+          const avg = publishedReviews.length > 0 ? publishedReviews.reduce((s, r) => s + r.total_rating, 0) / publishedReviews.length : 0;
+          await base44.entities.Teacher.update(review.teacher_id, { average_rating: avg, review_count: publishedReviews.length });
+        }
       } else {
         await SchoolReview.update(reviewId, { status: "hidden" });
+        // Recalculer les stats de l'école
+        if (review?.school_id) {
+          const { base44 } = await import("@/api/base44Client");
+          const publishedReviews = await base44.entities.SchoolReview.filter({ school_id: review.school_id, status: "published" });
+          const avg = publishedReviews.length > 0 ? publishedReviews.reduce((s, r) => s + r.rating, 0) / publishedReviews.length : 0;
+          await base44.entities.School.update(review.school_id, { average_rating: avg, review_count: publishedReviews.length });
+        }
       }
       await Report.update(reportId, { status: "approved" });
       toast.success("Avis masqué suite au signalement");
