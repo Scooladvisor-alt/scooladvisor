@@ -54,11 +54,24 @@ export default function AllReviews({ onUpdate }) {
     setLoading(false);
   };
 
+  const recalcTeacherStats = async (teacherId) => {
+    const published = await base44.entities.TeacherReview.filter({ teacher_id: teacherId, status: "published" });
+    const avg = published.length > 0 ? published.reduce((s, r) => s + r.total_rating, 0) / published.length : 0;
+    await base44.entities.Teacher.update(teacherId, { average_rating: avg, review_count: published.length });
+  };
+
+  const recalcSchoolStats = async (schoolId) => {
+    const published = await base44.entities.SchoolReview.filter({ school_id: schoolId, status: "published" });
+    const avg = published.length > 0 ? published.reduce((s, r) => s + r.rating, 0) / published.length : 0;
+    await base44.entities.School.update(schoolId, { average_rating: avg, review_count: published.length });
+  };
+
   const handleDeleteTeacherReview = async (reviewId) => {
     if (!confirm("Êtes-vous sûr de vouloir masquer cet avis ?")) return;
-    
     try {
+      const review = teacherReviews.find(r => r.id === reviewId);
       await TeacherReview.update(reviewId, { status: "hidden" });
+      if (review?.teacher_id) await recalcTeacherStats(review.teacher_id);
       toast.success("Avis masqué avec succès.");
       loadReviews();
       onUpdate();
@@ -69,9 +82,10 @@ export default function AllReviews({ onUpdate }) {
 
   const handleDeleteSchoolReview = async (reviewId) => {
     if (!confirm("Êtes-vous sûr de vouloir masquer cet avis ?")) return;
-    
     try {
+      const review = schoolReviews.find(r => r.id === reviewId);
       await SchoolReview.update(reviewId, { status: "hidden" });
+      if (review?.school_id) await recalcSchoolStats(review.school_id);
       toast.success("Avis masqué avec succès.");
       loadReviews();
       onUpdate();
@@ -82,7 +96,9 @@ export default function AllReviews({ onUpdate }) {
 
   const handleRestoreTeacherReview = async (reviewId) => {
     try {
+      const review = teacherReviews.find(r => r.id === reviewId);
       await TeacherReview.update(reviewId, { status: "published" });
+      if (review?.teacher_id) await recalcTeacherStats(review.teacher_id);
       toast.success("Avis restauré (publié) avec succès.");
       loadReviews();
       onUpdate();
@@ -93,7 +109,9 @@ export default function AllReviews({ onUpdate }) {
 
   const handleRestoreSchoolReview = async (reviewId) => {
     try {
+      const review = schoolReviews.find(r => r.id === reviewId);
       await SchoolReview.update(reviewId, { status: "published" });
+      if (review?.school_id) await recalcSchoolStats(review.school_id);
       toast.success("Avis restauré (publié) avec succès.");
       loadReviews();
       onUpdate();
