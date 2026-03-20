@@ -68,7 +68,7 @@ export default function ReportedReviews({ onUpdate }) {
 
   const handleApprove = async (reportId, reviewId, reviewType) => {
     try {
-      const review = reviews[reportId] || Object.values(reviews).find(r => r.id === reviewId);
+      const review = reviews[reviewId];
       
       if (reviewType === "teacher") {
         await TeacherReview.update(reviewId, { status: "hidden" });
