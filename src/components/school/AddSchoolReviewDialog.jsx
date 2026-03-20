@@ -597,7 +597,7 @@ rejected → si le message enfreint les règles ci-dessus"
                   </div>
                 </div>
               </div>
-            }
+          }
 
           <div className="bg-gradient-to-r from-amber-50 to-amber-100 rounded-lg p-2 border border-amber-200">
             <div className="flex items-center justify-between">
