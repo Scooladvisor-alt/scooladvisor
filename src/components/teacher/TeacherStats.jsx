@@ -6,7 +6,7 @@ import { BookOpen, Heart, Brain, FileText, TrendingUp } from "lucide-react";
 
 const criteriaConfig = {
   workload_avg: { label: "Charge de travail", icon: BookOpen, color: "bg-blue-500" },
-  friendliness_avg: { label: "Gentillesse", icon: Heart, color: "bg-pink-500" },
+  friendliness_avg: { label: "Sympathie", icon: Heart, color: "bg-pink-500" },
   teaching_avg: { label: "Qualité des cours", icon: Brain, color: "bg-purple-500" },
   grading_avg: { label: "Notation", icon: FileText, color: "bg-orange-500" }
 };
