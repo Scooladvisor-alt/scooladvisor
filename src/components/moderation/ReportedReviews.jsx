@@ -101,7 +101,7 @@ export default function ReportedReviews({ onUpdate }) {
     try {
       await Report.update(reportId, { status: "rejected" });
       toast.success("Signalement rejeté");
-      loadReports();
+      setReports(prev => prev.filter(r => r.id !== reportId));
       onUpdate();
     } catch (error) {
       toast.error("Erreur lors du traitement");
