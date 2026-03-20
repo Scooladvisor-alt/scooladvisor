@@ -391,7 +391,7 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
               return (
                 <div
                   key={review.id}
-                  className={`group relative p-5 rounded-2xl border transition-all duration-300
+                  className={`group relative p-3.5 sm:p-5 rounded-2xl border transition-all duration-300
                     ${isRejected ? 'bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-700 opacity-75 grayscale-[0.5]' : 'bg-white dark:bg-slate-800 border-slate-100 dark:border-slate-700 hover:border-purple-100 dark:hover:border-purple-700 shadow-[0_2px_8px_-2px_rgba(0,0,0,0.05)] hover:shadow-[0_8px_16px_-4px_rgba(0,0,0,0.08)]'}
                   `}
                 >
