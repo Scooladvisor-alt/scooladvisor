@@ -547,7 +547,7 @@ rejected → si le message enfreint les règles ci-dessus"
 
           </div>
 
-            {showStudentLifeBonus &&
+          {showStudentLifeBonus &&
             <div className="relative overflow-hidden bg-slate-50/50 dark:bg-slate-900/50 rounded-lg p-2 border border-slate-200 dark:border-slate-600">
                 {(formData.has_student_life || formData.has_network) &&
               <>
