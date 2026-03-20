@@ -404,34 +404,34 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
                     </div>
                   )}
                   {/* Header */}
-                  <div className="flex justify-between items-start gap-4">
-                    <div className="flex gap-3">
-                      <Avatar className="w-10 h-10 border-2 border-white dark:border-slate-700 shadow-sm ring-1 ring-slate-100 dark:ring-slate-700">
+                  <div className="flex justify-between items-center gap-3">
+                    <div className="flex gap-2.5 items-center min-w-0">
+                      <Avatar className="w-9 h-9 flex-shrink-0 border-2 border-white dark:border-slate-700 shadow-sm ring-1 ring-slate-100 dark:ring-slate-700">
                          {avatarUrl ?
                             <AvatarImage src={avatarUrl} loading="lazy" /> : null}
                           <AvatarFallback className="bg-transparent">
                                <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/f5396bc58_a-humanized-black-graduation-cap-with-a-star-shape-3.png" alt="Avatar" className="w-full h-full object-cover" />
                           </AvatarFallback>
                       </Avatar>
-                      <div>
-                        <h4 className="font-bold text-slate-900 dark:text-white text-sm">
-                          {review.is_anonymous ? "Anonyme" : review.author_name || "Étudiant"}
-                        </h4>
-                        {review.is_former_student && (
-                          <p className="text-[10px] text-slate-500 dark:text-slate-400 font-medium -mt-0.5">Ancien élève</p>
-                        )}
-                        <p className="text-xs text-slate-500 dark:text-slate-400 font-medium mt-0.5">
+                      <div className="min-w-0">
+                        <div className="flex items-center gap-1.5 flex-wrap">
+                          <h4 className="font-bold text-slate-900 dark:text-white text-sm leading-tight">
+                            {review.is_anonymous ? "Anonyme" : review.author_name || "Étudiant"}
+                          </h4>
+                          {review.is_former_student && (
+                            <span className="text-[9px] bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-400 px-1.5 py-0.5 rounded-full font-medium">Ancien élève</span>
+                          )}
+                        </div>
+                        <p className="text-[10px] text-slate-400 dark:text-slate-500 mt-0.5">
                           {formatDateWithTimezone(review.created_date, "d MMM yyyy")}
                         </p>
                       </div>
                     </div>
 
-                    <div className="flex flex-col items-end">
-                      <div className="flex items-center gap-1.5 bg-amber-50 text-amber-900 px-2.5 py-1 rounded-lg border border-amber-200 shadow-sm">
-                        <Star className="w-3.5 h-3.5 fill-amber-600 text-amber-600" />
-                        <span className="font-bold text-sm text-amber-950">{review.total_rating.toFixed(1)}</span>
-                        <span className="text-[10px] text-amber-700 font-medium">/20</span>
-                      </div>
+                    <div className="flex items-center gap-1.5 bg-amber-50 text-amber-900 px-2 py-1 rounded-lg border border-amber-200 shadow-sm flex-shrink-0">
+                      <Star className="w-3 h-3 fill-amber-600 text-amber-600" />
+                      <span className="font-bold text-sm text-amber-950">{review.total_rating.toFixed(1)}</span>
+                      <span className="text-[10px] text-amber-700 font-medium">/20</span>
                     </div>
                   </div>
 
