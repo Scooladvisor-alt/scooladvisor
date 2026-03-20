@@ -436,7 +436,7 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
                   </div>
 
                   {/* Comment & Expand Toggle */}
-                  <div className="mt-4 mb-2">
+                  <div className="mt-2.5 mb-1.5">
                     <div className="flex items-start gap-2">
                       <p className={`text-sm text-slate-700 dark:text-slate-200 leading-relaxed flex-1 ${!expandedComments.has(review.id) && isCommentLong(review.comment) ? 'line-clamp-3' : ''}`}>
                         {review.comment}
