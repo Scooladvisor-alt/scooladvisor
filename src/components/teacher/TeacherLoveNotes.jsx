@@ -134,7 +134,7 @@ export default function TeacherLoveNotes({ teacherId, user }) {
         </div>
       </CardHeader>
 
-      <CardContent className="pt-2 px-3 sm:px-6 pb-0 sm:pb-4">
+      <CardContent className="pt-2 px-3 sm:px-6 pb-4">
         <AnimatePresence>
           {showForm &&
           <motion.div
