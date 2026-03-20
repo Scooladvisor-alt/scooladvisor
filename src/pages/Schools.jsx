@@ -196,7 +196,9 @@ export default function SchoolsPage() {
       const teachersData = await base44.entities.Teacher.filter({ status: "approved" });
       const counts = {};
       for (const teacher of teachersData) {
-        counts[teacher.school_id] = (counts[teacher.school_id] || 0) + 1;
+        if (!teacher.is_hidden && !teacher.is_deleted) {
+          counts[teacher.school_id] = (counts[teacher.school_id] || 0) + 1;
+        }
       }
       setTeacherCounts(counts);
       setTeachers(teachersData);
