@@ -98,14 +98,13 @@ function AvatarSelectionDialog({ open, onOpenChange, currentAvatar, onAvatarSele
             <img
               src={avatar.url}
               alt={avatar.name}
-              className="w-full h-20 sm:h-32 object-contain rounded-lg" /> :
+              className="w-full h-full object-contain rounded-lg" /> :
 
 
-            <div className="w-full h-20 sm:h-32 flex items-center justify-center bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-[#4DA6FF] rounded-lg">
-                  <span className="text-4xl sm:text-6xl font-bold text-white">{userInitial}</span>
+            <div className="w-full h-full flex items-center justify-center bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-[#4DA6FF] rounded-lg">
+                  <span className="text-3xl font-bold text-white">{userInitial}</span>
                 </div>
             }
-              <p className="text-xs sm:text-sm font-medium text-center mt-1 sm:mt-2 text-slate-900 dark:text-slate-100">{avatar.name}</p>
               {selectedAvatar === avatar.id &&
             <div className="absolute top-1 right-1 sm:top-2 sm:right-2 w-5 h-5 sm:w-6 sm:h-6 bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-[#4DA6FF] rounded-full flex items-center justify-center">
                   <svg className="w-3 h-3 sm:w-4 sm:h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
