@@ -88,7 +88,7 @@ function AvatarSelectionDialog({ open, onOpenChange, currentAvatar, onAvatarSele
           <button
             key={avatar.id}
             onClick={() => setSelectedAvatar(avatar.id)}
-            className={`relative p-2 sm:p-4 rounded-xl border-2 transition-all hover:scale-105 ${
+            className={`relative p-1.5 rounded-xl border-2 transition-all hover:scale-105 aspect-square ${
             selectedAvatar === avatar.id ?
             'border-[#FF4D8D] bg-pink-50 dark:bg-pink-950/30 shadow-lg' :
             'border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-900 hover:border-pink-300 dark:hover:border-pink-600'}`
