@@ -188,7 +188,7 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
     try {
       await TeacherReview.delete(reviewId);
       toast.success("Avis supprimé avec succès.");
-      // Les stats seront automatiquement recalculées par l'automation
+      await updateTeacherStats();
       await loadReviews(true);
       onReload();
     } catch (error) {
