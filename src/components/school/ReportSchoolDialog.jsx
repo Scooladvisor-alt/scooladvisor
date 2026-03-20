@@ -56,69 +56,55 @@ export default function ReportSchoolDialog({ open, onOpenChange, schoolId }) {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-[95vw] sm:max-w-5xl max-h-[90vh] overflow-y-auto rounded-2xl">
-        <DialogHeader>
-          <DialogTitle className="text-lg sm:text-xl font-bold flex items-center gap-2">
-            <AlertTriangle className="w-5 h-5 text-[#FF4D8D]" />
+      <DialogContent className="max-w-[95vw] sm:max-w-5xl max-h-[90vh] overflow-y-auto rounded-2xl p-4 sm:p-6">
+        <DialogHeader className="pb-2 sm:pb-4">
+          <DialogTitle className="text-base sm:text-xl font-bold flex items-center gap-2">
+            <AlertTriangle className="w-4 h-4 sm:w-5 sm:h-5 text-[#FF4D8D]" />
             <span className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
               Signaler cet établissement
             </span>
           </DialogTitle>
         </DialogHeader>
 
-        <RadioGroup value={reason} onValueChange={setReason} className="space-y-3">
-          <div className="flex items-start space-x-3 p-3 rounded-lg border-2 border-pink-200 bg-pink-50/40 hover:bg-pink-50 hover:border-pink-300 transition-all cursor-pointer">
-            <RadioGroupItem value="fake_school" id="fake" className="mt-1 border-pink-400 text-pink-600" />
-            <Label htmlFor="fake" className="font-medium cursor-pointer flex-1 text-sm sm:text-base text-slate-800">
-              Ce n'est pas un vrai établissement
-            </Label>
-          </div>
-
-          <div className="flex items-start space-x-3 p-3 rounded-lg border-2 border-purple-200 bg-purple-50/40 hover:bg-purple-50 hover:border-purple-300 transition-all cursor-pointer">
-            <RadioGroupItem value="inappropriate" id="inappropriate" className="mt-1 border-purple-400 text-purple-600" />
-            <Label htmlFor="inappropriate" className="font-medium cursor-pointer flex-1 text-sm sm:text-base text-slate-800">
-              Contenu inapproprié
-            </Label>
-          </div>
-
-          <div className="flex items-start space-x-3 p-3 rounded-lg border-2 border-indigo-200 bg-indigo-50/40 hover:bg-indigo-50 hover:border-indigo-300 transition-all cursor-pointer">
-            <RadioGroupItem value="duplicate" id="duplicate" className="mt-1 border-indigo-400 text-indigo-600" />
-            <Label htmlFor="duplicate" className="font-medium cursor-pointer flex-1 text-sm sm:text-base text-slate-800">
-              Doublon
-            </Label>
-          </div>
-
-          <div className="flex items-start space-x-3 p-3 rounded-lg border-2 border-blue-200 bg-blue-50/40 hover:bg-blue-50 hover:border-blue-300 transition-all cursor-pointer">
-            <RadioGroupItem value="other" id="other" className="mt-1 border-blue-400 text-blue-600" />
-            <Label htmlFor="other" className="font-medium cursor-pointer flex-1 text-sm sm:text-base text-slate-800">
-              Autre raison
-            </Label>
-          </div>
+        <RadioGroup value={reason} onValueChange={setReason} className="space-y-1.5 sm:space-y-3">
+          {[
+            { value: "fake_school", label: "Ce n'est pas un vrai établissement", border: "border-pink-200", bg: "bg-pink-50/40", hover: "hover:bg-pink-50 hover:border-pink-300", radio: "border-pink-400 text-pink-600" },
+            { value: "inappropriate", label: "Contenu inapproprié", border: "border-purple-200", bg: "bg-purple-50/40", hover: "hover:bg-purple-50 hover:border-purple-300", radio: "border-purple-400 text-purple-600" },
+            { value: "duplicate", label: "Doublon", border: "border-indigo-200", bg: "bg-indigo-50/40", hover: "hover:bg-indigo-50 hover:border-indigo-300", radio: "border-indigo-400 text-indigo-600" },
+            { value: "other", label: "Autre raison", border: "border-blue-200", bg: "bg-blue-50/40", hover: "hover:bg-blue-50 hover:border-blue-300", radio: "border-blue-400 text-blue-600" },
+          ].map(({ value, label, border, bg, hover, radio }) => (
+            <div key={value} className={`flex items-center space-x-2.5 px-2.5 py-2 sm:p-3 rounded-lg border-2 ${border} ${bg} ${hover} transition-all cursor-pointer`}>
+              <RadioGroupItem value={value} id={value} className={radio} />
+              <Label htmlFor={value} className="font-medium cursor-pointer flex-1 text-xs sm:text-base text-slate-800">
+                {label}
+              </Label>
+            </div>
+          ))}
         </RadioGroup>
 
         <Textarea
           value={details}
           onChange={(e) => setDetails(e.target.value)}
           placeholder="Détails supplémentaires (optionnel)..."
-          rows={3}
+          rows={2}
           className="text-xs placeholder:text-xs text-slate-900 dark:text-white"
         />
 
-        <Alert className="bg-blue-50 border-blue-200">
-          <AlertTriangle className="h-4 w-4 text-blue-600" />
-          <AlertDescription className="text-blue-800 text-xs sm:text-sm">
+        <Alert className="bg-blue-50 border-blue-200 p-2">
+          <AlertTriangle className="h-3 w-3 text-blue-600" />
+          <AlertDescription className="text-blue-800 text-xs">
             Les faux signalements peuvent entraîner la suspension de votre compte.
           </AlertDescription>
         </Alert>
 
-        <DialogFooter className="gap-2">
-          <Button variant="outline" onClick={() => onOpenChange(false)} className="text-xs sm:text-sm">
+        <DialogFooter className="gap-2 pt-1">
+          <Button variant="outline" onClick={() => onOpenChange(false)} className="text-xs sm:text-sm h-8 sm:h-9">
             Annuler
           </Button>
           <Button 
             onClick={handleReport} 
             disabled={loading}
-            className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-white shadow-md text-xs sm:text-sm font-semibold"
+            className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-white shadow-md text-xs sm:text-sm font-semibold h-8 sm:h-9"
           >
             {loading ? "Envoi..." : "Envoyer le signalement"}
           </Button>
