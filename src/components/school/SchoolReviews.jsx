@@ -435,7 +435,7 @@ Rédige maintenant ton résumé façon "L'avis de Satoshi" en 3 phrases max.`;
                             </div>
 
                             {/* Note ultra simple - Mobile uniquement */}
-                            <div className="flex sm:hidden items-center gap-0.5 bg-gradient-to-br from-amber-50 to-amber-100 px-1.5 py-0.5 rounded-full border border-amber-200">
+                            <div className="flex sm:hidden items-center gap-0.5 bg-gradient-to-br from-amber-50 to-amber-100 px-1.5 py-0.5 rounded-md border border-amber-200">
                               <Star className="w-2.5 h-2.5 text-amber-600 fill-amber-600" />
                               <span className="text-xs font-bold text-amber-900 leading-none">{review.rating.toFixed(1)}</span>
                             </div>
