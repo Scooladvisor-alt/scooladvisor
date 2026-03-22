@@ -17,7 +17,7 @@ const STUDY_LEVELS = [
     id: "lycee",
     label: "Lycée",
     emoji: "📚",
-    description: "2nde → Terminale",
+    description: "2nde → Terminale / BTS",
     avatar: "avatar7",
     avatarUrl: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/fd729e269_an-anonymous-student-with-a-james-bond-inspired-au.png",
     gradient: "from-yellow-400 to-orange-400",
