@@ -264,6 +264,7 @@ export default function Layout({ children }) {
   const [showBanDialog, setShowBanDialog] = useState(false);
   const [showLoginMessage, setShowLoginMessage] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
+  const [showOnboarding, setShowOnboarding] = useState(false);
 
 
   useEffect(() => {
