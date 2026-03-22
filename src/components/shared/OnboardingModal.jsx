@@ -54,8 +54,8 @@ const STUDY_LEVELS = [
     label: "École privée",
     emoji: "🌟",
     description: "École privée / Autre",
-    avatar: "avatar6",
-    avatarUrl: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/1b286b7dd_a-human-schoolboy-inspired-by-a-famous-comic-stude.png",
+    avatar: "avatar3",
+    avatarUrl: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/f5396bc58_a-humanized-black-graduation-cap-with-a-star-shape-3.png",
     gradient: "from-purple-400 to-pink-500",
   },
 ];
