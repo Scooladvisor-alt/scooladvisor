@@ -6,23 +6,23 @@ import { Button } from "@/components/ui/button";
 
 export default function Footer() {
   return (
-    <footer className="bg-white/80 backdrop-blur-sm border-t border-slate-200 py-6 mt-0 lg:mt-12">
+    <footer className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border-t border-slate-200 dark:border-slate-700 py-6 mt-0 lg:mt-12">
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-sm text-slate-600">
+          <p className="text-sm text-slate-600 dark:text-slate-400">
             © {new Date().getFullYear()} Scooladvisor. Tous droits réservés.
           </p>
           
           <div className="flex flex-wrap items-center justify-center gap-4 md:gap-6">
             <Link
               to={createPageUrl("TermsOfService")}
-              className="text-xs text-slate-500 hover:text-slate-900 transition-colors">
+              className="text-xs text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors">
 
               Conditions d'utilisation
             </Link>
             <Link
               to={createPageUrl("PrivacyPolicy")}
-              className="text-xs text-slate-500 hover:text-slate-900 transition-colors">
+              className="text-xs text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors">
 
               Politique de confidentialité
             </Link>
