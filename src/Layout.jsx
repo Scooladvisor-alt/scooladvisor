@@ -37,6 +37,7 @@ import SecurityGuard from "@/components/shared/SecurityGuard";
 import FloatingDecoration from "@/components/shared/FloatingDecoration";
 import { prefetchPage } from "@/components/shared/LinkPrefetch";
 import BottomTabBar from "@/components/mobile/BottomTabBar";
+import OnboardingModal from "@/components/shared/OnboardingModal";
 
 
 const BanDialog = ({ open, user }) => {
