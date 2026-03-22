@@ -297,6 +297,11 @@ export default function Layout({ children }) {
       const currentUser = await base44.auth.me();
       setUser(currentUser);
 
+      // Afficher l'onboarding si pas encore fait
+      if (currentUser && !currentUser.onboarding_done) {
+        setShowOnboarding(true);
+      }
+
       // Ne jamais bannir le compte admin
       if (currentUser && currentUser.is_banned && currentUser.email !== 'antownin@gmail.com') {
         setShowBanDialog(true);
