@@ -89,12 +89,14 @@ export default function OnboardingModal({ open, onComplete }) {
         className="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden"
       >
         {/* Header */}
-        <div className="px-6 pt-6 pb-4 text-center">
-          <div className="text-5xl mb-3">👋</div>
-          <h2 className="text-2xl font-bold bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
-            Bienvenue sur Scooladvisor !
-          </h2>
-          <p className="text-slate-500 dark:text-slate-400 text-sm mt-1.5">
+        <div className="px-6 pt-5 pb-3 text-center">
+          <div className="flex items-center justify-center gap-2 mb-1">
+            <span className="text-3xl">👋</span>
+            <h2 className="text-2xl font-bold bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent">
+              Bienvenue sur Scooladvisor !
+            </h2>
+          </div>
+          <p className="text-slate-500 dark:text-slate-400 text-sm">
             Choisis ton niveau d'études pour personnaliser ton avatar
           </p>
         </div>
