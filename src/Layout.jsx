@@ -689,6 +689,15 @@ export default function Layout({ children }) {
       {user && showBanDialog &&
       <BanDialog open={showBanDialog} user={user} />
       }
+
+      <OnboardingModal
+        open={showOnboarding}
+        onComplete={async () => {
+          setShowOnboarding(false);
+          const updatedUser = await base44.auth.me();
+          setUser(updatedUser);
+        }}
+      />
     </div>);
 
 }
