@@ -85,6 +85,22 @@ export default function TeachersList({ schoolId, onAddTeacher }) {
             background-color: rgba(0,0,0,0.05);
             border-radius: 10px;
           }
+
+          .teacher-name-gradient {
+            color: #1e293b;
+            transition: all 0.2s;
+          }
+
+          .dark .teacher-name-gradient {
+            color: white;
+          }
+
+          .group:hover .teacher-name-gradient {
+            background: linear-gradient(to right, #FF4D8D, #a855f7, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+          }
         `}</style>
         
         <CardHeader className="border-b border-slate-100 dark:border-slate-700 px-4 py-3 sm:px-6 sm:py-4">
@@ -161,10 +177,10 @@ export default function TeachersList({ schoolId, onAddTeacher }) {
                             </Avatar>
 
                             <div className="flex-1 min-w-0">
-                              <h3 className="font-semibold text-slate-900 dark:text-white group-hover:bg-gradient-to-r group-hover:from-[#FF4D8D] group-hover:via-purple-500 group-hover:to-blue-500 group-hover:bg-clip-text group-hover:text-transparent transition-colors truncate flex items-center gap-1 sm:gap-2 text-sm sm:text-base">
-                                {isPodium && <Award className={`w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0 ${podiumIconColors[index]}`} />}
-                                <span className="truncate">{teacher.name}</span>
-                              </h3>
+                              <h3 className="font-semibold truncate flex items-center gap-1 sm:gap-2 text-sm sm:text-base">
+                                 {isPodium && <Award className={`w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0 ${podiumIconColors[index]}`} />}
+                                 <span className="truncate teacher-name-gradient">{teacher.name}</span>
+                               </h3>
                               <div className="flex items-center gap-1 sm:gap-2 mt-1">
                                 <BookOpen className="w-3 h-3 sm:w-4 sm:h-4 text-slate-400 flex-shrink-0" />
                                 <span className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 truncate">{teacher.subject}</span>
