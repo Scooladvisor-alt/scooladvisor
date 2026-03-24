@@ -161,7 +161,7 @@ export default function TeachersList({ schoolId, onAddTeacher }) {
                             </Avatar>
 
                             <div className="flex-1 min-w-0">
-                              <h3 className="font-semibold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors truncate flex items-center gap-1 sm:gap-2 text-sm sm:text-base">
+                              <h3 className="font-semibold text-slate-900 dark:text-white group-hover:bg-gradient-to-r group-hover:from-[#FF4D8D] group-hover:via-purple-500 group-hover:to-blue-500 group-hover:bg-clip-text group-hover:text-transparent transition-colors truncate flex items-center gap-1 sm:gap-2 text-sm sm:text-base">
                                 {isPodium && <Award className={`w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0 ${podiumIconColors[index]}`} />}
                                 <span className="truncate">{teacher.name}</span>
                               </h3>
@@ -178,7 +178,7 @@ export default function TeachersList({ schoolId, onAddTeacher }) {
                                   <span className="font-bold text-slate-800 dark:text-white text-xs sm:text-sm">{teacher.average_rating.toFixed(1)}</span>
                                 </div>
                           }
-                              <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 text-slate-400 group-hover:text-blue-600 group-hover:translate-x-1 transition-all" />
+                              <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 text-slate-400 group-hover:text-[#FF4D8D] group-hover:translate-x-1 transition-all" />
                             </div>
                           </div>
                         </Link>
