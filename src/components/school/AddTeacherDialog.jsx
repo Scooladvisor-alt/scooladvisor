@@ -364,7 +364,7 @@ export default function AddTeacherDialog({ open, onOpenChange, schoolId, onSucce
                 required
                 placeholder="M. Dupont"
                 className="h-7 text-xs sm:text-sm flex-1 text-slate-900 dark:bg-slate-900 dark:border-slate-600 dark:text-white" />
-              <div className="flex items-center gap-1.5 bg-slate-800 dark:bg-slate-900 px-2 py-1.5 rounded-lg border border-slate-700 dark:border-slate-600">
+              <div className="flex items-center gap-1.5 bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 px-2 py-1.5 rounded-lg border-0">
                 <input
                   type="checkbox"
                   id="is_former"
