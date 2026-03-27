@@ -256,13 +256,39 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
     return cleaned;
   };
 
+  // Types Google Places reconnus comme établissements d'enseignement
   const SCHOOL_TYPES = [
     "school", "university", "secondary_school", "primary_school",
-    "establishment"
+    "kindergarten", "library", "book_store"
+  ];
+
+  // Types clairement NON scolaires — bloqués même s'ils coexistent avec d'autres types
+  const FORBIDDEN_TYPES = [
+    "restaurant", "food", "bar", "cafe", "bakery", "meal_delivery", "meal_takeaway",
+    "supermarket", "grocery_or_supermarket", "convenience_store", "liquor_store",
+    "pharmacy", "drugstore", "hospital", "doctor", "dentist", "health",
+    "gym", "stadium", "amusement_park", "zoo", "aquarium", "campground",
+    "car_dealer", "car_repair", "car_wash", "gas_station", "parking",
+    "bank", "atm", "finance", "insurance_agency", "real_estate_agency",
+    "hotel", "lodging", "motel",
+    "movie_theater", "night_club", "casino",
+    "beauty_salon", "hair_care", "spa",
+    "clothing_store", "shoe_store", "jewelry_store", "electronics_store",
+    "furniture_store", "hardware_store", "pet_store", "florist",
+    "shopping_mall", "department_store",
+    "laundry", "moving_company", "storage", "funeral_home",
+    "fire_station", "police", "local_government_office", "courthouse",
+    "post_office", "embassy",
+    "place_of_worship", "church", "mosque", "synagogue",
+    "tourist_attraction", "museum", "art_gallery",
+    "cemetery"
   ];
 
   const isSchoolPlace = (place) => {
-    if (!place.types || place.types.length === 0) return true; // on laisse passer si pas de types
+    if (!place.types || place.types.length === 0) return false; // on bloque si pas de types
+    // Bloquer immédiatement si un type interdit est présent
+    if (place.types.some(t => FORBIDDEN_TYPES.includes(t))) return false;
+    // Accepter seulement si au moins un type scolaire est présent
     return place.types.some(t => SCHOOL_TYPES.includes(t));
   };
 

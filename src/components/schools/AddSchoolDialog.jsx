@@ -196,22 +196,37 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
         return;
       }
 
-      // Vérification que le nom ressemble à un établissement scolaire
-      const NON_SCHOOL_KEYWORDS = [
-        'restaurant', 'boulangerie', 'pharmacie', 'supermarché', 'supermarche',
-        'animalerie', 'coiffeur', 'garage', 'hôtel', 'hotel', 'bar', 'café', 'cafe',
-        'pizzeria', 'kebab', 'sushi', 'fast food', 'fastfood', 'épicerie', 'epicerie',
-        'banque', 'assurance', 'agence', 'immobilier', 'cabinet', 'clinique',
-        'hôpital', 'hopital', 'mairie', 'poste', 'gym', 'fitness', 'salle de sport',
-        'salon', 'boutique', 'magasin', 'enseigne', 'zoo', 'parc', 'musée', 'musee',
-        'cinema', 'cinéma', 'piscine', 'stade'
+      // Whitelist : le nom DOIT contenir un mot-clé scolaire reconnu
+      const SCHOOL_KEYWORDS_WHITELIST = [
+        'lycée', 'lycee', 'collège', 'college', 'université', 'universite',
+        'ecole', 'école', 'institut', 'ipec', 'inseec', 'ifsi', 'ifas',
+        'cfa', 'mfr', 'erea', 'segpa', 'ufa',
+        'formation', 'enseignement', 'pedagogie', 'pédagogie',
+        'preparatoire', 'préparatoire', 'classe prépa', 'classe prepa',
+        'bts ', 'iut ', 'cpge', 'bac pro',
+        'académie', 'academie', 'campus', 'faculty', 'faculté', 'faculte',
+        'grande ecole', 'grande école', 'business school', 'engineering school',
+        'high school', 'middle school', 'primary school', 'elementary school',
+        'saint-', 'notre-dame', 'sainte-'
       ];
-      const lowerName = formData.name.toLowerCase();
-      const isNonSchool = NON_SCHOOL_KEYWORDS.some(kw => lowerName.includes(kw));
-      if (isNonSchool) {
-        setNotSchoolWarning(true);
-        setLoading(false);
-        return;
+      const lowerName = formData.name.toLowerCase()
+        .normalize("NFD").replace(/[\u0300-\u036f]/g, ""); // Retirer accents pour comparaison
+      const lowerNameRaw = formData.name.toLowerCase();
+
+      // Types qui forcément impliquent un établissement scolaire (le type est déjà la validation)
+      const typeIsSchool = ['lycee', 'college', 'universite', 'ecole_privee', 'ecole_commerce', 'ecole_ingenieur'].includes(formData.type);
+
+      if (!typeIsSchool) {
+        // Si le type n'est pas dans la liste scolaire, vérifier le nom aussi
+        const hasSchoolKeyword = SCHOOL_KEYWORDS_WHITELIST.some(kw =>
+          lowerName.includes(kw.normalize("NFD").replace(/[\u0300-\u036f]/g, "")) ||
+          lowerNameRaw.includes(kw)
+        );
+        if (!hasSchoolKeyword) {
+          setNotSchoolWarning(true);
+          setLoading(false);
+          return;
+        }
       }
       setNotSchoolWarning(false);
 
