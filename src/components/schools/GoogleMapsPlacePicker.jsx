@@ -14,6 +14,7 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
   const [map, setMap] = useState(null);
   const [marker, setMarker] = useState(null);
   const [selectedPlace, setSelectedPlace] = useState(null);
+  const [notSchoolWarning, setNotSchoolWarning] = useState(false);
   const [apiKey, setApiKey] = useState(null);
   const [user, setUser] = useState(null);
   const mapRef = useRef(null);
@@ -176,12 +177,14 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
           marker.setPosition(location);
           marker.setVisible(true);
 
+          setNotSchoolWarning(false);
           setSelectedPlace({
             name: place.name || "",
             address: extractStreetAddress(place),
             city: extractCity(place),
             fullAddress: place.formatted_address,
-            location: { lat: location.lat(), lng: location.lng() }
+            location: { lat: location.lat(), lng: location.lng() },
+            types: place.types || []
           });
         }
       }
@@ -253,14 +256,24 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
     return cleaned;
   };
 
+  const SCHOOL_TYPES = [
+    "school", "university", "secondary_school", "primary_school",
+    "establishment"
+  ];
+
+  const isSchoolPlace = (place) => {
+    if (!place.types || place.types.length === 0) return true; // on laisse passer si pas de types
+    return place.types.some(t => SCHOOL_TYPES.includes(t));
+  };
+
   const handleConfirm = () => {
     if (selectedPlace) {
-      console.log("📍 Place confirmed:", selectedPlace);
-      console.log("🏙️ City extracted:", selectedPlace.city);
-      
+      if (!isSchoolPlace(selectedPlace)) {
+        setNotSchoolWarning(true);
+        return;
+      }
+      setNotSchoolWarning(false);
       const cleanedName = cleanSchoolName(selectedPlace.name);
-      console.log("🧹 School name cleaned:", selectedPlace.name, "→", cleanedName);
-      
       onPlaceSelected({
         name: cleanedName,
         address: selectedPlace.address,
@@ -378,6 +391,14 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
             }
             <div ref={mapRef} className="w-full h-full bg-slate-100" />
           </div>
+
+          {/* Avertissement lieu non scolaire */}
+          {notSchoolWarning && (
+            <div className="flex items-center gap-2 px-3 py-2 bg-amber-50 border border-amber-200 rounded-lg text-amber-700 text-xs">
+              <AlertCircle className="w-3.5 h-3.5 flex-shrink-0" />
+              <span>Scooladvisor est réservé aux établissements scolaires. Ce lieu ne semble pas correspondre.</span>
+            </div>
+          )}
 
           {/* Boutons d'action */}
           <div className="flex justify-end gap-2">

@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { AlertCircle, Loader2, MapPin } from "lucide-react";
+import { AlertCircle, Loader2, MapPin, School } from "lucide-react";
 import { toast } from "sonner";
 import JoinFamilyDialog from "@/components/shared/JoinFamilyDialog";
 import { useJoinFamily } from "@/components/shared/useJoinFamily";
@@ -29,6 +29,7 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
   });
   const { showJoinDialog, actionDescription, requireAuth, closeDialog } = useJoinFamily();
 
+  const [notSchoolWarning, setNotSchoolWarning] = useState(false);
   const [addressSuggestions, setAddressSuggestions] = useState([]);
   const [showAddressSuggestions, setShowAddressSuggestions] = useState(false);
   const [addressLoading, setAddressLoading] = useState(false);
@@ -155,6 +156,7 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
   }, [formData.type]);
 
   const handleNameChange = (value) => {
+    if (notSchoolWarning) setNotSchoolWarning(false);
     if (hasLockedPrefix(formData.type)) {
       const prefix = getSchoolPrefix(formData.type);
       
@@ -193,6 +195,25 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
         localStorage.setItem('pending_school_submission', JSON.stringify(formData));
         return;
       }
+
+      // Vérification que le nom ressemble à un établissement scolaire
+      const NON_SCHOOL_KEYWORDS = [
+        'restaurant', 'boulangerie', 'pharmacie', 'supermarché', 'supermarche',
+        'animalerie', 'coiffeur', 'garage', 'hôtel', 'hotel', 'bar', 'café', 'cafe',
+        'pizzeria', 'kebab', 'sushi', 'fast food', 'fastfood', 'épicerie', 'epicerie',
+        'banque', 'assurance', 'agence', 'immobilier', 'cabinet', 'clinique',
+        'hôpital', 'hopital', 'mairie', 'poste', 'gym', 'fitness', 'salle de sport',
+        'salon', 'boutique', 'magasin', 'enseigne', 'zoo', 'parc', 'musée', 'musee',
+        'cinema', 'cinéma', 'piscine', 'stade'
+      ];
+      const lowerName = formData.name.toLowerCase();
+      const isNonSchool = NON_SCHOOL_KEYWORDS.some(kw => lowerName.includes(kw));
+      if (isNonSchool) {
+        setNotSchoolWarning(true);
+        setLoading(false);
+        return;
+      }
+      setNotSchoolWarning(false);
 
       // SECURITY: Sanitize inputs
       const cleanName = security.sanitize(formData.name);
@@ -568,6 +589,12 @@ export default function AddSchoolDialog({ open, onOpenChange, onSuccess }) {
           </div>
 
           <div className="flex-shrink-0 px-5 sm:px-6 py-4 border-t border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900">
+            {notSchoolWarning && (
+              <div className="flex items-center gap-2 px-3 py-2 mb-3 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-700 rounded-lg text-amber-700 dark:text-amber-400 text-xs">
+                <School className="w-3.5 h-3.5 flex-shrink-0" />
+                <span>Scooladvisor est réservé aux établissements scolaires (collèges, lycées, universités…). Ce type de lieu ne peut pas être ajouté.</span>
+              </div>
+            )}
             {error ? (
               <Alert variant="destructive" className="w-full border-red-300 bg-red-50 dark:bg-red-900/20">
                 <AlertCircle className="h-4 w-4" />
