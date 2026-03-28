@@ -489,15 +489,16 @@ export default function AddTeacherReviewDialog({ open, onOpenChange, teacherId, 
             </div>
           </div>
 
-          <div className="flex items-center gap-3 p-3 bg-gradient-to-r from-pink-50 via-purple-50 to-blue-50 dark:from-pink-950/30 dark:via-purple-950/30 dark:to-blue-950/30 rounded-xl border-2 border-pink-200/80 dark:border-purple-700/50 checkbox-gradient-only">
+          <div
+            className="flex items-center gap-3 p-3 bg-gradient-to-r from-pink-50 via-purple-50 to-blue-50 dark:from-pink-950/30 dark:via-purple-950/30 dark:to-blue-950/30 rounded-xl border-2 border-pink-200/80 dark:border-purple-700/50 checkbox-gradient-only cursor-pointer select-none"
+            onClick={() => setFormData({ ...formData, certification: !formData.certification })}
+          >
             <Checkbox
               id="certification"
               checked={formData.certification}
               onCheckedChange={(checked) => setFormData({ ...formData, certification: checked })}
-              className="h-4 w-4 flex-shrink-0 checkbox-gradient-border" />
-            <label
-              htmlFor="certification"
-              className="text-xs font-semibold cursor-pointer text-slate-700 dark:text-slate-200 leading-snug">
+              className="h-4 w-4 flex-shrink-0 checkbox-gradient-border pointer-events-none" />
+            <label className="text-xs font-semibold cursor-pointer text-slate-700 dark:text-slate-200 leading-snug">
               Je certifie être responsable de mon avis
             </label>
           </div>
