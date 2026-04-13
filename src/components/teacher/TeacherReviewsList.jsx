@@ -148,28 +148,31 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
   };
 
   const updateTeacherStats = async () => {
-    const reviews = await TeacherReview.filter({ teacher_id: teacherId, status: "published" });
-    const reviewCount = reviews.length;
+    const [publishedReviews, rejectedReviews] = await Promise.all([
+      TeacherReview.filter({ teacher_id: teacherId, status: "published" }),
+      TeacherReview.filter({ teacher_id: teacherId, status: "rejected" })
+    ]);
+    const publishedCount = publishedReviews.length;
+    const totalCount = publishedCount + rejectedReviews.length;
 
-    if (reviewCount === 0) {
+    if (publishedCount === 0) {
       await Teacher.update(teacherId, {
         workload_avg: 0,
         friendliness_avg: 0,
         teaching_avg: 0,
         grading_avg: 0,
         average_rating: 0,
-        review_count: 0
+        review_count: totalCount
       });
       return;
     }
 
-    const avg = (key) => reviews.reduce((sum, r) => sum + r[key], 0) / reviewCount;
+    const avg = (key) => publishedReviews.reduce((sum, r) => sum + r[key], 0) / publishedCount;
 
     const workload_avg = avg('workload');
     const friendliness_avg = avg('friendliness');
     const teaching_avg = avg('teaching_method');
     const grading_avg = avg('grading_severity');
-    // The average_rating is the sum of the four criteria averages, consistent with /20 display.
     const average_rating = workload_avg + friendliness_avg + teaching_avg + grading_avg;
 
     await Teacher.update(teacherId, {
@@ -178,7 +181,7 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
       teaching_avg,
       grading_avg,
       average_rating,
-      review_count: reviewCount
+      review_count: totalCount
     });
   };
 

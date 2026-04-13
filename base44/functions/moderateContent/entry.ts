@@ -73,8 +73,42 @@ Réponds UNIQUEMENT par JSON : { "decision": "approved" | "rejected", "reason": 
 
             if (type === 'teacher_review') {
                 await adminClient.entities.TeacherReview.update(id, { status: 'rejected' });
+                // Recalculate teacher stats (review_count must include rejected reviews)
+                const review = await adminClient.entities.TeacherReview.filter({ id });
+                if (review[0]?.teacher_id) {
+                    const teacherId = review[0].teacher_id;
+                    const [publishedReviews, rejectedReviews] = await Promise.all([
+                        adminClient.entities.TeacherReview.filter({ teacher_id: teacherId, status: 'published' }),
+                        adminClient.entities.TeacherReview.filter({ teacher_id: teacherId, status: 'rejected' })
+                    ]);
+                    const totalCount = publishedReviews.length + rejectedReviews.length;
+                    const pc = publishedReviews.length;
+                    if (pc > 0) {
+                        const avg = (key) => publishedReviews.reduce((s, r) => s + r[key], 0) / pc;
+                        await adminClient.entities.Teacher.update(teacherId, {
+                            workload_avg: avg('workload'), friendliness_avg: avg('friendliness'),
+                            teaching_avg: avg('teaching_method'), grading_avg: avg('grading_severity'),
+                            average_rating: avg('workload') + avg('friendliness') + avg('teaching_method') + avg('grading_severity'),
+                            review_count: totalCount
+                        });
+                    } else {
+                        await adminClient.entities.Teacher.update(teacherId, { review_count: totalCount });
+                    }
+                }
             } else if (type === 'school_review') {
                 await adminClient.entities.SchoolReview.update(id, { status: 'rejected' });
+                // Recalculate school stats (review_count must include rejected reviews)
+                const schoolReview = await adminClient.entities.SchoolReview.filter({ id });
+                if (schoolReview[0]?.school_id) {
+                    const schoolId = schoolReview[0].school_id;
+                    const [publishedReviews, rejectedReviews] = await Promise.all([
+                        adminClient.entities.SchoolReview.filter({ school_id: schoolId, status: 'published' }),
+                        adminClient.entities.SchoolReview.filter({ school_id: schoolId, status: 'rejected' })
+                    ]);
+                    const totalCount = publishedReviews.length + rejectedReviews.length;
+                    const avgRating = publishedReviews.length > 0 ? publishedReviews.reduce((s, r) => s + r.rating, 0) / publishedReviews.length : 0;
+                    await adminClient.entities.School.update(schoolId, { average_rating: avgRating, review_count: totalCount });
+                }
             } else if (type === 'teacher_creation') {
                  // For teachers, maybe we mark as rejected or deleted?
                  // User said "message bloqué... grisé". For teacher creation usually we might just hide it.

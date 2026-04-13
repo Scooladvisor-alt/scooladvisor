@@ -445,12 +445,16 @@ rejected → si le message enfreint les règles ci-dessus"
 
   const updateSchoolStats = async (schoolId) => {
     try {
-      const reviews = await base44.entities.SchoolReview.filter({ school_id: schoolId, status: "published" });
-      const avgRating = reviews.length > 0 ? reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length : 0;
+      const [publishedReviews, rejectedReviews] = await Promise.all([
+        base44.entities.SchoolReview.filter({ school_id: schoolId, status: "published" }),
+        base44.entities.SchoolReview.filter({ school_id: schoolId, status: "rejected" })
+      ]);
+      const totalCount = publishedReviews.length + rejectedReviews.length;
+      const avgRating = publishedReviews.length > 0 ? publishedReviews.reduce((sum, r) => sum + r.rating, 0) / publishedReviews.length : 0;
 
       await base44.entities.School.update(schoolId, {
         average_rating: avgRating,
-        review_count: reviews.length
+        review_count: totalCount
       });
     } catch (error) {
       console.error("Error updating school stats:", error);
