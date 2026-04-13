@@ -401,7 +401,7 @@ Rédige maintenant ton résumé façon "L'avis de Satoshi" en 3 phrases max.`;
             </div> :
 
           <div className="space-y-1 reviews-scrollable pr-1 max-h-[400px] sm:max-h-none overflow-y-auto">
-              {sortedReviews.slice(0, 2).map((review) => {
+              {sortedReviews.map((review) => {
               const avatarUrl = review.author_avatar && review.author_avatar !== 'letter' ? getAvatarUrl(review.author_avatar) : null;
 
               const isRejected = review.status === 'rejected';
