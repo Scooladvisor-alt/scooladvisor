@@ -106,6 +106,7 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
       // Centre par défaut sur la France
       const defaultCenter = { lat: 46.603354, lng: 1.888334 };
 
+      const google = window.google;
       const mapInstance = new google.maps.Map(mapRef.current, {
         center: defaultCenter,
         zoom: 6,
@@ -135,7 +136,7 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
         markerInstance.setVisible(true);
 
         // Géocodage inverse pour obtenir l'adresse
-        const geocoder = new google.maps.Geocoder();
+        const geocoder = new window.google.maps.Geocoder();
         geocoder.geocode({ location }, (results, status) => {
           if (status === "OK" && results[0]) {
             const place = results[0];
@@ -160,6 +161,7 @@ export default function GoogleMapsPlacePicker({ open, onOpenChange, onPlaceSelec
   const handleSearch = async () => {
     if (!searchQuery.trim() || !map) return;
 
+    const google = window.google;
     const service = new google.maps.places.PlacesService(map);
 
     service.textSearch(

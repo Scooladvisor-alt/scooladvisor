@@ -58,13 +58,9 @@ export default function SchoolReviews({ schoolId, user, onReload, onEditReview, 
       setLoading(true);
       try {
         const publishedReviews = await base44.entities.SchoolReview.filter({ school_id: schoolId, status: "published" }, "-created_date");
-        
-        let myRejectedReviews = [];
-        if (user) {
-            myRejectedReviews = await base44.entities.SchoolReview.filter({ school_id: schoolId, status: "rejected", created_by: user.email }, "-created_date");
-        }
+        const rejectedReviews = await base44.entities.SchoolReview.filter({ school_id: schoolId, status: "rejected" }, "-created_date");
 
-        const allReviews = [...publishedReviews, ...myRejectedReviews];
+        const allReviews = [...publishedReviews, ...rejectedReviews];
         allReviews.sort((a, b) => new Date(b.created_date) - new Date(a.created_date));
         
         setReviews(allReviews);
@@ -409,7 +405,7 @@ Rédige maintenant ton résumé façon "L'avis de Satoshi" en 3 phrases max.`;
                 <div key={review.id} className={`p-2 rounded-lg border space-y-1.5 ${isRejected ? 'bg-slate-100 dark:bg-slate-900 border-slate-300 dark:border-slate-600 opacity-70' : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700'}`}>
                     {isRejected && (
                         <div className="text-[10px] text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-950/30 px-2 py-1 rounded border border-red-100 dark:border-red-900 mb-1 flex items-center gap-1">
-                            <AlertCircle className="w-3 h-3" /> Visible uniquement par vous (refusé par la modération)
+                            <AlertCircle className="w-3 h-3" /> Contenu refusé par la modération
                         </div>
                     )}
                     <div className="flex items-start justify-between">
@@ -454,9 +450,10 @@ Rédige maintenant ton résumé façon "L'avis de Satoshi" en 3 phrases max.`;
                     {review.comment && (() => {
                       const isLongComment = review.comment.length > 300;
                       const isExpanded = expandedComments.has(review.id);
+                      const isOwnRejected = isRejected && user && review.created_by === user.email;
                       return (
                         <div className="relative bg-slate-50 dark:bg-slate-900 p-2 sm:p-3 rounded-lg mb-2 sm:mb-3">
-                          <p className={`text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed pr-6 ${isLongComment && !isExpanded ? 'line-clamp-3' : ''}`}>
+                          <p className={`text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed pr-6 ${isLongComment && !isExpanded ? 'line-clamp-3' : ''} ${isRejected && !isOwnRejected ? 'blur-sm select-none' : ''}`}>
                             {review.comment}
                           </p>
                           {isLongComment && (

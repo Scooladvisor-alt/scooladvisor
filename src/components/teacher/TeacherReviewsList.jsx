@@ -95,16 +95,16 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
         skip
       );
 
-      let myRejectedReviews = [];
-      if (user && reset) { // Only load rejected on first load to avoid pagination mess
-         myRejectedReviews = await TeacherReview.filter(
-            { teacher_id: teacherId, status: "rejected", created_by: user.email },
+      let rejectedReviews = [];
+      if (reset) { // Only load rejected on first load to avoid pagination mess
+         rejectedReviews = await TeacherReview.filter(
+            { teacher_id: teacherId, status: "rejected" },
             "-created_date"
          );
       }
 
       // Merge and sort
-      let newReviews = [...publishedReviews, ...myRejectedReviews];
+      let newReviews = [...publishedReviews, ...rejectedReviews];
       // Sort by date desc
       newReviews.sort((a, b) => new Date(b.created_date) - new Date(a.created_date));
       
@@ -399,7 +399,7 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
                     <div className="mb-3 p-2 bg-red-50 dark:bg-red-950/30 border border-red-100 dark:border-red-900 rounded-lg flex items-center gap-2">
                         <AlertCircle className="w-4 h-4 text-red-500" />
                         <span className="text-xs font-medium text-red-700 dark:text-red-400">
-                            Visible uniquement par vous (contenu refusé par la modération)
+                            Contenu refusé par la modération
                         </span>
                     </div>
                   )}
@@ -438,9 +438,14 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
                   {/* Comment & Expand Toggle */}
                   <div className="mt-2.5 mb-1.5">
                     <div className="flex items-start gap-2">
-                      <p className={`text-sm text-slate-700 dark:text-slate-200 leading-relaxed flex-1 ${!expandedComments.has(review.id) && isCommentLong(review.comment) ? 'line-clamp-3' : ''}`}>
-                        {review.comment}
-                      </p>
+                      {(() => {
+                        const isOwnRejected = isRejected && user && review.created_by === user.email;
+                        return (
+                          <p className={`text-sm text-slate-700 dark:text-slate-200 leading-relaxed flex-1 ${!expandedComments.has(review.id) && isCommentLong(review.comment) ? 'line-clamp-3' : ''} ${isRejected && !isOwnRejected ? 'blur-sm select-none' : ''}`}>
+                            {review.comment}
+                          </p>
+                        );
+                      })()}
                       <button
                         onClick={() => toggleExpand(review.id)}
                         className="flex-shrink-0 p-1 text-slate-400 hover:text-purple-600 dark:hover:text-purple-400 transition-colors rounded-full hover:bg-slate-50 dark:hover:bg-slate-700"
@@ -449,7 +454,7 @@ export default function TeacherReviewsList({ teacherId, user, onReload, onEditRe
                         <ChevronDown className={`w-5 h-5 transition-transform duration-300 ${expandedReviews.has(review.id) ? 'rotate-180' : ''}`} />
                       </button>
                     </div>
-                    {isCommentLong(review.comment) && !expandedComments.has(review.id) && (
+                    {isCommentLong(review.comment) && !expandedComments.has(review.id) && !isRejected && (
                       <button
                         onClick={() => toggleCommentExpand(review.id)}
                         className="text-xs text-blue-600 hover:text-blue-700 font-medium mt-1"
