@@ -1,0 +1,78 @@
+{
+  "name": "ContactMessage",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Nom de l'exp\u00e9diteur"
+    },
+    "email": {
+      "type": "string",
+      "description": "Email de l'exp\u00e9diteur"
+    },
+    "subject": {
+      "type": "string",
+      "description": "Sujet du message"
+    },
+    "message": {
+      "type": "string",
+      "description": "Contenu du message"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "read",
+        "resolved"
+      ],
+      "default": "pending",
+      "description": "Statut du message"
+    }
+  },
+  "required": [
+    "name",
+    "email",
+    "subject",
+    "message"
+  ],
+  "rls": {
+    "create": {
+      "auth.id": {
+        "$ne": null
+      }
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "moderator"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "moderator"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}
