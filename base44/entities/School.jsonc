@@ -1,0 +1,105 @@
+{
+  "name": "School",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Nom de l'\u00e9tablissement"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "college",
+        "lycee",
+        "universite",
+        "ecole_privee",
+        "ecole_commerce",
+        "ecole_ingenieur"
+      ],
+      "description": "Type d'\u00e9tablissement"
+    },
+    "address": {
+      "type": "string",
+      "description": "Adresse compl\u00e8te"
+    },
+    "city": {
+      "type": "string",
+      "description": "Ville"
+    },
+    "region": {
+      "type": "string",
+      "description": "R\u00e9gion (utilis\u00e9 pour filtre International)"
+    },
+    "average_rating": {
+      "type": "number",
+      "description": "Note moyenne calcul\u00e9e"
+    },
+    "review_count": {
+      "type": "integer",
+      "description": "Nombre total d'avis"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "approved",
+        "rejected",
+        "banned"
+      ],
+      "default": "pending",
+      "description": "Statut de validation"
+    },
+    "is_hidden": {
+      "type": "boolean",
+      "default": false,
+      "description": "Si l'\u00e9tablissement est masqu\u00e9 (non visible sur le site)"
+    }
+  },
+  "required": [
+    "name",
+    "type",
+    "address",
+    "city"
+  ],
+  "rls": {
+    "create": {
+      "auth.id": {
+        "$ne": null
+      }
+    },
+    "read": {
+      "$or": [
+        {
+          "$and": [
+            {
+              "data.is_hidden": false
+            },
+            {
+              "data.is_deleted": false
+            }
+          ]
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "moderator"
+          }
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}
