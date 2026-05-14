@@ -1,0 +1,108 @@
+{
+  "name": "Report",
+  "type": "object",
+  "properties": {
+    "review_type": {
+      "type": "string",
+      "enum": [
+        "teacher",
+        "school"
+      ],
+      "description": "Type d'avis signal\u00e9"
+    },
+    "review_id": {
+      "type": "string",
+      "description": "ID de l'avis"
+    },
+    "reporter_email": {
+      "type": "string",
+      "description": "Email du signaleur"
+    },
+    "reporter_id": {
+      "type": "string",
+      "description": "ID du signaleur"
+    },
+    "reason": {
+      "type": "string",
+      "enum": [
+        "diffamation",
+        "injure",
+        "hors_sujet",
+        "fausse_info",
+        "autre"
+      ],
+      "description": "Raison du signalement"
+    },
+    "details": {
+      "type": "string",
+      "description": "D\u00e9tails du signalement"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "approved",
+        "rejected"
+      ],
+      "default": "pending"
+    },
+    "moderator_decision": {
+      "type": "string",
+      "description": "D\u00e9cision du mod\u00e9rateur"
+    }
+  },
+  "required": [
+    "review_type",
+    "review_id",
+    "reporter_email",
+    "reporter_id",
+    "reason"
+  ],
+  "rls": {
+    "create": {
+      "created_by": "{{user.email}}"
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "moderator"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "moderator"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "moderator"
+          }
+        }
+      ]
+    }
+  }
+}
