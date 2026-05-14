@@ -1,0 +1,95 @@
+{
+  "name": "TeacherLoveNote",
+  "type": "object",
+  "properties": {
+    "teacher_id": {
+      "type": "string",
+      "description": "ID du professeur"
+    },
+    "message": {
+      "type": "string",
+      "description": "Le petit mot doux"
+    },
+    "author_email": {
+      "type": "string",
+      "description": "Email de l'auteur"
+    },
+    "author_id": {
+      "type": "string",
+      "description": "ID de l'auteur"
+    },
+    "author_name": {
+      "type": "string",
+      "description": "Nom de l'auteur"
+    },
+    "is_anonymous": {
+      "type": "boolean",
+      "default": false,
+      "description": "Si le message est anonyme"
+    }
+  },
+  "required": [
+    "teacher_id",
+    "message",
+    "author_email",
+    "author_id"
+  ],
+  "rls": {
+    "create": {
+      "created_by": "{{user.email}}"
+    },
+    "read": {
+      "$or": [
+        {
+          "auth.id": {
+            "$ne": null
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "moderator"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "moderator"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "moderator"
+          }
+        }
+      ]
+    }
+  }
+}
