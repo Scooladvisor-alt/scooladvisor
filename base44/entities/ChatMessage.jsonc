@@ -1,0 +1,99 @@
+{
+  "name": "ChatMessage",
+  "type": "object",
+  "properties": {
+    "school_id": {
+      "type": "string",
+      "description": "ID de l'\u00e9tablissement"
+    },
+    "message": {
+      "type": "string",
+      "description": "Contenu du message"
+    },
+    "is_anonymous": {
+      "type": "boolean",
+      "default": false,
+      "description": "Si le message est post\u00e9 anonymement"
+    },
+    "is_edited": {
+      "type": "boolean",
+      "default": false,
+      "description": "Si le message a \u00e9t\u00e9 modifi\u00e9"
+    },
+    "edit_count": {
+      "type": "integer",
+      "default": 0,
+      "description": "Nombre de modifications effectu\u00e9es"
+    },
+    "like_count": {
+      "type": "integer",
+      "default": 0,
+      "description": "Nombre de likes"
+    },
+    "is_deleted": {
+      "type": "boolean",
+      "default": false,
+      "description": "Si le message est supprim\u00e9 (corbeille)"
+    }
+  },
+  "required": [
+    "school_id",
+    "message"
+  ],
+  "rls": {
+    "create": {
+      "created_by": "{{user.email}}"
+    },
+    "read": {
+      "$or": [
+        {
+          "data.is_deleted": false
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "moderator"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "moderator"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "moderator"
+          }
+        }
+      ]
+    }
+  }
+}
