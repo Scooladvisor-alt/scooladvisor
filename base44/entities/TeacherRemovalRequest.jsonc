@@ -1,0 +1,110 @@
+{
+  "name": "TeacherRemovalRequest",
+  "type": "object",
+  "properties": {
+    "teacher_id": {
+      "type": "string",
+      "description": "ID du professeur concern\u00e9"
+    },
+    "teacher_name": {
+      "type": "string",
+      "description": "Nom du professeur"
+    },
+    "requester_email": {
+      "type": "string",
+      "description": "Email du demandeur"
+    },
+    "requester_id": {
+      "type": "string",
+      "description": "ID du demandeur"
+    },
+    "removal_reason": {
+      "type": "string",
+      "enum": [
+        "je_suis_ce_professeur",
+        "atteinte_vie_privee",
+        "informations_incorrectes",
+        "avis_diffamatoires",
+        "autre"
+      ],
+      "description": "Raison principale de la demande"
+    },
+    "platform_rating": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 10,
+      "description": "Note de la plateforme sur 10"
+    },
+    "message": {
+      "type": "string",
+      "description": "Message d\u00e9taill\u00e9 du demandeur"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "processed",
+        "rejected"
+      ],
+      "default": "pending"
+    }
+  },
+  "required": [
+    "teacher_id",
+    "teacher_name",
+    "requester_email",
+    "requester_id",
+    "removal_reason",
+    "message"
+  ],
+  "rls": {
+    "create": {
+      "created_by": "{{user.email}}"
+    },
+    "read": {
+      "$or": [
+        {
+          "data.requester_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "moderator"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "moderator"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "moderator"
+          }
+        }
+      ]
+    }
+  }
+}
