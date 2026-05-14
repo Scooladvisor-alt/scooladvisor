@@ -1,0 +1,88 @@
+{
+  "name": "ReviewLike",
+  "type": "object",
+  "properties": {
+    "review_type": {
+      "type": "string",
+      "enum": [
+        "teacher",
+        "school"
+      ],
+      "description": "Type d'avis"
+    },
+    "review_id": {
+      "type": "string",
+      "description": "ID de l'avis"
+    },
+    "user_email": {
+      "type": "string",
+      "description": "Email de l'utilisateur qui a lik\u00e9"
+    },
+    "user_id": {
+      "type": "string",
+      "description": "ID de l'utilisateur qui a lik\u00e9"
+    }
+  },
+  "required": [
+    "review_type",
+    "review_id",
+    "user_email",
+    "user_id"
+  ],
+  "rls": {
+    "create": {
+      "created_by": "{{user.email}}"
+    },
+    "read": {
+      "$or": [
+        {
+          "created_by": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "moderator"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "moderator"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "moderator"
+          }
+        }
+      ]
+    }
+  }
+}
