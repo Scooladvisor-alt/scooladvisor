@@ -1,0 +1,167 @@
+{
+  "name": "SchoolReview",
+  "type": "object",
+  "properties": {
+    "school_id": {
+      "type": "string",
+      "description": "ID de l'\u00e9tablissement"
+    },
+    "ambiance": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 5,
+      "description": "Ambiance g\u00e9n\u00e9rale (0-5)"
+    },
+    "staff_quality": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 5,
+      "description": "Qualit\u00e9 du personnel (0-5)"
+    },
+    "facilities": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 5,
+      "description": "Qualit\u00e9 des locaux (0-5)"
+    },
+    "cafeteria": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 5,
+      "description": "Qualit\u00e9 de la cantine (0-5)"
+    },
+    "student_life_bonus": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 5,
+      "description": "Bonus vie associative (Calcul\u00e9)"
+    },
+    "has_student_life": {
+      "type": "boolean",
+      "default": false,
+      "description": "Bonus Vie Associative activ\u00e9"
+    },
+    "has_network": {
+      "type": "boolean",
+      "default": false,
+      "description": "Bonus R\u00e9seaux activ\u00e9"
+    },
+    "rating": {
+      "type": "number",
+      "description": "Note totale"
+    },
+    "comment": {
+      "type": "string",
+      "description": "Commentaire"
+    },
+    "is_anonymous": {
+      "type": "boolean",
+      "default": false
+    },
+    "is_former_student": {
+      "type": "boolean",
+      "default": false,
+      "description": "Si l'auteur est un ancien \u00e9l\u00e8ve"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "published",
+        "pending",
+        "rejected",
+        "hidden",
+        "reported"
+      ],
+      "default": "published"
+    },
+    "report_count": {
+      "type": "integer",
+      "default": 0
+    },
+    "like_count": {
+      "type": "integer",
+      "default": 0,
+      "description": "Nombre de likes"
+    },
+    "edit_count": {
+      "type": "integer",
+      "default": 0,
+      "description": "Nombre de modifications effectu\u00e9es"
+    },
+    "author_name": {
+      "type": "string",
+      "description": "Nom de l'auteur (cache)"
+    },
+    "author_avatar": {
+      "type": "string",
+      "description": "Avatar de l'auteur (cache)"
+    }
+  },
+  "required": [
+    "school_id",
+    "ambiance",
+    "staff_quality",
+    "facilities",
+    "cafeteria",
+    "comment"
+  ],
+  "rls": {
+    "create": {
+      "created_by": "{{user.email}}"
+    },
+    "read": {
+      "$or": [
+        {
+          "data.status": "published"
+        },
+        {
+          "created_by": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "moderator"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "moderator"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "moderator"
+          }
+        }
+      ]
+    }
+  }
+}
