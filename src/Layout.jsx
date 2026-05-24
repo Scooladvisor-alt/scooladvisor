@@ -10,8 +10,10 @@ import {
   X,
   User as UserIcon,
   Mic, // Added Mic icon
-  HelpCircle // Added HelpCircle icon
+  HelpCircle, // Added HelpCircle icon
+  Trophy
 } from "lucide-react";
+import RankingDialog from "./components/shared/RankingDialog";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -261,6 +263,7 @@ export default function Layout({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [showRanking, setShowRanking] = useState(false);
   const [showBanDialog, setShowBanDialog] = useState(false);
   const [showLoginMessage, setShowLoginMessage] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
@@ -470,6 +473,14 @@ export default function Layout({ children }) {
                 </Link>
               ))}
               
+              <button
+                onClick={() => setShowRanking(true)}
+                className="flex items-center gap-2 px-3 py-2 rounded-lg transition-all font-medium text-slate-600 dark:text-slate-300 hover:text-[#FF4D8D] dark:hover:text-[#FF4D8D] hover:bg-gradient-to-r hover:from-[#FF4D8D]/10 hover:via-purple-500/10 hover:to-blue-500/10"
+              >
+                <Trophy className="w-4 h-4" />
+                <span>Classement</span>
+              </button>
+
               {user && (user.role === 'moderator' || user.role === 'admin') && (
                 <Link
                   to={createPageUrl("Moderation")}
@@ -513,6 +524,10 @@ export default function Layout({ children }) {
                           {item.title}
                         </DropdownMenuItem>
                       ))}
+                      <DropdownMenuItem onClick={() => setShowRanking(true)} className="cursor-pointer">
+                        <Trophy className="w-4 h-4 mr-2" />
+                        Classement
+                      </DropdownMenuItem>
                       
                       {(user.role === 'moderator' || user.role === 'admin') &&
                         <>
@@ -575,6 +590,14 @@ export default function Layout({ children }) {
                     <span className="text-sm">{item.title}</span>
                   </Link>
               )}
+
+              <button
+                onClick={() => { setShowRanking(true); setMobileMenuOpen(false); }}
+                className={`flex items-center gap-2 px-4 py-2.5 mx-2 rounded-lg transition-all w-full text-left ${darkMode ? 'text-slate-300 hover:bg-slate-700' : 'text-slate-600 hover:bg-slate-50'}`}
+              >
+                <Trophy className="w-5 h-5" />
+                <span className="text-sm">Classement</span>
+              </button>
 
               {user && (user.role === 'moderator' || user.role === 'admin') &&
               <Link
@@ -698,6 +721,8 @@ export default function Layout({ children }) {
           setUser(updatedUser);
         }}
       />
+
+      <RankingDialog open={showRanking} onOpenChange={setShowRanking} />
     </div>);
 
 }
