@@ -48,61 +48,17 @@
     "message"
   ],
   "rls": {
-    "create": {
-      "user_condition": {
-        "role": "admin"
-      }
-    },
     "read": {
-      "$or": [
-        {
-          "data.user_email": "{{user.email}}"
-        },
-        {
-          "user_condition": {
-            "role": "admin"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "moderator"
-          }
-        }
-      ]
+      "rule": "user_email = auth.email || auth.role = 'admin'"
     },
     "update": {
-      "$or": [
-        {
-          "data.user_email": "{{user.email}}"
-        },
-        {
-          "user_condition": {
-            "role": "admin"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "moderator"
-          }
-        }
-      ]
+      "rule": "user_email = auth.email || auth.role = 'admin'"
     },
     "delete": {
-      "$or": [
-        {
-          "data.user_email": "{{user.email}}"
-        },
-        {
-          "user_condition": {
-            "role": "admin"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "moderator"
-          }
-        }
-      ]
+      "rule": "user_email = auth.email || auth.role = 'admin'"
+    },
+    "create": {
+      "rule": "auth.id != null"
     }
   }
 }

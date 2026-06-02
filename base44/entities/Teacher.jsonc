@@ -78,43 +78,6 @@
     "subject"
   ],
   "rls": {
-    "create": {
-      "auth.id": {
-        "$ne": null
-      }
-    },
-    "read": {
-      "$or": [
-        {
-          "$and": [
-            {
-              "data.status": "approved"
-            },
-            {
-              "data.is_hidden": false
-            },
-            {
-              "data.is_deleted": false
-            }
-          ]
-        },
-        {
-          "user_condition": {
-            "role": "admin"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "moderator"
-          }
-        }
-      ]
-    },
-    "update": {
-      "user_condition": {
-        "role": "admin"
-      }
-    },
     "delete": {
       "user_condition": {
         "role": "admin"

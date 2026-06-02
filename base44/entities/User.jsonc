@@ -1,0 +1,54 @@
+{
+  "name": "User",
+  "type": "object",
+  "properties": {
+    "role": {
+      "type": "string",
+      "enum": [
+        "user",
+        "admin",
+        "moderator"
+      ],
+      "default": "user"
+    },
+    "profile_avatar": {
+      "type": "string",
+      "description": "Avatar s\u00e9lectionn\u00e9 par l'utilisateur"
+    },
+    "study_level": {
+      "type": "string",
+      "enum": [
+        "college",
+        "lycee",
+        "universite",
+        "ecole_commerce",
+        "ecole_ingenieur",
+        "ecole_privee",
+        "autre"
+      ],
+      "description": "Niveau d'\u00e9tude de l'utilisateur"
+    },
+    "onboarding_done": {
+      "type": "boolean",
+      "default": false,
+      "description": "Si l'utilisateur a compl\u00e9t\u00e9 l'onboarding"
+    },
+    "is_banned": {
+      "type": "boolean",
+      "default": false
+    },
+    "banned_until": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "warnings_count": {
+      "type": "integer",
+      "default": 0
+    }
+  },
+  "required": [
+    "profile_avatar",
+    "study_level",
+    "banned_until"
+  ]
+}

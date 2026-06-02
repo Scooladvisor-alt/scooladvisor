@@ -1,0 +1,88 @@
+{
+  "name": "DeletedItem",
+  "type": "object",
+  "properties": {
+    "item_type": {
+      "type": "string",
+      "enum": [
+        "school",
+        "teacher",
+        "teacher_review",
+        "school_review",
+        "chat_message",
+        "national_message"
+      ],
+      "description": "Type de contenu supprim\u00e9"
+    },
+    "item_id": {
+      "type": "string",
+      "description": "ID de l'\u00e9l\u00e9ment d'origine"
+    },
+    "item_data": {
+      "type": "object",
+      "description": "Donn\u00e9es compl\u00e8tes de l'\u00e9l\u00e9ment supprim\u00e9"
+    },
+    "item_name": {
+      "type": "string",
+      "description": "Nom ou titre de l'\u00e9l\u00e9ment (pour affichage rapide)"
+    },
+    "deleted_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Date de suppression"
+    },
+    "deleted_by": {
+      "type": "string",
+      "description": "Email de la personne qui a supprim\u00e9"
+    },
+    "deletion_reason": {
+      "type": "string",
+      "enum": [
+        "manual",
+        "moderation_ai",
+        "reports",
+        "user_request"
+      ],
+      "description": "Raison de la suppression"
+    },
+    "deletion_details": {
+      "type": "string",
+      "description": "D\u00e9tails suppl\u00e9mentaires sur la suppression"
+    }
+  },
+  "required": [
+    "item_type",
+    "item_id",
+    "item_data",
+    "item_name",
+    "deleted_by",
+    "deletion_reason"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "write": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

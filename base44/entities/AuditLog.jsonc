@@ -1,0 +1,85 @@
+{
+  "name": "AuditLog",
+  "type": "object",
+  "properties": {
+    "action_type": {
+      "type": "string",
+      "enum": [
+        "hide",
+        "unhide",
+        "delete",
+        "update",
+        "mark_former",
+        "unmark_former",
+        "update_avatar"
+      ],
+      "description": "Type d'action effectu\u00e9e"
+    },
+    "target_type": {
+      "type": "string",
+      "enum": [
+        "teacher",
+        "school"
+      ],
+      "description": "Type de cible (professeur ou \u00e9tablissement)"
+    },
+    "target_id": {
+      "type": "string",
+      "description": "ID de la cible"
+    },
+    "target_name": {
+      "type": "string",
+      "description": "Nom de la cible pour r\u00e9f\u00e9rence"
+    },
+    "admin_email": {
+      "type": "string",
+      "description": "Email de l'admin qui a effectu\u00e9 l'action"
+    },
+    "admin_id": {
+      "type": "string",
+      "description": "ID de l'admin"
+    },
+    "details": {
+      "type": "string",
+      "description": "D\u00e9tails suppl\u00e9mentaires sur l'action"
+    },
+    "previous_data": {
+      "type": "object",
+      "description": "Donn\u00e9es avant modification (pour audit)"
+    }
+  },
+  "required": [
+    "action_type",
+    "target_type",
+    "target_id",
+    "admin_email",
+    "admin_id"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "write": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

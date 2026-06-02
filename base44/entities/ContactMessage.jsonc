@@ -36,39 +36,6 @@
     "message"
   ],
   "rls": {
-    "create": {
-      "auth.id": {
-        "$ne": null
-      }
-    },
-    "read": {
-      "$or": [
-        {
-          "user_condition": {
-            "role": "admin"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "moderator"
-          }
-        }
-      ]
-    },
-    "update": {
-      "$or": [
-        {
-          "user_condition": {
-            "role": "admin"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "moderator"
-          }
-        }
-      ]
-    },
     "delete": {
       "user_condition": {
         "role": "admin"
