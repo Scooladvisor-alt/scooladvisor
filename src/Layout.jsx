@@ -331,13 +331,8 @@ export default function Layout({ children }) {
     }
   };
 
-  const handleLogin = async () => {
-    try {
-      const currentUrl = window.location.href;
-      await base44.auth.redirectToLogin(currentUrl);
-    } catch (error) {
-      console.error("Error during login redirect:", error);
-    }
+  const handleLogin = () => {
+    navigate("/login");
   };
 
   const showDecoration = location.pathname === createPageUrl("Schools") || location.pathname === "/" || location.pathname === createPageUrl("About");
