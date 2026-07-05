@@ -44,6 +44,43 @@
     "warnings_count": {
       "type": "integer",
       "default": 0
+    },
+    "linkedin_url": {
+      "type": "string",
+      "description": "URL du profil LinkedIn de l'utilisateur"
+    },
+    "career_entries": {
+      "type": "array",
+      "description": "Parcours de l'utilisateur (formations et exp\u00e9riences)",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "education",
+              "experience"
+            ],
+            "description": "Type d'entr\u00e9e : formation ou exp\u00e9rience"
+          },
+          "title": {
+            "type": "string",
+            "description": "Intitul\u00e9 (dipl\u00f4me, poste)"
+          },
+          "organization": {
+            "type": "string",
+            "description": "\u00c9tablissement ou entreprise"
+          },
+          "period": {
+            "type": "string",
+            "description": "P\u00e9riode (ex: 2020 - 2023)"
+          },
+          "description": {
+            "type": "string",
+            "description": "Description optionnelle"
+          }
+        }
+      }
     }
   },
   "required": [

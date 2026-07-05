@@ -30,6 +30,7 @@ import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 import { toast } from "sonner";
 import GradientSpinner from "@/components/shared/GradientSpinner";
+import CareerSection from "@/components/profile/CareerSection";
 
 const getAvatarUrl = (avatar) => {
   const avatarUrls = {
@@ -504,9 +505,17 @@ export default function ProfilePage() {
                 </div>
               </div>
             </CardContent>
-          
-            <CardContent className="p-6 border-slate-100 dark:border-slate-700 border-t">
-              {reviewsLoading ?
+
+              {/* Section LinkedIn + Parcours */}
+              <CardContent className="p-4 sm:p-6 border-slate-100 dark:border-slate-700 border-t">
+                <h3 className="text-base sm:text-lg font-semibold mb-4 bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 bg-clip-text text-transparent font-bold">
+                  Mon parcours & LinkedIn
+                </h3>
+                <CareerSection user={user} onUpdate={loadProfile} />
+              </CardContent>
+
+              <CardContent className="p-6 border-slate-100 dark:border-slate-700 border-t">
+                {reviewsLoading ?
               <div className="flex justify-center py-12">
                   <div className="w-8 h-8 border-4 border-[#FF4D8D] border-t-transparent rounded-full animate-spin" />
                 </div> :
