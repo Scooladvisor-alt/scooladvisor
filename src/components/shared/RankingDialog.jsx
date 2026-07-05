@@ -58,12 +58,12 @@ export default function RankingDialog({ open, onOpenChange }) {
         
         {/* Header */}
         <div className="relative px-6 pt-6 pb-4 bg-gradient-to-br from-pink-50 via-purple-50 to-blue-50 dark:from-pink-950/30 dark:via-purple-950/30 dark:to-blue-950/30 shrink-0">
-          <button
-            onClick={() => onOpenChange(false)}
-            className="absolute top-4 right-4 w-8 h-8 rounded-full bg-white/80 dark:bg-slate-800/80 flex items-center justify-center hover:bg-white dark:hover:bg-slate-700 transition-all shadow-sm hidden">
-            
-            <X className="w-4 h-4 text-slate-500" />
-          </button>
+          
+
+
+
+
+          
           <div className="flex items-center gap-3 mb-1">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-yellow-400 to-amber-500 flex items-center justify-center shadow-lg">
               <Trophy className="w-5 h-5 text-white" />
