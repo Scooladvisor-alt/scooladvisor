@@ -339,11 +339,11 @@ export default function Layout({ children }) {
 
   return (
     <div 
-      className={`min-h-screen flex flex-col ${darkMode ? 'bg-gradient-to-br from-slate-950 to-slate-900' : 'bg-gradient-to-br from-slate-50 to-blue-50'} relative`}
+      className="min-h-screen flex flex-col paper-grid paper-margin relative"
       style={{
         paddingTop: 'env(safe-area-inset-top)',
         paddingBottom: 'env(safe-area-inset-bottom)',
-        fontFamily: "'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+        fontFamily: 'var(--font-body)',
       }}
     >
 
@@ -417,26 +417,25 @@ export default function Layout({ children }) {
         /* iOS Safe Area & Smooth Scrolling */
         * {
           -webkit-overflow-scrolling: touch;
-          font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
         }
         
         body {
           overscroll-behavior: contain;
           user-select: text;
           -webkit-user-select: text;
-          font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+          font-family: var(--font-body);
         }
 
         h1, h2, h3, h4, h5, h6 {
-          font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-          font-weight: 700;
-          letter-spacing: -0.01em;
+          font-family: var(--font-heading);
+          font-weight: 800;
+          letter-spacing: -0.02em;
         }
 
         `}</style>
       
       <header 
-        className={`${darkMode ? 'bg-slate-800/90 border-slate-700' : 'bg-white/90 border-slate-200'} backdrop-blur-md border-b sticky top-0 z-50 shadow-sm`}
+        className="bg-card/95 backdrop-blur-md border-b-2 border-ink/80 sticky top-0 z-50"
         style={{
           paddingTop: 'max(0px, calc(env(safe-area-inset-top) - 16px))',
         }}
@@ -449,7 +448,9 @@ export default function Layout({ children }) {
                 alt="Scooladvisor"
                 className="h-14 w-14 sm:h-16 sm:w-16" />
 
-              <span className="text-base sm:text-2xl font-bold bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 text-transparent bg-clip-text">Scooladvisor</span>
+              <span className="text-base sm:text-2xl font-heading font-extrabold text-ink tracking-tight">
+                Scool<span className="text-pen">advisor</span>
+              </span>
             </Link>
 
             <nav className="hidden md:flex items-center gap-6 flex-1 justify-center">
@@ -459,8 +460,8 @@ export default function Layout({ children }) {
                   to={item.url}
                   className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all font-medium ${
                     location.pathname === item.url
-                      ? 'bg-gradient-to-r from-[#FF4D8D]/15 via-purple-500/15 to-blue-500/15 text-slate-900 dark:text-white border border-pink-200/50 dark:border-pink-700/30'
-                      : 'text-slate-600 dark:text-slate-300 hover:text-[#FF4D8D] dark:hover:text-[#FF4D8D] hover:bg-gradient-to-r hover:from-[#FF4D8D]/10 hover:via-purple-500/10 hover:to-blue-500/10'
+                      ? 'bg-highlight text-ink border-2 border-ink/80 shadow-hard-ink'
+                      : 'text-ink/70 dark:text-slate-300 hover:text-pen hover:bg-highlight/40'
                   }`}
                 >
                   <item.icon className="w-4 h-4" />
@@ -470,7 +471,7 @@ export default function Layout({ children }) {
               
               <button
                 onClick={() => setShowRanking(true)}
-                className="flex items-center gap-2 px-3 py-2 rounded-lg transition-all font-medium text-slate-600 dark:text-slate-300 hover:text-[#FF4D8D] dark:hover:text-[#FF4D8D] hover:bg-gradient-to-r hover:from-[#FF4D8D]/10 hover:via-purple-500/10 hover:to-blue-500/10"
+                className="flex items-center gap-2 px-3 py-2 rounded-lg transition-all font-medium text-ink/70 dark:text-slate-300 hover:text-pen hover:bg-highlight/40"
               >
                 <Trophy className="w-4 h-4" />
                 <span>Classement</span>
@@ -481,8 +482,8 @@ export default function Layout({ children }) {
                   to={createPageUrl("Moderation")}
                   className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all font-medium ${
                     location.pathname === createPageUrl("Moderation")
-                      ? 'bg-gradient-to-r from-[#FF4D8D]/15 via-purple-500/15 to-blue-500/15 text-slate-900 dark:text-white border border-pink-200/50 dark:border-pink-700/30'
-                      : 'text-slate-600 dark:text-slate-300 hover:text-[#FF4D8D] dark:hover:text-[#FF4D8D] hover:bg-gradient-to-r hover:from-[#FF4D8D]/10 hover:via-purple-500/10 hover:to-blue-500/10'
+                      ? 'bg-highlight text-ink border-2 border-ink/80 shadow-hard-ink'
+                      : 'text-ink/70 dark:text-slate-300 hover:text-pen hover:bg-highlight/40'
                   }`}
                 >
                   <ShieldCheck className="w-4 h-4" />
@@ -552,7 +553,7 @@ export default function Layout({ children }) {
                   </DropdownMenu> :
 
               <Button
-                onClick={handleLogin} className="inline-flex items-center justify-center gap-2 whitespace-nowrap ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-primary hover:bg-primary/90 rounded-md bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-white shadow-md h-7 sm:h-8 px-2 sm:px-3 text-[10px] sm:text-xs font-semibold">
+                onClick={handleLogin} size="sm" className="h-8 px-3 text-[10px] sm:text-xs">
 
 
                     <UserIcon className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
@@ -660,7 +661,7 @@ export default function Layout({ children }) {
           }}
           className="flex justify-center px-4 py-2">
 
-            <div className="relative bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-xl shadow-md px-3 py-1.5 sm:px-6 sm:py-3 max-w-2xl">
+            <div className="relative bg-ink rounded-xl border-2 border-ink shadow-hard px-3 py-1.5 sm:px-6 sm:py-3 max-w-2xl">
               <div className="absolute inset-0 rounded-xl animate-subtle-shine" />
               
               <div className="relative flex flex-col sm:flex-row items-center gap-2 sm:gap-4">
@@ -670,7 +671,8 @@ export default function Layout({ children }) {
                 <Button
                 onClick={handleLogin}
                 size="sm"
-                className="bg-white text-purple-700 hover:bg-gray-100 font-semibold shadow-md whitespace-nowrap text-xs h-7 sm:h-9 sm:text-sm">
+                variant="secondary"
+                className="whitespace-nowrap text-xs h-7 sm:h-9 sm:text-sm">
 
                   Se connecter
                 </Button>

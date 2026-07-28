@@ -4,12 +4,28 @@ module.exports = {
     content: ["./index.html", "./src/**/*.{ts,tsx,js,jsx}"],
   theme: {
   	extend: {
+  		fontFamily: {
+  			heading: ['Bricolage Grotesque', 'system-ui', 'sans-serif'],
+  			body: ['Instrument Sans', 'system-ui', 'sans-serif'],
+  			hand: ['Caveat', 'cursive']
+  		},
+  		boxShadow: {
+  			hard: '6px 6px 0 hsl(var(--ink) / 0.12)',
+  			'hard-lg': '9px 9px 0 hsl(var(--ink) / 0.18)',
+  			'hard-ink': '3px 3px 0 hsl(var(--ink) / 0.85)'
+  		},
   		borderRadius: {
   			lg: 'var(--radius)',
-  			md: 'calc(var(--radius) - 2px)',
-  			sm: 'calc(var(--radius) - 4px)'
+  			md: 'calc(var(--radius) - 6px)',
+  			sm: 'calc(var(--radius) - 10px)'
   		},
   		colors: {
+  			cream: 'hsl(var(--cream))',
+  			ink: 'hsl(var(--ink))',
+  			pen: 'hsl(var(--pen-red))',
+  			highlight: 'hsl(var(--highlight))',
+  			'grade-high': 'hsl(var(--grade-high))',
+  			'grade-mid': 'hsl(var(--grade-mid))',
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {

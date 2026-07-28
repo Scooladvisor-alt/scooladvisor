@@ -2,8 +2,7 @@ import React, { useCallback } from "react";
 import { Link } from "react-router-dom";
 import { prefetchPage } from "@/components/shared/LinkPrefetch";
 import { createPageUrl } from "@/utils";
-import { MapPin, Star, MessageSquare, Users, Globe } from "lucide-react"; 
-import { Badge } from "@/components/ui/badge";
+import { MapPin, MessageSquare, Users, Globe } from "lucide-react";
 
 const typeLabels = {
   college: "Collège",
@@ -23,149 +22,75 @@ const typeLabelsShort = {
   ecole_ingenieur: "Éc. ingénieurs",
 };
 
-const typeColors = {
-  college: "bg-[#3498DB] text-white border-[#3498DB]",
-  lycee: "bg-[#1ABC9C] text-white border-[#1ABC9C]",
-  universite: "bg-[#27AE60] text-white border-[#27AE60]",
-  ecole_privee: "bg-[#F39C12] text-white border-[#F39C12]",
-  ecole_commerce: "bg-[#E74C3C] text-white border-[#E74C3C]",
-  ecole_ingenieur: "bg-[#FF6B35] text-white border-[#FF6B35]",
+// Rubans façon diplôme
+const typeRibbons = {
+  college: "bg-ink",
+  lycee: "bg-grade-high",
+  universite: "bg-pen",
+  ecole_privee: "bg-grade-mid",
+  ecole_commerce: "bg-ink",
+  ecole_ingenieur: "bg-grade-mid",
 };
 
 export default function SchoolCard({ school, teacherCount }) {
   const hasRating = school.review_count > 0 && school.average_rating > 0;
 
-  // Prefetch au survol
   const handleMouseEnter = useCallback(() => {
     prefetchPage('SchoolDetail');
   }, []);
 
   return (
-    <Link 
-      to={createPageUrl(`SchoolDetail?id=${school.id}`)} 
+    <Link
+      to={createPageUrl(`SchoolDetail?id=${school.id}`)}
       className="block h-full w-full group"
       onMouseEnter={handleMouseEnter}
     >
-      <style>{`
-        @keyframes shine {
-          0% { background-position: -200% center; }
-          100% { background-position: 200% center; }
-        }
-        
-        @keyframes pulse-soft {
-          0%, 100% { transform: scale(1); opacity: 1; }
-          50% { transform: scale(1.02); opacity: 0.95; }
-        }
-        
-        @keyframes badge-shimmer {
-          0% { transform: translateX(-100%) rotate(45deg); }
-          100% { transform: translateX(400%) rotate(45deg); }
-        }
-        
-        .stat-widget {
-          position: relative;
-          overflow: hidden;
-        }
-        
-        .stat-widget::before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: -100%;
-          width: 100%;
-          height: 100%;
-          background: linear-gradient(
-            90deg,
-            transparent 0%,
-            rgba(255, 255, 255, 0.4) 50%,
-            transparent 100%
-          );
-          transition: left 0.5s ease;
-        }
-        
-        .stat-widget:hover::before {
-          left: 100%;
-        }
-        
-        .type-badge {
-          animation: pulse-soft 3s ease-in-out infinite;
-        }
-        
-        .note-widget {
-          position: relative;
-          overflow: hidden;
-        }
-        
-        .note-widget::before {
-          content: '';
-          position: absolute;
-          top: -50%;
-          left: -50%;
-          width: 50%;
-          height: 200%;
-          background: linear-gradient(
-            90deg,
-            transparent,
-            rgba(255, 255, 255, 0.5),
-            transparent
-          );
-          animation: badge-shimmer 3s infinite;
-          pointer-events: none;
-        }
-      `}</style>
-      
-      <div className="bg-white dark:bg-slate-800 rounded-xl sm:rounded-2xl shadow-md border border-slate-200 dark:border-slate-700 p-2 sm:p-6 transition-all duration-300 hover:shadow-xl hover:scale-[1.02] hover:-translate-y-1 h-full flex flex-col relative z-10">
+      <div className="card-notebook p-2.5 sm:p-5 h-full flex flex-col relative z-10">
         <div className="flex-1 flex flex-col min-h-0">
-          <div className="flex items-start justify-between mb-1.5 sm:mb-3">
-            <Badge className={`inline-flex items-center gap-1 text-[9px] sm:text-xs border sm:border-2 font-semibold shadow-sm sm:shadow-md type-badge ${typeColors[school.type]}`}>
+          <div className="flex items-start justify-between gap-2 mb-2 sm:mb-3">
+            <span className={`ribbon text-[8px] sm:text-[11px] ${typeRibbons[school.type]}`}>
               <span className="sm:hidden">{typeLabelsShort[school.type]}</span>
               <span className="hidden sm:inline">{typeLabels[school.type]}</span>
-            </Badge>
-            
+            </span>
+
             {hasRating ? (
-              <div className="flex-shrink-0 bg-gradient-to-br from-amber-50 to-amber-100 rounded-md sm:rounded-lg border border-amber-200 px-2 py-1 sm:px-3 sm:py-1.5 flex items-center gap-0.5 sm:gap-1 note-widget">
-                <Star className="w-3 h-3 sm:w-4 sm:h-4 text-amber-600 fill-amber-600 flex-shrink-0" />
-                <span className="text-[10px] sm:text-sm font-bold text-amber-900 leading-none">
+              <div className="grade-circle flex-shrink-0 mr-1.5 mt-0.5">
+                <span className="handwritten text-lg sm:text-2xl">
                   {school.average_rating.toFixed(1)}
+                  <span className="text-[10px] sm:text-sm">/20</span>
                 </span>
-                <span className="text-[9px] sm:text-xs text-amber-700">/20</span>
               </div>
             ) : (
-              <div className="flex-shrink-0 bg-slate-100 dark:bg-slate-700 rounded-md sm:rounded-lg border border-slate-200 dark:border-slate-600 px-2 py-1 sm:px-3 sm:py-1.5 flex items-center gap-0.5 sm:gap-1">
-                <Star className="w-3 h-3 sm:w-4 sm:h-4 text-slate-400 flex-shrink-0" />
-                <span className="text-[10px] sm:text-xs text-slate-600 dark:text-slate-300 font-medium whitespace-nowrap">N/A</span>
-              </div>
+              <span className="handwritten text-base sm:text-xl opacity-50 flex-shrink-0 mr-1">
+                n.n.
+              </span>
             )}
           </div>
 
-          <h3 className="font-bold text-slate-900 dark:text-white text-xs sm:text-xl mb-1 sm:mb-3 leading-tight line-clamp-2">
+          <h3 className="font-heading font-extrabold text-ink text-xs sm:text-lg mb-1 sm:mb-2 leading-tight line-clamp-2">
             {school.name}
           </h3>
 
-          <div className="flex items-center gap-1 sm:gap-2 text-[10px] sm:text-sm text-slate-600 dark:text-slate-300 mb-1.5 sm:mb-4">
-            <MapPin className="w-2.5 h-2.5 sm:w-4 sm:h-4 text-slate-400 flex-shrink-0" />
+          <div className="flex items-center gap-1 sm:gap-1.5 text-[10px] sm:text-sm text-ink/60 mb-2 sm:mb-4">
+            <MapPin className="w-2.5 h-2.5 sm:w-4 sm:h-4 flex-shrink-0" />
             <span className="truncate">{school.city}</span>
             {school.region && school.region.trim().toLowerCase() === "international" && (
-              <Globe className="w-2.5 h-2.5 sm:w-3.5 sm:h-3.5 text-indigo-500 flex-shrink-0" title="International" />
+              <Globe className="w-2.5 h-2.5 sm:w-3.5 sm:h-3.5 text-pen flex-shrink-0" title="International" />
             )}
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-1.5 sm:gap-3 mt-auto">
-          <div className="stat-widget bg-[#FF4D8D]/5 dark:bg-[#FF4D8D]/10 rounded-md sm:rounded-xl p-1 sm:p-2.5 border border-[#FF4D8D]/20 dark:border-[#FF4D8D]/30 flex items-center justify-center gap-1 sm:gap-2">
-            <MessageSquare className="w-3 h-3 sm:w-5 sm:h-5 text-[#FF4D8D] flex-shrink-0" />
-            <div className="flex items-baseline gap-0.5 sm:gap-1">
-              <span className="text-sm sm:text-xl font-bold text-[#FF4D8D]">{school.review_count || 0}</span>
-              <span className="text-[9px] sm:text-xs text-[#FF4D8D] font-medium hidden sm:inline">Avis</span>
-            </div>
+        <div className="grid grid-cols-2 gap-1.5 sm:gap-2.5 mt-auto">
+          <div className="rounded-lg border-2 border-ink/20 bg-highlight/25 p-1 sm:p-2 flex items-center justify-center gap-1 sm:gap-1.5">
+            <MessageSquare className="w-3 h-3 sm:w-4 sm:h-4 text-pen flex-shrink-0" />
+            <span className="text-sm sm:text-lg font-heading font-extrabold text-ink">{school.review_count || 0}</span>
+            <span className="text-[9px] sm:text-xs text-ink/60 font-medium hidden sm:inline">Avis</span>
           </div>
 
-          <div className="stat-widget bg-blue-500/5 dark:bg-blue-500/10 rounded-md sm:rounded-xl p-1 sm:p-2.5 border border-blue-500/20 dark:border-blue-500/30 flex items-center justify-center gap-1 sm:gap-2">
-            <Users className="w-3 h-3 sm:w-5 sm:h-5 text-blue-500 flex-shrink-0" />
-            <div className="flex items-baseline gap-0.5 sm:gap-1">
-              <span className="text-sm sm:text-xl font-bold text-blue-500">{teacherCount}</span>
-              <span className="text-[9px] sm:text-xs text-blue-500 font-medium hidden sm:inline">Profs</span>
-            </div>
+          <div className="rounded-lg border-2 border-ink/20 bg-ink/[0.04] p-1 sm:p-2 flex items-center justify-center gap-1 sm:gap-1.5">
+            <Users className="w-3 h-3 sm:w-4 sm:h-4 text-ink flex-shrink-0" />
+            <span className="text-sm sm:text-lg font-heading font-extrabold text-ink">{teacherCount}</span>
+            <span className="text-[9px] sm:text-xs text-ink/60 font-medium hidden sm:inline">Profs</span>
           </div>
         </div>
       </div>
