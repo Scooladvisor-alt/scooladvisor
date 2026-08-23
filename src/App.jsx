@@ -15,6 +15,7 @@ import Login from '@/pages/Login';
 import Register from '@/pages/Register';
 import ForgotPassword from '@/pages/ForgotPassword';
 import ResetPassword from '@/pages/ResetPassword';
+import Advisor from '@/pages/Advisor';
 
 const { Pages, Layout, mainPage } = pagesConfig;
 const mainPageKey = mainPage ?? Object.keys(Pages)[0];
@@ -73,6 +74,13 @@ const AuthenticatedApp = () => {
           />
         ) : null
       ))}
+
+      {/* Conseiller d'orientation (agent IA) */}
+      <Route path="/Advisor" element={
+        <LayoutWrapper currentPageName="Advisor">
+          <Advisor />
+        </LayoutWrapper>
+      } />
 
       {/* Protected pages — require login */}
       <Route element={<ProtectedRoute unauthenticatedElement={<Navigate to="/login" replace />} />}>
