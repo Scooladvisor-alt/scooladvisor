@@ -1,0 +1,39 @@
+{
+  "name": "Sync stats avis professeurs",
+  "description": "Recalcule automatiquement les statistiques du professeur \u00e0 chaque cr\u00e9ation, modification ou suppression d'un avis.",
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "entity",
+      "events": [
+        "create",
+        "update",
+        "delete"
+      ],
+      "entity_name": "TeacherReview"
+    }
+  },
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "sync_stats_avis_professeurs",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "run_function": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "syncReviewStats",
+            "args": {}
+          },
+          "then": "end"
+        }
+      }
+    ]
+  },
+  "x-base44-migrated-from-automation": {
+    "legacy_payload_function": "syncReviewStats"
+  }
+}
