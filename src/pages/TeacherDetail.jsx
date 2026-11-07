@@ -186,21 +186,24 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
     }
   };
 
-  useEffect(() => {
-    if (!loading && !teacher) {
-      window.location.href = "/";
-    }
-  }, [loading, teacher]);
-
-  if (loading) {
+  if (!teacherId || loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-pink-50/30 to-blue-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 flex items-center justify-center">
-        <GradientSpinner size="w-12 h-12" />
+      <div className="min-h-[60vh] flex items-center justify-center">
+        {teacherId ? <GradientSpinner size="w-12 h-12" /> :
+        <p className="handwritten text-2xl">Aucun professeur sélectionné</p>}
       </div>);
 
   }
 
-  if (!teacher) return null;
+  if (!teacher) {
+    return (
+      <div className="min-h-[60vh] flex flex-col items-center justify-center gap-4 px-4 text-center">
+        <p className="handwritten text-3xl">Professeur introuvable</p>
+        <p className="text-ink/70">Ce professeur n'existe pas ou n'est plus visible.</p>
+        <Button onClick={() => navigate("/")}>Retour à l'accueil</Button>
+      </div>);
+
+  }
 
   const handleEditReview = (review) => {
     setEditingReview(review);
@@ -351,7 +354,7 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="md:bg-white/80 dark:md:bg-slate-800/80 md:backdrop-blur-sm md:rounded-2xl md:shadow-xl md:border md:border-slate-200 dark:md:border-slate-700 overflow-hidden md:mb-8">
+          className="md:card-notebook overflow-hidden md:mb-8">
 
           <div className="relative p-3 md:p-8">
             <div className="hidden sm:block absolute top-0 right-0 w-72 h-72 bg-gradient-to-br from-[#FF4D8D]/10 via-purple-500/10 to-blue-500/5 rounded-bl-full" />
@@ -492,7 +495,7 @@ IMPORTANT : Commence DIRECTEMENT par le contenu (ex: "Alors voilà le topo..."),
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-md rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+            className="card-notebook overflow-hidden">
 
             <div className="grid grid-cols-3 divide-x divide-slate-100 dark:divide-slate-700 h-[360px]">
               <div className="col-span-2 h-full overflow-hidden">

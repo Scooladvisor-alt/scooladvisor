@@ -228,3 +228,27 @@
     border-color: transparent transparent hsl(var(--ink) / 0.12) transparent;
   }
 }
+
+/* Harmonisation "cahier d'écolier" : neutralise les anciens dégradés rose/violet/bleu */
+[class*="bg-gradient-to-"] { background-image: none !important; }
+[class*="bg-gradient-to-"][class*=" from-[#FF4D8D]"]:not(.bg-clip-text):not([class*=" from-[#FF4D8D]/"]) {
+  background-color: hsl(var(--pen-red)) !important;
+  color: #fff;
+}
+[class*="bg-gradient-to-"][class*=" from-blue-500"]:not(.bg-clip-text):not([class*=" from-blue-500/"]),
+[class*="bg-gradient-to-"][class*=" from-purple-6"]:not(.bg-clip-text):not([class*=" from-purple-600/"]) {
+  background-color: hsl(var(--ink)) !important;
+  color: #fff;
+}
+.bg-clip-text { background-color: transparent !important; }
+[class*="bg-gradient-to-"][class*="from-amber-"] { background-color: hsl(var(--highlight) / 0.35); }
+.bg-clip-text {
+  background-image: none !important;
+  -webkit-background-clip: border-box;
+  background-clip: border-box;
+  color: hsl(var(--pen-red)) !important;
+  -webkit-text-fill-color: currentColor;
+}
+[class*="text-[#FF4D8D]"] { color: hsl(var(--pen-red)); }
+[class*="border-[#FF4D8D]"] { border-color: hsl(var(--pen-red)); }
+[class*="bg-[#FF4D8D]"] { background-color: hsl(var(--pen-red)); }

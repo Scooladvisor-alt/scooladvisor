@@ -20,6 +20,21 @@ module.exports = {
   			sm: 'calc(var(--radius) - 10px)'
   		},
   		colors: {
+  			pink: {
+  				50: 'hsl(var(--pen-red) / 0.07)', 100: 'hsl(var(--pen-red) / 0.12)', 200: 'hsl(var(--pen-red) / 0.25)',
+  				300: 'hsl(var(--pen-red) / 0.45)', 400: 'hsl(var(--pen-red))', 500: 'hsl(var(--pen-red))',
+  				600: 'hsl(var(--pen-red))', 700: 'hsl(var(--pen-red))', 800: 'hsl(var(--pen-red))', 900: 'hsl(var(--pen-red))', 950: 'hsl(var(--pen-red))'
+  			},
+  			purple: {
+  				50: 'hsl(var(--ink) / 0.05)', 100: 'hsl(var(--ink) / 0.09)', 200: 'hsl(var(--ink) / 0.18)',
+  				300: 'hsl(var(--ink) / 0.35)', 400: 'hsl(var(--ink) / 0.7)', 500: 'hsl(var(--ink))',
+  				600: 'hsl(var(--ink))', 700: 'hsl(var(--ink))', 800: 'hsl(var(--ink))', 900: 'hsl(var(--ink))', 950: 'hsl(var(--ink))'
+  			},
+  			blue: {
+  				50: 'hsl(var(--ink) / 0.05)', 100: 'hsl(var(--ink) / 0.09)', 200: 'hsl(var(--ink) / 0.18)',
+  				300: 'hsl(var(--ink) / 0.35)', 400: 'hsl(var(--ink) / 0.7)', 500: 'hsl(var(--ink))',
+  				600: 'hsl(var(--ink))', 700: 'hsl(var(--ink))', 800: 'hsl(var(--ink))', 900: 'hsl(var(--ink))', 950: 'hsl(var(--ink))'
+  			},
   			cream: 'hsl(var(--cream))',
   			ink: 'hsl(var(--ink))',
   			pen: 'hsl(var(--pen-red))',
