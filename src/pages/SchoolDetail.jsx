@@ -355,14 +355,14 @@ export default function SchoolDetailPage() {
               <div className="flex flex-col gap-2 sm:flex-row sm:gap-2.5 mb-4">
                 <Button
                   onClick={() => setShowAddReview(true)}
-                  className="bg-gradient-to-r from-yellow-400 via-yellow-500 to-amber-500 hover:from-yellow-500 hover:via-yellow-600 hover:to-amber-600 text-white shadow-md hover:shadow-lg transition-all w-full sm:flex-1 h-11 font-semibold">
+                  className="btn-pill bg-highlight hover:bg-highlight text-ink w-full sm:flex-1 h-11 font-bold">
                   <Star className="w-4 h-4 mr-2" />
                   Noter l'établissement
                 </Button>
 
                 <Button
                   onClick={() => setShowAddTeacher(true)}
-                  className="bg-gradient-to-r from-[#FF4D8D] via-purple-500 to-blue-500 hover:from-[#FF4D8D]/90 hover:via-purple-500/90 hover:to-blue-500/90 text-white shadow-md hover:shadow-lg transition-all w-full sm:flex-1 h-11 font-semibold">
+                  className="btn-pill bg-pen hover:bg-pen text-white w-full sm:flex-1 h-11 font-bold">
                   <Plus className="w-4 h-4 mr-2" />
                   Ajouter un professeur
                 </Button>
