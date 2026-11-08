@@ -60,6 +60,8 @@ const AuthenticatedApp = () => {
         </LayoutWrapper>
       } />
 
+      <Route path="/Schools" element={<Navigate to="/" replace />} />
+
       {/* Public pages */}
       {['About', 'Contact', 'PrivacyPolicy', 'TermsOfService', 'SchoolDetail', 'TeacherDetail'].map((path) => (
         Pages[path] ? (
