@@ -29,6 +29,11 @@
     "teacher_name": {
       "type": "string",
       "description": "Nom du professeur signal\u00e9"
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 1000,
+      "description": "Description optionnelle"
     }
   },
   "required": [

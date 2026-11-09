@@ -80,6 +80,11 @@
     "author_avatar": {
       "type": "string",
       "description": "Avatar de l'auteur (cache)"
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 1000,
+      "description": "Description optionnelle"
     }
   },
   "required": [

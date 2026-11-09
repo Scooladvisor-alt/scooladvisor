@@ -40,6 +40,11 @@
     "link": {
       "type": "string",
       "description": "Lien optionnel"
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 1000,
+      "description": "Description optionnelle"
     }
   },
   "required": [

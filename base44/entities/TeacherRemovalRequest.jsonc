@@ -47,6 +47,11 @@
         "rejected"
       ],
       "default": "pending"
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 1000,
+      "description": "Description optionnelle"
     }
   },
   "required": [

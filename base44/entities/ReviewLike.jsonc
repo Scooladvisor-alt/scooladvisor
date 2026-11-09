@@ -21,6 +21,11 @@
     "user_id": {
       "type": "string",
       "description": "ID de l'utilisateur qui a lik\u00e9"
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 1000,
+      "description": "Description optionnelle"
     }
   },
   "required": [

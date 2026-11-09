@@ -26,6 +26,11 @@
       "type": "boolean",
       "default": false,
       "description": "Si le message est anonyme"
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 1000,
+      "description": "Description optionnelle"
     }
   },
   "required": [

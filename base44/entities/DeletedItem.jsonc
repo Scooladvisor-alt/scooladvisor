@@ -48,6 +48,11 @@
     "deletion_details": {
       "type": "string",
       "description": "D\u00e9tails suppl\u00e9mentaires sur la suppression"
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 1000,
+      "description": "Description optionnelle"
     }
   },
   "required": [

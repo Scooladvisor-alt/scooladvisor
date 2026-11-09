@@ -70,6 +70,11 @@
       "type": "boolean",
       "default": false,
       "description": "Si le professeur est masqu\u00e9 (visible uniquement en mod\u00e9ration)"
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 1000,
+      "description": "Description optionnelle"
     }
   },
   "required": [

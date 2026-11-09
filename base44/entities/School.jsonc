@@ -53,6 +53,11 @@
       "type": "boolean",
       "default": false,
       "description": "Si l'\u00e9tablissement est masqu\u00e9 (non visible sur le site)"
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 1000,
+      "description": "Description optionnelle"
     }
   },
   "required": [

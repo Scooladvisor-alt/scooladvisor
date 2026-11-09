@@ -26,6 +26,11 @@
     "moderator_decision": {
       "type": "string",
       "description": "D\u00e9cision du mod\u00e9rateur"
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 1000,
+      "description": "Description optionnelle"
     }
   },
   "required": [
