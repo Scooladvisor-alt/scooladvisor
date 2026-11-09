@@ -48,6 +48,19 @@ export default function SEO({ title, description, canonicalPath, noIndex = false
     updateOGTag('og:url', canonicalUrl);
     updateOGTag('og:type', 'website');
     updateOGTag('og:site_name', 'ScoolAdvisor');
+    updateOGTag('og:locale', 'fr_FR');
+    const defaultImage = "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e56a6378dcdf368ceea549/d395706ad_Gemini_Generated_Image_3m8bo23m8bo23m8b.png";
+    updateOGTag('og:image', defaultImage);
+    [['twitter:card', 'summary'], ['twitter:title', title], ['twitter:description', description], ['twitter:image', defaultImage]].forEach(([name, content]) => {
+      if (!content) return;
+      let m = document.querySelector(`meta[name="${name}"]`);
+      if (!m) {
+        m = document.createElement('meta');
+        m.setAttribute('name', name);
+        document.head.appendChild(m);
+      }
+      m.setAttribute('content', content);
+    });
 
     let metaRobots = document.querySelector("meta[name='robots']");
     if (!metaRobots) {

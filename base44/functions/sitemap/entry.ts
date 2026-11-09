@@ -27,8 +27,8 @@ export default Deno.serve(async (req) => {
         // Let's use asServiceRole to facilitate fetching ALL for the sitemap (crawler perspective)
         // Filtering for approved/published content is crucial.
         
-        const schools = await base44.asServiceRole.entities.School.filter({ is_deleted: false }); // Assuming status approved check if needed
-        const teachers = await base44.asServiceRole.entities.Teacher.filter({ is_deleted: false, status: "approved" });
+        const schools = await base44.asServiceRole.entities.School.filter({ status: "approved", is_hidden: { $ne: true } }, '-updated_date', 5000);
+        const teachers = await base44.asServiceRole.entities.Teacher.filter({ is_deleted: { $ne: true }, is_hidden: { $ne: true }, status: "approved" }, '-updated_date', 5000);
 
         let xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">`;
